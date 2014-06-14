@@ -9,6 +9,7 @@ using Autofac;
 using XamlingCore.Portable.Contract.Localisation;
 using XamlingCore.Portable.Contract.Navigation;
 using XamlingCore.Portable.Contract.Services;
+using XamlingCore.Portable.Contract.UI;
 using XamlingCore.Portable.Contract.ViewModels;
 using XamlingCore.Portable.Messages.Navigation;
 using XamlingCore.Portable.Messages.System;
@@ -20,6 +21,9 @@ namespace XamlingCore.Portable.View.ViewModel
 {
     public abstract class XRootViewModelBase : ViewModelBase
     {
+        private bool _isReady;
+
+
         private readonly ILoadStatusService _loadStatusService;
         private readonly IOrientationService _orientationService;
         private readonly ILocalisationService _localisationService;
@@ -52,17 +56,23 @@ namespace XamlingCore.Portable.View.ViewModel
             ILoadStatusService systemTrayService,
             IOrientationService orientationService,
             ILocalisationService localisationService, 
-            IXNavigation xNavigationService)
+            IXNavigation xNavigationService, 
+            IDispatcher dispatcher)
         {
             _loadStatusService = systemTrayService;
             _orientationService = orientationService;
             _localisationService = localisationService;
             _navigation = xNavigationService;
-
+            Dispatcher = dispatcher;
             Container = c;
         }
 
         public abstract Task Init();
+
+        public void SetReady()
+        {
+            IsReady = true;
+        }
 
         public void ResetNavigationAndHistory()
         {
@@ -272,6 +282,16 @@ namespace XamlingCore.Portable.View.ViewModel
         public object CurrentContentObject
         {
             get { return Navigation.CurrentContentObject; }
+        }
+
+        public bool IsReady
+        {
+            get { return _isReady; }
+            set
+            {
+                _isReady = value;
+                OnPropertyChanged();
+            }
         }
 
         public bool IsCurrentContentObjectType(Type type)

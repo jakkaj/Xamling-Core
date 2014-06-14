@@ -2,25 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Autofac;
 using Autofac.Core;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
 using XamlingCore.Portable.Contract.Navigation;
+using XamlingCore.Portable.View.ViewModel;
 
 namespace XamlingCore.iOS.Navigation
 {
     public class iOSNavigator
     {
+        private readonly XRootViewModelBase _rootVm;
         private readonly IXNavigation _xNavigation;
         private readonly ILifetimeScope _container;
 
         private UIWindow _window;
         private NavigationPage _rootNavigationPage;
         private INavigation _xamarinNavigation;
-        public iOSNavigator(IXNavigation xNavigation, ILifetimeScope container)
+        public iOSNavigator(XRootViewModelBase rootVm, IXNavigation xNavigation, ILifetimeScope container)
         {
+            _rootVm = rootVm;
             _xNavigation = xNavigation;
             _container = container;
 
@@ -43,12 +47,17 @@ namespace XamlingCore.iOS.Navigation
             _setView();
         }
 
-        private void _setView()
+        private async void _setView()
         {
+            while (!_rootVm.IsReady)
+            {
+                await Task.Yield();
+            }
+
             var vm = _xNavigation.CurrentContentObject;
             var t = vm.GetType();
 
-            var typeName = t.Name.Replace("ViewModel", "View");
+            var typeName = t.FullName.Replace("ViewModel", "View");
 
             //Xamarin Forms will resolve this way
             var nextToType = Type.GetType(string.Format("{0}, {1}", typeName, t.Assembly.FullName));
@@ -58,7 +67,9 @@ namespace XamlingCore.iOS.Navigation
                 var tUiView = _container.Resolve(nextToType) as Page;
                 if (tUiView != null)
                 {
-                    _xamarinNavigation.PushAsync(tUiView);
+                    tUiView.BindingContext = vm;
+                    await _xamarinNavigation.PushAsync(tUiView);
+                    return;
                 }
             }
 

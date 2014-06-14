@@ -39,6 +39,8 @@
   <ItemGroup>
     <Compile Include="Glue\iOSGlue.cs" />
     <Compile Include="Glue\Modules\DefaultiOSModule.cs" />
+    <Compile Include="Implementations\iOSDispatcher.cs" />
+    <Compile Include="Implementations\LoadStatusService.cs" />
     <Compile Include="Implementations\LocalStorage.cs" />
     <Compile Include="Navigation\iOSNavigator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

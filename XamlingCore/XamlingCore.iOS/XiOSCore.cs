@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using XamlingCore.iOS.Navigation;
 using XamlingCore.Portable.Contract.Glue;
@@ -19,22 +20,12 @@ namespace XamlingCore.iOS
 
         public void Init()
         {
-            var msr = new ManualResetEvent(false);
-
-            Task.Run(async () =>
-            {
-                await InitRoot();
-                _navigator = new iOSNavigator(RootVm.Navigation, RootVm.Container);
-                msr.Set();
-            });
-
-            msr.WaitOne();
-
-            
+            InitRoot();
+            _navigator = new iOSNavigator(RootVm, RootVm.Navigation, RootVm.Container);
         }
     }
 
-    public abstract class XCore<TRootVm, TInitialVM, TGlue> 
+    public abstract class XCore<TRootVm, TInitialVM, TGlue>
         where TRootVm : XRootViewModelBase
         where TInitialVM : XViewModel
         where TGlue : class, IGlue, new()
@@ -42,15 +33,14 @@ namespace XamlingCore.iOS
         protected IContainer Container;
         protected TRootVm RootVm;
 
-        protected async Task InitRoot()
-            
+        protected async void InitRoot()
         {
             var glue = new TGlue();
             glue.Init();
 
             Container = glue.Container;
             RootVm = Container.Resolve<TRootVm>();
-            
+
             await RootVm.Init();
             var initalVm = RootVm.CreateContentModel<TInitialVM>();
             if (initalVm == null)
@@ -61,6 +51,6 @@ namespace XamlingCore.iOS
             RootVm.NavigateTo(initalVm);
         }
 
-        
+
     }
 }

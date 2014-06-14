@@ -131,13 +131,13 @@ namespace XamlingCore.Portable.View.ViewModel
 
         protected Action<object> WrapCall(Action<object> method)
         {
-            return (obj) => Dispatcher(() => method(obj));
+            return (obj) => Dispatcher.Invoke(() => method(obj));
         }
 
         protected Action<object> WrapCallTyped<T>(Action<T> method)
             where T : class
         {
-            return (obj) => Dispatcher(() => method(obj as T));
+            return (obj) => Dispatcher.Invoke(() => method(obj as T));
         }
 
         protected async Task<T> Loader<T>(Task<T> awaiter, string text = null)

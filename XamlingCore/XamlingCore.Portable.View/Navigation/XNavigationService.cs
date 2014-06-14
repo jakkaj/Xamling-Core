@@ -19,14 +19,11 @@ namespace XamlingCore.Portable.View.Navigation
 
         public event EventHandler Navigated;
 
-        public XRootViewModelBase ParentRoot { get; set; }
-
         public DateTime? LastNavigation { get; private set; }
 
-        public XNavigationService(XRootViewModelBase parentRoot)
+        public XNavigationService()
         {
             NavigationHistory = new List<object>();
-            ParentRoot = parentRoot;
         }
 
         public void InsertIntoHistory(object obj)
@@ -64,7 +61,7 @@ namespace XamlingCore.Portable.View.Navigation
 
             LastNavigation = DateTime.Now;
 
-            ParentRoot.OnNavigating(content, CurrentContentObject);
+            
             if (content != null)
             {
 
