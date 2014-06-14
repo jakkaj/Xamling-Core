@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using Xamarin.Forms;
+using XamlingCore.iOS;
+using XamlingCore.Samples.iOS.Glue;
+using XamlingCore.Samples.ViewModels.Home;
+using XamlingCore.Samples.XCore;
 
 namespace XamlingCore.Samples.iOS
 {
@@ -29,11 +33,8 @@ namespace XamlingCore.Samples.iOS
         {
             Forms.Init();
 
-            window = new UIWindow(UIScreen.MainScreen.Bounds);
-
-            window.RootViewController = App.GetMainPage().CreateViewController();
-
-            window.MakeKeyAndVisible();
+            var x = new XiOSCore<RootViewModel, HomeViewModel, ProjectGlue>();
+            x.Init();
 
             return true;
         }

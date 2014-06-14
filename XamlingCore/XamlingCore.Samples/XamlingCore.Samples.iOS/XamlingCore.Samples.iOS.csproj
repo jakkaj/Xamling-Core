@@ -77,13 +77,31 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Glue\ProjectGlue.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <None Include="app.config" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\XamlingCore.iOS\XamlingCore.iOS.csproj">
+      <Project>{1EF4C889-A64B-49A7-A393-B37B6E371DFB}</Project>
+      <Name>XamlingCore.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
+      <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
+      <Name>XamlingCore.Portable.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Portable.Glue\XamlingCore.Portable.Glue.csproj">
+      <Project>{E908CD00-22C8-4F7B-BA99-8DDF32C5F656}</Project>
+      <Name>XamlingCore.Portable.Glue</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
+      <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
+      <Name>XamlingCore.Portable.View</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Samples\XamlingCore.Samples.csproj">
       <Name>XamlingCore.Samples</Name>
     </ProjectReference>
@@ -91,6 +109,9 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\..\packages\Autofac.3.4.1\lib\portable-win+net40+sl50+wp8\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />

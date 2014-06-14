@@ -38,8 +38,13 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Home\HomeViewModel.cs" />
+    <Compile Include="XCore\RootViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\..\packages\Autofac.3.4.1\lib\portable-win+net40+sl50+wp8\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="Xamarin.Forms.Core">
       <HintPath>..\..\packages\Xamarin.Forms.1.0.6186\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
@@ -49,6 +54,32 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
+      <Project>{ea36c7d4-c89e-4242-bd39-8e485f408086}</Project>
+      <Name>XamlingCore.Portable.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
+      <Project>{568d9a09-151c-49b3-bee5-71529fc6869d}</Project>
+      <Name>XamlingCore.Portable.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
+      <Project>{e2682110-bb54-48d8-9e8c-20bc29488bbe}</Project>
+      <Name>XamlingCore.Portable.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Portable.Net\XamlingCore.Portable.Net.csproj">
+      <Project>{da91f91f-3a71-4c7d-9fd5-4f0dc6e3dc86}</Project>
+      <Name>XamlingCore.Portable.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
+      <Project>{b3d7c301-2df7-4c16-9f49-7dda8689556e}</Project>
+      <Name>XamlingCore.Portable.View</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Portable\XamlingCore.Portable.csproj">
+      <Project>{cb7e7377-7f48-40e0-aafe-a936743da902}</Project>
+      <Name>XamlingCore.Portable</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -9,6 +9,7 @@ namespace XamlingCore.Portable.Contract.Glue
 {
     public interface IGlue
     {
+        void Init();
         IContainer Container { get; }
     }
 }

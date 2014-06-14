@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</ProjectGuid>
+    <ProjectGuid>{E908CD00-22C8-4F7B-BA99-8DDF32C5F656}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XamlingCore.Portable.View</RootNamespace>
-    <AssemblyName>XamlingCore.Portable.View</AssemblyName>
+    <RootNamespace>XamlingCore.Portable.Glue</RootNamespace>
+    <AssemblyName>XamlingCore.Portable.Glue</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -41,13 +41,9 @@
       <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
       <Name>XamlingCore.Portable.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
-      <Project>{568D9A09-151C-49B3-BEE5-71529FC6869D}</Project>
-      <Name>XamlingCore.Portable.Messages</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
-      <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
-      <Name>XamlingCore.Portable.Model</Name>
+    <ProjectReference Include="..\XamlingCore.Portable.Service\XamlingCore.Portable.Service.csproj">
+      <Project>{449DC319-446E-4D47-923A-3C9EFDF02B88}</Project>
+      <Name>XamlingCore.Portable.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable\XamlingCore.Portable.csproj">
       <Project>{CB7E7377-7F48-40E0-AAFE-A936743DA902}</Project>
@@ -55,16 +51,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Navigation\XNavigationService.cs" />
+    <Compile Include="DefaultXCoreModule.cs" />
+    <Compile Include="GlueBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Special\Annotations.cs" />
-    <Compile Include="ViewModel\Base\DisplayListViewModel.cs" />
-    <Compile Include="ViewModel\Base\GroupItemViewModel.cs" />
-    <Compile Include="ViewModel\Base\GroupListViewModel.cs" />
-    <Compile Include="ViewModel\Base\NotifyBase.cs" />
-    <Compile Include="ViewModel\Base\ViewModelBase.cs" />
-    <Compile Include="ViewModel\XRootViewModelBase.cs" />
-    <Compile Include="ViewModel\XViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

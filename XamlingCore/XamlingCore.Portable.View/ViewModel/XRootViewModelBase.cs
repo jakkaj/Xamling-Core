@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Autofac;
 using XamlingCore.Portable.Contract.Localisation;
+using XamlingCore.Portable.Contract.Navigation;
 using XamlingCore.Portable.Contract.Services;
+using XamlingCore.Portable.Contract.ViewModels;
 using XamlingCore.Portable.Messages.Navigation;
 using XamlingCore.Portable.Messages.System;
 using XamlingCore.Portable.View.Navigation;
@@ -16,16 +18,14 @@ using XamlingCore.Portable.XamlingMessenger;
 
 namespace XamlingCore.Portable.View.ViewModel
 {
-    public class XFrameViewModelBase : ViewModelBase
+    public abstract class XRootViewModelBase : ViewModelBase
     {
-        private readonly ILoadStatusService _systemTrayService;
+        private readonly ILoadStatusService _loadStatusService;
         private readonly IApplicationBarService _applicationBarService;
         private readonly IOrientationService _orientationService;
         private readonly ILocalisationService _localisationService;
 
-        private XNavigationService navigationService;
-
-        private object overlayViewModel;
+        private IXNavigationService _navigationService;
 
         public ICommand NavigateBackCommand { get; set; }
 
@@ -35,7 +35,7 @@ namespace XamlingCore.Portable.View.ViewModel
         public string Title { get; set; }
         public string Description { get; set; }
 
-        public static XFrameViewModelBase RootFrame { get; protected internal set; }
+        public static XRootViewModelBase RootRoot { get; protected internal set; }
 
         public Action BackKeyIntercept { get; set; }
 
@@ -48,21 +48,24 @@ namespace XamlingCore.Portable.View.ViewModel
 
         public ILifetimeScope Container { get; private set; }
 
-        public XFrameViewModelBase(
+        protected XRootViewModelBase(
             ILifetimeScope c,
             ILoadStatusService systemTrayService,
             IApplicationBarService applicationBarService,
             IOrientationService orientationService,
-            ILocalisationService localisationService)
+            ILocalisationService localisationService, 
+            IXNavigationService xNavigationService)
         {
-            _systemTrayService = systemTrayService;
+            _loadStatusService = systemTrayService;
             _applicationBarService = applicationBarService;
             _orientationService = orientationService;
             _localisationService = localisationService;
-            NavigationService = new XNavigationService(this);
+            _navigationService = xNavigationService;
 
             Container = c;
         }
+
+        public abstract Task Init();
 
         public void ResetNavigationAndHistory()
         {
@@ -94,13 +97,13 @@ namespace XamlingCore.Portable.View.ViewModel
         }
 
         public static T CreateRootFrame<T>(ILifetimeScope c, Action<T> initialisedCallback = null)
-            where T : XFrameViewModelBase
+            where T : XRootViewModelBase
         {
             var obj = c.Resolve<T>();
             obj.KnownTypes.Add(typeof(T));
             if (initialisedCallback != null) initialisedCallback(obj);
             obj.OnInitialise();
-            RootFrame = obj;
+            RootRoot = obj;
             return obj;
         }
 
@@ -128,7 +131,7 @@ namespace XamlingCore.Portable.View.ViewModel
 
             obj.ParentModel = this;
 
-            obj.SystemTrayService = _systemTrayService;
+            obj.SystemTrayService = _loadStatusService;
             obj.ApplicationBarService = _applicationBarService;
             obj.OrientationService = _orientationService;
             obj.LocalisationService = _localisationService;
@@ -230,11 +233,11 @@ namespace XamlingCore.Portable.View.ViewModel
 
                 if (value)
                 {
-                    _systemTrayService.PushLoader();
+                    _loadStatusService.PushLoader();
                 }
                 else
                 {
-                    _systemTrayService.PopLoader();
+                    _loadStatusService.PopLoader();
                 }
             }
         }
@@ -253,19 +256,19 @@ namespace XamlingCore.Portable.View.ViewModel
         }
 
 
-        public XNavigationService NavigationService
+        public IXNavigationService NavigationService
         {
-            get { return navigationService; }
+            get { return _navigationService; }
             set
             {
-                if (navigationService != null)
+                if (_navigationService != null)
                 {
-                    navigationService.Navigated -= new System.EventHandler(navigationService_Navigated);
+                    _navigationService.Navigated -= new System.EventHandler(navigationService_Navigated);
                 }
 
-                navigationService = value;
+                _navigationService = value;
                 OnPropertyChanged("NavigationService");
-                navigationService.Navigated += new System.EventHandler(navigationService_Navigated);
+                _navigationService.Navigated += new System.EventHandler(navigationService_Navigated);
             }
         }
 

@@ -16,7 +16,7 @@ namespace XamlingCore.Portable.View.ViewModel
 {
     public abstract class XViewModel : ViewModelBase, IDisposable
     {
-        private XFrameViewModelBase _parentModel;
+        private XRootViewModelBase _parentModel;
 
         public bool IsDisposed { get; private set; }
         public double ScrollPosition { get; set; }
@@ -223,7 +223,7 @@ namespace XamlingCore.Portable.View.ViewModel
             }
         }
 
-        protected internal XFrameViewModelBase ParentModel
+        protected internal XRootViewModelBase ParentModel
         {
             get
             {
