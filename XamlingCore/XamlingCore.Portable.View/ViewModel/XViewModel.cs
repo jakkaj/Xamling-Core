@@ -34,8 +34,7 @@ namespace XamlingCore.Portable.View.ViewModel
 
         private readonly List<XViewModel> _childModels = new List<XViewModel>();
 
-        protected internal ILoadStatusService SystemTrayService;
-        protected internal IApplicationBarService ApplicationBarService;
+        protected internal ILoadStatusService LoadStatusService;
         protected internal IOrientationService OrientationService;
         protected internal ILocalisationService LocalisationService;
 
@@ -78,12 +77,12 @@ namespace XamlingCore.Portable.View.ViewModel
         {
             get
             {
-                if (ParentModel.NavigationService.CurrentContentObject == this)
+                if (ParentModel.Navigation.CurrentContentObject == this)
                 {
                     return true;
                 }
 
-                var vm = ParentModel.NavigationService.CurrentContentObject as XViewModel;
+                var vm = ParentModel.Navigation.CurrentContentObject as XViewModel;
                 
                 if (vm == null)
                 {
@@ -109,7 +108,7 @@ namespace XamlingCore.Portable.View.ViewModel
 
             foreach (var child in _childModels)
             {
-                if (!child.IsDisposed && child != ParentModel.NavigationService.CurrentContentObject)
+                if (!child.IsDisposed && child != ParentModel.Navigation.CurrentContentObject)
                 {
                     child.Dispose();
                 }
@@ -143,12 +142,12 @@ namespace XamlingCore.Portable.View.ViewModel
 
         protected async Task<T> Loader<T>(Task<T> awaiter, string text = null)
         {
-            return await SystemTrayService.Loader(awaiter, text);
+            return await LoadStatusService.Loader(awaiter, text);
         }
 
         protected async Task Loader(Task awaiter, string text = null)
         {
-            await SystemTrayService.Loader(awaiter, text);
+            await LoadStatusService.Loader(awaiter, text);
         }
 
         protected string GetResource(string resourceName)

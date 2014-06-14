@@ -12,14 +12,14 @@ namespace XamlingCore.Portable.Repos.Base
 {
     public class SimpleLocalStorageEntityRepo<T> : ISimpleEntityRepo<T> where T : class, IEntity, new()
     {
-        private readonly IApplicationDataHelper _applicationDataHelper;
+        private readonly ILocalStorage _applicationDataHelper;
         private readonly ILocalStorageFileRepo _localStorageFileRepo;
 
         AsyncLock _lock = new AsyncLock();
 
         private string _name;
 
-        public SimpleLocalStorageEntityRepo(IApplicationDataHelper applicationDataHelper, ILocalStorageFileRepo localStorageFileRepo)
+        public SimpleLocalStorageEntityRepo(ILocalStorage applicationDataHelper, ILocalStorageFileRepo localStorageFileRepo)
         {
             _applicationDataHelper = applicationDataHelper;
             _localStorageFileRepo = localStorageFileRepo;

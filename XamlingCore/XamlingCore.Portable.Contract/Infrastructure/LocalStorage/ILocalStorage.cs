@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace XamlingCore.Portable.Contract.Infrastructure.LocalStorage
 {
-    public interface IApplicationDataHelper
+    public interface ILocalStorage
     {
         Task<bool> FileExists(string fileName);
         Task<bool> Copy(string source, string destinationFolder, string newName, bool replace = true);

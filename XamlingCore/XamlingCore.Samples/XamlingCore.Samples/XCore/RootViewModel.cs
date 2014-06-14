@@ -18,7 +18,7 @@ namespace XamlingCore.Samples.XCore
             IApplicationBarService applicationBarService, 
             IOrientationService orientationService, 
             ILocalisationService localisationService, 
-            IXNavigationService xNavigationService) : 
+            IXNavigation xNavigationService) : 
             base(c, systemTrayService, 
             applicationBarService, 
             orientationService, 

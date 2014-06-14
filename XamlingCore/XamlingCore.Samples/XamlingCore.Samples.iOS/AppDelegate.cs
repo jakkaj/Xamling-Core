@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MonoTouch.Foundation;
+﻿using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using Xamarin.Forms;
 using XamlingCore.iOS;
 using XamlingCore.Samples.iOS.Glue;
-using XamlingCore.Samples.ViewModels.Home;
+using XamlingCore.Samples.View;
 using XamlingCore.Samples.XCore;
 
 namespace XamlingCore.Samples.iOS

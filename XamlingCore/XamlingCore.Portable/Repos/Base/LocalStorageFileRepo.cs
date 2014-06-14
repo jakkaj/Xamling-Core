@@ -9,10 +9,10 @@ namespace XamlingCore.Portable.Repos.Base
 {
     public class LocalStorageFileRepo : ILocalStorageFileRepo
     {
-        private readonly IApplicationDataHelper _applicationDataHelper;
+        private readonly ILocalStorage _applicationDataHelper;
         private readonly IEntitySerialiser _entitySerialiser;
 
-        public LocalStorageFileRepo(IApplicationDataHelper applicationDataHelper, IEntitySerialiser entitySerialiser)
+        public LocalStorageFileRepo(ILocalStorage applicationDataHelper, IEntitySerialiser entitySerialiser)
         {
             _applicationDataHelper = applicationDataHelper;
             _entitySerialiser = entitySerialiser;

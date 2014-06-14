@@ -25,7 +25,7 @@ namespace XamlingCore.Portable.View.ViewModel
         private readonly IOrientationService _orientationService;
         private readonly ILocalisationService _localisationService;
 
-        private IXNavigationService _navigationService;
+        private IXNavigation _navigation;
 
         public ICommand NavigateBackCommand { get; set; }
 
@@ -54,13 +54,13 @@ namespace XamlingCore.Portable.View.ViewModel
             IApplicationBarService applicationBarService,
             IOrientationService orientationService,
             ILocalisationService localisationService, 
-            IXNavigationService xNavigationService)
+            IXNavigation xNavigationService)
         {
             _loadStatusService = systemTrayService;
             _applicationBarService = applicationBarService;
             _orientationService = orientationService;
             _localisationService = localisationService;
-            _navigationService = xNavigationService;
+            _navigation = xNavigationService;
 
             Container = c;
         }
@@ -92,8 +92,8 @@ namespace XamlingCore.Portable.View.ViewModel
             }
             allvmCopy.Clear();
             AllViewModels.Clear();
-            NavigationService.ResetHistory();
-            NavigationService.CurrentContentObject = null;
+            Navigation.ResetHistory();
+            Navigation.CurrentContentObject = null;
         }
 
         public static T CreateRootFrame<T>(ILifetimeScope c, Action<T> initialisedCallback = null)
@@ -131,8 +131,8 @@ namespace XamlingCore.Portable.View.ViewModel
 
             obj.ParentModel = this;
 
-            obj.SystemTrayService = _loadStatusService;
-            obj.ApplicationBarService = _applicationBarService;
+            obj.LoadStatusService = _loadStatusService;
+            
             obj.OrientationService = _orientationService;
             obj.LocalisationService = _localisationService;
 
@@ -165,7 +165,7 @@ namespace XamlingCore.Portable.View.ViewModel
         public virtual void OnDeactivated()
         {
             _activatedFired = false;
-            var cco = NavigationService.CurrentContentObject as XViewModel;
+            var cco = Navigation.CurrentContentObject as XViewModel;
 
             if (cco != null)
             {
@@ -186,7 +186,7 @@ namespace XamlingCore.Portable.View.ViewModel
 
             BackExitObject = null;
 
-            var cco = NavigationService.CurrentContentObject as XViewModel;
+            var cco = Navigation.CurrentContentObject as XViewModel;
 
             if (cco != null)
             {
@@ -216,7 +216,7 @@ namespace XamlingCore.Portable.View.ViewModel
 
         public bool BackEnabled
         {
-            get { return NavigationService.CanGoBack; }
+            get { return Navigation.CanGoBack; }
         }
 
         public bool IsLoading
@@ -256,42 +256,42 @@ namespace XamlingCore.Portable.View.ViewModel
         }
 
 
-        public IXNavigationService NavigationService
+        public IXNavigation Navigation
         {
-            get { return _navigationService; }
+            get { return _navigation; }
             set
             {
-                if (_navigationService != null)
+                if (_navigation != null)
                 {
-                    _navigationService.Navigated -= new System.EventHandler(navigationService_Navigated);
+                    _navigation.Navigated -= new System.EventHandler(navigationService_Navigated);
                 }
 
-                _navigationService = value;
-                OnPropertyChanged("NavigationService");
-                _navigationService.Navigated += new System.EventHandler(navigationService_Navigated);
+                _navigation = value;
+                OnPropertyChanged("Navigation");
+                _navigation.Navigated += new System.EventHandler(navigationService_Navigated);
             }
         }
 
         public object CurrentContentObject
         {
-            get { return NavigationService.CurrentContentObject; }
+            get { return Navigation.CurrentContentObject; }
         }
 
         public bool IsCurrentContentObjectType(Type type)
         {
-            if (NavigationService.CurrentContentObject == null)
+            if (Navigation.CurrentContentObject == null)
             {
                 return false;
             }
 
-            return NavigationService.CurrentContentObject.GetType() == type;
+            return Navigation.CurrentContentObject.GetType() == type;
         }
 
         #region NavigationShortcuts
 
         public virtual bool OnBackNavigate()
         {
-            if (BackExitObject != null && NavigationService.CurrentContentObject == BackExitObject)
+            if (BackExitObject != null && Navigation.CurrentContentObject == BackExitObject)
             {
                 Debug.WriteLine("WARNING: BackExitObject is quitting the application");
                 new ForceAppExitUsingNavigation().Send();
@@ -299,7 +299,7 @@ namespace XamlingCore.Portable.View.ViewModel
 
             }
 
-            if (NavigationService.CanGoBack || BackKeyIntercept != null)
+            if (Navigation.CanGoBack || BackKeyIntercept != null)
             {
                 NavigateBack();
                 return true;
@@ -312,12 +312,12 @@ namespace XamlingCore.Portable.View.ViewModel
         public void NavigateSkipBack<T>()
             where T : XViewModel
         {
-            if (NavigationService.CurrentContentObject != null && NavigationService.CurrentContentObject.GetType() == typeof(T))
+            if (Navigation.CurrentContentObject != null && Navigation.CurrentContentObject.GetType() == typeof(T))
             {
                 return;
             }
 
-            var nh = NavigationService.NavigationHistory;
+            var nh = Navigation.NavigationHistory;
 
             var item = nh.FirstOrDefault(_ => _.GetType() == typeof(T));
 
@@ -343,11 +343,11 @@ namespace XamlingCore.Portable.View.ViewModel
 
         public void NavigateHome()
         {
-            if (NavigationService.NavigationHistory.Count > 0)
+            if (Navigation.NavigationHistory.Count > 0)
             {
-                if (NavigationService.NavigationHistory[0] != NavigationService.CurrentContentObject)
+                if (Navigation.NavigationHistory[0] != Navigation.CurrentContentObject)
                 {
-                    NavigateTo(NavigationService.NavigationHistory[0]);
+                    NavigateTo(Navigation.NavigationHistory[0]);
                 }
             }
 
@@ -363,18 +363,18 @@ namespace XamlingCore.Portable.View.ViewModel
 
         public void NavigateTo(object content)
         {
-            NavigationService.NavigateTo(content, false);
+            Navigation.NavigateTo(content, false);
         }
 
 
         public void NavigateTo(object content, bool noHistory)
         {
-            NavigationService.NavigateTo(content, noHistory, false);
+            Navigation.NavigateTo(content, noHistory, false);
         }
 
         public void NavigateTo(object content, bool noHistory, bool forceBack)
         {
-            NavigationService.NavigateTo(content, noHistory, forceBack);
+            Navigation.NavigateTo(content, noHistory, forceBack);
         }
 
         public void NavigateBack()
@@ -385,18 +385,18 @@ namespace XamlingCore.Portable.View.ViewModel
             }
             else
             {
-                NavigationService.NavigateBack(false);
+                Navigation.NavigateBack(false);
             }
         }
 
         public void NavigateBack(bool allowNullNavigation)
         {
-            NavigationService.NavigateBack(allowNullNavigation);
+            Navigation.NavigateBack(allowNullNavigation);
         }
 
         public bool IsInNavigationCooldown()
         {
-            return NavigationService.IsInNavigationCooldown();
+            return Navigation.IsInNavigationCooldown();
         }
 
         #endregion

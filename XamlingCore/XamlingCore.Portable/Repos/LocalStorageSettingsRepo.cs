@@ -14,7 +14,7 @@ namespace XamlingCore.Portable.Repos
 {
     public class LocalStorageSettingsRepo : SimpleLocalStorageEntityRepo<GeneralSettingsEntity>, ISettingsRepo
     {
-        public LocalStorageSettingsRepo(IApplicationDataHelper applicationDataHelper, 
+        public LocalStorageSettingsRepo(ILocalStorage applicationDataHelper, 
             ILocalStorageFileRepo localStorageFileRepo) : base(applicationDataHelper, localStorageFileRepo)
         {
         }

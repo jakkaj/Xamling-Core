@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace XamlingCore.Portable.Contract.Navigation
 {
-    public interface IXNavigationService
+    public interface IXNavigation
     {
         event EventHandler Navigated;
         DateTime? LastNavigation { get; }

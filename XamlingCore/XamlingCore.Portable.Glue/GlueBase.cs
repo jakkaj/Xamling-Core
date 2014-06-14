@@ -12,6 +12,7 @@ namespace XamlingCore.Portable.Glue
     {
         protected ContainerBuilder Builder;
 
+        
         public virtual void Init()
         {
             Builder = new ContainerBuilder();

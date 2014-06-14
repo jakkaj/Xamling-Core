@@ -48,12 +48,12 @@
     <Compile Include="Downloaders\IDownloadResult.cs" />
     <Compile Include="Downloaders\ISimpleDownloader.cs" />
     <Compile Include="Glue\IGlue.cs" />
-    <Compile Include="Infrastructure\LocalStorage\IApplicationDataHelper.cs" />
+    <Compile Include="Infrastructure\LocalStorage\ILocalStorage.cs" />
     <Compile Include="Infrastructure\Resource\IApplicationResource.cs" />
     <Compile Include="Localisation\ILocalisationService.cs" />
     <Compile Include="Localisation\IXLocalisable.cs" />
     <Compile Include="Messenging\IMessenger.cs" />
-    <Compile Include="Navigation\IXNavigationService.cs" />
+    <Compile Include="Navigation\IXNavigation.cs" />
     <Compile Include="Network\IDeviceNetworkStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repos\Base\IBasicWebRepoBase.cs" />

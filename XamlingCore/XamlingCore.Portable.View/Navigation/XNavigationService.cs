@@ -6,7 +6,7 @@ using XamlingCore.Portable.View.ViewModel.Base;
 
 namespace XamlingCore.Portable.View.Navigation
 {
-    public class XNavigationService : NotifyBase, IXNavigationService
+    public class XNavigationService : NotifyBase, IXNavigation
     {
         private bool _isReverseNavigation;
 
