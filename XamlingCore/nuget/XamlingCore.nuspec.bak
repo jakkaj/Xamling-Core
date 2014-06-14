@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>XamlingCore</id>
+    <version>1.1.264</version>
+    <authors>Jordan</authors>
+    <owners>Jordan</owners>
+    <licenseUrl>http://opensource.org/licenses/MS-PL</licenseUrl>
+    <projectUrl>http://www.xamling.net</projectUrl>
+    <iconUrl>http://xamling.net/Media/Images/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Xamling Core for development the Xamling way</description>
+    <releaseNotes>At the moment the source is not available. Contact info@xamling.net. </releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>Xamling XamlingCore</tags>
+    <dependencies>
+       <dependency id="Autofac" version="3.4.0" />	   
+       <dependency id="AutoMapper" version="3.2.1" />
+       <dependency id="Microsoft.Net.Http" version="2.2.22" />
+       <dependency id="Newtonsoft.Json" version="6.0.3" />
+    </dependencies>
+  </metadata>
+</package>
