@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using XamlingCore.Portable.DTO.Contract;
+using XamlingCore.Portable.Model.Contract;
 
 namespace XamlingCore.Portable.Contract.Repos.Base
 {

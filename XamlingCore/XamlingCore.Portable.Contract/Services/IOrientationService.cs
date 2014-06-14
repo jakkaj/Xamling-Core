@@ -1,5 +1,5 @@
 ﻿using System;
-using XamlingCore.Portable.DTO.Orientation;
+using XamlingCore.Portable.Model.Orientation;
 
 namespace XamlingCore.Portable.Contract.Services
 {

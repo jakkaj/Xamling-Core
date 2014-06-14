@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace XamlingCore.Portable.DTO.Localisation
+namespace XamlingCore.Portable.Model.Localisation
 {
     public class XLocalisedResources
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XamlingCore.Portable.DTO.Contract
+namespace XamlingCore.Portable.Model.Contract
 {
     public interface IEntity
     {

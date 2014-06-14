@@ -1,4 +1,4 @@
-﻿namespace XamlingCore.Portable.DTO.Location
+﻿namespace XamlingCore.Portable.Model.Location
 {
     public class XLocation
     {

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XamlingCore.Portable.DTO.Contract;
+using XamlingCore.Portable.Model.Contract;
 
-namespace XamlingCore.Portable.DTO.Settings
+namespace XamlingCore.Portable.Model.Settings
 {
     public class GeneralSettingsEntity : IEntity
     {

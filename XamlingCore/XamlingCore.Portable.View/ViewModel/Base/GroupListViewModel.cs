@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using XamlingCore.Portable.DTO.Contract;
+using XamlingCore.Portable.Model.Contract;
 
 namespace XamlingCore.Portable.View.ViewModel.Base
 {

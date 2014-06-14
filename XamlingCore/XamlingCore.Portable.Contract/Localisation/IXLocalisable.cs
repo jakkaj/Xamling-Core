@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using XamlingCore.Portable.DTO.Localisation;
+using XamlingCore.Portable.Model.Localisation;
 
 namespace XamlingCore.Portable.Contract.Localisation
 {

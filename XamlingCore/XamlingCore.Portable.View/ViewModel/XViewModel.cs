@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using XamlingCore.Portable.Contract.Localisation;
 using XamlingCore.Portable.Contract.Services;
-using XamlingCore.Portable.DTO.Orientation;
 using XamlingCore.Portable.Messages.Device;
+using XamlingCore.Portable.Model.Orientation;
 using XamlingCore.Portable.View.ViewModel.Base;
 using XamlingCore.Portable.XamlingMessenger;
 

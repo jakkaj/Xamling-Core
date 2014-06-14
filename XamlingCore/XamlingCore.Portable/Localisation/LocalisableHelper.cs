@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Localisation;
-using XamlingCore.Portable.DTO.Localisation;
+using XamlingCore.Portable.Model.Localisation;
 
 namespace XamlingCore.Portable.Localisation
 {

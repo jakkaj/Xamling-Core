@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using XamlingCore.Portable.DTO.Location;
+using XamlingCore.Portable.Model.Location;
 
 namespace XamlingCore.Portable.Contract.Device.Location
 {

@@ -5,7 +5,7 @@ using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Contract.Repos;
 using XamlingCore.Portable.Contract.Repos.Base;
 using XamlingCore.Portable.Contract.Serialise;
-using XamlingCore.Portable.DTO.Contract;
+using XamlingCore.Portable.Model.Contract;
 using XamlingCore.Portable.Util;
 
 namespace XamlingCore.Portable.Repos.Base

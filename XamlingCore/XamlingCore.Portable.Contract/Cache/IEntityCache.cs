@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using XamlingCore.Portable.DTO.Cache;
 
 namespace XamlingCore.Portable.Contract.Cache
 {

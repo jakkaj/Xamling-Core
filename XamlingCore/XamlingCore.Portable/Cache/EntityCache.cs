@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Cache;
 using XamlingCore.Portable.Contract.Repos.Base;
 using XamlingCore.Portable.Contract.Serialise;
-using XamlingCore.Portable.DTO.Cache;
+using XamlingCore.Portable.Model.Cache;
 using XamlingCore.Portable.Util;
 
 namespace XamlingCore.Portable.Cache

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Repos.Base;
-using XamlingCore.Portable.DTO.Settings;
+using XamlingCore.Portable.Model.Settings;
 
 namespace XamlingCore.Portable.Contract.Repos
 {
