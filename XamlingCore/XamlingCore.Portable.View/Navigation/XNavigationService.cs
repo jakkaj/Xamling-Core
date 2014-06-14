@@ -1,27 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using XamlingCore.Portable.Contract.Navigation;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.Portable.View.ViewModel.Base;
 
 namespace XamlingCore.Portable.View.Navigation
 {
-    public class XNavigationService : NotifyBase
+    public class XNavigationService : NotifyBase, IXNavigationService
     {
-        private bool isReverseNavigation;
+        private bool _isReverseNavigation;
 
-        private List<object> navigationHistory;
+        private List<object> _navigationHistory;
 
-        private object currentContentObject;
-        private object previousObject;
+        private object _currentContentObject;
+        private object _previousObject;
 
-        private bool canGoBack;
+        private bool _canGoBack;
 
         public event EventHandler Navigated;
-
-        private object serialiseContentOject;
 
         public XFrameViewModelBase ParentFrame { get; set; }
 
@@ -35,18 +31,12 @@ namespace XamlingCore.Portable.View.Navigation
 
         public void InsertIntoHistory(object obj)
         {
-            navigationHistory.Add(obj);
-        }
-
-        public void Serialise(IEnumerable<Type> knownTypes)
-        {
-
-
+            _navigationHistory.Add(obj);
         }
 
         public void ResetHistory()
         {
-            navigationHistory.Clear();
+            _navigationHistory.Clear();
             CanGoBack = false;
         }
 
@@ -78,7 +68,7 @@ namespace XamlingCore.Portable.View.Navigation
             if (content != null)
             {
 
-                if (navigationHistory.Count > 0 && CurrentContentObject != null)
+                if (_navigationHistory.Count > 0 && CurrentContentObject != null)
                 {
                     PreviousContentObject = CurrentContentObject;
                 }
@@ -87,12 +77,12 @@ namespace XamlingCore.Portable.View.Navigation
                     PreviousContentObject = null;
                 }
 
-                if (navigationHistory.Contains(content))
+                if (_navigationHistory.Contains(content))
                 {
                     IsReverseNavigation = true;
-                    while (navigationHistory[navigationHistory.Count - 1] != content)
+                    while (_navigationHistory[_navigationHistory.Count - 1] != content)
                     {
-                        var item = navigationHistory[navigationHistory.Count - 1];
+                        var item = _navigationHistory[_navigationHistory.Count - 1];
                         var dispose = item as IDisposable;
 
                         if (dispose != null)
@@ -100,10 +90,10 @@ namespace XamlingCore.Portable.View.Navigation
                             dispose.Dispose();
                         }
 
-                        navigationHistory.Remove(item);
+                        _navigationHistory.Remove(item);
                     }
 
-                    navigationHistory.Remove(content);
+                    _navigationHistory.Remove(content);
                 }
                 else
                 {
@@ -111,7 +101,7 @@ namespace XamlingCore.Portable.View.Navigation
 
                     if (!noHistory && CurrentContentObject != null)
                     {
-                        navigationHistory.Add(CurrentContentObject);
+                        _navigationHistory.Add(CurrentContentObject);
                     }
 
                 }
@@ -174,13 +164,13 @@ namespace XamlingCore.Portable.View.Navigation
 
         public void NavigateBack(bool allowNullNavigation)
         {
-            if (navigationHistory.Count > 1)
+            if (_navigationHistory.Count > 1)
             {
-                NavigateTo(navigationHistory[navigationHistory.Count - 1], false, true);
+                NavigateTo(_navigationHistory[_navigationHistory.Count - 1], false, true);
             }
-            else if (navigationHistory.Count == 1)
+            else if (_navigationHistory.Count == 1)
             {
-                NavigateTo(navigationHistory[0], true, true);
+                NavigateTo(_navigationHistory[0], true, true);
             }
             else if (allowNullNavigation)
             {
@@ -190,10 +180,10 @@ namespace XamlingCore.Portable.View.Navigation
 
         public bool IsReverseNavigation
         {
-            get { return isReverseNavigation; }
+            get { return _isReverseNavigation; }
             set
             {
-                isReverseNavigation = value;
+                _isReverseNavigation = value;
                 OnPropertyChanged("IsReverseNavigation");
             }
         }
@@ -201,55 +191,41 @@ namespace XamlingCore.Portable.View.Navigation
 
         public List<object> NavigationHistory
         {
-            get { return navigationHistory; }
+            get { return _navigationHistory; }
             set
             {
-                navigationHistory = value;
+                _navigationHistory = value;
                 OnPropertyChanged("NavigationHistory");
             }
         }
 
         public object CurrentContentObject
         {
-            get { return currentContentObject; }
+            get { return _currentContentObject; }
             set
             {
-                currentContentObject = value;
-
-                if (CurrentContentObject != null)
-                {
-                    SerialiseContentObject = value;
-                }
+                _currentContentObject = value;
 
                 OnPropertyChanged("CurrentContentObject");
             }
         }
 
-
-        public object SerialiseContentObject
-        {
-            get { return serialiseContentOject; }
-            set { serialiseContentOject = value; }
-        }
-
-
         public object PreviousContentObject
         {
-            get { return previousObject; }
+            get { return _previousObject; }
             set
             {
-                previousObject = value;
+                _previousObject = value;
                 OnPropertyChanged("PreviousContentObject");
             }
         }
 
-
         public bool CanGoBack
         {
-            get { return canGoBack; }
+            get { return _canGoBack; }
             set
             {
-                canGoBack = value;
+                _canGoBack = value;
                 OnPropertyChanged("CanGoBack");
             }
         }

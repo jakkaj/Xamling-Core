@@ -53,6 +53,7 @@
     <Compile Include="Localisation\ILocalisationService.cs" />
     <Compile Include="Localisation\IXLocalisable.cs" />
     <Compile Include="Messenging\IMessenger.cs" />
+    <Compile Include="Navigation\IXNavigationService.cs" />
     <Compile Include="Network\IDeviceNetworkStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repos\Base\IBasicWebRepoBase.cs" />
