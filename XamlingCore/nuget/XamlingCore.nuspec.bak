@@ -2,19 +2,20 @@
 <package >
   <metadata>
     <id>XamlingCore</id>
-    <version>1.1.264</version>
+	<title>Xamling Core</title>
+    <version>2.0.1</version>
     <authors>Jordan</authors>
     <owners>Jordan</owners>
     <licenseUrl>http://opensource.org/licenses/MS-PL</licenseUrl>
-    <projectUrl>http://www.xamling.net</projectUrl>
+    <projectUrl>https://github.com/jakkaj/Xamling-Core</projectUrl>
     <iconUrl>http://xamling.net/Media/Images/logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Xamling Core for development the Xamling way</description>
-    <releaseNotes>At the moment the source is not available. Contact info@xamling.net. </releaseNotes>
+    <releaseNotes>Contact Jordan @jakkaj jakkaj@xamling.net. </releaseNotes>
     <copyright>Copyright 2014</copyright>
-    <tags>Xamling XamlingCore</tags>
+    <tags>Xamling XamlingCore MVVM Portable</tags>
     <dependencies>
-       <dependency id="Autofac" version="3.4.0" />	   
+       <dependency id="Autofac" version="3.4.1" />	   
        <dependency id="AutoMapper" version="3.2.1" />
        <dependency id="Microsoft.Net.Http" version="2.2.22" />
        <dependency id="Newtonsoft.Json" version="6.0.3" />

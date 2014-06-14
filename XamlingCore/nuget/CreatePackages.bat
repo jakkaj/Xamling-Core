@@ -1,1 +1,1 @@
-nuget pack XamlingCore.nuspec
+..\.nuget\NuGet.exe pack XamlingCore.nuspec
