@@ -21,7 +21,6 @@ namespace XamlingCore.Portable.View.ViewModel
     public abstract class XRootViewModelBase : ViewModelBase
     {
         private readonly ILoadStatusService _loadStatusService;
-        private readonly IApplicationBarService _applicationBarService;
         private readonly IOrientationService _orientationService;
         private readonly ILocalisationService _localisationService;
 
@@ -51,13 +50,11 @@ namespace XamlingCore.Portable.View.ViewModel
         protected XRootViewModelBase(
             ILifetimeScope c,
             ILoadStatusService systemTrayService,
-            IApplicationBarService applicationBarService,
             IOrientationService orientationService,
             ILocalisationService localisationService, 
             IXNavigation xNavigationService)
         {
             _loadStatusService = systemTrayService;
-            _applicationBarService = applicationBarService;
             _orientationService = orientationService;
             _localisationService = localisationService;
             _navigation = xNavigationService;
@@ -211,7 +208,7 @@ namespace XamlingCore.Portable.View.ViewModel
 
         public virtual void OnNavigating(object newObject, object oldObject)
         {
-            _applicationBarService.Reset();
+            
         }
 
         public bool BackEnabled

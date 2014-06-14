@@ -15,12 +15,10 @@ namespace XamlingCore.Samples.XCore
     {
         public RootViewModel(ILifetimeScope c, 
             ILoadStatusService systemTrayService, 
-            IApplicationBarService applicationBarService, 
             IOrientationService orientationService, 
             ILocalisationService localisationService, 
             IXNavigation xNavigationService) : 
             base(c, systemTrayService, 
-            applicationBarService, 
             orientationService, 
             localisationService, 
             xNavigationService)
