@@ -7,12 +7,12 @@ using Xamarin.Forms;
 
 namespace XamlingCore.Samples.View
 {
-    public partial class HomeView : ContentPage
+    public partial class NextPageView : ContentPage
     {
-        public HomeView()
+        public NextPageView()
         {
             InitializeComponent();
-            Title = "First Page";
+            Title = "Next page";
         }
     }
 }

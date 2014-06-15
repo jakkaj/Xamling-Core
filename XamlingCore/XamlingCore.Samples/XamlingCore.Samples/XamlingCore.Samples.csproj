@@ -44,6 +44,12 @@
     <Compile Include="View\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\NextPageView.model.cs">
+      <DependentUpon>NextPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NextPageView.xaml.cs">
+      <DependentUpon>NextPageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="XCore\RootViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +94,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\NextPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
