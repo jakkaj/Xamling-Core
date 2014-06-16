@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XamlingCore.Portable.Database.SQLite
+namespace XamlingCore.Portable.Data.Database.SQLite
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class TableAttribute : Attribute

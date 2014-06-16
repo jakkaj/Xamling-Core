@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net;
-using System.ServiceModel;
 using System.Threading.Tasks;
-using XamlingCore.Portable.Contract.Downloaders;
-using XamlingCore.Portable.Contract.Repos;
-using XamlingCore.Portable.Contract.Repos.Base;
-using XamlingCore.Portable.Contract.Serialise;
 
-namespace XamlingCore.Portable.Repos.Base
+namespace XamlingCore.Portable.Data.Repos.Base
 {
     public abstract class BasicWebRepoBase<TEntity> : IBasicWebRepoBase<TEntity> where TEntity : class, new()
     {
