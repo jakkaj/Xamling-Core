@@ -234,4 +234,19 @@ namespace XamlingCore.Portable.View.Navigation
         Forward,
         Back
     }
+
+    public class NavigationEventArgs : EventArgs
+    {
+        private readonly NavigationDirection _direction;
+
+        public NavigationEventArgs(NavigationDirection direction)
+        {
+            _direction = direction;
+        }
+
+        public NavigationDirection Direction
+        {
+            get { return _direction; }
+        }
+    }
 }
