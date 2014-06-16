@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
-using XamlingCore.Portable.Contract.Repos;
 using XamlingCore.Portable.Contract.Repos.Base;
-using XamlingCore.Portable.Contract.Serialise;
 using XamlingCore.Portable.Model.Contract;
 using XamlingCore.Portable.Util;
 
-namespace XamlingCore.Portable.Repos.Base
+namespace XamlingCore.Portable.Data.Repos.Base
 {
     public class SimpleLocalStorageEntityRepo<T> : ISimpleEntityRepo<T> where T : class, IEntity, new()
     {

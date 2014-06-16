@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using XamlingCore.Portable.Contract.Cache;
-using XamlingCore.Portable.Contract.Repos.Base;
-using XamlingCore.Portable.Contract.Serialise;
-using XamlingCore.Portable.Model.Cache;
-using XamlingCore.Portable.Util;
 
-namespace XamlingCore.Portable.Cache
+namespace XamlingCore.Portable.Data.Cache
 {
     public class EntityCache : IEntityCache
     {

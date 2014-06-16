@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using System.Threading.Tasks;
-using XamlingCore.Portable.Contract.Serialise;
 
-namespace XamlingCore.Portable.Serialise
+namespace XamlingCore.Portable.Data.Serialise
 {
     public class JsonEntitySerialiser : IEntitySerialiser
     {
