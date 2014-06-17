@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using XamlingCore.Portable.Contract.Navigation;
+using XamlingCore.Portable.Model.Navigation;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.Portable.View.ViewModel.Base;
 
@@ -17,7 +18,7 @@ namespace XamlingCore.Portable.View.Navigation
 
         private bool _canGoBack;
 
-        public event EventHandler Navigated;
+        public event EventHandler<XNavigationEventArgs> Navigated;
 
         public DateTime? LastNavigation { get; private set; }
 
@@ -61,7 +62,7 @@ namespace XamlingCore.Portable.View.Navigation
 
             LastNavigation = DateTime.Now;
 
-            
+
             if (content != null)
             {
 
@@ -150,7 +151,7 @@ namespace XamlingCore.Portable.View.Navigation
 
             if (Navigated != null)
             {
-                Navigated(this, EventArgs.Empty);
+                Navigated(this, new XNavigationEventArgs(IsReverseNavigation ? NavigationDirection.Back : NavigationDirection.Forward));
             }
         }
 
@@ -225,28 +226,6 @@ namespace XamlingCore.Portable.View.Navigation
                 _canGoBack = value;
                 OnPropertyChanged("CanGoBack");
             }
-        }
-    }
-
-
-    public enum NavigationDirection
-    {
-        Forward,
-        Back
-    }
-
-    public class NavigationEventArgs : EventArgs
-    {
-        private readonly NavigationDirection _direction;
-
-        public NavigationEventArgs(NavigationDirection direction)
-        {
-            _direction = direction;
-        }
-
-        public NavigationDirection Direction
-        {
-            get { return _direction; }
         }
     }
 }

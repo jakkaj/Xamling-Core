@@ -9,6 +9,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
 using XamlingCore.Portable.Contract.Navigation;
+using XamlingCore.Portable.Model.Navigation;
 using XamlingCore.Portable.View.ViewModel;
 
 namespace XamlingCore.iOS.Navigation
@@ -37,24 +38,22 @@ namespace XamlingCore.iOS.Navigation
             _xNavigation.Navigated += _xNavigation_Navigated;
 
             _window = new UIWindow(UIScreen.MainScreen.Bounds);
-            
+
             _rootNavigationPage = new NavigationPage();
             _xamarinNavigation = _rootNavigationPage.Navigation;
 
             _window.RootViewController = _rootNavigationPage.CreateViewController();
-            _window.MakeKeyAndVisible();   
- 
-            _setView();
+            
+            _window.MakeKeyAndVisible();
+
+            _setView(NavigationDirection.Forward);
         }
 
-        private async void _setView()
+        async void _navigationForward()
         {
-            while (!_rootVm.IsReady)
-            {
-                await Task.Yield();
-            }
 
             var vm = _xNavigation.CurrentContentObject;
+
             var t = vm.GetType();
 
             var typeName = t.FullName.Replace("ViewModel", "View");
@@ -77,12 +76,35 @@ namespace XamlingCore.iOS.Navigation
 
             //locate the view...
 
+        }
+
+        async void _navigationBackward()
+        {
+            await _xamarinNavigation.PopAsync();
+        }
+
+        private async void _setView(NavigationDirection direction)
+        {
+            while (!_rootVm.IsReady)
+            {
+                await Task.Yield();
+            }
+
+            if (direction == NavigationDirection.Forward)
+            {
+                _navigationForward();
+            }
+            else
+            {
+                _navigationBackward();
+            }
+
 
         }
 
-        void _xNavigation_Navigated(object sender, EventArgs e)
+        void _xNavigation_Navigated(object sender, XNavigationEventArgs e)
         {
-            _setView();
+            _setView(e.Direction);
         }
     }
 }
