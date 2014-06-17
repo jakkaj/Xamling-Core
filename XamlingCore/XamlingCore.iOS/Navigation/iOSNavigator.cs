@@ -40,6 +40,11 @@ namespace XamlingCore.iOS.Navigation
             _window = new UIWindow(UIScreen.MainScreen.Bounds);
 
             _rootNavigationPage = new NavigationPage();
+            
+            _rootNavigationPage.Popped += _rootNavigationPage_Popped;
+            _rootNavigationPage.PoppedToRoot += _rootNavigationPage_PoppedToRoot;
+            _rootNavigationPage.Pushed += _rootNavigationPage_Pushed;
+            
             _xamarinNavigation = _rootNavigationPage.Navigation;
 
             _window.RootViewController = _rootNavigationPage.CreateViewController();
@@ -47,6 +52,21 @@ namespace XamlingCore.iOS.Navigation
             _window.MakeKeyAndVisible();
 
             _setView(NavigationDirection.Forward);
+        }
+
+        void _rootNavigationPage_Pushed(object sender, NavigationEventArgs e)
+        {
+            
+        }
+
+        void _rootNavigationPage_PoppedToRoot(object sender, NavigationEventArgs e)
+        {
+            
+        }
+
+        void _rootNavigationPage_Popped(object sender, NavigationEventArgs e)
+        {
+            
         }
 
         async void _navigationForward()
