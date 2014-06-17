@@ -1,4 +1,7 @@
-﻿namespace XamlingCore.Portable.Data.Serialise
+﻿using Newtonsoft.Json;
+using XamlingCore.Portable.Contract.Serialise;
+
+namespace XamlingCore.Portable.Data.Serialise
 {
     public class JsonNETEntitySerialiser : IEntitySerialiser
     {

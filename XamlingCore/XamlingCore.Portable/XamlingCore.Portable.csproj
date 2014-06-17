@@ -36,15 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Extensions\UriExtensions.cs" />
-    <Compile Include="GeoSpatial\HeadingHelper.cs" />
-    <Compile Include="Glue\XAutofacModule.cs" />
-    <Compile Include="Localisation\LocalisableHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\AsyncLock.cs" />
-    <Compile Include="Util\DateUtil.cs" />
-    <Compile Include="XamlingMessenger\XMessage.cs" />
-    <Compile Include="XamlingMessenger\XMessenger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

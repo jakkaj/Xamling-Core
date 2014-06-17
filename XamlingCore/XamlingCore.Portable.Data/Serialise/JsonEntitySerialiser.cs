@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using XamlingCore.Portable.Contract.Serialise;
 
 namespace XamlingCore.Portable.Data.Serialise
 {

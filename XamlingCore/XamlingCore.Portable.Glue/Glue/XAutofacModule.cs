@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using Autofac;
 using Module = Autofac.Module;
 
-namespace XamlingCore.Portable.Glue
+namespace XamlingCore.Portable.Glue.Glue
 {
     /// <summary>
     /// Quickly load types from an assembly that end with the filter

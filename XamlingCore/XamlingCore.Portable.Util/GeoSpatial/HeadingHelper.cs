@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XamlingCore.Portable.GeoSpatial
+namespace XamlingCore.Portable.Util.GeoSpatial
 {
     public static class HeadingHelper
     {

@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
+using XamlingCore.Portable.Contract.Repos.Base;
+using XamlingCore.Portable.Contract.Serialise;
 
 namespace XamlingCore.Portable.Data.Repos.Base
 {

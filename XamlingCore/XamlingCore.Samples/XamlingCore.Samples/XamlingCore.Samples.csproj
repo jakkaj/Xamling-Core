@@ -87,10 +87,6 @@
       <Project>{b3d7c301-2df7-4c16-9f49-7dda8689556e}</Project>
       <Name>XamlingCore.Portable.View</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\XamlingCore.Portable\XamlingCore.Portable.csproj">
-      <Project>{cb7e7377-7f48-40e0-aafe-a936743da902}</Project>
-      <Name>XamlingCore.Portable</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\HomeView.xaml">

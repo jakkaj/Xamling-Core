@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace XamlingCore.Portable.Util
+namespace XamlingCore.Portable.Util.Lock
 {
     //Thanks to Scott Hanselman and Stephen Toubs
     //http://www.hanselman.com/blog/ComparingTwoTechniquesInNETAsynchronousCoordinationPrimitives.aspx

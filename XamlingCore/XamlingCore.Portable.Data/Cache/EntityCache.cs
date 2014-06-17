@@ -2,6 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using XamlingCore.Portable.Contract.Cache;
+using XamlingCore.Portable.Contract.Repos.Base;
+using XamlingCore.Portable.Model.Cache;
+using XamlingCore.Portable.Util;
+using XamlingCore.Portable.Util.Lock;
 
 namespace XamlingCore.Portable.Data.Cache
 {

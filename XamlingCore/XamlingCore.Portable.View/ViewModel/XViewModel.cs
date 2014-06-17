@@ -8,9 +8,9 @@ using System.Windows.Input;
 using XamlingCore.Portable.Contract.Localisation;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Messages.Device;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Model.Orientation;
 using XamlingCore.Portable.View.ViewModel.Base;
-using XamlingCore.Portable.XamlingMessenger;
 
 namespace XamlingCore.Portable.View.ViewModel
 {

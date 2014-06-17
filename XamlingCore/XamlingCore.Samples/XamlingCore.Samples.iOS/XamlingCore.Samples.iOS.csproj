@@ -104,10 +104,6 @@
       <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
       <Name>XamlingCore.Portable.View</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\XamlingCore.Portable\XamlingCore.Portable.csproj">
-      <Project>{CB7E7377-7F48-40E0-AAFE-A936743DA902}</Project>
-      <Name>XamlingCore.Portable</Name>
-    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Samples\XamlingCore.Samples.csproj">
       <Name>XamlingCore.Samples</Name>
     </ProjectReference>

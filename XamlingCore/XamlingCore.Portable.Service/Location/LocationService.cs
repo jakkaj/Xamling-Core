@@ -4,9 +4,11 @@ using AutoMapper;
 using XamlingCore.Portable.Contract.Device.Location;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Messages.Location;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Model.Location;
 using XamlingCore.Portable.Util;
-using XamlingCore.Portable.XamlingMessenger;
+using XamlingCore.Portable.Util.Lock;
+using XamlingCore.Portable.Util.Util;
 
 namespace XamlingCore.Portable.Service.Location
 {

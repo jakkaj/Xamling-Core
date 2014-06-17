@@ -6,9 +6,11 @@ using XamlingCore.Portable.Contract.Repos;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Messages.Location;
 using XamlingCore.Portable.Messages.Settings;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Model.Settings;
 using XamlingCore.Portable.Util;
-using XamlingCore.Portable.XamlingMessenger;
+using XamlingCore.Portable.Util.Lock;
+using XamlingCore.Portable.Util.Util;
 
 namespace XamlingCore.Portable.Service.Settings
 {

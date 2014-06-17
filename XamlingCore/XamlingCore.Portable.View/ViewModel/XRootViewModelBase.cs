@@ -13,9 +13,9 @@ using XamlingCore.Portable.Contract.UI;
 using XamlingCore.Portable.Contract.ViewModels;
 using XamlingCore.Portable.Messages.Navigation;
 using XamlingCore.Portable.Messages.System;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.Navigation;
 using XamlingCore.Portable.View.ViewModel.Base;
-using XamlingCore.Portable.XamlingMessenger;
 
 namespace XamlingCore.Portable.View.ViewModel
 {

@@ -1,8 +1,8 @@
 ﻿using System;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Messages.Device;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Model.Orientation;
-using XamlingCore.Portable.XamlingMessenger;
 
 namespace XamlingCore.Portable.Service.Orientation
 {

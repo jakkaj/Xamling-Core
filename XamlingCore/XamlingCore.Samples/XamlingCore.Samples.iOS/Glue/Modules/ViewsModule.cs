@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using XamlingCore.Portable.Glue;
+using XamlingCore.Portable.Glue.Glue;
 
 namespace XamlingCore.Samples.iOS.Glue.Modules
 {

@@ -7,6 +7,7 @@ using System.Text;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using XamlingCore.Portable.Glue;
+using XamlingCore.Portable.Glue.Glue;
 
 namespace XamlingCore.Samples.iOS.Glue.Modules
 {

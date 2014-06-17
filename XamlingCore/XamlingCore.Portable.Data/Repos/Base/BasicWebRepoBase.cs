@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using XamlingCore.Portable.Contract.Downloaders;
+using XamlingCore.Portable.Contract.Repos.Base;
+using XamlingCore.Portable.Contract.Serialise;
 
 namespace XamlingCore.Portable.Data.Repos.Base
 {

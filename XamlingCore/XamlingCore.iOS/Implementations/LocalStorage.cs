@@ -1,14 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
-using System.Text;
-
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
-using XamlingCore.Portable.Util;
+using XamlingCore.Portable.Util.Lock;
+using XamlingCore.Portable.Util.Util;
 
 namespace XamlingCore.iOS.Implementations
 {

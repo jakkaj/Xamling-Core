@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Localisation;
 using XamlingCore.Portable.Model.Localisation;
 
-namespace XamlingCore.Portable.Localisation
+namespace XamlingCore.Portable.Util.Localisation
 {
     public static class LocalisableHelper
     {

@@ -1,4 +1,4 @@
-﻿using XamlingCore.Portable.XamlingMessenger;
+﻿using XamlingCore.Portable.Messages.XamlingMessenger;
 
 namespace XamlingCore.Portable.Messages.Network
 {

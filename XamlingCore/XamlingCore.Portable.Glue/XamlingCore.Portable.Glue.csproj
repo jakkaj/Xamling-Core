@@ -41,6 +41,10 @@
       <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
       <Name>XamlingCore.Portable.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Data\XamlingCore.Portable.Data.csproj">
+      <Project>{CEE58A71-49B1-4C9F-B22A-ECD33B6E3A6B}</Project>
+      <Name>XamlingCore.Portable.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
       <Project>{568d9a09-151c-49b3-bee5-71529fc6869d}</Project>
       <Name>XamlingCore.Portable.Messages</Name>
@@ -61,14 +65,11 @@
       <Project>{b3d7c301-2df7-4c16-9f49-7dda8689556e}</Project>
       <Name>XamlingCore.Portable.View</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable\XamlingCore.Portable.csproj">
-      <Project>{CB7E7377-7F48-40E0-AAFE-A936743DA902}</Project>
-      <Name>XamlingCore.Portable</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultXCoreModule.cs" />
     <Compile Include="GlueBase.cs" />
+    <Compile Include="Glue\XAutofacModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

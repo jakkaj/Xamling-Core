@@ -1,5 +1,5 @@
-﻿using XamlingCore.Portable.Model.Orientation;
-using XamlingCore.Portable.XamlingMessenger;
+﻿using XamlingCore.Portable.Messages.XamlingMessenger;
+using XamlingCore.Portable.Model.Orientation;
 
 namespace XamlingCore.Portable.Messages.Device
 {

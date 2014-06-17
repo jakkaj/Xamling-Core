@@ -55,13 +55,13 @@
       <Project>{E908CD00-22C8-4F7B-BA99-8DDF32C5F656}</Project>
       <Name>XamlingCore.Portable.Glue</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Util\XamlingCore.Portable.Util.csproj">
+      <Project>{BF649817-277F-44C1-AF23-C90D6DAF5901}</Project>
+      <Name>XamlingCore.Portable.Util</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
       <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
       <Name>XamlingCore.Portable.View</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable\XamlingCore.Portable.csproj">
-      <Project>{CB7E7377-7F48-40E0-AAFE-A936743DA902}</Project>
-      <Name>XamlingCore.Portable</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

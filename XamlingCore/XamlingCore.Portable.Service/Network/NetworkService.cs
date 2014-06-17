@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Network;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Messages.Network;
-using XamlingCore.Portable.XamlingMessenger;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 
 namespace XamlingCore.Portable.Service.Network
 {

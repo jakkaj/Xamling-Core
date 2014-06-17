@@ -39,10 +39,6 @@
       <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
       <Name>XamlingCore.Portable.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable\XamlingCore.Portable.csproj">
-      <Project>{CB7E7377-7F48-40E0-AAFE-A936743DA902}</Project>
-      <Name>XamlingCore.Portable</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Device\PageOrientationChangedMessage.cs" />
@@ -57,6 +53,8 @@
     <Compile Include="Settings\SettingsUpdatedMessage.cs" />
     <Compile Include="System\ApplicationDeactivatedMessage.cs" />
     <Compile Include="System\ApplicationReactivatedMessage.cs" />
+    <Compile Include="XamlingMessenger\XMessage.cs" />
+    <Compile Include="XamlingMessenger\XMessenger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>

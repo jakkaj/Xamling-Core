@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XamlingCore.Portable.Util
+namespace XamlingCore.Portable.Util.Util
 {
     public static class DateUtil
     {

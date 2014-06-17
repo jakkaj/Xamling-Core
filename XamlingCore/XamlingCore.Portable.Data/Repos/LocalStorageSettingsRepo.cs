@@ -1,4 +1,8 @@
-﻿using XamlingCore.Portable.Data.Repos.Base;
+﻿using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
+using XamlingCore.Portable.Contract.Repos;
+using XamlingCore.Portable.Contract.Repos.Base;
+using XamlingCore.Portable.Data.Repos.Base;
+using XamlingCore.Portable.Model.Settings;
 
 namespace XamlingCore.Portable.Data.Repos
 {
