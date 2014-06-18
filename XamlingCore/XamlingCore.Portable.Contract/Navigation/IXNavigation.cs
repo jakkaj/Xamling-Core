@@ -8,7 +8,6 @@ namespace XamlingCore.Portable.Contract.Navigation
     public interface IXNavigation
     {
         event EventHandler<XNavigationEventArgs> Navigated;
-        DateTime? LastNavigation { get; }
         bool IsReverseNavigation { get; set; }
         List<object> NavigationHistory { get; set; }
         object CurrentContentObject { get; set; }
@@ -18,7 +17,6 @@ namespace XamlingCore.Portable.Contract.Navigation
         void ResetHistory();
         void NavigateTo(object content);
         void NavigateTo(object content, bool noHistory);
-        bool IsInNavigationCooldown();
         void NavigateTo(object content, bool noHistory, bool forceBack);
         void NavigateBack();
         void NavigateBack(bool allowNullNavigation);

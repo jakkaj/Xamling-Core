@@ -20,8 +20,6 @@ namespace XamlingCore.Portable.View.Navigation
 
         public event EventHandler<XNavigationEventArgs> Navigated;
 
-        public DateTime? LastNavigation { get; private set; }
-
         public XNavigationService()
         {
             NavigationHistory = new List<object>();
@@ -48,21 +46,8 @@ namespace XamlingCore.Portable.View.Navigation
             NavigateTo(content, noHistory, false);
         }
 
-        public bool IsInNavigationCooldown()
-        {
-            return (LastNavigation.HasValue && DateTime.Now.Subtract(LastNavigation.Value) < TimeSpan.FromSeconds(2));
-        }
-
         public void NavigateTo(object content, bool noHistory, bool forceBack)
         {
-            if (IsInNavigationCooldown())
-            {
-                return;
-            }
-
-            LastNavigation = DateTime.Now;
-
-
             if (content != null)
             {
 

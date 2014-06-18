@@ -284,11 +284,7 @@ namespace XamlingCore.Portable.View.ViewModel
         {
             ParentModel.NavigateBack(allowNullNavigation);
         }
-
-        public bool IsInNavigationCooldown()
-        {
-            return ParentModel.IsInNavigationCooldown();
-        }
+        
         #endregion
     }
 }

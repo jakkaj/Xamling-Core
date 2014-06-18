@@ -56,23 +56,62 @@ namespace XamlingCore.iOS.Navigation
 
         void _rootNavigationPage_Pushed(object sender, NavigationEventArgs e)
         {
-            
+            _synchroniseNavigation(NavigationDirection.Forward);
         }
 
         void _rootNavigationPage_PoppedToRoot(object sender, NavigationEventArgs e)
         {
-            
+            _popRoot();
         }
 
         void _rootNavigationPage_Popped(object sender, NavigationEventArgs e)
         {
-            
+            _synchroniseNavigation(NavigationDirection.Back);
+        }
+
+        void _popRoot()
+        {
+            _rootVm.NavigateHome();
+        }
+
+        /// <summary>
+        /// Check that the current page is synchronised with the XCore navigation framework
+        /// They can get our of wack as navigation can be kicked off by things outside the framework
+        /// ... like the default back button in the NavigationPage
+        /// </summary>
+        /// <param name="direction"></param>
+        void _synchroniseNavigation(NavigationDirection direction)
+        {            
+            var page = _rootNavigationPage.CurrentPage;
+
+            if (page != null && page.BindingContext != null)
+            {
+                if (page.BindingContext != _xNavigation.CurrentContentObject)
+                {
+                    if (direction == NavigationDirection.Back)
+                    {
+                        _rootVm.NavigateBack();
+                    }
+                    else
+                    {
+                        _rootVm.NavigateTo(page.BindingContext);
+                    }
+                }    
+            }
         }
 
         async void _navigationForward()
         {
 
             var vm = _xNavigation.CurrentContentObject;
+
+            var currentPage = _rootNavigationPage.CurrentPage;
+
+            if (currentPage != null && currentPage.BindingContext != null && currentPage.BindingContext == vm)
+            {
+                //This page is already correct (probably an out of XCore back)
+                return;
+            }
 
             var t = vm.GetType();
 
@@ -100,6 +139,14 @@ namespace XamlingCore.iOS.Navigation
 
         async void _navigationBackward()
         {
+            var currentPage = _rootNavigationPage.CurrentPage;
+
+            if (currentPage != null && currentPage.BindingContext != null && currentPage.BindingContext == _rootVm.CurrentContentObject)
+            {
+                //This page is already correct (probably an out of XCore back)
+                return;
+            }
+
             await _xamarinNavigation.PopAsync();
         }
 
