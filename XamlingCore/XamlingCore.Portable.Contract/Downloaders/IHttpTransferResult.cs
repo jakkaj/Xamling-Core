@@ -3,7 +3,7 @@ using System.Net;
 
 namespace XamlingCore.Portable.Contract.Downloaders
 {
-    public interface IDownloadResult
+    public interface IHttpTransferResult
     {
         string Result { get; set; }
         HttpStatusCode HttpStatusCode { get; set; }

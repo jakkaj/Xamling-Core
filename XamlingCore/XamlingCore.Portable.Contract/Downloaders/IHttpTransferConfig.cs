@@ -5,7 +5,7 @@ namespace XamlingCore.Portable.Contract.Downloaders
     /// <summary>
     /// Represents a configuration used for making a download request
     /// </summary>
-    public interface IDownloadConfig
+    public interface IHttpTransferConfig
     {
         string Url { get; }
         string Verb { get; }

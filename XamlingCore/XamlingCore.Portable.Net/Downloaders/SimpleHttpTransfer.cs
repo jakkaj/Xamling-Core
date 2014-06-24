@@ -7,11 +7,11 @@ using XamlingCore.Portable.Contract.Services;
 
 namespace XamlingCore.Portable.Net.Downloaders
 {
-    public class SimpleDownloader : ISimpleDownloader
+    public class SimpleHttpHttpTransfer : ISimpleHttpTranferrer
     {
         private readonly INetworkService _networkInformation;
 
-        public SimpleDownloader(INetworkService networkInformation)
+        public SimpleHttpHttpTransfer(INetworkService networkInformation)
         {
             _networkInformation = networkInformation;
         }

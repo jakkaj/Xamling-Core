@@ -47,7 +47,7 @@ namespace XamlingCore.Portable.Glue
 
             
             
-            builder.RegisterType<SimpleDownloader>().As<ISimpleDownloader>().SingleInstance();
+            builder.RegisterType<SimpleHttpHttpTransfer>().As<ISimpleHttpTranferrer>().SingleInstance();
 
             builder.RegisterType<EntityCache>().As<IEntityCache>().SingleInstance();
 

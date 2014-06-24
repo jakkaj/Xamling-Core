@@ -7,7 +7,7 @@ using XamlingCore.Portable.Contract.Downloaders;
 
 namespace XamlingCore.Portable.Net.DownloadConfig
 {
-    public class StandardDownloadConfig : IDownloadConfig
+    public class StandardHttpConfig : IHttpTransferConfig
     {
         public string Url { get; set; }
 

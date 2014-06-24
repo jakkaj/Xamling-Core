@@ -10,18 +10,18 @@ namespace XamlingCore.Portable.Data.Repos.Base
 {
     public abstract class BasicWebRepoBase<TEntity> : IBasicWebRepoBase<TEntity> where TEntity : class, new()
     {
-        private readonly IDownloader _downloader;
+        private readonly IHttpTransferrer _downloader;
         private readonly IEntitySerialiser _entitySerialiser;
         private readonly string _service;
 
-        protected BasicWebRepoBase(IDownloader downloader, IEntitySerialiser entitySerialiser, string service)
+        protected BasicWebRepoBase(IHttpTransferrer downloader, IEntitySerialiser entitySerialiser, string service)
         {
             _downloader = downloader;
             _entitySerialiser = entitySerialiser;
             _service = service;
         }
 
-        public virtual bool OnResultRetrieved(IDownloadResult result)
+        public virtual bool OnResultRetrieved(IHttpTransferResult result)
         {
             return true;
         }
@@ -36,7 +36,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
             return true;
         }
 
-        public async Task<IDownloadResult> UploadRaw(byte[] data, string extra, string method)
+        public async Task<IHttpTransferResult> UploadRaw(byte[] data, string extra, string method)
         {
             var result = await _downloader.Upload(_service + extra, method, data);
             
@@ -85,13 +85,13 @@ namespace XamlingCore.Portable.Data.Repos.Base
             return await _sendList(serialisedData, extra, "POST");
         }
 
-        public async Task<IDownloadResult> PostResult<TRequest>(TRequest entity, string extra = null)
+        public async Task<IHttpTransferResult> PostResult<TRequest>(TRequest entity, string extra = null)
         {
             var serialisedData = Serialise(entity);
             return await SendRaw(serialisedData, extra);
         }
 
-        public async Task<IDownloadResult> PostResult(string serialisedData, string extra = null)
+        public async Task<IHttpTransferResult> PostResult(string serialisedData, string extra = null)
         {
             return await SendRaw(serialisedData, extra, "POST");
         }
@@ -120,7 +120,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
             return await _sendList(null, extra, "GET");
         }
 
-        public async Task<IDownloadResult> GetResult(string extra = null)
+        public async Task<IHttpTransferResult> GetResult(string extra = null)
         {
             return await SendRaw(null, extra, "GET");
         }
@@ -140,13 +140,13 @@ namespace XamlingCore.Portable.Data.Repos.Base
             return await _send(serialisedData, extra, "PUT");
         }
 
-        public async Task<IDownloadResult> PutResult<TRequest>(TRequest entity, string extra = null)
+        public async Task<IHttpTransferResult> PutResult<TRequest>(TRequest entity, string extra = null)
         {
             var serialisedData = Serialise(entity);
             return await SendRaw(serialisedData, extra, "PUT");
         }
 
-        public async Task<IDownloadResult> PutResult(string serialisedData, string extra = null)
+        public async Task<IHttpTransferResult> PutResult(string serialisedData, string extra = null)
         {
             return await SendRaw(serialisedData, extra, "PUT");
         }
@@ -226,7 +226,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
             return null;
         }
 
-        protected async Task<IDownloadResult> SendRaw(string serialisedData = null, string extra = null, string method = "POST")
+        protected async Task<IHttpTransferResult> SendRaw(string serialisedData = null, string extra = null, string method = "POST")
         {
             var result = await _downloader.Download(_service + extra, method, serialisedData);
 

@@ -42,11 +42,11 @@
     <Compile Include="Device\Info\IDeviceInfoService.cs" />
     <Compile Include="Device\Location\ILocationTrackingSensor.cs" />
     <Compile Include="Device\Toast\IToastService.cs" />
-    <Compile Include="Downloaders\IDownloadConfig.cs" />
-    <Compile Include="Downloaders\IDownloadConfigService.cs" />
-    <Compile Include="Downloaders\IDownloader.cs" />
-    <Compile Include="Downloaders\IDownloadResult.cs" />
-    <Compile Include="Downloaders\ISimpleDownloader.cs" />
+    <Compile Include="Downloaders\IHttpTransferConfig.cs" />
+    <Compile Include="Downloaders\IHttpTrasferConfigService.cs" />
+    <Compile Include="Downloaders\IHttpTransferrer.cs" />
+    <Compile Include="Downloaders\IHttpTransferResult.cs" />
+    <Compile Include="Downloaders\ISimpleHttpTranferrer.cs" />
     <Compile Include="Glue\IGlue.cs" />
     <Compile Include="Infrastructure\LocalStorage\ILocalStorage.cs" />
     <Compile Include="Infrastructure\Resource\IApplicationResource.cs" />

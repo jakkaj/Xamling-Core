@@ -17,12 +17,12 @@ namespace XamlingCore.Portable.Contract.Repos.Base
 
         Task<List<TEntity>> GetList(string extra = null);
         Task<List<TEntity>> PostList(string serialisedData, string extra = null);
-        Task<IDownloadResult> PutResult<TRequest>(TRequest entity, string extra = null);
-        Task<IDownloadResult> PutResult(string serialisedData, string extra = null);
-        Task<IDownloadResult> PostResult<TRequest>(TRequest entity, string extra = null);
-        Task<IDownloadResult> PostResult(string serialisedData, string extra = null);
-        Task<IDownloadResult> GetResult(string extra = null);
-        Task<IDownloadResult> UploadRaw(byte[] data, string extra, string method);
+        Task<IHttpTransferResult> PutResult<TRequest>(TRequest entity, string extra = null);
+        Task<IHttpTransferResult> PutResult(string serialisedData, string extra = null);
+        Task<IHttpTransferResult> PostResult<TRequest>(TRequest entity, string extra = null);
+        Task<IHttpTransferResult> PostResult(string serialisedData, string extra = null);
+        Task<IHttpTransferResult> GetResult(string extra = null);
+        Task<IHttpTransferResult> UploadRaw(byte[] data, string extra, string method);
         Task<TEntity> Upload(byte[] data, string extra, string method);
     }
 }

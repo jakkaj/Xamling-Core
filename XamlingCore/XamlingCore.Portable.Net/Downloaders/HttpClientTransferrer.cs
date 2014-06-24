@@ -9,18 +9,18 @@ using XamlingCore.Portable.Contract.Downloaders;
 
 namespace XamlingCore.Portable.Net.Downloaders
 {
-    public class HttpClientDownloader : IDownloader
+    public class HttpClientTransferrer : IHttpTransferrer
     {
-        private readonly IDownloadConfigService _downloadService;
+        private readonly IHttpTransferConfigService _httpTransferService;
 
-        public HttpClientDownloader(IDownloadConfigService downloadService)
+        public HttpClientTransferrer(IHttpTransferConfigService httpTransferService)
         {
-            _downloadService = downloadService;
+            _httpTransferService = httpTransferService;
         }
 
-        public async Task<IDownloadResult> Upload(string url, string verb = "GET", byte[] data = null)
+        public async Task<IHttpTransferResult> Upload(string url, string verb = "GET", byte[] data = null)
         {
-            var downloadConfig = await _downloadService.GetConfig(url, verb);
+            var downloadConfig = await _httpTransferService.GetConfig(url, verb);
 
             if (downloadConfig == null)
             {
@@ -29,7 +29,7 @@ namespace XamlingCore.Portable.Net.Downloaders
 
             if (!downloadConfig.IsValid)
             {
-                return new DownloadResult
+                return new HttpTransferResult
                 {
                     IsSuccessCode = false
                 };
@@ -45,9 +45,9 @@ namespace XamlingCore.Portable.Net.Downloaders
             return await _doDownload(obj, downloadConfig);
         }
 
-        public async Task<IDownloadResult> Download(string url, string verb = "GET", string data = null)
+        public async Task<IHttpTransferResult> Download(string url, string verb = "GET", string data = null)
         {
-            var downloadConfig = await _downloadService.GetConfig(url, verb);
+            var downloadConfig = await _httpTransferService.GetConfig(url, verb);
 
             if (downloadConfig == null)
             {
@@ -56,7 +56,7 @@ namespace XamlingCore.Portable.Net.Downloaders
 
             if (!downloadConfig.IsValid)
             {
-                return new DownloadResult
+                return new HttpTransferResult
                 {
                     IsSuccessCode = false
                 };
@@ -72,7 +72,7 @@ namespace XamlingCore.Portable.Net.Downloaders
             return await _doDownload(obj, downloadConfig);
         }
 
-        async Task<IDownloadResult> _doDownload(DownloadQueueObject obj, IDownloadConfig downloadConfig)
+        async Task<IHttpTransferResult> _doDownload(DownloadQueueObject obj, IHttpTransferConfig downloadConfig)
         {
             // add support for Gzip decompression
 
@@ -166,7 +166,7 @@ namespace XamlingCore.Portable.Net.Downloaders
 
                         using (var result = await httpClient.SendAsync(message))
                         {
-                            return await _downloadService.GetResult(result, downloadConfig);
+                            return await _httpTransferService.GetResult(result, downloadConfig);
                         }
 
                         Debug.WriteLine("Finished: {0}", obj.Url);
@@ -176,13 +176,13 @@ namespace XamlingCore.Portable.Net.Downloaders
                     {
                         Debug.WriteLine("Warning - HttpRequestException encountered: {0}", ex.Message);
 
-                        return _downloadService.GetExceptionResult(ex,
+                        return _httpTransferService.GetExceptionResult(ex,
                             "XamlingCore.Portable.Net.Downloaders.HttpClientDownloader", downloadConfig);
                     }
                     catch (Exception ex)
                     {
                         Debug.WriteLine("Warning - general HTTP exception encountered: {0}", ex.Message);
-                        return _downloadService.GetExceptionResult(ex,
+                        return _httpTransferService.GetExceptionResult(ex,
                             "XamlingCore.Portable.Net.Downloaders.HttpClientDownloader", downloadConfig);
                     }
                 }

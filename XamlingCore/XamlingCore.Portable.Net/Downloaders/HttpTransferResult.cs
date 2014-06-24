@@ -4,7 +4,7 @@ using XamlingCore.Portable.Contract.Downloaders;
 
 namespace XamlingCore.Portable.Net.Downloaders
 {
-    public class DownloadResult : IDownloadResult
+    public class HttpTransferResult : IHttpTransferResult
     {
         public string Result { get; set; }
 
