@@ -54,6 +54,10 @@ namespace XamlingCore.Portable.Glue
 
             builder.RegisterType<XNavigationService>().As<IXNavigation>().SingleInstance();
 
+            builder.RegisterType<HttpClientTransferrer>().As<IHttpTransferrer>().SingleInstance();
+
+
+
             base.Load(builder);
         }
     }
