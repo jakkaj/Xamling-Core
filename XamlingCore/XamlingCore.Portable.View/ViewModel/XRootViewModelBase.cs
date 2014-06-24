@@ -14,6 +14,7 @@ using XamlingCore.Portable.Contract.ViewModels;
 using XamlingCore.Portable.Messages.Navigation;
 using XamlingCore.Portable.Messages.System;
 using XamlingCore.Portable.Messages.XamlingMessenger;
+using XamlingCore.Portable.Model.Navigation;
 using XamlingCore.Portable.View.Navigation;
 using XamlingCore.Portable.View.ViewModel.Base;
 
@@ -203,7 +204,7 @@ namespace XamlingCore.Portable.View.ViewModel
             XMessenger.Default.Send(new ApplicationReactivatedMessage());
         }
 
-        void navigationService_Navigated(object sender, System.EventArgs e)
+        void navigationService_Navigated(object sender, XNavigationEventArgs e)
         {
             OnPropertyChanged("BackEnabled");
             OnPropertyChanged("BackVisible");
@@ -270,12 +271,12 @@ namespace XamlingCore.Portable.View.ViewModel
             {
                 if (_navigation != null)
                 {
-                    _navigation.Navigated -= new System.EventHandler(navigationService_Navigated);
+                    _navigation.Navigated -= navigationService_Navigated;
                 }
-
+                
                 _navigation = value;
                 OnPropertyChanged("Navigation");
-                _navigation.Navigated += new System.EventHandler(navigationService_Navigated);
+                _navigation.Navigated += navigationService_Navigated;
             }
         }
 
@@ -409,11 +410,6 @@ namespace XamlingCore.Portable.View.ViewModel
         public void NavigateBack(bool allowNullNavigation)
         {
             Navigation.NavigateBack(allowNullNavigation);
-        }
-
-        public bool IsInNavigationCooldown()
-        {
-            return Navigation.IsInNavigationCooldown();
         }
 
         #endregion

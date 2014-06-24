@@ -9,6 +9,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
 using XamlingCore.Portable.Contract.Navigation;
+using XamlingCore.Portable.Model.Navigation;
 using XamlingCore.Portable.View.ViewModel;
 
 namespace XamlingCore.iOS.Navigation
@@ -37,24 +38,81 @@ namespace XamlingCore.iOS.Navigation
             _xNavigation.Navigated += _xNavigation_Navigated;
 
             _window = new UIWindow(UIScreen.MainScreen.Bounds);
-            
+
             _rootNavigationPage = new NavigationPage();
+            
+            _rootNavigationPage.Popped += _rootNavigationPage_Popped;
+            _rootNavigationPage.PoppedToRoot += _rootNavigationPage_PoppedToRoot;
+            _rootNavigationPage.Pushed += _rootNavigationPage_Pushed;
+            
             _xamarinNavigation = _rootNavigationPage.Navigation;
 
             _window.RootViewController = _rootNavigationPage.CreateViewController();
-            _window.MakeKeyAndVisible();   
- 
-            _setView();
+            
+            _window.MakeKeyAndVisible();
+
+            _setView(NavigationDirection.Forward);
         }
 
-        private async void _setView()
+        void _rootNavigationPage_Pushed(object sender, NavigationEventArgs e)
         {
-            while (!_rootVm.IsReady)
+            _synchroniseNavigation(NavigationDirection.Forward);
+        }
+
+        void _rootNavigationPage_PoppedToRoot(object sender, NavigationEventArgs e)
+        {
+            _popRoot();
+        }
+
+        void _rootNavigationPage_Popped(object sender, NavigationEventArgs e)
+        {
+            _synchroniseNavigation(NavigationDirection.Back);
+        }
+
+        void _popRoot()
+        {
+            _rootVm.NavigateHome();
+        }
+
+        /// <summary>
+        /// Check that the current page is synchronised with the XCore navigation framework
+        /// They can get our of wack as navigation can be kicked off by things outside the framework
+        /// ... like the default back button in the NavigationPage
+        /// </summary>
+        /// <param name="direction"></param>
+        void _synchroniseNavigation(NavigationDirection direction)
+        {            
+            var page = _rootNavigationPage.CurrentPage;
+
+            if (page != null && page.BindingContext != null)
             {
-                await Task.Yield();
+                if (page.BindingContext != _xNavigation.CurrentContentObject)
+                {
+                    if (direction == NavigationDirection.Back)
+                    {
+                        _rootVm.NavigateBack();
+                    }
+                    else
+                    {
+                        _rootVm.NavigateTo(page.BindingContext);
+                    }
+                }    
             }
+        }
+
+        async void _navigationForward()
+        {
 
             var vm = _xNavigation.CurrentContentObject;
+
+            var currentPage = _rootNavigationPage.CurrentPage;
+
+            if (currentPage != null && currentPage.BindingContext != null && currentPage.BindingContext == vm)
+            {
+                //This page is already correct (probably an out of XCore back)
+                return;
+            }
+
             var t = vm.GetType();
 
             var typeName = t.FullName.Replace("ViewModel", "View");
@@ -77,12 +135,43 @@ namespace XamlingCore.iOS.Navigation
 
             //locate the view...
 
+        }
+
+        async void _navigationBackward()
+        {
+            var currentPage = _rootNavigationPage.CurrentPage;
+
+            if (currentPage != null && currentPage.BindingContext != null && currentPage.BindingContext == _rootVm.CurrentContentObject)
+            {
+                //This page is already correct (probably an out of XCore back)
+                return;
+            }
+
+            await _xamarinNavigation.PopAsync();
+        }
+
+        private async void _setView(NavigationDirection direction)
+        {
+            while (!_rootVm.IsReady)
+            {
+                await Task.Yield();
+            }
+
+            if (direction == NavigationDirection.Forward)
+            {
+                _navigationForward();
+            }
+            else
+            {
+                _navigationBackward();
+            }
+
 
         }
 
-        void _xNavigation_Navigated(object sender, EventArgs e)
+        void _xNavigation_Navigated(object sender, XNavigationEventArgs e)
         {
-            _setView();
+            _setView(e.Direction);
         }
     }
 }
