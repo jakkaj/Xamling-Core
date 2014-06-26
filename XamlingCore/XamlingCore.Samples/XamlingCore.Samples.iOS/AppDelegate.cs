@@ -29,7 +29,7 @@ namespace XamlingCore.Samples.iOS
         {
             Forms.Init();
 
-            var x = new XiOSCore<RootViewModel, HomeViewModel, ProjectGlue>();
+            var x = new XiOSCore<RootFrame, HomeViewModel, ProjectGlue>();
             x.Init();
 
             return true;

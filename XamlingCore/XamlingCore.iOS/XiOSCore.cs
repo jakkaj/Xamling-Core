@@ -10,8 +10,9 @@ using XamlingCore.Portable.View.ViewModel;
 
 namespace XamlingCore.iOS
 {
-    public class XiOSCore<TRootVm, TInitialVM, TGlue> : XCore<TRootVm, TInitialVM, TGlue>
-        where TRootVm : XRootViewModelBase
+    public class XiOSCore<TRootFrame,TRootVM, TInitialVM, TGlue> : XCore<TRootFrame, TRootVM, TInitialVM, TGlue>
+        where TRootFrame : XFrame
+        where TRootVM : XViewModel
         where TInitialVM : XViewModel
         where TGlue : class, IGlue, new()
     {
@@ -21,17 +22,18 @@ namespace XamlingCore.iOS
         public void Init()
         {
             InitRoot();
-            _navigator = new iOSNavigator(RootVm, RootVm.Navigation, RootVm.Container);
+            _navigator = new iOSNavigator(RootFrame, RootFrame.Navigation, RootFrame.Container);
         }
     }
 
-    public abstract class XCore<TRootVm, TInitialVM, TGlue>
-        where TRootVm : XRootViewModelBase
+    public abstract class XCore<TRootFrame, TRootVM, TInitialVM, TGlue>
+        where TRootFrame : XFrame
+        where TRootVM : XViewModel
         where TInitialVM : XViewModel
         where TGlue : class, IGlue, new()
     {
         protected IContainer Container;
-        protected TRootVm RootVm;
+        protected TRootFrame RootFrame;
 
         protected async void InitRoot()
         {
@@ -39,16 +41,18 @@ namespace XamlingCore.iOS
             glue.Init();
 
             Container = glue.Container;
-            RootVm = Container.Resolve<TRootVm>();
+            RootFrame = XFrame.CreateRootFrame<TRootFrame>(glue.Container.BeginLifetimeScope());
 
-            await RootVm.Init();
-            var initalVm = RootVm.CreateContentModel<TInitialVM>();
+            await RootFrame.Init();
+
+            var initalVm = RootFrame.CreateContentModel<TInitialVM>();
+
             if (initalVm == null)
             {
                 throw new Exception("Initial VM could not be resolved, ensure viewmodels are registered");
             }
 
-            RootVm.NavigateTo(initalVm);
+            RootFrame.NavigateTo(initalVm);
         }
 
 

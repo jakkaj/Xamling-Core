@@ -20,7 +20,7 @@ using XamlingCore.Portable.View.ViewModel.Base;
 
 namespace XamlingCore.Portable.View.ViewModel
 {
-    public abstract class XRootViewModelBase : ViewModelBase
+    public abstract class XFrame : ViewModelBase
     {
         private bool _isReady;
 
@@ -39,7 +39,7 @@ namespace XamlingCore.Portable.View.ViewModel
         public string Title { get; set; }
         public string Description { get; set; }
 
-        public static XRootViewModelBase RootRoot { get; protected internal set; }
+        public static XFrame RootRoot { get; protected internal set; }
 
         public Action BackKeyIntercept { get; set; }
 
@@ -52,7 +52,7 @@ namespace XamlingCore.Portable.View.ViewModel
 
         public ILifetimeScope Container { get; private set; }
 
-        protected XRootViewModelBase(
+        protected XFrame(
             ILifetimeScope c,
             ILoadStatusService systemTrayService,
             IOrientationService orientationService,
@@ -105,7 +105,7 @@ namespace XamlingCore.Portable.View.ViewModel
         }
 
         public static T CreateRootFrame<T>(ILifetimeScope c, Action<T> initialisedCallback = null)
-            where T : XRootViewModelBase
+            where T : XFrame
         {
             var obj = c.Resolve<T>();
             obj.KnownTypes.Add(typeof(T));
