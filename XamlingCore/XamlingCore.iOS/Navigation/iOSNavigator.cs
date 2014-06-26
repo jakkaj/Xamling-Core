@@ -8,6 +8,7 @@ using Autofac.Core;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
+
 using XamlingCore.Portable.Contract.Navigation;
 using XamlingCore.Portable.Model.Navigation;
 using XamlingCore.Portable.View.ViewModel;
@@ -46,12 +47,12 @@ namespace XamlingCore.iOS.Navigation
             _rootNavigationPage.Pushed += _rootNavigationPage_Pushed;
             
             _xamarinNavigation = _rootNavigationPage.Navigation;
-
-            _window.RootViewController = _rootNavigationPage.CreateViewController();
             
-            _window.MakeKeyAndVisible();
+            _window.RootViewController = _rootNavigationPage.CreateViewController();
 
             _setView(NavigationDirection.Forward);
+
+            _window.MakeKeyAndVisible();
         }
 
         void _rootNavigationPage_Pushed(object sender, NavigationEventArgs e)
