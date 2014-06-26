@@ -12,9 +12,9 @@ using XamlingCore.Portable.View.ViewModel;
 
 namespace XamlingCore.Samples.XCore
 {
-    public class RootViewModel : XRootViewModelBase 
+    public class RootFrame : XFrame 
     {
-        public RootViewModel(ILifetimeScope c, 
+        public RootFrame(ILifetimeScope c, 
             ILoadStatusService loadStatusService, 
             IOrientationService orientationService, 
             ILocalisationService localisationService, 

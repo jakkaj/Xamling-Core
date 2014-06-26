@@ -53,6 +53,7 @@
     <Compile Include="View\Root\RootNavigationView.cs" />
     <Compile Include="View\Root\RootNavigationView.model.cs" />
     <Compile Include="XCore\RootViewModel.cs" />
+    <Compile Include="XCore\RootFrame.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

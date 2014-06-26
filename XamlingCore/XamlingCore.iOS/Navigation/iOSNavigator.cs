@@ -17,14 +17,14 @@ namespace XamlingCore.iOS.Navigation
 {
     public class iOSNavigator
     {
-        private readonly XRootViewModelBase _rootVm;
+        private readonly XFrame _rootVm;
         private readonly IXNavigation _xNavigation;
         private readonly ILifetimeScope _container;
 
         private UIWindow _window;
         private NavigationPage _rootNavigationPage;
         private INavigation _xamarinNavigation;
-        public iOSNavigator(XRootViewModelBase rootVm, IXNavigation xNavigation, ILifetimeScope container)
+        public iOSNavigator(XFrame rootVm, IXNavigation xNavigation, ILifetimeScope container)
         {
             _rootVm = rootVm;
             _xNavigation = xNavigation;

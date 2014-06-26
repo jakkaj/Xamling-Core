@@ -59,7 +59,7 @@
     <Compile Include="ViewModel\Base\GroupListViewModel.cs" />
     <Compile Include="ViewModel\Base\NotifyBase.cs" />
     <Compile Include="ViewModel\Base\ViewModelBase.cs" />
-    <Compile Include="ViewModel\XRootViewModelBase.cs" />
+    <Compile Include="ViewModel\XFrame.cs" />
     <Compile Include="ViewModel\XViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
