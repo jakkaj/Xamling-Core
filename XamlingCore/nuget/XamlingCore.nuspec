@@ -18,7 +18,7 @@
        <dependency id="Autofac" version="3.5.0" />	   
        <dependency id="AutoMapper" version="3.2.1" />
        <dependency id="Microsoft.Net.Http" version="2.2.22" />
-       <dependency id="Newtonsoft.Json" version="6.0.3" />	  
+       <dependency id="Newtonsoft.Json" version="6.0.3" />
     </dependencies>
   </metadata>
 </package>
