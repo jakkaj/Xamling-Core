@@ -50,6 +50,8 @@
     <Compile Include="View\NextPageView.xaml.cs">
       <DependentUpon>NextPageView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Root\RootNavigationView.cs" />
+    <Compile Include="View\Root\RootNavigationView.model.cs" />
     <Compile Include="XCore\RootViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +102,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="View\Home\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

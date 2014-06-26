@@ -39,8 +39,6 @@ namespace XamlingCore.iOS.Navigation
             _xNavigation.Navigated += _xNavigation_Navigated;
 
             _window = new UIWindow(UIScreen.MainScreen.Bounds);
-
-            _rootNavigationPage = new NavigationPage();
             
             _rootNavigationPage.Popped += _rootNavigationPage_Popped;
             _rootNavigationPage.PoppedToRoot += _rootNavigationPage_PoppedToRoot;

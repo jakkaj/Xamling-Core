@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using XamlingCore.iOS;
 using XamlingCore.Samples.iOS.Glue;
 using XamlingCore.Samples.View;
+using XamlingCore.Samples.View.Root;
 using XamlingCore.Samples.XCore;
 
 namespace XamlingCore.Samples.iOS
@@ -29,7 +30,7 @@ namespace XamlingCore.Samples.iOS
         {
             Forms.Init();
 
-            var x = new XiOSCore<RootViewModel, HomeViewModel, ProjectGlue>();
+            var x = new XiOSCore<RootViewModel, RootNavigationViewModel, ProjectGlue>();
             x.Init();
 
             return true;
