@@ -53,6 +53,17 @@
     <Compile Include="Util\DateUtil.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\portable-windows8+net45+wp8+MonoAndroid+MonoTouch"
+copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\wp8"
+copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\MonoAndroid"
+copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\MonoTouch"
+
+xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\portable-windows8+net45+wp8+MonoAndroid+MonoTouch"
+xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\wp8"
+xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\MonoAndroid"
+xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\MonoTouch"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
