@@ -11,6 +11,7 @@ namespace XamlingCore.Samples
     {
         public static Page GetMainPage()
         {
+
             return new ContentPage
             {
                 Content = new Label

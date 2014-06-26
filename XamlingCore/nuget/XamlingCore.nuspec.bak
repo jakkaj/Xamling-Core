@@ -3,7 +3,7 @@
   <metadata>
     <id>XamlingCore</id>
 	<title>Xamling Core</title>
-    <version>2.0.6</version>
+    <version>2.0.4</version>
     <authors>Jordan</authors>
     <owners>Jordan</owners>
     <licenseUrl>http://opensource.org/licenses/MS-PL</licenseUrl>
@@ -15,10 +15,11 @@
     <copyright>Copyright 2014</copyright>
     <tags>Xamling XamlingCore MVVM Portable</tags>
     <dependencies>
-       <dependency id="Autofac" version="3.4.1" />	   
+       <dependency id="Autofac" version="3.5.0" />	   
        <dependency id="AutoMapper" version="3.2.1" />
        <dependency id="Microsoft.Net.Http" version="2.2.22" />
        <dependency id="Newtonsoft.Json" version="6.0.3" />
+       <dependency id="Xamarin.Forms" version="1.1.1.6206" />
     </dependencies>
   </metadata>
 </package>
