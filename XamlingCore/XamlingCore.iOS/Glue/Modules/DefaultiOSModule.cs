@@ -26,6 +26,8 @@ namespace XamlingCore.iOS.Glue.Modules
             builder.RegisterType<XFrameManager>().AsImplementedInterfaces();
             builder.RegisterType<iOSViewResolver>().AsImplementedInterfaces();
 
+            builder.RegisterType<DefaultRootFrame>().AsSelf();
+
             base.Load(builder);
         }
     }

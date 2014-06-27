@@ -144,6 +144,8 @@ namespace XamlingCore.Portable.View.ViewModel
             obj.OrientationService = _orientationService;
             obj.LocalisationService = _localisationService;
 
+            obj.Container = Container;
+
             if (initialisedCallback != null) initialisedCallback(obj);
 
             rootModel.AllViewModels.Add(obj);

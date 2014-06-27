@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using Autofac;
+using Autofac.Core;
 using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Contract;
+using XamlingCore.XamarinThings.Frame;
 
 namespace XamlingCore.XamarinThings.ViewModel
 {
@@ -41,14 +44,21 @@ namespace XamlingCore.XamarinThings.ViewModel
             //teh view that is associated with the view model will be used
             var masterAreaView = _viewResolver.Resolve(_masterViewModel);
             MasterContent = masterAreaView;
+            
+            DetailContent = _showNavPage(SectionViewModels.First());
+        }
 
-            var detailAreaView = _viewResolver.Resolve(SectionViewModels.First());
-            DetailContent = new NavigationPage(detailAreaView);
+        Page _showNavPage(XViewModel vm)
+        {
+            var frameManager = Container.Resolve<IFrameManager>();
+            var initalViewController = frameManager.Init(XFrame.CreateRootFrame<DefaultRootFrame>(Container), vm);
+
+            return initalViewController;
         }
 
         void _onNavigateToPage(XViewModel navigateViewModel)
         {
-            
+
         }
 
         public Page MasterContent
@@ -56,7 +66,7 @@ namespace XamlingCore.XamarinThings.ViewModel
             get { return _masterContent; }
             set
             {
-                _masterContent = value; 
+                _masterContent = value;
                 OnPropertyChanged();
             }
         }

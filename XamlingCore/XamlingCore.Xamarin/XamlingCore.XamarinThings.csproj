@@ -39,6 +39,7 @@
     <Compile Include="Contract\IFrameNavigator.cs" />
     <Compile Include="Contract\IViewResolver.cs" />
     <Compile Include="Contract\IFrameManager.cs" />
+    <Compile Include="Frame\DefaultRootFrame.cs" />
     <Compile Include="Frame\XFrameManager.cs" />
     <Compile Include="Navigators\XNavigationMasterDetailNavigator.cs" />
     <Compile Include="Navigators\XNavigationPageNavigator.cs" />

@@ -62,6 +62,8 @@
     <Compile Include="View\MasterDetailHome\HomeMasterView.xaml.cs">
       <DependentUpon>HomeMasterView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MasterDetailHome\Home\Root\MasterDetailHomeRootView.cs" />
+    <Compile Include="View\MasterDetailHome\Home\Root\MasterDetailHomeRootViewModel.cs" />
     <Compile Include="View\NextPageView.model.cs">
       <DependentUpon>NextPageView.xaml</DependentUpon>
     </Compile>

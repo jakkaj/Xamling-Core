@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Autofac;
 using XamlingCore.Portable.Contract.Localisation;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Messages.Device;
@@ -37,6 +38,8 @@ namespace XamlingCore.Portable.View.ViewModel
         protected internal ILoadStatusService LoadStatusService;
         protected internal IOrientationService OrientationService;
         protected internal ILocalisationService LocalisationService;
+
+        protected internal ILifetimeScope Container { get; set; }
 
         public T CreateContentModel<T>(Action<T> initialisedCallback)
              where T : XViewModel

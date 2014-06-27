@@ -40,6 +40,11 @@ namespace XamlingCore.XamarinThings.Navigators
             _rootNavigationPage.Pushed += _rootNavigationPage_Pushed;
             
             _xamarinNavigation = _rootNavigationPage.Navigation;
+
+            if (_xNavigation.CurrentContentObject != null)
+            {
+                _setView(NavigationDirection.Forward);
+            }
         }
 
         void _rootNavigationPage_Pushed(object sender, NavigationEventArgs e)
