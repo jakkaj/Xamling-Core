@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
+using XamlingCore.Samples.View.MasterDetailHome;
 
 namespace XamlingCore.Samples.View.Home
 {
@@ -30,7 +31,7 @@ namespace XamlingCore.Samples.View.Home
         }
         void _onNextPage()
         {
-            NavigateTo<NextPageViewModel>();
+            NavigateTo<AnotherItemViewModel>();
         }
 
         public string MainText

@@ -64,12 +64,6 @@
     </Compile>
     <Compile Include="View\MasterDetailHome\Home\Root\MasterDetailHomeRootView.cs" />
     <Compile Include="View\MasterDetailHome\Home\Root\MasterDetailHomeRootViewModel.cs" />
-    <Compile Include="View\NextPageView.model.cs">
-      <DependentUpon>NextPageView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\NextPageView.xaml.cs">
-      <DependentUpon>NextPageView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Root\MasterDetailRoot\RootMDView.cs" />
     <Compile Include="View\Root\MasterDetailRoot\RootMDView.model.cs" />
     <Compile Include="View\Root\NavPageRoot\RootNavigationView.cs" />
@@ -117,12 +111,6 @@
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>XamlingCore.XamarinThings</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="View\NextPageView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\MasterDetailHome\HomeItemView.xaml">

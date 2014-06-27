@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace XamlingCore.Samples.View
+namespace XamlingCore.Samples.View.MasterDetailHome
 {
-    public partial class NextPageView : ContentPage
+    public partial class AnotherItemView : ContentPage
     {
-        public NextPageView()
+        public AnotherItemView()
         {
             InitializeComponent();
-            Title = "Next page";
         }
     }
 }
