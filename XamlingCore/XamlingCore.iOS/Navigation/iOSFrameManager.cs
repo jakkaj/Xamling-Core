@@ -20,19 +20,20 @@ namespace XamlingCore.iOS.Navigation
             _viewResolver = viewResolver;
         }
 
-        public UIViewController Init(XFrame rootFrame, XViewModel rootViewModel, XViewModel initalViewModel)
+        public UIViewController Init(XFrame rootFrame, XViewModel rootViewModel, XViewModel initialViewModel)
         {
             var rootPage = _viewResolver.Resolve(rootViewModel);
-            var rootView = _viewResolver.Resolve(initalViewModel);
 
-            if (rootPage == null || rootView == null)
+            if (rootPage == null)
             {
                 throw new InvalidOperationException("Could not resolve the inital views");
             }
 
-            _configureNavigation(rootFrame, rootView);
+            _configureNavigation(rootFrame, rootPage);
 
-            return rootView.CreateViewController();
+            rootFrame.NavigateTo(initialViewModel);
+
+            return rootPage.CreateViewController();
         }
 
         void _configureNavigation(XFrame rootFrame, Page rootPage)

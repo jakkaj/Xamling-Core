@@ -18,7 +18,7 @@ namespace XamlingCore.iOS
     /// <typeparam name="TRootVM"></typeparam>
     /// <typeparam name="TInitialVM"></typeparam>
     /// <typeparam name="TGlue"></typeparam>
-    public class XiOSCore<TRootFrame,TRootVM, TInitialVM, TGlue> : XCore<TRootFrame, TRootVM, TInitialVM, TGlue>
+    public class XiOSCore<TRootFrame,TRootVM, TInitialVM, TGlue> : XCore<TRootFrame, TGlue>
         where TRootFrame : XFrame
         where TRootVM : XViewModel
         where TInitialVM : XViewModel
@@ -53,10 +53,8 @@ namespace XamlingCore.iOS
         }
     }
 
-    public abstract class XCore<TRootFrame, TRootVM, TInitialVM, TGlue>
+    public abstract class XCore<TRootFrame, TGlue>
         where TRootFrame : XFrame
-        where TRootVM : XViewModel
-        where TInitialVM : XViewModel
         where TGlue : class, IGlue, new()
     {
         protected IContainer Container;
@@ -71,15 +69,6 @@ namespace XamlingCore.iOS
             RootFrame = XFrame.CreateRootFrame<TRootFrame>(glue.Container.BeginLifetimeScope());
 
             await RootFrame.Init();
-
-            var initalVm = RootFrame.CreateContentModel<TInitialVM>();
-
-            if (initalVm == null)
-            {
-                throw new Exception("Initial VM could not be resolved, ensure viewmodels are registered");
-            }
-
-            RootFrame.NavigateTo(initalVm);
         }
 
 

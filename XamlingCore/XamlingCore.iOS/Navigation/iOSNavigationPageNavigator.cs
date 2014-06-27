@@ -46,8 +46,6 @@ namespace XamlingCore.iOS.Navigation
             _rootNavigationPage.Pushed += _rootNavigationPage_Pushed;
             
             _xamarinNavigation = _rootNavigationPage.Navigation;
-
-            _setView(NavigationDirection.Forward);
         }
 
         void _rootNavigationPage_Pushed(object sender, NavigationEventArgs e)
