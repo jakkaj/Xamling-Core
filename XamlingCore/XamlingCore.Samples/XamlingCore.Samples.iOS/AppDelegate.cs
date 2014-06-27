@@ -37,7 +37,7 @@ namespace XamlingCore.Samples.iOS
             //var x = new XiOSCore<RootFrame, RootNavigationViewModel, HomeViewModel, ProjectGlue>();
             
             //boot using master detail setup
-            var x = new XiOSCore<NavigationPageRootFrame, RootNavigationViewModel, ProjectGlue>();
+            var x = new XiOSCore<MDRootFrame, RootMDViewModel, ProjectGlue>();
             x.Init();
 
             return true;

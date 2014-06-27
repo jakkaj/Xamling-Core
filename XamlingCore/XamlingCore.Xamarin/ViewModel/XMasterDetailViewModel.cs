@@ -25,6 +25,11 @@ namespace XamlingCore.XamarinThings.ViewModel
             NavigateToViewModelCommand = new Command<XViewModel>(_onNavigateToPage);
         }
 
+        protected void SetMaster(XViewModel masterPage)
+        {
+            _masterViewModel = masterPage;
+        }
+
         protected void AddPage(XViewModel sectionPage)
         {
             SectionViewModels.Add(sectionPage);
@@ -34,11 +39,11 @@ namespace XamlingCore.XamarinThings.ViewModel
         {
             //Resolves the view and also sets the binding context
             //teh view that is associated with the view model will be used
-            var masterAreaView = _viewResolver.Resolve(this);
+            var masterAreaView = _viewResolver.Resolve(_masterViewModel);
             MasterContent = masterAreaView;
 
             var detailAreaView = _viewResolver.Resolve(SectionViewModels.First());
-            DetailContent = detailAreaView;
+            DetailContent = new NavigationPage(detailAreaView);
         }
 
         void _onNavigateToPage(XViewModel navigateViewModel)

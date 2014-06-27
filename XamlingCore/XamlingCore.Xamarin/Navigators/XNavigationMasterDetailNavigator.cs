@@ -33,7 +33,6 @@ namespace XamlingCore.XamarinThings.Navigators
         void _configure()
         {
             
-          
         }
     }
 }

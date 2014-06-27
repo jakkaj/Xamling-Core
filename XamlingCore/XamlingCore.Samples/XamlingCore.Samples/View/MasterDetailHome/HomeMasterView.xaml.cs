@@ -12,6 +12,7 @@ namespace XamlingCore.Samples.View.MasterDetailHome
         public HomeMasterView()
         {
             InitializeComponent();
+            Title = "Temp Master Title";
         }
     }
 }

@@ -22,8 +22,6 @@ namespace XamlingCore.XamarinThings.Frame
                 
             var rootPage = _viewResolver.Resolve(rootViewModel);
 
-            rootPage.BindingContext = rootFrame; //the is the binding context for the outer page. Inner pages get their own binding context. 
-
             if (rootPage == null)
             {
                 throw new InvalidOperationException("Could not resolve the inital views");
@@ -40,11 +38,11 @@ namespace XamlingCore.XamarinThings.Frame
         {
             if (rootPage is MasterDetailPage)
             {
-                if (!(rootViewModel is XMasterDetailViewModel))
-                {
-                    throw new ArgumentException("Root view model must be XMasterDetailViewModelBase");;
-                }
-                FrameNavigator = new XNavigationMasterDetailNavigator(rootFrame, rootPage as MasterDetailPage, _viewResolver);
+                //if (!(rootViewModel is XMasterDetailViewModel))
+                //{
+                //    throw new ArgumentException("Root view model must be XMasterDetailViewModelBase");;
+                //}
+                //FrameNavigator = new XNavigationMasterDetailNavigator(rootFrame, rootPage as MasterDetailPage, _viewResolver);
             }
 
             if (rootPage is NavigationPage)
