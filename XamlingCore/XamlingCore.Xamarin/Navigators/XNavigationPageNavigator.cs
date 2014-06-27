@@ -123,7 +123,7 @@ namespace XamlingCore.XamarinThings.Navigators
             await _xamarinNavigation.PopAsync();
         }
 
-        private async void _setView(NavigationDirection direction)
+        private void _setView(NavigationDirection direction)
         {
             if (direction == NavigationDirection.Forward)
             {
