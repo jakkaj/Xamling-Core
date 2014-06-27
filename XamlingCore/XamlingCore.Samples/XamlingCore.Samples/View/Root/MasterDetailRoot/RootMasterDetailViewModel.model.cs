@@ -5,9 +5,9 @@ using XamlingCore.XamarinThings.ViewModel;
 
 namespace XamlingCore.Samples.View.Root.MasterDetailRoot
 {
-    public class RootMDViewModel : XMasterDetailViewModel
+    public class RootMasterDetailViewModel : XMasterDetailViewModel
     {
-        public RootMDViewModel(IViewResolver viewResolver) : base(viewResolver)
+        public RootMasterDetailViewModel(IViewResolver viewResolver) : base(viewResolver)
         {
         }
 

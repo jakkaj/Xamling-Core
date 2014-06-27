@@ -8,9 +8,9 @@ using XamlingCore.XamarinThings.View;
 
 namespace XamlingCore.Samples.View.Root.MasterDetailRoot
 {
-    public class RootMDView : XMasterDetailView
+    public class RootMasterDetailView : XMasterDetailView
     {
-        public RootMDView()
+        public RootMasterDetailView()
         {
             Title = "Outer master page";
         }

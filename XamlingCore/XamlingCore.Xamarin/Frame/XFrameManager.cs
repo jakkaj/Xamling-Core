@@ -36,15 +36,8 @@ namespace XamlingCore.XamarinThings.Frame
 
         void _configureNavigation(XFrame rootFrame, XViewModel rootViewModel, Page rootPage)
         {
-            if (rootPage is MasterDetailPage)
-            {
-                //if (!(rootViewModel is XMasterDetailViewModel))
-                //{
-                //    throw new ArgumentException("Root view model must be XMasterDetailViewModelBase");;
-                //}
-                //FrameNavigator = new XNavigationMasterDetailNavigator(rootFrame, rootPage as MasterDetailPage, _viewResolver);
-            }
-
+            //Navigations pages need navigators (which means the child VM's can navigate in them)
+            //Pages like master details don't, their base VM's handle the changing of pages etc...
             if (rootPage is NavigationPage)
             {
                 FrameNavigator = new XNavigationPageNavigator(rootFrame, rootPage as NavigationPage, _viewResolver);

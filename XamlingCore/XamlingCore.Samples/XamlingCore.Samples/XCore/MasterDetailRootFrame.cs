@@ -13,9 +13,14 @@ using XamlingCore.Samples.View.Home;
 
 namespace XamlingCore.Samples.XCore
 {
-    public class MDRootFrame : XFrame
+    /// <summary>
+    /// Use this frame when you want the root area to be a MasterDetailpage
+    /// Couple this with a RootViewModel base type of XMasterDetailViewModel
+    /// and a root page type of XMasterDetailView
+    /// </summary>
+    public class MasterDetailRootFrame : XFrame
     {
-        public MDRootFrame(ILifetimeScope c,
+        public MasterDetailRootFrame(ILifetimeScope c,
             ILoadStatusService loadStatusService,
             IOrientationService orientationService,
             ILocalisationService localisationService,
