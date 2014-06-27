@@ -52,9 +52,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlingCore.Portable.Util",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{80059A62-CE8B-4807-BFFF-562F304B18D1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xamarin", "Xamarin", "{8E655987-8940-4D7E-A886-42BE70E1F1D6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamarinThings", "XamarinThings", "{8E655987-8940-4D7E-A886-42BE70E1F1D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlingCore.Xamarin", "XamlingCore.Xamarin\XamlingCore.Xamarin.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlingCore.XamarinThings", "XamlingCore.Xamarin\XamlingCore.XamarinThings.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -362,7 +362,6 @@ Global
 		{6892D5F9-CA66-498E-9830-EEC08D8A5BC5}.Debug|ARM.ActiveCfg = Debug|Any CPU
 		{6892D5F9-CA66-498E-9830-EEC08D8A5BC5}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{6892D5F9-CA66-498E-9830-EEC08D8A5BC5}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{6892D5F9-CA66-498E-9830-EEC08D8A5BC5}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{6892D5F9-CA66-498E-9830-EEC08D8A5BC5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{6892D5F9-CA66-498E-9830-EEC08D8A5BC5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{6892D5F9-CA66-498E-9830-EEC08D8A5BC5}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
@@ -413,7 +412,6 @@ Global
 		{7D80292E-39F0-4C30-BE7C-3BC22E2623A7}.Debug|ARM.Deploy.0 = Debug|ARM
 		{7D80292E-39F0-4C30-BE7C-3BC22E2623A7}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{7D80292E-39F0-4C30-BE7C-3BC22E2623A7}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{7D80292E-39F0-4C30-BE7C-3BC22E2623A7}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{7D80292E-39F0-4C30-BE7C-3BC22E2623A7}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{7D80292E-39F0-4C30-BE7C-3BC22E2623A7}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{7D80292E-39F0-4C30-BE7C-3BC22E2623A7}.Debug|Mixed Platforms.Deploy.0 = Debug|x86
@@ -626,6 +624,7 @@ Global
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Debug|x86.ActiveCfg = Debug|Any CPU

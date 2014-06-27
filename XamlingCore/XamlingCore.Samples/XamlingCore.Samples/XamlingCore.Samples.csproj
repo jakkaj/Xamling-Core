@@ -38,11 +38,29 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\HomeView.model.cs">
-      <DependentUpon>HomeView.xaml</DependentUpon>
+    <Compile Include="View\Home\MainNavigationHomeView.model.cs">
+      <DependentUpon>MainNavigationHomeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\HomeView.xaml.cs">
-      <DependentUpon>HomeView.xaml</DependentUpon>
+    <Compile Include="View\Home\MainNavigationHomeView.xaml.cs">
+      <DependentUpon>MainNavigationHomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MasterDetailHome\AnotherItemView.model.cs">
+      <DependentUpon>AnotherItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MasterDetailHome\AnotherItemView.xaml.cs">
+      <DependentUpon>AnotherItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MasterDetailHome\HomeItemView.model.cs">
+      <DependentUpon>HomeItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MasterDetailHome\HomeItemView.xaml.cs">
+      <DependentUpon>HomeItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MasterDetailHome\HomeMasterView.model.cs">
+      <DependentUpon>HomeMasterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MasterDetailHome\HomeMasterView.xaml.cs">
+      <DependentUpon>HomeMasterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\NextPageView.model.cs">
       <DependentUpon>NextPageView.xaml</DependentUpon>
@@ -50,9 +68,12 @@
     <Compile Include="View\NextPageView.xaml.cs">
       <DependentUpon>NextPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Root\RootNavigationView.cs" />
-    <Compile Include="View\Root\RootNavigationView.model.cs" />
-    <Compile Include="XCore\RootFrame.cs" />
+    <Compile Include="View\Root\MasterDetailRoot\RootMDView.cs" />
+    <Compile Include="View\Root\MasterDetailRoot\RootMDView.model.cs" />
+    <Compile Include="View\Root\NavPageRoot\RootNavigationView.cs" />
+    <Compile Include="View\Root\NavPageRoot\RootNavigationView.model.cs" />
+    <Compile Include="XCore\MDRootFrame.cs" />
+    <Compile Include="XCore\NavigationPageRootFrame.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">
@@ -90,12 +111,10 @@
       <Project>{b3d7c301-2df7-4c16-9f49-7dda8689556e}</Project>
       <Name>XamlingCore.Portable.View</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="View\HomeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
+    <ProjectReference Include="..\..\XamlingCore.Xamarin\XamlingCore.XamarinThings.csproj">
+      <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
+      <Name>XamlingCore.XamarinThings</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\NextPageView.xaml">
@@ -104,7 +123,28 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="View\Home\" />
+    <EmbeddedResource Include="View\MasterDetailHome\HomeItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\MasterDetailHome\AnotherItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\MasterDetailHome\HomeMasterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\Home\MainNavigationHomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

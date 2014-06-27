@@ -1,6 +1,6 @@
 using Xamarin.Forms;
 
-namespace XamlingCore.Xamarin.Contract
+namespace XamlingCore.XamarinThings.Contract
 {
     public interface IFrameNavigator
     {

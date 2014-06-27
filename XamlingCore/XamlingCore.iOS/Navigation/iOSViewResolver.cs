@@ -6,7 +6,7 @@ using Autofac;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
-using XamlingCore.Xamarin.Contract;
+using XamlingCore.XamarinThings.Contract;
 
 namespace XamlingCore.iOS.Navigation
 {

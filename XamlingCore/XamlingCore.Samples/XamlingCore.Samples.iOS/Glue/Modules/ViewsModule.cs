@@ -13,11 +13,5 @@ namespace XamlingCore.Samples.iOS.Glue.Modules
         {
             
         }
-
-        protected override void Load(ContainerBuilder builder)
-        {
-            builder.RegisterType<RootFrame>().AsImplementedInterfaces().AsSelf();
-            base.Load(builder);
-        }
     }
 }

@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace XamlingCore.Samples.View
+namespace XamlingCore.Samples.View.MasterDetailHome
 {
-    public partial class HomeView : ContentPage
+    public partial class HomeMasterView : ContentPage
     {
-        public HomeView()
+        public HomeMasterView()
         {
             InitializeComponent();
-            Title = "First Page";
         }
     }
 }

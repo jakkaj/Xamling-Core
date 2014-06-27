@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using Autofac;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using Xamarin.Forms;
 using XamlingCore.iOS.Navigation;
 using XamlingCore.Portable.Contract.Glue;
 using XamlingCore.Portable.Model.Navigation;
 using XamlingCore.Portable.View.ViewModel;
+using XamlingCore.XamarinThings.Contract;
 
 namespace XamlingCore.iOS
 {
@@ -18,36 +20,27 @@ namespace XamlingCore.iOS
     /// <typeparam name="TRootVM"></typeparam>
     /// <typeparam name="TInitialVM"></typeparam>
     /// <typeparam name="TGlue"></typeparam>
-    public class XiOSCore<TRootFrame,TRootVM, TInitialVM, TGlue> : XCore<TRootFrame, TGlue>
+    public class XiOSCore<TRootFrame, TRootVM, TGlue> : XCore<TRootFrame, TGlue>
         where TRootFrame : XFrame
         where TRootVM : XViewModel
-        where TInitialVM : XViewModel
         where TGlue : class, IGlue, new()
     {
-
-        private iOSFrameManager _frameManager;
+        private IFrameManager _frameManager;
 
         private UIWindow _window;
-
-        public XiOSCore()
-        {
-            
-        }
 
         public void Init()
         {
             InitRoot();
 
             var rootVm = RootFrame.CreateContentModel<TRootVM>();
-            var initialVm = rootVm.CreateContentModel<TInitialVM>();
+            _frameManager = RootFrame.Container.Resolve<IFrameManager>();
 
-            _frameManager = RootFrame.Container.Resolve<iOSFrameManager>();
-
-            var initalViewController = _frameManager.Init(RootFrame, rootVm, initialVm);
+            var initalViewController = _frameManager.Init(RootFrame, rootVm);
 
             _window = new UIWindow(UIScreen.MainScreen.Bounds);
 
-            _window.RootViewController = initalViewController;
+            _window.RootViewController = initalViewController.CreateViewController();
 
             _window.MakeKeyAndVisible();
         }
@@ -66,9 +59,7 @@ namespace XamlingCore.iOS
             glue.Init();
 
             Container = glue.Container;
-            RootFrame = XFrame.CreateRootFrame<TRootFrame>(glue.Container.BeginLifetimeScope());
-
-            await RootFrame.Init();
+            RootFrame = XFrame.CreateRootFrame<TRootFrame>(glue.Container.BeginLifetimeScope());            
         }
 
 

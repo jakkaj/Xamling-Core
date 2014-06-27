@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using XamlingCore.Portable.View.ViewModel;
 
-namespace XamlingCore.Samples.View.Root
+namespace XamlingCore.Samples.View.MasterDetailHome
 {
-    public class RootNavigationViewModel : XViewModel
+    public class AnotherItemViewModel : XViewModel
     {
+
     }
 }

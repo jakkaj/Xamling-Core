@@ -5,7 +5,10 @@ using Xamarin.Forms;
 using XamlingCore.iOS;
 using XamlingCore.Samples.iOS.Glue;
 using XamlingCore.Samples.View;
+using XamlingCore.Samples.View.Home;
 using XamlingCore.Samples.View.Root;
+using XamlingCore.Samples.View.Root.MasterDetailRoot;
+using XamlingCore.Samples.View.Root.NavPageRoot;
 using XamlingCore.Samples.XCore;
 
 namespace XamlingCore.Samples.iOS
@@ -30,7 +33,11 @@ namespace XamlingCore.Samples.iOS
         {
             Forms.Init();
 
-            var x = new XiOSCore<RootFrame, RootNavigationViewModel, HomeViewModel, ProjectGlue>();
+            //boot using standard navigation page 
+            //var x = new XiOSCore<RootFrame, RootNavigationViewModel, HomeViewModel, ProjectGlue>();
+            
+            //boot using master detail setup
+            var x = new XiOSCore<NavigationPageRootFrame, RootNavigationViewModel, ProjectGlue>();
             x.Init();
 
             return true;

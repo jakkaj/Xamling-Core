@@ -22,6 +22,7 @@ namespace XamlingCore.Samples.iOS.Glue
            //do your project registrations here.
            Builder.RegisterModule<ViewModelModule>();
            Builder.RegisterModule<ViewsModule>();
+           Builder.RegisterModule<FramesModelModule>();
            Container = Builder.Build();
        }
 

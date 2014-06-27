@@ -90,6 +90,7 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Glue\Modules\FramesModules.cs" />
     <Compile Include="Glue\Modules\ViewModelModule.cs" />
     <Compile Include="Glue\Modules\ViewsModule.cs" />
     <Compile Include="Glue\ProjectGlue.cs" />
@@ -116,6 +117,10 @@
     <ProjectReference Include="..\..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
       <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
       <Name>XamlingCore.Portable.View</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Xamarin\XamlingCore.XamarinThings.csproj">
+      <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
+      <Name>XamlingCore.XamarinThings</Name>
     </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Samples\XamlingCore.Samples.csproj">
       <Name>XamlingCore.Samples</Name>

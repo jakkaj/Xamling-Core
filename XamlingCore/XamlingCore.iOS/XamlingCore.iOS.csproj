@@ -42,8 +42,6 @@
     <Compile Include="Implementations\iOSDispatcher.cs" />
     <Compile Include="Implementations\LoadStatusService.cs" />
     <Compile Include="Implementations\LocalStorage.cs" />
-    <Compile Include="Navigation\iOSFrameManager.cs" />
-    <Compile Include="Navigation\iOSNavigationPageNavigator.cs" />
     <Compile Include="Navigation\iOSViewResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XiOSCore.cs" />
@@ -69,9 +67,9 @@
       <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
       <Name>XamlingCore.Portable.View</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Xamarin\XamlingCore.Xamarin.csproj">
+    <ProjectReference Include="..\XamlingCore.Xamarin\XamlingCore.XamarinThings.csproj">
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
-      <Name>XamlingCore.Xamarin</Name>
+      <Name>XamlingCore.XamarinThings</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

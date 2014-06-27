@@ -68,7 +68,7 @@ namespace XamlingCore.Portable.View.ViewModel
             Container = c;
         }
 
-        public abstract Task Init();
+        public abstract void Init();
 
         public void SetReady()
         {

@@ -1,43 +1,37 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Autofac;
-using Autofac.Core;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
 using Xamarin.Forms;
-
 using XamlingCore.Portable.Contract.Navigation;
 using XamlingCore.Portable.Model.Navigation;
 using XamlingCore.Portable.View.ViewModel;
-using XamlingCore.Xamarin.Contract;
+using XamlingCore.XamarinThings.Contract;
 
-namespace XamlingCore.iOS.Navigation
+namespace XamlingCore.XamarinThings.Navigators
 {
-    public class iOSNavigationPageNavigator : IFrameNavigator
+    public class XNavigationPageNavigator : IFrameNavigator
     {
         private readonly XFrame _rootFrame;
         private readonly IXNavigation _xNavigation;
         private readonly ILifetimeScope _container;
 
         private readonly NavigationPage _rootNavigationPage;
-        
+        private readonly IViewResolver _viewResolver;
+
         private INavigation _xamarinNavigation;
 
-        public iOSNavigationPageNavigator(XFrame rootFrame, NavigationPage page)
+        public XNavigationPageNavigator(XFrame rootFrame, NavigationPage page, IViewResolver viewResolver)
         {
-
             _rootFrame = rootFrame;
             _xNavigation = rootFrame.Navigation;
             _container = rootFrame.Container;
             _rootNavigationPage = page;
+            _viewResolver = viewResolver;
 
             _configure();
         }
 
-        void _configure()
+        public void _configure()
         {
             _xNavigation.Navigated += _xNavigation_Navigated;
             
@@ -96,7 +90,6 @@ namespace XamlingCore.iOS.Navigation
 
         async void _navigationForward()
         {
-
             var vm = _xNavigation.CurrentContentObject;
 
             var currentPage = _rootNavigationPage.CurrentPage;
@@ -107,28 +100,14 @@ namespace XamlingCore.iOS.Navigation
                 return;
             }
 
-            var t = vm.GetType();
+            var p = _viewResolver.Resolve(vm);
 
-            var typeName = t.FullName.Replace("ViewModel", "View");
-
-            //Xamarin Forms will resolve this way
-            var nextToType = Type.GetType(string.Format("{0}, {1}", typeName, t.Assembly.FullName));
-
-            if (_container.IsRegistered(nextToType))
+            if (p == null)
             {
-                var tUiView = _container.Resolve(nextToType) as Page;
-                if (tUiView != null)
-                {
-                    tUiView.BindingContext = vm;
-                    await _xamarinNavigation.PushAsync(tUiView);
-                    return;
-                }
+                throw new Exception("View type not implemented");    
             }
 
-            throw new Exception("View type not implemented");
-
-            //locate the view...
-
+            await _xamarinNavigation.PushAsync(p);
         }
 
         async void _navigationBackward()
@@ -146,11 +125,6 @@ namespace XamlingCore.iOS.Navigation
 
         private async void _setView(NavigationDirection direction)
         {
-            while (!_rootFrame.IsReady)
-            {
-                await Task.Yield();
-            }
-
             if (direction == NavigationDirection.Forward)
             {
                 _navigationForward();
