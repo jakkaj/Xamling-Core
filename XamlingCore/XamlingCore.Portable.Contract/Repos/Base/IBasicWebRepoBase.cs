@@ -24,5 +24,6 @@ namespace XamlingCore.Portable.Contract.Repos.Base
         Task<IHttpTransferResult> GetResult(string extra = null);
         Task<IHttpTransferResult> UploadRaw(byte[] data, string extra, string method);
         Task<TEntity> Upload(byte[] data, string extra, string method);
+        Task<List<TEntity>> PostList<TRequest>(TRequest requestEntity, string extra = null, string verb = "POST");
     }
 }

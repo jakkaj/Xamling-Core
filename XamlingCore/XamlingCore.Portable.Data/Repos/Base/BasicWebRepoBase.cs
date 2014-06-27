@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Downloaders;
 using XamlingCore.Portable.Contract.Repos.Base;
@@ -85,6 +86,13 @@ namespace XamlingCore.Portable.Data.Repos.Base
             return await _sendList(serialisedData, extra, "POST");
         }
 
+        public async Task<List<TEntity>> PostList<TRequest>(TRequest requestEntity, string extra = null, string verb = "POST")
+        {
+            var serialisedData = Serialise(requestEntity);
+
+            return await _sendList(serialisedData, extra, verb);
+        }
+
         public async Task<IHttpTransferResult> PostResult<TRequest>(TRequest entity, string extra = null)
         {
             var serialisedData = Serialise(entity);
@@ -113,6 +121,11 @@ namespace XamlingCore.Portable.Data.Repos.Base
         public async Task<TEntity> Get(string extra = null)
         {
             return await _send(null, extra, "GET");
+        }
+
+        public async Task<TEntity> Get(Guid id, string extra = null)
+        {
+            return await _send(null, "/" + id + extra, "GET");
         }
 
         public async Task<List<TEntity>> GetList(string extra = null)

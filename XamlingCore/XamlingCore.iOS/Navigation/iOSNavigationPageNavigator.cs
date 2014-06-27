@@ -12,24 +12,27 @@ using Xamarin.Forms;
 using XamlingCore.Portable.Contract.Navigation;
 using XamlingCore.Portable.Model.Navigation;
 using XamlingCore.Portable.View.ViewModel;
+using XamlingCore.Xamarin.Contract;
 
 namespace XamlingCore.iOS.Navigation
 {
-    public class iOSNavigator
+    public class iOSNavigationPageNavigator : IFrameNavigator
     {
-        private readonly XFrame _rootVm;
+        private readonly XFrame _rootFrame;
         private readonly IXNavigation _xNavigation;
         private readonly ILifetimeScope _container;
 
-        private UIWindow _window;
-        private NavigationPage _rootNavigationPage;
+        private readonly NavigationPage _rootNavigationPage;
+        
         private INavigation _xamarinNavigation;
-        public iOSNavigator(XFrame rootVm, IXNavigation xNavigation, ILifetimeScope container)
-        {
-            _rootVm = rootVm;
-            _xNavigation = xNavigation;
-            _container = container;
 
+        public iOSNavigationPageNavigator(XFrame rootFrame, NavigationPage page)
+        {
+
+            _rootFrame = rootFrame;
+            _xNavigation = rootFrame.Navigation;
+            _container = rootFrame.Container;
+            _rootNavigationPage = page;
 
             _configure();
         }
@@ -37,20 +40,14 @@ namespace XamlingCore.iOS.Navigation
         void _configure()
         {
             _xNavigation.Navigated += _xNavigation_Navigated;
-
-            _window = new UIWindow(UIScreen.MainScreen.Bounds);
             
             _rootNavigationPage.Popped += _rootNavigationPage_Popped;
             _rootNavigationPage.PoppedToRoot += _rootNavigationPage_PoppedToRoot;
             _rootNavigationPage.Pushed += _rootNavigationPage_Pushed;
             
             _xamarinNavigation = _rootNavigationPage.Navigation;
-            
-            _window.RootViewController = _rootNavigationPage.CreateViewController();
 
             _setView(NavigationDirection.Forward);
-
-            _window.MakeKeyAndVisible();
         }
 
         void _rootNavigationPage_Pushed(object sender, NavigationEventArgs e)
@@ -70,7 +67,7 @@ namespace XamlingCore.iOS.Navigation
 
         void _popRoot()
         {
-            _rootVm.NavigateHome();
+            _rootFrame.NavigateHome();
         }
 
         /// <summary>
@@ -89,11 +86,11 @@ namespace XamlingCore.iOS.Navigation
                 {
                     if (direction == NavigationDirection.Back)
                     {
-                        _rootVm.NavigateBack();
+                        _rootFrame.NavigateBack();
                     }
                     else
                     {
-                        _rootVm.NavigateTo(page.BindingContext);
+                        _rootFrame.NavigateTo(page.BindingContext);
                     }
                 }    
             }
@@ -140,7 +137,7 @@ namespace XamlingCore.iOS.Navigation
         {
             var currentPage = _rootNavigationPage.CurrentPage;
 
-            if (currentPage != null && currentPage.BindingContext != null && currentPage.BindingContext == _rootVm.CurrentContentObject)
+            if (currentPage != null && currentPage.BindingContext != null && currentPage.BindingContext == _rootFrame.CurrentContentObject)
             {
                 //This page is already correct (probably an out of XCore back)
                 return;
@@ -151,7 +148,7 @@ namespace XamlingCore.iOS.Navigation
 
         private async void _setView(NavigationDirection direction)
         {
-            while (!_rootVm.IsReady)
+            while (!_rootFrame.IsReady)
             {
                 await Task.Yield();
             }
@@ -171,6 +168,11 @@ namespace XamlingCore.iOS.Navigation
         void _xNavigation_Navigated(object sender, XNavigationEventArgs e)
         {
             _setView(e.Direction);
+        }
+
+        public Page Page
+        {
+            get { return _rootNavigationPage; }
         }
     }
 }

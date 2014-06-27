@@ -6,6 +6,7 @@ using Autofac;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using XamlingCore.iOS.Implementations;
+using XamlingCore.iOS.Navigation;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Contract.UI;
@@ -20,6 +21,9 @@ namespace XamlingCore.iOS.Glue.Modules
             builder.RegisterType<LoadStatusService>().As<ILoadStatusService>().SingleInstance();
 
             builder.Register(_ => new iOSDispatcher(new NSObject())).As<IDispatcher>().SingleInstance();
+
+            builder.RegisterType<iOSFrameManager>().AsSelf();
+            builder.RegisterType<iOSViewResolver>().AsImplementedInterfaces();
 
             base.Load(builder);
         }

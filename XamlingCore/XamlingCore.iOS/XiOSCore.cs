@@ -6,10 +6,18 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using XamlingCore.iOS.Navigation;
 using XamlingCore.Portable.Contract.Glue;
+using XamlingCore.Portable.Model.Navigation;
 using XamlingCore.Portable.View.ViewModel;
 
 namespace XamlingCore.iOS
 {
+    /// <summary>
+    /// Boots the app to the initial frame
+    /// </summary>
+    /// <typeparam name="TRootFrame"></typeparam>
+    /// <typeparam name="TRootVM"></typeparam>
+    /// <typeparam name="TInitialVM"></typeparam>
+    /// <typeparam name="TGlue"></typeparam>
     public class XiOSCore<TRootFrame,TRootVM, TInitialVM, TGlue> : XCore<TRootFrame, TRootVM, TInitialVM, TGlue>
         where TRootFrame : XFrame
         where TRootVM : XViewModel
@@ -17,12 +25,31 @@ namespace XamlingCore.iOS
         where TGlue : class, IGlue, new()
     {
 
-        private iOSNavigator _navigator;
+        private iOSFrameManager _frameManager;
+
+        private UIWindow _window;
+
+        public XiOSCore()
+        {
+            
+        }
 
         public void Init()
         {
             InitRoot();
-            _navigator = new iOSNavigator(RootFrame, RootFrame.Navigation, RootFrame.Container);
+
+            var rootVm = RootFrame.CreateContentModel<TRootVM>();
+            var initialVm = rootVm.CreateContentModel<TInitialVM>();
+
+            _frameManager = RootFrame.Container.Resolve<iOSFrameManager>();
+
+            var initalViewController = _frameManager.Init(RootFrame, rootVm, initialVm);
+
+            _window = new UIWindow(UIScreen.MainScreen.Bounds);
+
+            _window.RootViewController = initalViewController;
+
+            _window.MakeKeyAndVisible();
         }
     }
 
