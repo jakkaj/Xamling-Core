@@ -1,12 +1,11 @@
 ﻿using Xamarin.Forms;
-using XamlingCore.Samples.View.MasterDetailHome;
-using XamlingCore.Samples.View.MasterDetailHome.AnotherMenuOption;
-using XamlingCore.Samples.View.MasterDetailHome.Home;
-using XamlingCore.Samples.View.MasterDetailHome.Menu;
+using XamlingCore.Samples.Views.MasterDetailHome.AnotherMenuOption;
+using XamlingCore.Samples.Views.MasterDetailHome.Home;
+using XamlingCore.Samples.Views.MasterDetailHome.Menu;
 using XamlingCore.XamarinThings.Content.MasterDetail;
 using XamlingCore.XamarinThings.Contract;
 
-namespace XamlingCore.Samples.View.Root.MasterDetailRoot
+namespace XamlingCore.Samples.Views.Root.MasterDetailRoot
 {
     public class RootMasterDetailViewModel : XMasterDetailViewModel
     {

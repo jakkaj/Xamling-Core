@@ -19,6 +19,24 @@ namespace XamlingCore.iOS.Navigation
             _scope = scope;
         }
 
+        public View ResolveView(object content)
+        {
+            var t = content.GetType();
+
+            var typeName = t.FullName.Replace("ViewModel", "View");
+            typeName = _filterTypeName(typeName);
+            var nextToType = Type.GetType(string.Format("{0}, {1}", typeName, t.Assembly.FullName));
+
+            var cell = _resolveView(nextToType);
+
+            if (cell != null)
+            {
+                return cell;
+            }
+
+            throw new Exception("Page could not be resolved: " + typeName);
+        }
+
         public Page Resolve(object content)
         {
             var t = content.GetType();
@@ -45,7 +63,7 @@ namespace XamlingCore.iOS.Navigation
                 return view;
             }
 
-            throw new Exception("Content could not be resolved: " + typeName);
+            throw new Exception("Page could not be resolved: " + typeName);
         }
 
         string _filterTypeName(string typeName)
@@ -69,6 +87,22 @@ namespace XamlingCore.iOS.Navigation
             {
                 var tView = _scope.Resolve(t) as Page;
 
+                return tView;
+            }
+
+            return null;
+        }
+
+        View _resolveView(Type t)
+        {
+            if (t == null)
+            {
+                return null;
+            }
+
+            if (_scope.IsRegistered(t))
+            {
+                var tView = _scope.Resolve(t) as View;
                 return tView;
             }
 

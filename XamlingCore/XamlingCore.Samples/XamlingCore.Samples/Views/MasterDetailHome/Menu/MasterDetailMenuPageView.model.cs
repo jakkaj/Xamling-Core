@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.Portable.View.ViewModel.Base;
-using XamlingCore.Samples.View.Tile.MenuOption;
+using XamlingCore.Samples.Views.Tile.MenuOption;
 
-namespace XamlingCore.Samples.View.MasterDetailHome.Menu
+namespace XamlingCore.Samples.Views.MasterDetailHome.Menu
 {
     public class MasterDetailMenuPageViewModel : DisplayListViewModel<MenuOptionViewModel, XViewModel>
     {

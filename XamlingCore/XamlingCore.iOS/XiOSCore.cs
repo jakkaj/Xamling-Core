@@ -9,6 +9,7 @@ using XamlingCore.iOS.Navigation;
 using XamlingCore.Portable.Contract.Glue;
 using XamlingCore.Portable.Model.Navigation;
 using XamlingCore.Portable.View.ViewModel;
+using XamlingCore.XamarinThings.Container;
 using XamlingCore.XamarinThings.Contract;
 
 namespace XamlingCore.iOS
@@ -59,6 +60,9 @@ namespace XamlingCore.iOS
             glue.Init();
 
             Container = glue.Container;
+
+            ContainerHost.Container = Container; //sometimes we need to resolve around the place outside of strucutre. 
+
             RootFrame = XFrame.CreateRootFrame<TRootFrame>(glue.Container.BeginLifetimeScope());            
         }
 

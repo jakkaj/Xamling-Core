@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
-using XamlingCore.Samples.View.MasterDetailHome;
 
-namespace XamlingCore.Samples.View.Home
+namespace XamlingCore.Samples.Views.Home
 {
     public class MainNavigationHomeViewModel : XViewModel
     {

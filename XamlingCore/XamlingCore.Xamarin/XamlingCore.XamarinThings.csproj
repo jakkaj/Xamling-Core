@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Container\ContainerHost.cs" />
+    <Compile Include="Content\Cells\DynamicContentCell.cs" />
+    <Compile Include="Content\Lists\XListView.cs" />
     <Compile Include="Content\MasterDetail\XMasterDetailView.cs" />
     <Compile Include="Content\Navigation\XNavigationPage.cs" />
     <Compile Include="Content\Navigation\XNavigationPageTypedView.cs" />

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
+using XamlingCore.XamarinThings.Content.Lists;
 
-namespace XamlingCore.Samples.View.MasterDetailHome.Menu
+namespace XamlingCore.Samples.Views.MasterDetailHome.Menu
 {
     public class MasterDetailMenuPageView : ContentPage
     {
@@ -13,6 +11,13 @@ namespace XamlingCore.Samples.View.MasterDetailHome.Menu
         {
             Icon = "settings.png";
             Title = "menu";
+
+
+            var list = new XListView();
+
+            list.SetBinding(ListView.ItemsSourceProperty, "Items");
+
+            Content = list;
         }
     }
 }
