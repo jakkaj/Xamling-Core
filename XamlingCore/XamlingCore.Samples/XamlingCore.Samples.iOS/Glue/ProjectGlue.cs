@@ -10,6 +10,7 @@ using XamlingCore.Portable.Contract.Glue;
 using XamlingCore.Portable.Glue;
 using XamlingCore.Portable.View.ViewModel.Base;
 using XamlingCore.Samples.iOS.Glue.Modules;
+using XamlingCore.XamarinThings.Glue;
 
 namespace XamlingCore.Samples.iOS.Glue
 {
@@ -23,6 +24,9 @@ namespace XamlingCore.Samples.iOS.Glue
            Builder.RegisterModule<ViewModelModule>();
            Builder.RegisterModule<ViewsModule>();
            Builder.RegisterModule<FramesModelModule>();
+
+           Builder.RegisterModule<XamarinGlue>();
+
            Container = Builder.Build();
        }
 

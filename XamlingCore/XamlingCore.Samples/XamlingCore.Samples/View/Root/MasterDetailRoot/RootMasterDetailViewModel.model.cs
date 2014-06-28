@@ -1,7 +1,7 @@
 ﻿using XamlingCore.Samples.View.MasterDetailHome;
-using XamlingCore.Samples.View.MasterDetailHome.Home.Root;
+using XamlingCore.Samples.View.MasterDetailHome.Menu;
+using XamlingCore.XamarinThings.Content.MasterDetail;
 using XamlingCore.XamarinThings.Contract;
-using XamlingCore.XamarinThings.ViewModel;
 
 namespace XamlingCore.Samples.View.Root.MasterDetailRoot
 {
@@ -17,11 +17,11 @@ namespace XamlingCore.Samples.View.Root.MasterDetailRoot
             //remember this vm + page combination hosts the actual MasterDetail view
             
 
-            //add a couple of pages. They just need to be ViewModels at this stage.
-            AddPage(CreateContentModel<MasterDetailHomeRootViewModel>());
+            //add a couple of pages. These view models are the root items that then point off to the real items.
+            AddPage(CreateContentModel<HomeItemViewModel>());
             AddPage(CreateContentModel<AnotherItemViewModel>());
 
-            SetMaster(CreateContentModel<HomeMasterViewModel>());
+            SetMaster(CreateContentModel<MasterDetailMenuPageViewModel>());
 
             Build();
 

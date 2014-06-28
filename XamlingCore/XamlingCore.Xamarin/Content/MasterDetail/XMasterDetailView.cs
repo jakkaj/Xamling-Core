@@ -1,10 +1,9 @@
 ﻿using System;
 using Xamarin.Forms;
-using XamlingCore.XamarinThings.ViewModel;
 
-namespace XamlingCore.XamarinThings.View
+namespace XamlingCore.XamarinThings.Content.MasterDetail
 {
-    public abstract class XMasterDetailView : MasterDetailPage
+    public class XMasterDetailView : MasterDetailPage
     {
         private XMasterDetailViewModel _viewModel;
 
@@ -33,12 +32,12 @@ namespace XamlingCore.XamarinThings.View
 
         void _setContent()
         {
-            if (_viewModel.MasterContent !=null && _viewModel.MasterContent != Master && Master == null)
+            if (_viewModel.MasterContent != null && _viewModel.MasterContent != Master && Master == null)
             {
                 Master = _viewModel.MasterContent;
             }
 
-            if (_viewModel.DetailContent!=null && _viewModel.DetailContent != Detail && Detail == null)
+            if (_viewModel.DetailContent != null && _viewModel.DetailContent != Detail && Detail == null)
             {
                 Detail = _viewModel.DetailContent;
             }

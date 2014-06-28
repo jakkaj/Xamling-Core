@@ -3,7 +3,6 @@ using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Contract;
 using XamlingCore.XamarinThings.Navigators;
-using XamlingCore.XamarinThings.ViewModel;
 
 namespace XamlingCore.XamarinThings.Frame
 {
@@ -27,14 +26,14 @@ namespace XamlingCore.XamarinThings.Frame
                 throw new InvalidOperationException("Could not resolve the inital views");
             }
 
-            _configureNavigation(rootFrame, rootViewModel, rootPage);
+            _configureNavigation(rootFrame, rootPage);
 
             rootFrame.Init();
 
             return rootPage;
         }
 
-        void _configureNavigation(XFrame rootFrame, XViewModel rootViewModel, Page rootPage)
+        void _configureNavigation(XFrame rootFrame, Page rootPage)
         {
             //Navigations pages need navigators (which means the child VM's can navigate in them)
             //Pages like master details don't, their base VM's handle the changing of pages etc...

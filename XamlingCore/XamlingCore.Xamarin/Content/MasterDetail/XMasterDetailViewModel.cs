@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
 using Autofac;
-using Autofac.Core;
 using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Contract;
 using XamlingCore.XamarinThings.Frame;
 
-namespace XamlingCore.XamarinThings.ViewModel
+namespace XamlingCore.XamarinThings.Content.MasterDetail
 {
     public abstract class XMasterDetailViewModel : XViewModel
     {
@@ -51,7 +49,7 @@ namespace XamlingCore.XamarinThings.ViewModel
         Page _showNavPage(XViewModel vm)
         {
             var frameManager = Container.Resolve<IFrameManager>();
-            var initalViewController = frameManager.Init(XFrame.CreateRootFrame<DefaultRootFrame>(Container), vm);
+            var initalViewController = frameManager.Init(XFrame.CreateRootFrame<XRootFrame>(Container), vm);
 
             return initalViewController;
         }

@@ -12,9 +12,9 @@ using XamlingCore.Portable.View.ViewModel;
 
 namespace XamlingCore.XamarinThings.Frame
 {
-    public class DefaultRootFrame : XFrame
+    public class XRootFrame : XFrame
     {
-        public DefaultRootFrame(ILifetimeScope c, ILoadStatusService systemTrayService, IOrientationService orientationService, ILocalisationService localisationService, IXNavigation xNavigationService, IDispatcher dispatcher) : base(c, systemTrayService, orientationService, localisationService, xNavigationService, dispatcher)
+        public XRootFrame(ILifetimeScope c, ILoadStatusService systemTrayService, IOrientationService orientationService, ILocalisationService localisationService, IXNavigation xNavigationService, IDispatcher dispatcher) : base(c, systemTrayService, orientationService, localisationService, xNavigationService, dispatcher)
         {
         }
 

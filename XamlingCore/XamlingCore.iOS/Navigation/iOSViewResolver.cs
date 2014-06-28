@@ -28,19 +28,40 @@ namespace XamlingCore.iOS.Navigation
             //Xamarin Forms will resolve this way
             var nextToType = Type.GetType(string.Format("{0}, {1}", typeName, t.Assembly.FullName));
 
-            if (_scope.IsRegistered(nextToType))
-            {
-                var tUiView = _scope.Resolve(nextToType) as Page;
-                
-                if (tUiView != null)
-                {
-                    tUiView.BindingContext = content;
-                }
+            var view = _resolve(nextToType);
 
-                return tUiView;
+            if (view == null)
+            {
+                //try doing one of it's base types
+                var typeNameBase = t.BaseType.FullName.Replace("ViewModel", "View");
+                var baseType = Type.GetType(string.Format("{0}, {1}", typeNameBase, t.BaseType.Assembly.FullName));
+                view = _resolve(baseType);
+            }
+
+            if (view != null)
+            {
+                view.BindingContext = content;
+
+                return view;
             }
 
             throw new Exception("Content could not be resolved");
+        }
+
+        Page _resolve(Type t)
+        {
+            if (t == null)
+            {
+                return null;
+            }
+            if (_scope.IsRegistered(t))
+            {
+                var tView = _scope.Resolve(t) as Page;
+
+                return tView;
+            }
+
+            return null;
         }
     }
 }

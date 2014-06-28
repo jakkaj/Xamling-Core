@@ -23,10 +23,10 @@ namespace XamlingCore.iOS.Glue.Modules
 
             builder.Register(_ => new iOSDispatcher(new NSObject())).As<IDispatcher>().SingleInstance();
 
-            builder.RegisterType<XFrameManager>().AsImplementedInterfaces();
+            
             builder.RegisterType<iOSViewResolver>().AsImplementedInterfaces();
 
-            builder.RegisterType<DefaultRootFrame>().AsSelf();
+            
 
             base.Load(builder);
         }
