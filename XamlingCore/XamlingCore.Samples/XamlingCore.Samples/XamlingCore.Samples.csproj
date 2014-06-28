@@ -44,6 +44,12 @@
     <Compile Include="View\Home\MainNavigationHomeView.xaml.cs">
       <DependentUpon>MainNavigationHomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Home\SecondNavigationView.model.cs">
+      <DependentUpon>SecondNavigationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Home\SecondNavigationView.xaml.cs">
+      <DependentUpon>SecondNavigationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MasterDetailHome\AnotherMenuOption\AnotherMenuOptionView.model.cs">
       <DependentUpon>AnotherMenuOptionView.xaml</DependentUpon>
     </Compile>
@@ -129,6 +135,12 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="View\MasterDetailHome\Home\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\Home\SecondNavigationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
