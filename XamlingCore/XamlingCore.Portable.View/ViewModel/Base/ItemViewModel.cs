@@ -20,7 +20,10 @@ namespace XamlingCore.Portable.View.ViewModel.Base
 
         protected virtual void OnItemChanged(T item)
         {
-
+            if (SelectionChanged != null)
+            {
+                SelectionChanged(this, EventArgs.Empty);
+            }
         }
 
         public T Item
@@ -39,5 +42,7 @@ namespace XamlingCore.Portable.View.ViewModel.Base
                 OnItemChanged(_item);
             }
         }
+
+        public event EventHandler SelectionChanged;
     }
 }

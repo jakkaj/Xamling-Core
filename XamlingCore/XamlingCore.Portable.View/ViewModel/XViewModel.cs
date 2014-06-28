@@ -225,7 +225,7 @@ namespace XamlingCore.Portable.View.ViewModel
             }
         }
 
-        protected internal XFrame ParentModel
+        public XFrame ParentModel
         {
             get
             {

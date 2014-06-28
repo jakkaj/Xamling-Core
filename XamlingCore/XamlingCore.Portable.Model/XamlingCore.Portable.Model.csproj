@@ -41,6 +41,7 @@
     <Compile Include="Cache\XCacheItem.cs" />
     <Compile Include="Contract\IEntity.cs" />
     <Compile Include="Contract\ISelectableItem.cs" />
+    <Compile Include="Contract\ISelectedItem.cs" />
     <Compile Include="Localisation\XLocalisedResources.cs" />
     <Compile Include="Location\XLocation.cs" />
     <Compile Include="Location\XLocationSearchResult.cs" />

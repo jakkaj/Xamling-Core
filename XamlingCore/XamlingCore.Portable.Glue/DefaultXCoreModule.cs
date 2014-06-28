@@ -52,7 +52,7 @@ namespace XamlingCore.Portable.Glue
             builder.RegisterType<EntityCache>().As<IEntityCache>().SingleInstance();
 
 
-            builder.RegisterType<XNavigationService>().As<IXNavigation>().SingleInstance();
+            builder.RegisterType<XNavigationService>().As<IXNavigation>();
 
             builder.RegisterType<HttpClientTransferrer>().As<IHttpTransferrer>().SingleInstance();
 

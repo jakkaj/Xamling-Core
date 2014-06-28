@@ -37,10 +37,12 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
                 Master = _viewModel.MasterContent;
             }
 
-            if (_viewModel.DetailContent != null && _viewModel.DetailContent != Detail && Detail == null)
+            if (_viewModel.DetailContent != null && _viewModel.DetailContent != Detail)
             {
                 Detail = _viewModel.DetailContent;
             }
+
+            IsPresented = false;
         }
 
         protected override void OnDisappearing()

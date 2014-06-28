@@ -16,6 +16,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Menu
             var list = new XListView();
 
             list.SetBinding(ListView.ItemsSourceProperty, "Items");
+            list.SetBinding(ListView.SelectedItemProperty, "SelectedItem");
 
             Content = list;
         }

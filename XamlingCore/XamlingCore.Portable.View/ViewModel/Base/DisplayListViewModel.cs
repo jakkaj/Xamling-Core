@@ -9,7 +9,8 @@ using XamlingCore.Portable.Model.Contract;
 
 namespace XamlingCore.Portable.View.ViewModel.Base
 {
-    public abstract class DisplayListViewModel<TWrapViewModelType, TEntityType> : XViewModel, IDataListViewModel<TEntityType>
+    public abstract class DisplayListViewModel<TWrapViewModelType, TEntityType> : XViewModel, 
+        IDataListViewModel<TEntityType>, ISelectedItem<TWrapViewModelType>, ISelectableItem<TEntityType>
        where TWrapViewModelType : XViewModel, ISelectableItem<TEntityType>
     {
 
@@ -25,6 +26,8 @@ namespace XamlingCore.Portable.View.ViewModel.Base
 
         protected virtual void OnItemSelected(TEntityType selectedItem)
         {
+            Item = selectedItem;
+
             if (SelectionChanged != null)
             {
                 SelectionChanged(this, EventArgs.Empty);
@@ -99,5 +102,7 @@ namespace XamlingCore.Portable.View.ViewModel.Base
                 OnPropertyChanged();
             }
         }
+
+        public TEntityType Item { get; private set; }
     }
 }

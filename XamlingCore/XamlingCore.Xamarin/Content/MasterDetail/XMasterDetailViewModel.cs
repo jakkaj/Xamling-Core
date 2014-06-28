@@ -37,6 +37,23 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
         protected void SetMaster(XViewModel masterPage)
         {
             _masterViewModel = masterPage;
+
+            var selectable = _masterViewModel as ISelectableItem<XViewModel>;
+            if (selectable != null)
+            {
+                selectable.SelectionChanged += selectable_SelectionChanged;
+            }
+        }
+
+        void selectable_SelectionChanged(object sender, EventArgs e)
+        {
+            var s = sender as ISelectableItem<XViewModel>;
+
+            if (s != null)
+            {
+                var currentVm = s.Item;
+                _showNavPage(currentVm);
+            }
         }
 
         protected void AddPage(XViewModel sectionPage)
@@ -62,40 +79,54 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
 
             var firstPage = SectionViewModels.First();
 
-            var page = _showNavPage(firstPage);
-
-            if (NavigationTint != null)
-            {
-                var navPage = page as NavigationPage;
-                if (navPage != null)
-                {
-                    navPage.Tint = NavigationTint.Value;
-                }
-            }
-
-            DetailContent = page;
+            _showNavPage(firstPage);
+            
 
             firstPage.OnActivated();
             _masterViewModel.OnActivated();
         }
 
-        Page _showNavPage(XViewModel vm)
+        void _showNavPage(XViewModel vm)
         {
             var frameManager = Container.Resolve<IFrameManager>();
 
             var rootFrame = XFrame.CreateRootFrame<XRootFrame>(Container);
+            vm.ParentModel = rootFrame; //this vm was created here, but we need to shove it to the new frame. 
+
             rootFrame.NavigateTo(vm);
 
             var rootNavigationVm = rootFrame.CreateContentModel<XNavigationPageViewModel>();
 
             var initalViewController = frameManager.Init(rootFrame, rootNavigationVm);
 
-            return initalViewController;
+            if (NavigationTint != null)
+            {
+                var navPage = initalViewController as NavigationPage;
+                if (navPage != null)
+                {
+                    navPage.Tint = NavigationTint.Value;
+                }
+            }
+
+            DetailContent = initalViewController;
         }
 
         void _onNavigateToPage(XViewModel navigateViewModel)
         {
 
+        }
+
+        public override void Dispose()
+        {
+            if (_masterViewModel == null) return;
+
+            var selectable = _masterViewModel as ISelectableItem<XViewModel>;
+            if (selectable != null)
+            {
+                selectable.SelectionChanged -= selectable_SelectionChanged;
+            }
+
+            base.Dispose();
         }
 
         public Page MasterContent
