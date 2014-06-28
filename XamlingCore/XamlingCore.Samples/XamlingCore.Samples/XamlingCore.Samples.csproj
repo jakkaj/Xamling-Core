@@ -44,20 +44,26 @@
     <Compile Include="View\Home\MainNavigationHomeView.xaml.cs">
       <DependentUpon>MainNavigationHomeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MasterDetailHome\AnotherItemView.model.cs">
-      <DependentUpon>AnotherItemView.xaml</DependentUpon>
+    <Compile Include="View\MasterDetailHome\AnotherMenuOption\AnotherMenuOptionView.model.cs">
+      <DependentUpon>AnotherMenuOptionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MasterDetailHome\AnotherItemView.xaml.cs">
-      <DependentUpon>AnotherItemView.xaml</DependentUpon>
+    <Compile Include="View\MasterDetailHome\AnotherMenuOption\AnotherMenuOptionView.xaml.cs">
+      <DependentUpon>AnotherMenuOptionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MasterDetailHome\HomeItemView.model.cs">
-      <DependentUpon>HomeItemView.xaml</DependentUpon>
+    <Compile Include="View\MasterDetailHome\Home\HomePageTwoView.model.cs">
+      <DependentUpon>HomePageTwoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MasterDetailHome\HomeItemView.xaml.cs">
-      <DependentUpon>HomeItemView.xaml</DependentUpon>
+    <Compile Include="View\MasterDetailHome\Home\HomePageTwoView.xaml.cs">
+      <DependentUpon>HomePageTwoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MasterDetailHome\Home\Root\MasterDetailHomeRootView.cs" />
-    <Compile Include="View\MasterDetailHome\Home\Root\MasterDetailHomeRootViewModel.cs" />
+    <Compile Include="View\MasterDetailHome\Home\HomeView.model.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\MasterDetailHome\Home\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="View\MasterDetailHome\Menu\MasterDetailMenuPageView.cs" />
     <Compile Include="View\MasterDetailHome\Menu\MasterDetailMenuPageView.model.cs" />
     <Compile Include="View\Root\MasterDetailRoot\RootMasterDetailViewModel.model.cs" />
@@ -108,19 +114,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="View\MasterDetailHome\HomeItemView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="View\MasterDetailHome\AnotherItemView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="View\Home\MainNavigationHomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\MasterDetailHome\Home\HomePageTwoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\MasterDetailHome\AnotherMenuOption\AnotherMenuOptionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\MasterDetailHome\Home\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

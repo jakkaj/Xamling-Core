@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace XamlingCore.Samples.View.MasterDetailHome
+namespace XamlingCore.Samples.View.MasterDetailHome.Home
 {
-    public partial class AnotherItemView : ContentPage
+    public partial class HomeView : ContentPage
     {
-        public AnotherItemView()
+        public HomeView()
         {
             InitializeComponent();
         }

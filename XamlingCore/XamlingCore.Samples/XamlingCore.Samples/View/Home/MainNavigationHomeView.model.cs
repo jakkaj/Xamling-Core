@@ -31,7 +31,7 @@ namespace XamlingCore.Samples.View.Home
         }
         void _onNextPage()
         {
-            NavigateTo<AnotherItemViewModel>();
+            //NavigateTo<AnotherItemViewModel>();
         }
 
         public string MainText

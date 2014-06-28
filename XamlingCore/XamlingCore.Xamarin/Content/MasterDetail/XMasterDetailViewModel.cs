@@ -3,6 +3,7 @@ using System.Linq;
 using Autofac;
 using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
+using XamlingCore.XamarinThings.Content.Navigation;
 using XamlingCore.XamarinThings.Contract;
 using XamlingCore.XamarinThings.Frame;
 
@@ -49,7 +50,13 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
         Page _showNavPage(XViewModel vm)
         {
             var frameManager = Container.Resolve<IFrameManager>();
-            var initalViewController = frameManager.Init(XFrame.CreateRootFrame<XRootFrame>(Container), vm);
+
+            var rootFrame = XFrame.CreateRootFrame<XRootFrame>(Container);
+            rootFrame.NavigateTo(vm);
+
+            var rootNavigationVm = rootFrame.CreateContentModel<XNavigationPageViewModel>();
+
+            var initalViewController = frameManager.Init(rootFrame, rootNavigationVm);
 
             return initalViewController;
         }

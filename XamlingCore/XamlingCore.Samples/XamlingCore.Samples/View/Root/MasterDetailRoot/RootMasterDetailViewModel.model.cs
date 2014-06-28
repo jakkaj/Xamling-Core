@@ -1,4 +1,6 @@
 ﻿using XamlingCore.Samples.View.MasterDetailHome;
+using XamlingCore.Samples.View.MasterDetailHome.AnotherMenuOption;
+using XamlingCore.Samples.View.MasterDetailHome.Home;
 using XamlingCore.Samples.View.MasterDetailHome.Menu;
 using XamlingCore.XamarinThings.Content.MasterDetail;
 using XamlingCore.XamarinThings.Contract;
@@ -18,8 +20,8 @@ namespace XamlingCore.Samples.View.Root.MasterDetailRoot
             
 
             //add a couple of pages. These view models are the root items that then point off to the real items.
-            AddPage(CreateContentModel<HomeItemViewModel>());
-            AddPage(CreateContentModel<AnotherItemViewModel>());
+            AddPage(CreateContentModel<HomeViewModel>());
+            AddPage(CreateContentModel<AnotherMenuOptionViewModel>());
 
             SetMaster(CreateContentModel<MasterDetailMenuPageViewModel>());
 

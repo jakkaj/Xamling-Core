@@ -7,13 +7,13 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
 
-namespace XamlingCore.Samples.View.MasterDetailHome
+namespace XamlingCore.Samples.View.MasterDetailHome.Home
 {
-    public class HomeItemViewModel : XViewModel
+    public class HomeViewModel : XViewModel
     {
         public ICommand NextPageCommand { get; set; }
-        
-        public HomeItemViewModel()
+
+        public HomeViewModel()
         {
             Title = "Home";
             NextPageCommand = new Command(_nextPage);
@@ -21,7 +21,7 @@ namespace XamlingCore.Samples.View.MasterDetailHome
 
         void _nextPage()
         {
-            NavigateTo<AnotherItemViewModel>();
+            NavigateTo<HomePageTwoViewModel>();
         }
     }
 }

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using XamlingCore.Portable.View.ViewModel;
 
-namespace XamlingCore.Samples.View.MasterDetailHome
+namespace XamlingCore.Samples.View.MasterDetailHome.Home
 {
-    public class AnotherItemViewModel : XViewModel
+    public class HomePageTwoViewModel : XViewModel
     {
 
     }
