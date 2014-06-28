@@ -1,4 +1,5 @@
-﻿using XamlingCore.Samples.View.MasterDetailHome;
+﻿using Xamarin.Forms;
+using XamlingCore.Samples.View.MasterDetailHome;
 using XamlingCore.Samples.View.MasterDetailHome.AnotherMenuOption;
 using XamlingCore.Samples.View.MasterDetailHome.Home;
 using XamlingCore.Samples.View.MasterDetailHome.Menu;
@@ -15,14 +16,13 @@ namespace XamlingCore.Samples.View.Root.MasterDetailRoot
 
         public override void OnInitialise()
         {
-            //build the child pages
-            //remember this vm + page combination hosts the actual MasterDetail view
-            
+            NavigationTint = Color.Silver;
 
-            //add a couple of pages. These view models are the root items that then point off to the real items.
+            //add a couple of pages.
             AddPage(CreateContentModel<HomeViewModel>());
             AddPage(CreateContentModel<AnotherMenuOptionViewModel>());
 
+            //Add the master view (which is like the menu bit the flies out)
             SetMaster(CreateContentModel<MasterDetailMenuPageViewModel>());
 
             Build();

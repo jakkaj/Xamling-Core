@@ -2,6 +2,7 @@
 using MonoTouch.UIKit;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 using XamlingCore.iOS;
 using XamlingCore.Samples.iOS.Glue;
 using XamlingCore.Samples.View.Home;
@@ -31,15 +32,28 @@ namespace XamlingCore.Samples.iOS
         {
             Forms.Init();
 
+            _configurePretties();
+
             //boot using standard navigation page 
-            var x = new XiOSCore<XRootFrame, XNavigationPageTypedViewModel<MainNavigationHomeViewModel>, ProjectGlue>();
-            x.Init();
+            //var x = new XiOSCore<XRootFrame, XNavigationPageTypedViewModel<MainNavigationHomeViewModel>, ProjectGlue>();
+            //x.Init();
             
             //boot using master detail setup
-            //var x = new XiOSCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue>();
-            //x.Init();
+            var x = new XiOSCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue>();
+            x.Init();
 
             return true;
+        }
+
+        void _configurePretties()
+        {
+            UINavigationBar.Appearance.BackgroundColor = UIColor.FromRGBA(0, 0, 0, 0);
+            UINavigationBar.Appearance.TintColor = Color.Blue.ToUIColor();
+            UINavigationBar.Appearance.BarTintColor = UIColor.White;
+            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes()
+            {
+                TextColor = UIColor.White
+            });
         }
     }
 }

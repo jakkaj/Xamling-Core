@@ -21,6 +21,8 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
 
         public Command<XViewModel> NavigateToViewModelCommand { get; set; }
 
+        public Color? NavigationTint { get; set; }
+
         protected XMasterDetailViewModel(IViewResolver viewResolver)
         {
             _viewResolver = viewResolver;
@@ -44,7 +46,18 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             var masterAreaView = _viewResolver.Resolve(_masterViewModel);
             MasterContent = masterAreaView;
             
-            DetailContent = _showNavPage(SectionViewModels.First());
+            var page = _showNavPage(SectionViewModels.First());
+
+            if (NavigationTint != null)
+            {
+                var navPage = page as NavigationPage;
+                if (navPage != null)
+                {
+                    navPage.Tint = NavigationTint.Value;
+                }
+            }
+
+            DetailContent = page;
         }
 
         Page _showNavPage(XViewModel vm)
