@@ -67,8 +67,6 @@
     <Compile Include="View\MasterDetailHome\Menu\MasterDetailMenuPageView.cs" />
     <Compile Include="View\MasterDetailHome\Menu\MasterDetailMenuPageView.model.cs" />
     <Compile Include="View\Root\MasterDetailRoot\RootMasterDetailViewModel.model.cs" />
-    <Compile Include="View\Root\NavPageRoot\RootNavigationView.cs" />
-    <Compile Include="View\Root\NavPageRoot\RootNavigationView.model.cs" />
     <Compile Include="XCore\MasterDetailRootFrame.cs" />
     <Compile Include="XCore\NavigationPageRootFrame.cs" />
   </ItemGroup>

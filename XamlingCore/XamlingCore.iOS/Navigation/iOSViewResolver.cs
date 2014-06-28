@@ -24,8 +24,7 @@ namespace XamlingCore.iOS.Navigation
             var t = content.GetType();
 
             var typeName = t.FullName.Replace("ViewModel", "View");
-
-            //Xamarin Forms will resolve this way
+            typeName = _filterTypeName(typeName);
             var nextToType = Type.GetType(string.Format("{0}, {1}", typeName, t.Assembly.FullName));
 
             var view = _resolve(nextToType);
@@ -34,6 +33,7 @@ namespace XamlingCore.iOS.Navigation
             {
                 //try doing one of it's base types
                 var typeNameBase = t.BaseType.FullName.Replace("ViewModel", "View");
+                typeNameBase = _filterTypeName(typeNameBase);
                 var baseType = Type.GetType(string.Format("{0}, {1}", typeNameBase, t.BaseType.Assembly.FullName));
                 view = _resolve(baseType);
             }
@@ -45,7 +45,18 @@ namespace XamlingCore.iOS.Navigation
                 return view;
             }
 
-            throw new Exception("Content could not be resolved");
+            throw new Exception("Content could not be resolved: " + typeName);
+        }
+
+        string _filterTypeName(string typeName)
+        {
+            if (typeName.IndexOf("`") == -1)
+            {
+                return typeName;
+            }
+            var result = typeName.Substring(0, typeName.IndexOf("`"));
+            return result;
+
         }
 
         Page _resolve(Type t)

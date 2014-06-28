@@ -4,7 +4,9 @@ using MonoTouch.UIKit;
 using Xamarin.Forms;
 using XamlingCore.iOS;
 using XamlingCore.Samples.iOS.Glue;
+using XamlingCore.Samples.View.Home;
 using XamlingCore.Samples.View.Root.MasterDetailRoot;
+using XamlingCore.XamarinThings.Content.Navigation;
 using XamlingCore.XamarinThings.Frame;
 
 namespace XamlingCore.Samples.iOS
@@ -30,11 +32,12 @@ namespace XamlingCore.Samples.iOS
             Forms.Init();
 
             //boot using standard navigation page 
-            //var x = new XiOSCore<RootFrame, RootNavigationViewModel, HomeViewModel, ProjectGlue>();
+            var x = new XiOSCore<XRootFrame, XNavigationPageTypedViewModel<MainNavigationHomeViewModel>, ProjectGlue>();
+            x.Init();
             
             //boot using master detail setup
-            var x = new XiOSCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue>();
-            x.Init();
+            //var x = new XiOSCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue>();
+            //x.Init();
 
             return true;
         }

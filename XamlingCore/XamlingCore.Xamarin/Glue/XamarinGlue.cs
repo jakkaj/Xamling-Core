@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using Xamarin.Forms;
+using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Content.MasterDetail;
 using XamlingCore.XamarinThings.Content.Navigation;
 using XamlingCore.XamarinThings.Frame;
@@ -25,6 +26,9 @@ namespace XamlingCore.XamarinThings.Glue
 
             builder.RegisterType<XNavigationPageView>().AsSelf();
             builder.RegisterType<XNavigationPageViewModel>().AsSelf();
+
+            builder.RegisterType<XNavigationPageTypedView>().AsSelf();
+            builder.RegisterGeneric(typeof (XNavigationPageTypedViewModel<>)).AsSelf();
 
             base.Load(builder);
         }

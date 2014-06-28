@@ -38,6 +38,8 @@
   <ItemGroup>
     <Compile Include="Content\MasterDetail\XMasterDetailView.cs" />
     <Compile Include="Content\Navigation\XNavigationPage.cs" />
+    <Compile Include="Content\Navigation\XNavigationPageTypedView.cs" />
+    <Compile Include="Content\Navigation\XNavigationPageTypeView.model.cs" />
     <Compile Include="Content\Navigation\XNavigationPageView.model.cs" />
     <Compile Include="Contract\IFrameNavigator.cs" />
     <Compile Include="Contract\IViewResolver.cs" />
