@@ -19,6 +19,11 @@ namespace XamlingCore.Samples.View.MasterDetailHome.Home
             NextPageCommand = new Command(_nextPage);
         }
 
+        public override void OnInitialise()
+        {
+            base.OnInitialise();
+        }
+
         void _nextPage()
         {
             NavigateTo<HomePageTwoViewModel>();

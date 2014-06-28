@@ -68,6 +68,7 @@
     <Compile Include="Services\INetworkService.cs" />
     <Compile Include="Services\IOrientationService.cs" />
     <Compile Include="UI\IDispatcher.cs" />
+    <Compile Include="ViewModels\IItemViewModel.cs" />
     <Compile Include="ViewModels\IMoreTileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@ using XamlingCore.Portable.Model.Contract;
 
 namespace XamlingCore.Portable.View.ViewModel.Base
 {
-    public abstract class DisplayListViewModel<TWrapViewModelType, TEntityType> : XViewModel
+    public abstract class DisplayListViewModel<TWrapViewModelType, TEntityType> : XViewModel, IDataListViewModel<TEntityType>
        where TWrapViewModelType : XViewModel, ISelectableItem<TEntityType>
     {
 
@@ -17,6 +17,9 @@ namespace XamlingCore.Portable.View.ViewModel.Base
 
         private TWrapViewModelType _selectedItem;
         private ObservableCollection<TWrapViewModelType> _items;
+
+        //this is so the parent VM can pass data in. This is not mandatory (the supers might like to get their own data)
+        private ObservableCollection<TEntityType> _dataList; 
 
         private bool _noItems;
 
@@ -26,6 +29,11 @@ namespace XamlingCore.Portable.View.ViewModel.Base
             {
                 SelectionChanged(this, EventArgs.Empty);
             }
+        }
+
+        protected void UpdateItemCount()
+        {
+            NoItems = Items == null || Items.Count == 0;
         }
 
         void _onItemChanged()
@@ -78,6 +86,16 @@ namespace XamlingCore.Portable.View.ViewModel.Base
             set
             {
                 _noItems = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<TEntityType> DataList
+        {
+            get { return _dataList; }
+            set
+            {
+                _dataList = value; 
                 OnPropertyChanged();
             }
         }

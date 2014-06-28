@@ -57,6 +57,7 @@
     <Compile Include="ViewModel\Base\DisplayListViewModel.cs" />
     <Compile Include="ViewModel\Base\GroupItemViewModel.cs" />
     <Compile Include="ViewModel\Base\GroupListViewModel.cs" />
+    <Compile Include="ViewModel\Base\ItemViewModel.cs" />
     <Compile Include="ViewModel\Base\NotifyBase.cs" />
     <Compile Include="ViewModel\Base\ViewModelBase.cs" />
     <Compile Include="ViewModel\XFrame.cs" />
