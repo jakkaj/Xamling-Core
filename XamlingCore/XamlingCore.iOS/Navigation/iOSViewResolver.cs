@@ -31,6 +31,8 @@ namespace XamlingCore.iOS.Navigation
 
             if (cell != null)
             {
+                cell.BindingContext = content;
+                
                 return cell;
             }
 

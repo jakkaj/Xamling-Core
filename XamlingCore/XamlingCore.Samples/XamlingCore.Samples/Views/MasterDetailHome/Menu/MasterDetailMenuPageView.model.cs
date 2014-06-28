@@ -24,7 +24,10 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Menu
 
             foreach (var item in DataList)
             {
-                var i = CreateContentModel<MenuOptionViewModel>(_ => _.Item = item);
+                var i = CreateContentModel<MenuOptionViewModel>();
+                
+                i.Item = item;
+                i.Title = item.Title;
 
                 Items.Add(i);
             }

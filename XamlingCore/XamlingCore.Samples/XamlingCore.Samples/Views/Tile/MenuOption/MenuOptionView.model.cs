@@ -10,6 +10,9 @@ namespace XamlingCore.Samples.Views.Tile.MenuOption
 {
     public class MenuOptionViewModel : ItemViewModel<XViewModel>
     {
-
+        public MenuOptionViewModel()
+        {
+            Title = "MenuOpt";
+        }
     }
 }

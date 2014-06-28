@@ -4,5 +4,9 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.AnotherMenuOption
 {
     public class AnotherMenuOptionViewModel : XViewModel
     {
+        public AnotherMenuOptionViewModel()
+        {
+            Title = "Another option";
+        }
     }
 }
