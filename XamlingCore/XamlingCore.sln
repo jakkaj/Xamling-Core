@@ -56,9 +56,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamarinThings", "XamarinThi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlingCore.XamarinThings", "XamlingCore.Xamarin\XamlingCore.XamarinThings.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{4782A8D2-EC29-4733-B923-E2CE32D38C5A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{0EE5D693-D1FD-47C4-8A21-9781B532137F}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamlingCore.Platform.Shared", "XamlingCore.Platform.Shared\XamlingCore.Platform.Shared.shproj", "{29BC5772-7E79-455A-BEF5-F4A5BFB8198C}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		XamlingCore.Platform.Shared\XamlingCore.Platform.Shared.projitems*{29bc5772-7e79-455a-bef5-f4a5bfb8198c}*SharedItemsImports = 13
+		XamlingCore.Platform.Shared\XamlingCore.Platform.Shared.projitems*{1ef4c889-a64b-49a7-a393-b37b6e371dfb}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
 		Ad-Hoc|ARM = Ad-Hoc|ARM
@@ -727,5 +733,7 @@ Global
 		{80059A62-CE8B-4807-BFFF-562F304B18D1} = {AACD62D6-334A-4D68-9B9E-8A9CBA477B7E}
 		{8E655987-8940-4D7E-A886-42BE70E1F1D6} = {A4F7149C-ACC7-4C8C-836D-621EA5E078F8}
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24} = {8E655987-8940-4D7E-A886-42BE70E1F1D6}
+		{0EE5D693-D1FD-47C4-8A21-9781B532137F} = {A4F7149C-ACC7-4C8C-836D-621EA5E078F8}
+		{29BC5772-7E79-455A-BEF5-F4A5BFB8198C} = {0EE5D693-D1FD-47C4-8A21-9781B532137F}
 	EndGlobalSection
 EndGlobal

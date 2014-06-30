@@ -7,6 +7,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using XamlingCore.iOS.Glue.Modules;
 using XamlingCore.Portable.Glue;
+using XamlingCore.XamarinThings.Glue;
 
 namespace XamlingCore.iOS.Glue
 {
@@ -15,8 +16,9 @@ namespace XamlingCore.iOS.Glue
         public override void Init()
         {
             base.Init();
+            
             Builder.RegisterModule<DefaultiOSModule>();
-
+            Builder.RegisterModule<XamarinGlue>();
             Builder.RegisterModule<DefaultXCoreModule>();
         }
     }

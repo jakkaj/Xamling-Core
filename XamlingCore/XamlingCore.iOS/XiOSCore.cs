@@ -65,7 +65,5 @@ namespace XamlingCore.iOS
 
             RootFrame = XFrame.CreateRootFrame<TRootFrame>(glue.Container.BeginLifetimeScope());            
         }
-
-
     }
 }

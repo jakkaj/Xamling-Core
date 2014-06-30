@@ -90,9 +90,6 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Glue\Modules\FramesModules.cs" />
-    <Compile Include="Glue\Modules\ViewModelModule.cs" />
-    <Compile Include="Glue\Modules\ViewsModule.cs" />
     <Compile Include="Glue\ProjectGlue.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
@@ -114,6 +111,10 @@
     <ProjectReference Include="..\..\XamlingCore.Portable.Glue\XamlingCore.Portable.Glue.csproj">
       <Project>{E908CD00-22C8-4F7B-BA99-8DDF32C5F656}</Project>
       <Name>XamlingCore.Portable.Glue</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
+      <Project>{568D9A09-151C-49B3-BEE5-71529FC6869D}</Project>
+      <Name>XamlingCore.Portable.Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
       <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>

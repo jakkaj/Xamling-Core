@@ -11,7 +11,6 @@ namespace XamlingCore.Portable.Glue
     public abstract class GlueBase : IGlue
     {
         protected ContainerBuilder Builder;
-
         
         public virtual void Init()
         {
