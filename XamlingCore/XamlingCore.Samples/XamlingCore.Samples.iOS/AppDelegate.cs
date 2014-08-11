@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XamlingCore.iOS;
 using XamlingCore.Samples.iOS.Glue;
+using XamlingCore.Samples.Views.Home;
 using XamlingCore.Samples.Views.Root.MasterDetailRoot;
 using XamlingCore.XamarinThings.Content.Navigation;
 using XamlingCore.XamarinThings.Frame;
@@ -19,7 +20,7 @@ namespace XamlingCore.Samples.iOS
     {
         // class-level declarations
         UIWindow window;
-
+        private XiOSCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue> xCore;
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
@@ -38,8 +39,8 @@ namespace XamlingCore.Samples.iOS
             //x.Init();
             
             //boot using master detail setup
-            var x = new XiOSCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue>();
-            x.Init();
+            xCore = new XiOSCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue>();
+            xCore.Init();
 
             return true;
         }
