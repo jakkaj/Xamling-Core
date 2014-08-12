@@ -86,7 +86,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Helpers\LocationHelpers.cs" />
-    <Compile Include="Implementations\Sensors\LocationTracking Sensor.cs" />
+    <Compile Include="Implementations\Sensors\LocationTrackingSensor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
