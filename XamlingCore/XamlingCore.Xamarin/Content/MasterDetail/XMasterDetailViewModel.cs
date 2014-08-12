@@ -93,8 +93,6 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             var rootFrame = XFrame.CreateRootFrame<XRootFrame>(Container);
             vm.ParentModel = rootFrame; //this vm was created here, but we need to shove it to the new frame. 
 
-            rootFrame.NavigateTo(vm);
-
             var rootNavigationVm = rootFrame.CreateContentModel<XNavigationPageViewModel>();
 
             var initalViewController = frameManager.Init(rootFrame, rootNavigationVm);
@@ -107,6 +105,8 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
                     navPage.Tint = NavigationTint.Value;
                 }
             }
+
+            rootFrame.NavigateTo(vm);
 
             DetailContent = initalViewController;
         }
