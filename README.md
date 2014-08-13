@@ -15,6 +15,9 @@ Windows 8 (https://channel9.msdn.com/Events/TechEd/Australia/2012/DEV324).
 
 At the moment it's specialising in Xamarin iOS as we work on the new version, but soon enough it will include everyting. 
 
+We've concentrated on making it awesome for Xamarin Form as well - with some of the other more native bits and view types coming soon. 
+
+
 The core idea for the library is to make it as element and simple as possible for developers to do their daily work. 
 
 The system is centered on the Autofac container and has a strong conventions. 
