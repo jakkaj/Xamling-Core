@@ -47,6 +47,7 @@
     <Compile Include="Contract\IFrameNavigator.cs" />
     <Compile Include="Contract\IViewResolver.cs" />
     <Compile Include="Contract\IFrameManager.cs" />
+    <Compile Include="Core\XCore.cs" />
     <Compile Include="Frame\XRootFrame.cs" />
     <Compile Include="Frame\XFrameManager.cs" />
     <Compile Include="Glue\XamarinGlue.cs" />
@@ -74,6 +75,10 @@
     <ProjectReference Include="..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
       <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
       <Name>XamlingCore.Portable.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
+      <Project>{568D9A09-151C-49B3-BEE5-71529FC6869D}</Project>
+      <Name>XamlingCore.Portable.Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
       <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>

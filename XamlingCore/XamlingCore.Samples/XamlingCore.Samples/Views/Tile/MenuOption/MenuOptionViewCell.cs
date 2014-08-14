@@ -8,7 +8,7 @@ namespace XamlingCore.Samples.Views.Tile.MenuOption
         {
             var l = new Label();
 
-            l.TextColor = Color.FromHex("AAAAAA");
+            l.TextColor = Color.FromHex("BBBBBB");
             l.SetBinding(Label.TextProperty, "Title");
 
             var label = new ContentView

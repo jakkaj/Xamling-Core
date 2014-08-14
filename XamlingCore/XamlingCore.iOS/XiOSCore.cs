@@ -12,10 +12,10 @@ using XamlingCore.Portable.Contract.Glue;
 using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Model.Navigation;
-using XamlingCore.Portable.Platform.Shared.Core;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Container;
 using XamlingCore.XamarinThings.Contract;
+using XamlingCore.XamarinThings.Core;
 
 namespace XamlingCore.iOS
 {

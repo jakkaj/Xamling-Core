@@ -138,10 +138,6 @@
       <Project>{568D9A09-151C-49B3-BEE5-71529FC6869D}</Project>
       <Name>XamlingCore.Portable.Messages</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\XamlingCore.Portable.Platform.Shared\XamlingCore.Portable.Platform.Shared.csproj">
-      <Project>{DB5661CC-0A23-4E46-A124-4408A3E8B29F}</Project>
-      <Name>XamlingCore.Portable.Platform.Shared</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
       <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
       <Name>XamlingCore.Portable.View</Name>

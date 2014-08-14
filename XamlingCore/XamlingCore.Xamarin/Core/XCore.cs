@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
 using XamlingCore.Portable.Contract.Glue;
 using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Container;
 
-namespace XamlingCore.Portable.Platform.Shared.Core
+namespace XamlingCore.XamarinThings.Core
 {
     public abstract class XCore<TRootFrame, TGlue>
         where TRootFrame : XFrame
