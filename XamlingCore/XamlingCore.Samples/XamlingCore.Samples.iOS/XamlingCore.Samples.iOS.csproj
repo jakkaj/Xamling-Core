@@ -102,6 +102,10 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="NativeViews\Storyboards\AnotherActualViewController.cs" />
+    <Compile Include="NativeViews\Storyboards\AnotherActualViewController.designer.cs">
+      <DependentUpon>AnotherActualViewController.cs</DependentUpon>
+    </Compile>
     <Compile Include="Glue\ProjectGlue.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
