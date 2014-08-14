@@ -13,6 +13,7 @@ namespace XamlingCore.Samples.iOS.Glue
            //Place the type of one of your view models here, so we can find its assembly and auto register all views and view models there.
            //do this for any assemblies where you need to resolve views and view models.
            XCoreAutoRegistration.RegisterAssembly(Builder, typeof(HomeViewModel));
+           XCoreAutoRegistration.RegisterAssembly(Builder, typeof(ProjectGlue));
            
            //you can also do Builder.RegisterModule<> etc just like with Autofac - look it up :)
 

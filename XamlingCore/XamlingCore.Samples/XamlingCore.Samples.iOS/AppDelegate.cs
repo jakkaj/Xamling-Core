@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XamlingCore.iOS;
 using XamlingCore.Samples.iOS.Glue;
+using XamlingCore.Samples.iOS.NativeViews;
 using XamlingCore.Samples.Views.Home;
 using XamlingCore.Samples.Views.Root.MasterDetailRoot;
 using XamlingCore.XamarinThings.Content.Navigation;

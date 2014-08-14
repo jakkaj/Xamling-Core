@@ -5,16 +5,18 @@
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{568D9A09-151C-49B3-BEE5-71529FC6869D}</ProjectGuid>
+    <ProjectGuid>{DB5661CC-0A23-4E46-A124-4408A3E8B29F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XamlingCore.Portable.Messages</RootNamespace>
-    <AssemblyName>XamlingCore.Portable.Messages</AssemblyName>
+    <RootNamespace>XamlingCore.Portable.Platform.Shared</RootNamespace>
+    <AssemblyName>XamlingCore.Portable.Platform.Shared</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,40 +37,43 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
-      <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
-      <Name>XamlingCore.Portable.Model</Name>
+    <ProjectReference Include="..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
+      <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
+      <Name>XamlingCore.Portable.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
+      <Project>{568D9A09-151C-49B3-BEE5-71529FC6869D}</Project>
+      <Name>XamlingCore.Portable.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
+      <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
+      <Name>XamlingCore.Portable.View</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Xamarin\XamlingCore.XamarinThings.csproj">
+      <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
+      <Name>XamlingCore.XamarinThings</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Device\PageOrientationChangedMessage.cs" />
-    <Compile Include="Device\SupportedOrientationChangedMessage.cs" />
-    <Compile Include="Location\LocationSettingsChangedMessage.cs" />
-    <Compile Include="Location\LowResLocationUpdatedMessage.cs" />
-    <Compile Include="Navigation\ForceAppExitUsingNavigation.cs" />
-    <Compile Include="Network\CouldNotContactServersErrorMessage.cs" />
-    <Compile Include="Network\NetworkChangedMessage.cs" />
-    <Compile Include="Network\NoNetworkErrorMessage.cs" />
+    <Compile Include="Core\XCore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\SettingsUpdatedMessage.cs" />
-    <Compile Include="System\ApplicationDeactivatedMessage.cs" />
-    <Compile Include="System\ApplicationReactivatedMessage.cs" />
-    <Compile Include="View\ShowNativeViewMessage.cs" />
-    <Compile Include="XamlingMessenger\XMessage.cs" />
-    <Compile Include="XamlingMessenger\XMessenger.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\portable-windows8+net45+wp8+MonoAndroid+MonoTouch"
-copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\wp8"
-copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\MonoAndroid"
-copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\MonoTouch"
-
-xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\portable-windows8+net45+wp8+MonoAndroid+MonoTouch"
-xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\wp8"
-xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\MonoAndroid"
-xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\MonoTouch"</PostBuildEvent>
-  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

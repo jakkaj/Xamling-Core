@@ -1,5 +1,7 @@
 ﻿using System.Windows.Input;
 using Xamarin.Forms;
+using XamlingCore.Portable.Messages.View;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.Samples.Views.MasterDetailHome.AnotherMenuOption;
 
@@ -15,6 +17,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
         {
             PopCommand = new Command(_onPop);
             NextCommand = new Command(_onNext);
+           
         }
 
         void _onNext()

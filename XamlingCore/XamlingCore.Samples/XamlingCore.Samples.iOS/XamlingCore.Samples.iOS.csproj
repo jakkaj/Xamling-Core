@@ -105,10 +105,16 @@
     <Compile Include="Glue\ProjectGlue.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="NativeViews\SomeNativeView.cs" />
+    <Compile Include="NativeViews\Storyboards\NativeStoryboardView.cs" />
+    <Compile Include="NativeViews\Storyboards\NativeStoryboardView.designer.cs">
+      <DependentUpon>NativeStoryboardView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Shared\Util\Color.cs" />
     <None Include="app.config" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <InterfaceDefinition Include="NativeViews\Storyboards\NativeStoryboardView.storyboard" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +133,10 @@
     <ProjectReference Include="..\..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
       <Project>{568D9A09-151C-49B3-BEE5-71529FC6869D}</Project>
       <Name>XamlingCore.Portable.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Portable.Platform.Shared\XamlingCore.Portable.Platform.Shared.csproj">
+      <Project>{DB5661CC-0A23-4E46-A124-4408A3E8B29F}</Project>
+      <Name>XamlingCore.Portable.Platform.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
       <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
