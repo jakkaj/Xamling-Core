@@ -87,7 +87,7 @@ namespace XamlingCore.iOS
                 {
                     throw new Exception("Could not resolve navtive view as UIViewController: " + t.FullName);
                 }
-
+                
                 _rootView.PresentViewController(controller, false, null);
             });
 

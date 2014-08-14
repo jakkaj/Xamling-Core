@@ -24,8 +24,8 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 
         void _onShowNativeView()
         {
-            //new ShowNativeViewMessage("XamlingCore.Samples.iOS.NativeViews.SomeNativeView").Send();
-            new ShowNativeViewMessage("NativeStoryboardView").Send();
+            new ShowNativeViewMessage("XamlingCore.Samples.iOS.NativeViews.SomeNativeView").Send();
+            //new ShowNativeViewMessage("NativeStoryboardView").Send();
         }
 
         void _nextPage()
