@@ -12,7 +12,8 @@ namespace XamlingCore.Portable.Contract.Navigation
         List<object> NavigationHistory { get; set; }
         object CurrentContentObject { get; set; }
         object PreviousContentObject { get; set; }
-        bool CanGoBack { get; set; }    
+        bool CanGoBack { get; set; }
+        object ModalContentObject { get; set; }
         void InsertIntoHistory(object obj);
         void ResetHistory();
         void NavigateTo(object content);
@@ -21,5 +22,6 @@ namespace XamlingCore.Portable.Contract.Navigation
         void NavigateBack();
         void NavigateBack(bool allowNullNavigation);
         event PropertyChangedEventHandler PropertyChanged;
+        void NavigateToModal(object content);
     }
 }

@@ -9,6 +9,7 @@ namespace XamlingCore.Portable.Model.Navigation
     public enum NavigationDirection
     {
         Forward,
-        Back
+        Back,
+        Modal
     }
 }

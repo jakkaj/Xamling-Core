@@ -5,12 +5,15 @@ using Xamarin.Forms;
 using XamlingCore.Portable.Contract.Navigation;
 using XamlingCore.Portable.Model.Navigation;
 using XamlingCore.Portable.View.ViewModel;
+using XamlingCore.XamarinThings.Content.Navigation;
 using XamlingCore.XamarinThings.Contract;
+using XamlingCore.XamarinThings.Frame;
 
 namespace XamlingCore.XamarinThings.Navigators
 {
     public class XNavigationPageNavigator : IFrameNavigator
     {
+        private readonly ILifetimeScope _scope;
         private readonly XFrame _rootFrame;
         private readonly IXNavigation _xNavigation;
         private readonly ILifetimeScope _container;
@@ -20,8 +23,9 @@ namespace XamlingCore.XamarinThings.Navigators
 
         private INavigation _xamarinNavigation;
 
-        public XNavigationPageNavigator(XFrame rootFrame, NavigationPage page, IViewResolver viewResolver)
+        public XNavigationPageNavigator(ILifetimeScope scope, XFrame rootFrame, NavigationPage page, IViewResolver viewResolver)
         {
+            _scope = scope;
             _rootFrame = rootFrame;
             _xNavigation = rootFrame.Navigation;
             _container = rootFrame.Container;
@@ -93,6 +97,29 @@ namespace XamlingCore.XamarinThings.Navigators
             }
         }
 
+        async void _navigationModal()
+        {
+            var vm = _xNavigation.ModalContentObject as XViewModel;
+
+            if (vm == null)
+            {
+                await _xamarinNavigation.PopModalAsync();
+                return;
+            }
+
+            var rootFrame = XFrame.CreateRootFrame<XRootFrame>(_scope);
+            var frameManager = _scope.Resolve<IFrameManager>();
+
+            vm.ParentModel = rootFrame;
+
+            var rootNavigationVm = rootFrame.CreateContentModel<XNavigationPageViewModel>();
+
+            var initalViewController = frameManager.Init(rootFrame, rootNavigationVm);
+            rootFrame.NavigateTo(vm);
+
+            await _xamarinNavigation.PushModalAsync(initalViewController);
+        }
+
         async void _navigationForward()
         {
             var vm = _xNavigation.CurrentContentObject;
@@ -134,12 +161,14 @@ namespace XamlingCore.XamarinThings.Navigators
             {
                 _navigationForward();
             }
-            else
+            else if (direction == NavigationDirection.Back)
             {
                 _navigationBackward();
             }
-
-
+            else
+            {
+                _navigationModal();
+            }
         }
 
         void _xNavigation_Navigated(object sender, XNavigationEventArgs e)

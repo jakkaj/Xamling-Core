@@ -381,6 +381,11 @@ namespace XamlingCore.Portable.View.ViewModel
 
         }
 
+        public void NavigateToModal(object content)
+        {
+            Navigation.NavigateToModal(content);
+        }
+
         public void NavigateTo(object content)
         {
             Navigation.NavigateTo(content, false);

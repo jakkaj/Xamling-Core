@@ -1,4 +1,5 @@
 using System;
+using Autofac;
 using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Contract;
@@ -8,10 +9,12 @@ namespace XamlingCore.XamarinThings.Frame
 {
     public class XFrameManager : IFrameManager
     {
+        private readonly ILifetimeScope _scope;
         private readonly IViewResolver _viewResolver;
 
-        public XFrameManager(IViewResolver viewResolver)
+        public XFrameManager(ILifetimeScope scope, IViewResolver viewResolver)
         {
+            _scope = scope;
             _viewResolver = viewResolver;
         }
 
@@ -39,7 +42,7 @@ namespace XamlingCore.XamarinThings.Frame
             //Pages like master details don't, their base VM's handle the changing of pages etc...
             if (rootPage is NavigationPage)
             {
-                FrameNavigator = new XNavigationPageNavigator(rootFrame, rootPage as NavigationPage, _viewResolver);
+                FrameNavigator = new XNavigationPageNavigator(_scope, rootFrame, rootPage as NavigationPage, _viewResolver);
             }
         }
 

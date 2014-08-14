@@ -16,6 +16,8 @@ namespace XamlingCore.Portable.View.Navigation
         private object _currentContentObject;
         private object _previousObject;
 
+        private object _modalContentObject;
+
         private bool _canGoBack;
 
         public event EventHandler<XNavigationEventArgs> Navigated;
@@ -34,6 +36,15 @@ namespace XamlingCore.Portable.View.Navigation
         {
             _navigationHistory.Clear();
             CanGoBack = false;
+        }
+
+        public void NavigateToModal(object content)
+        {
+            ModalContentObject = content;
+            if (Navigated != null)
+            {
+                Navigated(this, new XNavigationEventArgs(NavigationDirection.Modal));
+            }
         }
 
         public void NavigateTo(object content)
@@ -203,6 +214,16 @@ namespace XamlingCore.Portable.View.Navigation
             }
         }
 
+        public object ModalContentObject
+        {
+            get { return _modalContentObject; }
+            set
+            {
+                _modalContentObject = value;
+                OnPropertyChanged("ModalContentObject");
+            }
+        }
+
         public bool CanGoBack
         {
             get { return _canGoBack; }
@@ -212,5 +233,7 @@ namespace XamlingCore.Portable.View.Navigation
                 OnPropertyChanged("CanGoBack");
             }
         }
+
+        
     }
 }
