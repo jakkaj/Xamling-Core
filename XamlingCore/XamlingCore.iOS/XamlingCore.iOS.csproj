@@ -62,7 +62,7 @@
     <ProjectReference Include="..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
       <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
       <Name>XamlingCore.Portable.Model</Name>
-    </ProjectReference>    
+    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Util\XamlingCore.Portable.Util.csproj">
       <Project>{BF649817-277F-44C1-AF23-C90D6DAF5901}</Project>
       <Name>XamlingCore.Portable.Util</Name>
@@ -79,6 +79,10 @@
   <ItemGroup>
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
