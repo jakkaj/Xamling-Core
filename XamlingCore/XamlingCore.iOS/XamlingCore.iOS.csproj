@@ -42,6 +42,7 @@
     <Compile Include="Implementations\iOSDispatcher.cs" />
     <Compile Include="Implementations\LoadStatusService.cs" />
     <Compile Include="Implementations\LocalStorage.cs" />
+    <Compile Include="Implementations\LocationTrackingSensor.cs" />
     <Compile Include="Navigation\iOSViewResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XiOSCore.cs" />
