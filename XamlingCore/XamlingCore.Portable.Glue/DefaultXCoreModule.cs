@@ -42,12 +42,6 @@ namespace XamlingCore.Portable.Glue
 
             //Core utilities
             builder.RegisterType<JsonNETEntitySerialiser>().As<IEntitySerialiser>().SingleInstance();
-
-            builder.RegisterType<LocalStorageSettingsRepo>().As<ISettingsRepo>();     
-
-            //builder.RegisterType<LocationTrackingSensor>().As<ILocationTrackingSensor>().SingleInstance();
-
-            
             
             builder.RegisterType<SimpleHttpHttpTransfer>().As<ISimpleHttpTranferrer>().SingleInstance();
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XamlingCore.Portable.Contract.Cache;
 using XamlingCore.Portable.Contract.Repos;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Messages.Location;
@@ -16,81 +17,109 @@ namespace XamlingCore.Portable.Service.Settings
 {
     public class GeneralSettingsService : IGeneralSettingsService
     {
-        private readonly ISettingsRepo _generalSettingsRepo;
-
-        private List<GeneralSettingsEntity> _cache;
+        private readonly IEntityCache _entityCache;
 
         private readonly AsyncLock _lock = new AsyncLock();
 
-        public GeneralSettingsService(ISettingsRepo generalSettingsRepo)
+        private const string SETTINGS_KEY = "GeneralSettings";
+
+        public GeneralSettingsService(IEntityCache entityCache)
         {
-            _generalSettingsRepo = generalSettingsRepo;
+            _entityCache = entityCache;
         }
 
-        async Task _initCache()
+        async Task<List<GeneralSettingsEntity>> _getCache()
         {
-            if (_cache == null)
+            //note there is no async lock here, it's to be handled by the caller
+            var settings = await _entityCache.GetEntity<List<GeneralSettingsEntity>>(SETTINGS_KEY);
+
+            if (settings == null)
             {
-                _cache = await _generalSettingsRepo.Get();
+                settings = new List<GeneralSettingsEntity>();
+                await _entityCache.SetEntity(SETTINGS_KEY, settings);
+            }
+
+            return settings;
+
+        }
+        async Task _setCache(List<GeneralSettingsEntity> settings)
+        {
+            //note there is no async lock here, it's to be handled by the caller
+            await _entityCache.SetEntity(SETTINGS_KEY, settings);
+        }
+
+        async Task<GeneralSettingsEntity> _getSetting(string settingName)
+        {
+            var e = await _getCache();
+            return e.FirstOrDefault(_ => _.PropertyName == settingName);
+        }
+
+        async Task _setValue(string settingName, string value)
+        {
+            var settings = await _getCache();
+
+            var settingInstance = settings.FirstOrDefault(_ => _.PropertyName == settingName);
+            if (settingInstance == null)
+            {
+                settingInstance = new GeneralSettingsEntity { Id = Guid.NewGuid(), PropertyName = settingName };
+                settings.Add(settingInstance);
+            }
+
+            settingInstance.PropertyValue = value;
+
+            await _setCache(settings);
+        }
+
+        async Task _deleteValue(string settingName)
+        {
+            var settings = await _getCache();
+
+            var settingInstance = settings.FirstOrDefault(_ => _.PropertyName == settingName);
+
+            if (settingInstance != null)
+            {
+                settings.Remove(settingInstance);
+                await _setCache(settings);
             }
         }
 
-        async Task<GeneralSettingsEntity> _getCache(string settingName)
+        async Task _clearAll()
         {
-            using (var releaser = await _lock.LockAsync())
-            {
-                if (_cache == null)
-                {
-                    await _initCache();
-                }
-                return _cache.FirstOrDefault(_ => _.PropertyName == settingName);
-            }
+            await _entityCache.Delete<List<GeneralSettingsEntity>>(SETTINGS_KEY);
         }
 
         public async Task<string> Get(string settingName)
         {
-            var i = await _getCache(settingName);
-
-            return i != null ? i.PropertyValue : null;
+            using (var l = await _lock.LockAsync())
+            {
+                var i = await _getSetting(settingName);
+                return i != null ? i.PropertyValue : null;    
+            }
         }
 
         public async Task Set(string settingName, string settingValue)
         {
-            var i = await _getCache(settingName);
-            if (i == null)
+            using (var l = await _lock.LockAsync())
             {
-                i = new GeneralSettingsEntity { Id = Guid.NewGuid(), PropertyName = settingName };
-                _cache.Add(i);
+                await _setValue(settingName, settingValue);
             }
-
-            i.PropertyValue = settingValue;
-            
-            await _generalSettingsRepo.Set(i);
-            
             new SettingsUpdatedMessage().Send();
         }
 
         public async Task Delete(string settingName)
         {
-            var i = await _getCache(settingName);
-            if (i == null)
+            using (var l = await _lock.LockAsync())
             {
-                return;
+                await _deleteValue(settingName);
             }
-
-            await _generalSettingsRepo.Delete(i.Id);
         }
 
         public async Task ClearAll()
         {
-            await _initCache();
-
-            foreach (var item in _cache)
+            using (var l = await _lock.LockAsync())
             {
-                await _generalSettingsRepo.Delete(item.Id);
+                await _clearAll();
             }
-
-            _cache.Clear();
         }
 
         public async Task<bool> GetLocationEnabled()
