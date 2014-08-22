@@ -18,6 +18,7 @@ using XamlingCore.Portable.Service.Localisation;
 using XamlingCore.Portable.Service.Location;
 using XamlingCore.Portable.Service.Network;
 using XamlingCore.Portable.Service.Orientation;
+using XamlingCore.Portable.Service.Settings;
 using XamlingCore.Portable.View.Navigation;
 
 namespace XamlingCore.Portable.Glue
@@ -36,12 +37,13 @@ namespace XamlingCore.Portable.Glue
 
             //Core services
             builder.RegisterType<OrientationService>().As<IOrientationService>().SingleInstance();
+            builder.RegisterType<GeneralSettingsService>().As<IGeneralSettingsService>().SingleInstance();
             builder.RegisterType<LocationService>().As<ILocationService>().SingleInstance();
 
             //Core utilities
             builder.RegisterType<JsonNETEntitySerialiser>().As<IEntitySerialiser>().SingleInstance();
 
-            builder.RegisterType<LocalStorageSettingsRepo>().As<ISettingsRepo>();
+            builder.RegisterType<LocalStorageSettingsRepo>().As<ISettingsRepo>();     
 
             //builder.RegisterType<LocationTrackingSensor>().As<ILocationTrackingSensor>().SingleInstance();
 

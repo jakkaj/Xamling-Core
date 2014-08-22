@@ -20,14 +20,9 @@ namespace XamlingCore.iOS.Glue.Modules
         {
             builder.RegisterType<LocalStorage>().As<ILocalStorage>().SingleInstance();
             builder.RegisterType<LoadStatusService>().As<ILoadStatusService>().SingleInstance();
-
             builder.Register(_ => new iOSDispatcher(new NSObject())).As<IDispatcher>().SingleInstance();
-
-            
+            builder.RegisterType<LocationTrackingSensor>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<iOSViewResolver>().AsImplementedInterfaces();
-
-            
-
             base.Load(builder);
         }
     }

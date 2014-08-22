@@ -21,8 +21,7 @@ namespace XamlingCore.Portable.Service.Location
 
         AsyncLock _lock = new AsyncLock();
 
-        public LocationService(ILocationTrackingSensor locationSensor,
-            IGeneralSettingsService generalSettingsService)
+        public LocationService(ILocationTrackingSensor locationSensor, IGeneralSettingsService generalSettingsService)
         {
             _locationSensor = locationSensor;
             _generalSettingsService = generalSettingsService;
@@ -123,21 +122,51 @@ namespace XamlingCore.Portable.Service.Location
             {
                 var wasResolved = IsLocationResolved();
 
-                var loc = new XLocation();
+                //todo don't have AutoMapper configured - come back to this when configured
+                //CurrentLocation = Mapper.Map(_locationSensor.CurrentLocation, loc); //clone it
 
-                CurrentLocation = Mapper.Map(_locationSensor.CurrentLocation, loc); //clone it
+                var loc = new XLocation
+                {
+                    Accuracy = _locationSensor.CurrentLocation.Accuracy,
+                    IsEnabled = _locationSensor.CurrentLocation.IsEnabled,
+                    IsResolved = _locationSensor.CurrentLocation.IsResolved,
+                    Latitude = _locationSensor.CurrentLocation.Latitude,
+                    Longitude = _locationSensor.CurrentLocation.Longitude,
+                    Status = _locationSensor.CurrentLocation.Status
+                };
+
+                CurrentLocation = loc;
 
                 var isResolved = IsLocationResolved();
 
                 if (!wasResolved && isResolved)
                 {
-                    LowResLocation = Mapper.Map<XLocation>(CurrentLocation);
+                    LowResLocation = new XLocation
+                    {
+                        Latitude = CurrentLocation.Latitude,
+                        Accuracy = CurrentLocation.Accuracy,
+                        IsEnabled = CurrentLocation.IsEnabled,
+                        IsResolved = CurrentLocation.IsResolved,
+                        Longitude = CurrentLocation.Longitude,
+                        Status = CurrentLocation.Status
+                    };
 
                     new LowResLocationUpdatedMessage().Send();
                 }
                 else if (LowResLocation != null && _locationSensor.Distance(LowResLocation.Latitude, LowResLocation.Longitude, CurrentLocation) > 50)
                 {
-                    LowResLocation = Mapper.Map<XLocation>(CurrentLocation);
+                    //todo don't have AutoMapper configured - come back to this when configured
+                    //LowResLocation = Mapper.Map<XLocation>(CurrentLocation);
+
+                    LowResLocation = new XLocation
+                    {
+                        Latitude = CurrentLocation.Latitude,
+                        Accuracy = CurrentLocation.Accuracy,
+                        IsEnabled = CurrentLocation.IsEnabled,
+                        IsResolved = CurrentLocation.IsResolved,
+                        Longitude = CurrentLocation.Longitude,
+                        Status = CurrentLocation.Status
+                    };
                     new LowResLocationUpdatedMessage().Send();
                 }
 

@@ -36,6 +36,7 @@ namespace XamlingCore.iOS.Implementations
             _geolocator = new CLLocationManager {DesiredAccuracy = CLLocation.AccuracyBest, DistanceFilter = 1};
 
 		    _geolocator.LocationsUpdated += GeolocatorOnLocationsUpdated;
+            _geolocator.StartUpdatingLocation();
             
             IsTracking = true;
             _fire();
@@ -66,10 +67,9 @@ namespace XamlingCore.iOS.Implementations
 
         public Task<XLocation> GetQuickLocation()
         {
-            // need to work out the implementation for this 
-            // i think i need to start the listener but only
-            // listen to one event and then stop.
-            throw new NotImplementedException();
+            //todo need to put in single result delagate.
+            return Task.Factory.StartNew(() => new XLocation() { Latitude = 100, Longitude = 100});
+  
         }
 
         public bool IsTracking { get; set; }

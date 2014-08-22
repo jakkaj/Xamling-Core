@@ -40,12 +40,16 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         string _getFolderName()
         {
-            return "entity\\" + _name;
+            //todo: just pulled the directory back one level until we work this out
+            // return "entity\\" + _name;
+            return _name;
         }
 
         private string _getFile(Guid id)
         {
-            return string.Format("entity\\{0}\\{1}", _name, id);
+            //todo: just pulled the directory back one level until we work this out
+            // return string.Format("entity\\{0}\\{1}", _name, id);
+            return string.Format("{0}\\{1}", _name, id);
         }
 
         public async Task<List<T>> Get()
