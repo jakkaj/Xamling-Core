@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using MonoTouch.Foundation;
@@ -22,20 +23,22 @@ namespace XamlingCore.Tests.iOS.Tests.CacheTests
         {
             var cache = Container.Resolve<IEntityCache>();
 
-            AsyncContext.Run(async () =>
+            var msr = new ManualResetEvent(false);
+
+            Task.Run(async () =>
             {
                 var list = new List<string>();
 
                 await cache.SetEntity("EmptyList", list);
 
                 var a = cache.GetEntity<List<string>>("EmptyList", _serverGetListGuid, null, true, false);
-                //var b = cache.GetEntity<List<string>>("EmptyList", _serverGetListGuid, null, true, false);
-                //var cc = cache.GetEntity<List<string>>("EmptyList", _serverGetListGuid, null, true, false);
-                //var d = cache.GetEntity<List<string>>("EmptyList", _serverGetListGuid, null, true, false);
-                //var e = cache.GetEntity<List<string>>("EmptyList", _serverGetListGuid, null, true, false);
-                //var f = cache.GetEntity<List<string>>("EmptyList", _serverGetListGuid, null, true, false);
+                var b = cache.GetEntity<List<string>>("EmptyList", _serverGetListGuid, null, true, false);
+                var cc = cache.GetEntity<List<string>>("EmptyList", _serverGetListGuid, null, true, false);
+                var d = cache.GetEntity<List<string>>("EmptyList", _serverGetListGuid, null, true, false);
+                var e = cache.GetEntity<List<string>>("EmptyList", _serverGetListGuid, null, true, false);
+                var f = cache.GetEntity<List<string>>("EmptyList", _serverGetListGuid, null, true, false);
 
-                var result = await Task.WhenAll(a);
+                var result = await Task.WhenAll(a, b, cc, d, e, f);
 
                 var firsResult = result.FirstOrDefault();
 
@@ -43,14 +46,17 @@ namespace XamlingCore.Tests.iOS.Tests.CacheTests
 
                 Assert.IsTrue(firsResult.Count != 0);
 
-
                 var firstGuid = firsResult.FirstOrDefault();
-
+                
                 foreach (var item in result)
                 {
                     Assert.AreEqual(item.FirstOrDefault(), firstGuid);
                 }
+                msr.Set();
             });
+
+            var msrResult = msr.WaitOne(3000);
+            Assert.IsTrue(msrResult, "MSR not set, means assertion failed in task");
 
         }
         async Task<List<string>> _serverGetListGuid()
