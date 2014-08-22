@@ -120,8 +120,7 @@
   </Target>
   <Import Project="..\XamlingCore.Platform.Shared\XamlingCore.Platform.Shared.projitems" Label="Shared" Condition="Exists('..\XamlingCore.Platform.Shared\XamlingCore.Platform.Shared.projitems')" />
   <PropertyGroup>
-    <PostBuildEvent>copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\MonoTouch"
-xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\MonoTouch"</PostBuildEvent>
+    <PostBuildEvent>copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\MonoTouch"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
 </Project>

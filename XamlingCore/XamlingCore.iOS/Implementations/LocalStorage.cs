@@ -12,7 +12,7 @@ namespace XamlingCore.iOS.Implementations
     {
         public async System.Threading.Tasks.Task<bool> Copy(string source, string destinationFolder, string newName, bool replace = true)
         {
-            var _lock = await NamedLock.Get(destinationFolder + "\\" + newName);
+            var _lock = NamedLock.Get(destinationFolder + "\\" + newName);
             using (var releaser = await _lock.LockAsync())
             {
                 using (var store = IsolatedStorageFile.GetUserStoreForApplication())
@@ -25,7 +25,7 @@ namespace XamlingCore.iOS.Implementations
 
         public async System.Threading.Tasks.Task<bool> DeleteFile(string fileName)
         {
-            var _lock = await NamedLock.Get(fileName);
+            var _lock = NamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -43,7 +43,7 @@ namespace XamlingCore.iOS.Implementations
 
         public async System.Threading.Tasks.Task<bool> EnsureFolderExists(string folderPath)
         {
-            var _lock = await NamedLock.Get(folderPath);
+            var _lock = NamedLock.Get(folderPath);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -86,7 +86,7 @@ namespace XamlingCore.iOS.Implementations
 
         public async System.Threading.Tasks.Task<bool> IsZero(string fileName)
         {
-            var _lock = await NamedLock.Get(fileName);
+            var _lock = NamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -107,7 +107,7 @@ namespace XamlingCore.iOS.Implementations
 
         public async System.Threading.Tasks.Task<byte[]> Load(string fileName)
         {
-            var _lock = await NamedLock.Get(fileName);
+            var _lock = NamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -130,7 +130,7 @@ namespace XamlingCore.iOS.Implementations
 
         public async System.Threading.Tasks.Task<System.IO.Stream> LoadStream(string fileName)
         {
-            var _lock = await NamedLock.Get(fileName);
+            var _lock = NamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -150,7 +150,7 @@ namespace XamlingCore.iOS.Implementations
 
         public async System.Threading.Tasks.Task<string> LoadString(string fileName)
         {
-            var _lock = await NamedLock.Get(fileName);
+            var _lock = NamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -174,7 +174,7 @@ namespace XamlingCore.iOS.Implementations
 
         public async System.Threading.Tasks.Task Save(string fileName, byte[] data)
         {
-            var _lock = await NamedLock.Get(fileName);
+            var _lock = NamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -190,7 +190,7 @@ namespace XamlingCore.iOS.Implementations
 
         public async System.Threading.Tasks.Task SaveStream(string fileName, System.IO.Stream stream)
         {
-            var _lock = await NamedLock.Get(fileName);
+            var _lock = NamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -206,7 +206,7 @@ namespace XamlingCore.iOS.Implementations
 
         public async System.Threading.Tasks.Task<bool> SaveString(string fileName, string data)
         {
-            var _lock = await NamedLock.Get(fileName);
+            var _lock = NamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
