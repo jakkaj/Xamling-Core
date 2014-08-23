@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MonoTouch.CoreLocation;
 using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using XamlingCore.iOS.Implementations.Location;
 using XamlingCore.Portable.Contract.Device.Location;
 using XamlingCore.Portable.Model.Location;
 
@@ -13,71 +11,77 @@ namespace XamlingCore.iOS.Implementations
 {
     public class LocationTrackingSensor : ILocationTrackingSensor
     {
-        public event EventHandler LocationUpdated;
-
-        private CLLocationManager _geolocator;
+        private readonly TaskScheduler _scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+        private CancellationTokenSource _cancelSource;
+        private Geolocator _geolocator;
 
         public LocationTrackingSensor()
         {
-            init();
+            Init();
         }
 
-        void init()
-        {
-            CurrentLocation = new XLocation();
-        }
+        public event EventHandler LocationUpdated;
 
         public void StartTracking()
         {
+            Setup();
+
             CurrentLocation.IsEnabled = true;
 
             if (IsTracking) return;
 
-            _geolocator = new CLLocationManager {DesiredAccuracy = CLLocation.AccuracyBest, DistanceFilter = 1};
+            if (!_geolocator.IsListening)
+                _geolocator.StartListening(5000, 1, false);
 
-		    _geolocator.LocationsUpdated += GeolocatorOnLocationsUpdated;
-            _geolocator.StartUpdatingLocation();
-            
             IsTracking = true;
             _fire();
         }
 
-        private void GeolocatorOnLocationsUpdated(object sender, CLLocationsUpdatedEventArgs args)
-        {
-            foreach (var clLocation in args.Locations)
-            {
-                _sendUpdate(clLocation);
-            }
-        }
 
         public void StopTracking()
         {
             if (!IsTracking) return;
             CurrentLocation.IsEnabled = false;
             CurrentLocation.IsResolved = false;
-            _geolocator.LocationsUpdated -= GeolocatorOnLocationsUpdated;
-            _geolocator.StopUpdatingLocation();
+            _geolocator.PositionError -= OnListeningError;
+            _geolocator.PositionChanged -= OnPositionChanged;
+            _geolocator.StopListening();
 
             IsTracking = false;
 
-            _geolocator.Dispose();
             _geolocator = null;
-
         }
 
-        public Task<XLocation> GetQuickLocation()
+        public async Task<XLocation> GetQuickLocation()
         {
-            //todo need to put in single result delagate.
-            return Task.Factory.StartNew(() => new XLocation() { Latitude = 100, Longitude = 100});
-  
+            Setup();
+
+            var loc = new XLocation();
+
+            _cancelSource = new CancellationTokenSource();
+
+            await _geolocator.GetPositionAsync(5000, _cancelSource.Token, false)
+                .ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                        throw new Exception(((GeolocationException) t.Exception.InnerException).Error.ToString());
+                    if (t.IsCanceled)
+                        return new XLocation();
+                    loc.Latitude = t.Result.Latitude;
+                    loc.Longitude = t.Result.Longitude;
+                    loc.Accuracy = t.Result.Accuracy;
+                    return loc;
+                }, _scheduler);
+            return loc;
         }
+
 
         public bool IsTracking { get; set; }
         public XLocation CurrentLocation { get; private set; }
+
         public double Distance(double lat, double lng, XLocation b)
         {
-
-            CLLocation firstPoint = new CLLocation(lat, lng);
+            var firstPoint = new CLLocation(lat, lng);
             var secondPoint = new CLLocation(b.Latitude, b.Longitude);
 
             return firstPoint.DistanceFrom(secondPoint);
@@ -88,27 +92,59 @@ namespace XamlingCore.iOS.Implementations
             return CLLocationManager.LocationServicesEnabled;
         }
 
-        void _fire()
+        private void Init()
+        {
+            CurrentLocation = new XLocation();
+        }
+
+        private void Setup()
+        {
+            if (_geolocator != null)
+                return;
+
+            _geolocator = new Geolocator {DesiredAccuracy = 10};
+            _geolocator.PositionError += OnListeningError;
+            _geolocator.PositionChanged += OnPositionChanged;
+        }
+
+
+        private void CancelPosition(NSObject sender)
+        {
+            CancellationTokenSource cancel = _cancelSource;
+            if (cancel != null)
+                cancel.Cancel();
+        }
+
+
+        private void OnListeningError(object sender, PositionErrorEventArgs e)
+        {
+            throw new Exception(e.Error.ToString());
+        }
+
+        private void OnPositionChanged(object sender, PositionEventArgs e)
+        {
+            _sendUpdate(e.Position);
+        }
+
+        private void _fire()
         {
             if (LocationUpdated != null)
             {
                 LocationUpdated(this, EventArgs.Empty);
             }
         }
-        
-        void _sendUpdate(CLLocation location)
+
+        private void _sendUpdate(Position location)
         {
-            CurrentLocation.Accuracy = location.HorizontalAccuracy;
-            CurrentLocation.Latitude = location.Coordinate.Latitude;
-            CurrentLocation.Longitude = location.Coordinate.Longitude;
+            CurrentLocation.Accuracy = location.Accuracy;
+            CurrentLocation.Latitude = location.Latitude;
+            CurrentLocation.Longitude = location.Longitude;
 
             // assume that any location event that came through is valid
-            // and also assume this property means the location is legit
+            // and also assume this property means sorrthe location is legit
             CurrentLocation.IsResolved = true;
 
             _fire();
-
         }
-
     }
 }
