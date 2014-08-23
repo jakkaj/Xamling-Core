@@ -1,13 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
-using Nito.AsyncEx;
 using NUnit.Framework;
 using XamlingCore.Portable.Contract.Cache;
 using XamlingCore.Tests.iOS.Base;
@@ -68,21 +64,30 @@ namespace XamlingCore.Tests.iOS.Tests.CacheTests
             };
         }
         [Test]
-        public async Task Check_Zero_Lists()
+        public void Check_Zero_Lists()
         {
             var cache = Container.Resolve<IEntityCache>();
 
-            var list = new List<string>();
+            var msr = new ManualResetEvent(false);
 
-            await cache.SetEntity("EmptyList", list);
+            Task.Run(async () =>
+            {
+                var list = new List<string>();
 
-            var listGet = await cache.GetEntity<List<string>>("EmptyList", _serverGetList, null, true, true);
+                await cache.SetEntity("EmptyList", list);
 
-            Assert.IsTrue(listGet.Count == 0);
+                var listGet = await cache.GetEntity<List<string>>("EmptyList", _serverGetList, null, true, true);
 
-            var listGetFromServer = await cache.GetEntity<List<string>>("EmptyList", _serverGetList, null, true, false);
-            Assert.IsTrue(listGetFromServer.Count != 0);
-            Assert.AreEqual(listGetFromServer.FirstOrDefault(), "Jordan");
+                Assert.IsTrue(listGet.Count == 0);
+
+                var listGetFromServer = await cache.GetEntity<List<string>>("EmptyList", _serverGetList, null, true, false);
+                Assert.IsTrue(listGetFromServer.Count != 0);
+                Assert.AreEqual(listGetFromServer.FirstOrDefault(), "Jordan");
+                msr.Set();
+            });
+
+            var msrResult = msr.WaitOne(3000);
+            Assert.IsTrue(msrResult, "MSR not set, means assertion failed in task");
         }
 
         async Task<List<string>> _serverGetList()
@@ -93,30 +98,39 @@ namespace XamlingCore.Tests.iOS.Tests.CacheTests
             };
         }
         [Test]
-        public async Task Cache_Get_AWAITER()
+        public void Cache_Get_AWAITER()
         {
             var cache = Container.Resolve<IEntityCache>();
 
-            var cItem = await cache.GetEntity("AwaitedItem", () => GetItem("Awaited"), maxAge: TimeSpan.FromSeconds(5));
+            var msr = new ManualResetEvent(false);
 
-            Assert.IsNotNull(cItem);
-            Assert.AreEqual(cItem.Field, "Awaited");
+            Task.Run(async () =>
+            {
+                var cItem = await cache.GetEntity("AwaitedItem", () => GetItem("Awaited"), maxAge: TimeSpan.FromSeconds(5));
 
-            var cItem2 = await cache.GetEntity<CacheTest2>("AwaitedItem", TimeSpan.FromSeconds(5));
-            Assert.IsNotNull(cItem2);
-            Assert.AreEqual(cItem2.Field, "Awaited");
+                Assert.IsNotNull(cItem);
+                Assert.AreEqual(cItem.Field, "Awaited");
+
+                var cItem2 = await cache.GetEntity<CacheTest2>("AwaitedItem", TimeSpan.FromSeconds(5));
+                Assert.IsNotNull(cItem2);
+                Assert.AreEqual(cItem2.Field, "Awaited");
 
 
-            var cItem3 = await cache.GetEntity("AwaitedItem", () => GetItem("Awaited2"), maxAge: TimeSpan.FromSeconds(5));
+                var cItem3 = await cache.GetEntity("AwaitedItem", () => GetItem("Awaited2"), maxAge: TimeSpan.FromSeconds(5));
 
-            //the new item will not have done the call back, as it was cached
-            Assert.IsNotNull(cItem3);
-            Assert.AreEqual(cItem3.Field, "Awaited");
+                //the new item will not have done the call back, as it was cached
+                Assert.IsNotNull(cItem3);
+                Assert.AreEqual(cItem3.Field, "Awaited");
 
-            await cache.Delete<CacheTest2>("AwaitedItem");
-            var cItem4 = await cache.GetEntity("AwaitedItem", () => GetItem("Awaited3"), maxAge: TimeSpan.FromSeconds(5));
-            Assert.IsNotNull(cItem4);
-            Assert.AreEqual(cItem4.Field, "Awaited3");
+                await cache.Delete<CacheTest2>("AwaitedItem");
+                var cItem4 = await cache.GetEntity("AwaitedItem", () => GetItem("Awaited3"), maxAge: TimeSpan.FromSeconds(5));
+                Assert.IsNotNull(cItem4);
+                Assert.AreEqual(cItem4.Field, "Awaited3");
+                msr.Set();
+            });
+
+            var msrResult = msr.WaitOne(3000);
+            Assert.IsTrue(msrResult, "MSR not set, means assertion failed in task");
         }
 
         private async Task<CacheTest2> GetItem(string fieldName)
@@ -125,98 +139,118 @@ namespace XamlingCore.Tests.iOS.Tests.CacheTests
         }
 
         [Test]
-        public async Task Cache_Get_Set()
+        public void Cache_Get_Set()
         {
             var cache = Container.Resolve<IEntityCache>();
 
-            var l1 = new List<CacheTest1>();
-            var l2 = new List<CacheTest2>();
+            var msr = new ManualResetEvent(false);
 
-            for (var i = 0; i < 15; i++)
+            Task.Run(async () =>
             {
-                var c1 = new CacheTest1
+                var l1 = new List<CacheTest1>();
+                var l2 = new List<CacheTest2>();
+
+                for (var i = 0; i < 15; i++)
                 {
-                    Field = "F" + i
-                };
+                    var c1 = new CacheTest1
+                    {
+                        Field = "F" + i
+                    };
 
-                l1.Add(c1);
+                    l1.Add(c1);
 
-                await cache.SetEntity(c1.Field, c1);
+                    await cache.SetEntity(c1.Field, c1);
 
-                var c2 = new CacheTest2
-                {
-                    Field = "F" + i
-                };
+                    var c2 = new CacheTest2
+                    {
+                        Field = "F" + i
+                    };
 
-                l2.Add(c2);
+                    l2.Add(c2);
 
-                await cache.SetEntity(c2.Field, c2);
-            }
+                    await cache.SetEntity(c2.Field, c2);
+                }
 
-            await cache.SetEntity("List1", l1);
-            await cache.SetEntity("List2", l2);
+                await cache.SetEntity("List1", l1);
+                await cache.SetEntity("List2", l2);
 
-            var c1Out = await cache.GetEntity<List<CacheTest1>>("List1", TimeSpan.FromSeconds(5));
-            var c2Out = await cache.GetEntity<List<CacheTest2>>("List2", TimeSpan.FromSeconds(5));
+                var c1Out = await cache.GetEntity<List<CacheTest1>>("List1", TimeSpan.FromSeconds(5));
+                var c2Out = await cache.GetEntity<List<CacheTest2>>("List2", TimeSpan.FromSeconds(5));
 
-            Assert.IsNotNull(c1Out);
-            Assert.IsNotNull(c2Out);
+                Assert.IsNotNull(c1Out);
+                Assert.IsNotNull(c2Out);
 
-            Assert.AreEqual(c2Out.Count, 15);
-            Assert.AreEqual(c1Out.Count, 15);
+                Assert.AreEqual(c2Out.Count, 15);
+                Assert.AreEqual(c1Out.Count, 15);
 
-            await cache.Delete<List<CacheTest1>>("List1");
+                await cache.Delete<List<CacheTest1>>("List1");
 
-            var c1Out2 = await cache.GetEntity<List<CacheTest1>>("List1", TimeSpan.FromSeconds(5));
-            var c2Out2 = await cache.GetEntity<List<CacheTest2>>("List2", TimeSpan.FromSeconds(5));
+                var c1Out2 = await cache.GetEntity<List<CacheTest1>>("List1", TimeSpan.FromSeconds(5));
+                var c2Out2 = await cache.GetEntity<List<CacheTest2>>("List2", TimeSpan.FromSeconds(5));
 
-            var c1OutMissingBadName = await cache.GetEntity<List<CacheTest1>>("List3", TimeSpan.FromSeconds(5));
+                var c1OutMissingBadName = await cache.GetEntity<List<CacheTest1>>("List3", TimeSpan.FromSeconds(5));
 
-            Assert.IsNotNull(c2Out2);
-            Assert.IsNull(c1Out2);
-            Assert.IsNull(c1OutMissingBadName);
+                Assert.IsNotNull(c2Out2);
+                Assert.IsNull(c1Out2);
+                Assert.IsNull(c1OutMissingBadName);
 
-            var c1Out3 = await cache.GetEntity<List<CacheTest2>>("List1", TimeSpan.FromSeconds(5));
-            var c2Out3 = await cache.GetEntity<List<CacheTest1>>("List2", TimeSpan.FromSeconds(5));
+                var c1Out3 = await cache.GetEntity<List<CacheTest2>>("List1", TimeSpan.FromSeconds(5));
+                var c2Out3 = await cache.GetEntity<List<CacheTest1>>("List2", TimeSpan.FromSeconds(5));
 
-            Assert.IsNull(c2Out3);
-            Assert.IsNull(c1Out3);
+                Assert.IsNull(c2Out3);
+                Assert.IsNull(c1Out3);
 
-            var f1 = await cache.GetEntity<CacheTest1>("F1", TimeSpan.FromSeconds(5));
-            var f2 = await cache.GetEntity<CacheTest2>("F1", TimeSpan.FromSeconds(5));
+                var f1 = await cache.GetEntity<CacheTest1>("F1", TimeSpan.FromSeconds(5));
+                var f2 = await cache.GetEntity<CacheTest2>("F1", TimeSpan.FromSeconds(5));
 
-            Assert.IsNotNull(f1);
-            Assert.IsNotNull(f2);
+                Assert.IsNotNull(f1);
+                Assert.IsNotNull(f2);
 
 
-            await cache.Delete<CacheTest1>("F1");
+                await cache.Delete<CacheTest1>("F1");
 
-            var f12 = await cache.GetEntity<CacheTest1>("F1", TimeSpan.FromSeconds(5));
-            var f22 = await cache.GetEntity<CacheTest2>("F1", TimeSpan.FromSeconds(5));
+                var f12 = await cache.GetEntity<CacheTest1>("F1", TimeSpan.FromSeconds(5));
+                var f22 = await cache.GetEntity<CacheTest2>("F1", TimeSpan.FromSeconds(5));
 
-            Assert.IsNull(f12);
-            Assert.IsNotNull(f22);
+                Assert.IsNull(f12);
+                Assert.IsNotNull(f22);
+
+                msr.Set();
+            });
+
+            var msrResult = msr.WaitOne(3000);
+            Assert.IsTrue(msrResult, "MSR not set, means assertion failed in task");
         }
 
         [Test]
-        public async Task Cache_Timeout_test()
+        public void Cache_Timeout_test()
         {
             var cache = Container.Resolve<IEntityCache>();
 
-            var c2 = new CacheTest2
+            var msr = new ManualResetEvent(false);
+
+            Task.Run(async () =>
             {
-                Field = "FJK"
-            };
+                var c2 = new CacheTest2
+                {
+                    Field = "FJK"
+                };
 
-            await cache.SetEntity("FJK", c2);
+                await cache.SetEntity("FJK", c2);
 
-            var beforeTimeout = await cache.GetEntity<CacheTest2>("FJK", TimeSpan.FromSeconds(1));
+                var beforeTimeout = await cache.GetEntity<CacheTest2>("FJK", TimeSpan.FromSeconds(1));
 
-            await Task.Delay(2000);
-            var afterTimeout = await cache.GetEntity<CacheTest2>("FJK", TimeSpan.FromSeconds(1));
+                await Task.Delay(2000);
+                var afterTimeout = await cache.GetEntity<CacheTest2>("FJK", TimeSpan.FromSeconds(1));
 
-            Assert.IsNotNull(beforeTimeout);
-            Assert.IsNull(afterTimeout);
+                Assert.IsNotNull(beforeTimeout);
+                Assert.IsNull(afterTimeout);
+                msr.Set();
+            });
+
+            var msrResult = msr.WaitOne(3000);
+            Assert.IsTrue(msrResult, "MSR not set, means assertion failed in task");
+            
         }
 
     }
