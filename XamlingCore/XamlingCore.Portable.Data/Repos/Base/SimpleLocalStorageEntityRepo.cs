@@ -31,25 +31,21 @@ namespace XamlingCore.Portable.Data.Repos.Base
         {
             _name = typeof(T).Name;
             _name = _name.Replace("Entity", "");
+
             using (var l = await _lock.LockAsync())
             {
                 var exists = await _applicationDataHelper.EnsureFolderExists(_getFolderName());    
             }
-            
         }
 
         string _getFolderName()
         {
-            //todo: just pulled the directory back one level until we work this out
-            // return "entity\\" + _name;
-            return _name;
+            return "entity\\" + _name;
         }
 
         private string _getFile(Guid id)
         {
-            //todo: just pulled the directory back one level until we work this out
-            // return string.Format("entity\\{0}\\{1}", _name, id);
-            return string.Format("{0}\\{1}", _name, id);
+            return string.Format("entity\\{0}\\{1}", _name, id);
         }
 
         public async Task<List<T>> Get()

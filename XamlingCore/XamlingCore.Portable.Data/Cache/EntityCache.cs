@@ -111,7 +111,7 @@ namespace XamlingCore.Portable.Data.Cache
             {
                 cacheItem.DateStamp = DateTime.UtcNow;
             }
-            
+
             cacheItem.Item = item;
 
             _updateItem(item, cacheItem);
@@ -153,6 +153,8 @@ namespace XamlingCore.Portable.Data.Cache
         public async Task<T> GetEntity<T>(string key, Func<Task<T>> sourceTask, TimeSpan? maxAge = null,
             bool allowExpired = true, bool allowZeroList = true) where T : class, new()
         {
+            var locker = NamedLock.Get(key + "2");//this lock is to cover the gets
+
             var e = await GetEntity<T>(key, maxAge);
 
             if (e != null)
@@ -162,29 +164,31 @@ namespace XamlingCore.Portable.Data.Cache
                     return e;
                 }
             }
-
-            var e2 = await GetEntity<T>(key, maxAge);
             
-            var _lock = await NamedLock.Get(key);
-
             T result = null;
-
-            using (var l = await _lock.LockAsync())
+            
+            using (var l = await locker.LockAsync())
             {
-                if (e2 != null && !_emptyListFails(e2, allowZeroList))
+                //this checks to see if this entity was updated on another lock thread
+                e = await GetEntity<T>(key, maxAge);
+                
+                if (e != null)
                 {
-                    return e2;
+                    if (!_emptyListFails(e, allowZeroList))
+                    {
+                        return e;
+                    }
                 }
 
                 result = await sourceTask();
-            }
 
-            if (result != null)
-            {
-                _updateItemCacheSource(result, false);
-                await SetEntity<T>(key, result);
+                if (result != null)
+                {
+                    _updateItemCacheSource(result, false);
+                    await SetEntity<T>(key, result);
+                }
             }
-
+        
             if (result == null && allowExpired)
             {
                 return await GetEntity<T>(key, TimeSpan.MaxValue);
@@ -195,7 +199,7 @@ namespace XamlingCore.Portable.Data.Cache
 
         public async Task<T> GetEntity<T>(string key, TimeSpan? maxAge = null) where T : class, new()
         {
-            var locker = await NamedLock.Get(key);
+            var locker = NamedLock.Get(key + "3");
             using (var locked = await locker.LockAsync())
             {
                 if (maxAge == null)
@@ -233,7 +237,7 @@ namespace XamlingCore.Portable.Data.Cache
 
         public async Task<bool> SetEntity<T>(string key, T item) where T : class, new()
         {
-            var locker = await NamedLock.Get(key);
+            var locker = NamedLock.Get(key);
             using (var locked = await locker.LockAsync())
             {
                 var fullName = _getFullKey<T>(key);

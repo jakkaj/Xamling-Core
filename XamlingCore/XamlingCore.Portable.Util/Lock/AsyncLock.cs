@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -7,7 +8,7 @@ namespace XamlingCore.Portable.Util.Lock
 {
     //Thanks to Scott Hanselman and Stephen Toubs
     //http://www.hanselman.com/blog/ComparingTwoTechniquesInNETAsynchronousCoordinationPrimitives.aspx
-    
+
     public sealed class AsyncLock
     {
         private readonly SemaphoreSlim m_semaphore = new SemaphoreSlim(1, 1);
@@ -38,26 +39,33 @@ namespace XamlingCore.Portable.Util.Lock
 
     public static class NamedLock
     {
-        private static readonly Dictionary<string, AsyncLock> Locks = new Dictionary<string, AsyncLock>(); 
+        private static readonly Dictionary<string, AsyncLock> Locks = new Dictionary<string, AsyncLock>();
 
         private static readonly AsyncLock Locker = new AsyncLock();
 
-        public static async Task<AsyncLock> Get(string name)
+        static ManualResetEvent msr = new ManualResetEvent(true);
+
+        public static AsyncLock Get(string name)
         {
             if (Locks.ContainsKey(name))
             {
                 return Locks[name];
             }
-            using (var l = await Locker.LockAsync())
+            
+            msr.WaitOne();
+
+
+            if (Locks.ContainsKey(name))
             {
-                if (Locks.ContainsKey(name))
-                {
-                    return Locks[name];
-                }
-                var newLock = new AsyncLock();
-                Locks.Add(name, newLock);
-                return newLock;
+                return Locks[name];
             }
+
+            var newLock = new AsyncLock();
+            Locks.Add(name, newLock);
+
+            msr.Set();
+
+            return newLock;
         }
 
         public static async Task Clear()

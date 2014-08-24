@@ -8,7 +8,7 @@ using XamlingCore.Portable.Model.Settings;
 
 namespace XamlingCore.Portable.Contract.Repos
 {
-    public interface ISettingsRepo : ISimpleEntityRepo<GeneralSettingsEntity>
-    {
-    }
+    //public interface ISettingsRepo : ISimpleEntityRepo<GeneralSettingsEntity>
+    //{
+    //}
 }
