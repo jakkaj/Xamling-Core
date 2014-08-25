@@ -40,7 +40,7 @@ namespace XamlingCore.Samples.iOS
 
             // set your google analytics tracking id here
             // if you leave it as blank then google analytics calls will not be executed
-            GoogleAnalyticsService.TrackingId = "UA-54094832-1";
+            GoogleAnalyticsService.TrackingId = "";
             GoogleAnalyticsService.AppName = "XamlingCore.Samples.iOS";
             GoogleAnalyticsService.AppVersion = "1.0";
 
