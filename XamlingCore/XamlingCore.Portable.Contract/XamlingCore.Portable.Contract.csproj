@@ -63,6 +63,7 @@
     <Compile Include="Serialise\IEntitySerialiser.cs" />
     <Compile Include="Services\IApplicationBarService.cs" />
     <Compile Include="Services\IGeneralSettingsService.cs" />
+    <Compile Include="Services\IGoogleAnalyticsService.cs" />
     <Compile Include="Services\ILoadStatusService.cs" />
     <Compile Include="Services\ILocationService.cs" />
     <Compile Include="Services\INetworkService.cs" />

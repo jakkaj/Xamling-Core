@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Glue\iOSGlue.cs" />
     <Compile Include="Glue\Modules\DefaultiOSModule.cs" />
+    <Compile Include="Implementations\GoogleAnalyticsService.cs" />
     <Compile Include="Implementations\iOSDispatcher.cs" />
     <Compile Include="Implementations\LoadStatusService.cs" />
     <Compile Include="Implementations\LocalStorage.cs" />
@@ -84,6 +85,9 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="GoogleAnalytics.iOS">
+      <HintPath>..\Components\googleanalytics-3.0.7\lib\ios\GoogleAnalytics.iOS.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
@@ -111,6 +115,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="googleanalytics">
+      <Visible>False</Visible>
+      <Version>3.0.7</Version>
+    </XamarinComponentReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

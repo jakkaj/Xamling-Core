@@ -23,6 +23,7 @@ namespace XamlingCore.iOS.Glue.Modules
             builder.Register(_ => new iOSDispatcher(new NSObject())).As<IDispatcher>().SingleInstance();
             builder.RegisterType<LocationTrackingSensor>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<iOSViewResolver>().AsImplementedInterfaces();
+            builder.RegisterType<GoogleAnalyticsService>().AsImplementedInterfaces().SingleInstance();
             base.Load(builder);
         }
     }
