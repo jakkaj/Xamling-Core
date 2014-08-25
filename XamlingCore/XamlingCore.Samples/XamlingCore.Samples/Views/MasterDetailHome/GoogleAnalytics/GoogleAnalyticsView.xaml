@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+					   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+					   x:Class="XamlingCore.Samples.Views.MasterDetailHome.GoogleAnalytics.GoogleAnalyticsView">
+  <StackLayout>
+    <Label Text="Google Analytics Calls" HorizontalOptions="Center"/>
+    <Button Text="Send Event" Command="{Binding SendEventCommand}"/>
+    <Button Text="Send Screen" Command="{Binding SendScreenCommand}"/>
+    <Button Text="Send Timing" Command="{Binding SendTimingCommand}"/>
+    <Button Text="Send Exception" Command="{Binding SendExceptionCommand}"/>
+  </StackLayout>
+</ContentPage>

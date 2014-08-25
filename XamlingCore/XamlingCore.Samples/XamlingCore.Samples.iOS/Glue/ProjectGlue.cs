@@ -1,4 +1,5 @@
 using XamlingCore.iOS.Glue;
+using XamlingCore.iOS.Implementations;
 using XamlingCore.Platform.Shared.Glue;
 using XamlingCore.Samples.Views.MasterDetailHome.Home;
 
@@ -14,7 +15,8 @@ namespace XamlingCore.Samples.iOS.Glue
            //do this for any assemblies where you need to resolve views and view models.
            XCoreAutoRegistration.RegisterAssembly(Builder, typeof(HomeViewModel));
            XCoreAutoRegistration.RegisterAssembly(Builder, typeof(ProjectGlue));
-           
+           XCoreAutoRegistration.RegisterAssembly(Builder, typeof(GoogleAnalyticsService));
+
            //you can also do Builder.RegisterModule<> etc just like with Autofac - look it up :)
 
            Container = Builder.Build();

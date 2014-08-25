@@ -1,9 +1,12 @@
-﻿using MonoTouch.Foundation;
+﻿using System;
+using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XamlingCore.iOS;
+using XamlingCore.iOS.Implementations;
+using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Samples.iOS.Glue;
 using XamlingCore.Samples.iOS.NativeViews;
 using XamlingCore.Samples.Views.Home;
@@ -34,6 +37,12 @@ namespace XamlingCore.Samples.iOS
             Forms.Init();
 
             _configurePretties();
+
+            // set your google analytics tracking id here
+            // if you leave it as blank then google analytics calls will not be executed
+            GoogleAnalyticsService.TrackingId = "UA-54094832-1";
+            GoogleAnalyticsService.AppName = "XamlingCore.Samples.iOS";
+            GoogleAnalyticsService.AppVersion = "1.0";
 
             //boot using standard navigation page 
             //var x = new XiOSCore<XRootFrame, XNavigationPageTypedViewModel<MainNavigationHomeViewModel>, ProjectGlue>();
