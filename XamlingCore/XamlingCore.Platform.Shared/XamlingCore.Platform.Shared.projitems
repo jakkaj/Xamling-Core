@@ -13,7 +13,4 @@
     <Compile Include="$(MSBuildThisFileDirectory)Glue\XAutofacAutoRegisterExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Glue\XCoreAutoRegistrations.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)NewFolder\" />
-  </ItemGroup>
 </Project>
