@@ -38,12 +38,6 @@ namespace XamlingCore.Samples.iOS
 
             _configurePretties();
 
-            // set your google analytics tracking id here
-            // if you leave it as blank then google analytics calls will not be executed
-            GoogleAnalyticsService.TrackingId = "";
-            GoogleAnalyticsService.AppName = "XamlingCore.Samples.iOS";
-            GoogleAnalyticsService.AppVersion = "1.0";
-
             //boot using standard navigation page 
             //var x = new XiOSCore<XRootFrame, XNavigationPageTypedViewModel<MainNavigationHomeViewModel>, ProjectGlue>();
             //x.Init();

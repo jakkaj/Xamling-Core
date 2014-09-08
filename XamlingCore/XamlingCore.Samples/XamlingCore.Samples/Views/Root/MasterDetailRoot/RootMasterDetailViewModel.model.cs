@@ -23,7 +23,6 @@ namespace XamlingCore.Samples.Views.Root.MasterDetailRoot
             AddPage(CreateContentModel<HomeViewModel>());
             AddPage(CreateContentModel<AnotherMenuOptionViewModel>());
             AddPage(CreateContentModel<LocationViewModel>());
-            AddPage(CreateContentModel<GoogleAnalyticsViewModel>());
 
             //Add the master view (which is like the menu bit the flies out)
             SetMaster(CreateContentModel<MasterDetailMenuPageViewModel>());
