@@ -47,7 +47,8 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
 
         protected override void OnDisappearing()
         {
-            _viewModel.PropertyChanged -= _viewModel_PropertyChanged;
+            //don't clean up this stuff - this will run when a modal pops too, so when it unpops stuff no workies anymore
+            //_viewModel.PropertyChanged -= _viewModel_PropertyChanged;
             base.OnDisappearing();
         }
     }

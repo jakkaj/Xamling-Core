@@ -38,8 +38,8 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 
         void _nextPage()
         { 
-            //NavigateTo<HomePageTwoViewModel>();
-            NavigateToModal<HomePageTwoViewModel>();
+            NavigateTo<HomePageTwoViewModel>();
+            //NavigateToModal<HomePageTwoViewModel>();
         }
 
         
