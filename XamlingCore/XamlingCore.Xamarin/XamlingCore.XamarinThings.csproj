@@ -48,6 +48,7 @@
     <Compile Include="Contract\IViewResolver.cs" />
     <Compile Include="Contract\IFrameManager.cs" />
     <Compile Include="Core\XCore.cs" />
+    <Compile Include="Core\XCorePlatform.cs" />
     <Compile Include="Frame\XRootFrame.cs" />
     <Compile Include="Frame\XFrameManager.cs" />
     <Compile Include="Glue\XamarinGlue.cs" />

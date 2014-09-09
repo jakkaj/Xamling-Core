@@ -40,6 +40,8 @@ namespace XamlingCore.iOS
         {
             InitRoot();
 
+            XCorePlatform.Platform = XCorePlatform.XCorePlatforms.iOS;
+
             _root = RootFrame.CreateContentModel<TRootVM>();
             _frameManager = RootFrame.Container.Resolve<IFrameManager>();
 
