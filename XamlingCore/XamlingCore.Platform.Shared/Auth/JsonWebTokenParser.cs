@@ -21,11 +21,11 @@ namespace XamlingCore.Platform.Shared.Auth
         HS512
     }
 
-    public class JsonWebToken
+    public class JsonWebTokenParser
     {
         private static Dictionary<JwtHashAlgorithm, Func<byte[], byte[], byte[]>> HashAlgorithms;
 
-        static JsonWebToken()
+        static JsonWebTokenParser()
         {
             HashAlgorithms = new Dictionary<JwtHashAlgorithm, Func<byte[], byte[], byte[]>>
             {
@@ -62,12 +62,7 @@ namespace XamlingCore.Platform.Shared.Auth
             return string.Join(".", segments.ToArray());
         }
 
-        public static string Decode(string token, string key)
-        {
-            return Decode(token, key, true);
-        }
-
-        public static string Decode(string token, string key, bool verify)
+        public static string Decode(string token, string key, bool verify = true)
         {
             var parts = token.Split('.');
             var header = parts[0];

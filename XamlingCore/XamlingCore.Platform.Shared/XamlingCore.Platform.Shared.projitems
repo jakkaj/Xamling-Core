@@ -9,7 +9,7 @@
     <Import_RootNamespace>XamlingCore.Platform.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Auth\JsonWebToken.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Auth\JsonWebTokenParser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Glue\XAutofacAutoRegisterExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Glue\XCoreAutoRegistrations.cs" />
   </ItemGroup>
