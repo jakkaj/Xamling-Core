@@ -1,46 +1,87 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
-
+using Autofac;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using XamlingCore.iOS.Controls.Loader;
+using XamlingCore.iOS.Root;
 using XamlingCore.Portable.Contract.Services;
+using XamlingCore.Portable.Contract.UI;
+using XamlingCore.Portable.View.Special;
+using XamlingCore.XamarinThings.Container;
 
 namespace XamlingCore.iOS.Implementations
 {
-    public class LoadStatusService : ILoadStatusService
+    public class LoadStatusService : LoadStatusServiceBase
     {
-        public System.Threading.Tasks.Task Loader(System.Threading.Tasks.Task awaiter, string text = null)
+        private LoadingOverlayViewBase _spinnerInstance;
+
+        public LoadStatusService(IDispatcher dispatcher) : base(dispatcher)
         {
-            throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task<T> Loader<T>(System.Threading.Tasks.Task<T> awaiter, string text = null)
+        protected override void ShowIndicator(string text)
         {
-            throw new NotImplementedException();
-        }
-
-        public void PushLoader()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PopLoader()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsShown
-        {
-            get
+            if (!string.IsNullOrWhiteSpace(text))
             {
-                throw new NotImplementedException();
+                _hideTray();
+                _showFullScreen(text);
             }
-            set
+            else
             {
-                throw new NotImplementedException();
+                //don't show the tray loader if the full screen spinner is up
+                if (_spinnerInstance == null)
+                {
+                    _hideFullScreen();
+                    _showTray();    
+                }
             }
         }
+
+        protected override void HideIndicator()
+        {
+            _hideFullScreen();
+            _hideTray();
+        }
+
+        void _showFullScreen(string text)
+        {
+            if (_spinnerInstance != null)
+            {
+                _spinnerInstance.Text = text;
+                return;
+            }
+
+            _spinnerInstance = new LoadingOverlayView(UIScreen.MainScreen.Bounds);
+
+            _spinnerInstance.Text = text;
+
+            XiOSRoot.RootViewController.View.Add(_spinnerInstance);
+        }
+
+        void _hideFullScreen()
+        {
+            if (_spinnerInstance != null)
+            {
+               _spinnerInstance.RemoveFromSuperview();
+            }
+
+            _spinnerInstance = null;
+        }
+
+        void _hideTray()
+        {
+            UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
+        }
+
+        void _showTray()
+        {
+            UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
+        }
+
+        
     }
 }

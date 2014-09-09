@@ -8,6 +8,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
 using XamlingCore.iOS.Navigation;
+using XamlingCore.iOS.Root;
 using XamlingCore.Portable.Contract.Glue;
 using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
@@ -36,6 +37,13 @@ namespace XamlingCore.iOS
         private UIWindow _window;
         private UIViewController _rootView;
         private TRootVM _root;
+
+        public UIViewController RootView
+        {
+            get { return _rootView; }
+            set { _rootView = value; }
+        }
+
         public void Init()
         {
             InitRoot();
@@ -46,11 +54,14 @@ namespace XamlingCore.iOS
             _frameManager = RootFrame.Container.Resolve<IFrameManager>();
 
             var initalViewController = _frameManager.Init(RootFrame, _root);
-
+            
             _window = new UIWindow(UIScreen.MainScreen.Bounds);
 
-            _rootView = initalViewController.CreateViewController();
-            _window.RootViewController = _rootView;
+            RootView = initalViewController.CreateViewController();
+
+            XiOSRoot.RootViewController = RootView;
+
+            _window.RootViewController = RootView;
 
             _window.MakeKeyAndVisible();
         }
@@ -63,7 +74,7 @@ namespace XamlingCore.iOS
                 {
                     var sb = UIStoryboard.FromName(viewName, null);
                     var controller = sb.InstantiateInitialViewController() as UIViewController;
-                    _rootView.PresentViewController(controller, false, null);
+                    RootView.PresentViewController(controller, false, null);
                 });
                 return;
             }
@@ -90,7 +101,7 @@ namespace XamlingCore.iOS
                     throw new Exception("Could not resolve navtive view as UIViewController: " + t.FullName);
                 }
                 
-                _rootView.PresentViewController(controller, false, null);
+                RootView.PresentViewController(controller, false, null);
             });
 
 

@@ -229,42 +229,6 @@ namespace XamlingCore.Portable.View.ViewModel
             get { return Navigation.CanGoBack; }
         }
 
-        public bool IsLoading
-        {
-            get
-            {
-                return _isLoading;
-            }
-            set
-            {
-
-                _isLoading = value;
-                OnPropertyChanged("IsLoading");
-
-                if (value)
-                {
-                    _loadStatusService.PushLoader();
-                }
-                else
-                {
-                    _loadStatusService.PopLoader();
-                }
-            }
-        }
-
-        public bool IsFullScreenLoading
-        {
-            get
-            {
-                return _isFullScreenLoading;
-            }
-            set
-            {
-                _isFullScreenLoading = value;
-                OnPropertyChanged("IsFullScreenLoading");
-            }
-        }
-
 
         public IXNavigation Navigation
         {

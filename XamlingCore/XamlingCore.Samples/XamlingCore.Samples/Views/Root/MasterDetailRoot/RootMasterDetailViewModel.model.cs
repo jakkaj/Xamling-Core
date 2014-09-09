@@ -2,6 +2,7 @@
 using XamlingCore.Samples.Views.MasterDetailHome.AnotherMenuOption;
 using XamlingCore.Samples.Views.MasterDetailHome.GoogleAnalytics;
 using XamlingCore.Samples.Views.MasterDetailHome.Home;
+using XamlingCore.Samples.Views.MasterDetailHome.Loaders;
 using XamlingCore.Samples.Views.MasterDetailHome.Location;
 using XamlingCore.Samples.Views.MasterDetailHome.Menu;
 using XamlingCore.XamarinThings.Content.MasterDetail;
@@ -23,6 +24,7 @@ namespace XamlingCore.Samples.Views.Root.MasterDetailRoot
             AddPage(CreateContentModel<HomeViewModel>());
             AddPage(CreateContentModel<AnotherMenuOptionViewModel>());
             AddPage(CreateContentModel<LocationViewModel>());
+            AddPage(CreateContentModel<LoadersViewModel>());
 
             //Add the master view (which is like the menu bit the flies out)
             SetMaster(CreateContentModel<MasterDetailMenuPageViewModel>());

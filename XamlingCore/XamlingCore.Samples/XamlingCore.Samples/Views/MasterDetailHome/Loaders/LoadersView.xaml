@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+					   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+					   x:Class="XamlingCore.Samples.Views.MasterDetailHome.Loaders.LoadersView">
+  <StackLayout>
+    <Label Text="Loaders Demo" />
+
+    
+    <Button Text="Full screen, 5 sec" Command="{Binding FullScreenFiveSecCommand}"/>
+    <Button Text="Start a tray loader" Command="{Binding TrayAddCommand}"/>
+  </StackLayout>
+
+</ContentPage>

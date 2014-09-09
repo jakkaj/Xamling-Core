@@ -37,6 +37,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\Loader\LoadingOverlayView.cs" />
     <Compile Include="Glue\iOSGlue.cs" />
     <Compile Include="Glue\Modules\DefaultiOSModule.cs" />
     <Compile Include="Implementations\GoogleAnalyticsService.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="Implementations\Location\Position.cs" />
     <Compile Include="Navigation\iOSViewResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Root\XiOSRoot.cs" />
     <Compile Include="XiOSCore.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -183,22 +183,7 @@ namespace XamlingCore.Portable.View.ViewModel
                 OnPropertyChanged("Description");
             }
         }
-
-        /// <summary>
-        /// Shows system wide loading status, say in the system tray.
-        /// </summary>
-        public bool IsLoading
-        {
-            get
-            {
-                return ParentModel.IsLoading;
-            }
-            set
-            {
-                ParentModel.IsLoading = value;
-            }
-        }
-
+        
         /// <summary>
         /// Use to loading status on the current item, like an in place loader (which you will have to add). 
         /// </summary>
@@ -212,19 +197,7 @@ namespace XamlingCore.Portable.View.ViewModel
                 OnPropertyChanged();
             }
         }
-
-        public bool IsFullScreenLoading
-        {
-            get
-            {
-                return ParentModel.IsFullScreenLoading;
-            }
-            set
-            {
-                ParentModel.IsFullScreenLoading = value;
-            }
-        }
-
+    
         public XFrame ParentModel
         {
             get

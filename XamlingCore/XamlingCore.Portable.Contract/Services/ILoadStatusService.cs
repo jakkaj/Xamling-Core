@@ -6,8 +6,5 @@ namespace XamlingCore.Portable.Contract.Services
     {
         Task Loader(Task awaiter, string text = null);
         Task<T> Loader<T>(Task<T> awaiter, string text = null);
-        void PushLoader();
-        void PopLoader();
-        bool IsShown { get; set; }
     }
 }
