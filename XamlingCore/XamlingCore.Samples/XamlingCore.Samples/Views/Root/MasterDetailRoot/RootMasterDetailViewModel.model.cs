@@ -22,7 +22,7 @@ namespace XamlingCore.Samples.Views.Root.MasterDetailRoot
             NavigationTint = Color.Silver;
 
             //add a couple of pages.
-            AddPage(CreateContentModel<HomeViewModel>());
+            AddPage(CreateContentModel<HomeTabsViewModel>());
             AddPage(CreateContentModel<AnotherMenuOptionViewModel>());
             AddPage(CreateContentModel<LocationViewModel>());
             AddPage(CreateContentModel<LoadersViewModel>());
