@@ -8,21 +8,21 @@ using XamlingCore.Portable.Contract.ViewModels;
 using XamlingCore.Portable.Model.Contract;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.Portable.View.ViewModel.Base;
+using XamlingCore.XamarinThings.Content.Common;
 using XamlingCore.XamarinThings.Content.Navigation;
 using XamlingCore.XamarinThings.Contract;
 using XamlingCore.XamarinThings.Frame;
 
 namespace XamlingCore.XamarinThings.Content.MasterDetail
 {
-    public abstract class XMasterDetailViewModel : XViewModel
+    public abstract class XMasterDetailViewModel : SectionViewModel
     {
         private readonly IViewResolver _viewResolver;
         private Page _masterContent;
         private Page _detailContent;
 
         private XViewModel _masterViewModel;
-
-        private readonly List<XViewModel> _sectionViewModels = new List<XViewModel>();
+        
 
         public Command<XViewModel> NavigateToViewModelCommand { get; set; }
 
@@ -56,10 +56,7 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             }
         }
 
-        protected void AddPage(XViewModel sectionPage)
-        {
-            SectionViewModels.Add(sectionPage);
-        }
+        
 
         protected void Build()
         {
@@ -70,7 +67,7 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
                 throw new ArgumentException("Master view model must implement IItemViewModel<XViewModel> so the root master can pass in items to show");
             }
 
-            v.DataList = new ObservableCollection<XViewModel>(_sectionViewModels);
+            v.DataList = new ObservableCollection<XViewModel>(SectionViewModels);
 
             //Resolves the view and also sets the binding context
             //teh view that is associated with the view model will be used
@@ -149,9 +146,6 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             }
         }
 
-        public List<XViewModel> SectionViewModels
-        {
-            get { return _sectionViewModels; }
-        }
+        
     }
 }

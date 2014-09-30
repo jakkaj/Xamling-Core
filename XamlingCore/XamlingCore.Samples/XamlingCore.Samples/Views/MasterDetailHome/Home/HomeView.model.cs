@@ -9,6 +9,7 @@ using XamlingCore.Portable.Contract.Cache;
 using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.ViewModel;
+using XamlingCore.Samples.Views.MasterDetailHome.Tabs;
 
 namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 {
@@ -38,7 +39,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 
         void _nextPage()
         { 
-            NavigateTo<HomePageTwoViewModel>();
+            NavigateTo<HomeTabsViewModel>();
             //NavigateToModal<HomePageTwoViewModel>();
         }
 

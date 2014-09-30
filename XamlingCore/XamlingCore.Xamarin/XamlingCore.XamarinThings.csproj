@@ -38,12 +38,16 @@
   <ItemGroup>
     <Compile Include="Container\ContainerHost.cs" />
     <Compile Include="Content\Cells\DynamicContentCell.cs" />
+    <Compile Include="Content\Cells\DynamicContentPage.cs" />
+    <Compile Include="Content\Common\SectionViewModel.cs" />
     <Compile Include="Content\Lists\XListView.cs" />
     <Compile Include="Content\MasterDetail\XMasterDetailView.cs" />
     <Compile Include="Content\Navigation\XNavigationPage.cs" />
     <Compile Include="Content\Navigation\XNavigationPageTypedView.cs" />
     <Compile Include="Content\Navigation\XNavigationPageTypeView.model.cs" />
     <Compile Include="Content\Navigation\XNavigationPageView.model.cs" />
+    <Compile Include="Content\TabbedPages\XTabbedPageView.cs" />
+    <Compile Include="Content\TabbedPages\XTabbedPageViewModel.cs" />
     <Compile Include="Contract\IFrameNavigator.cs" />
     <Compile Include="Contract\IViewResolver.cs" />
     <Compile Include="Contract\IFrameManager.cs" />

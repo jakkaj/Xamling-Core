@@ -10,6 +10,8 @@ using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Samples.iOS.Glue;
 using XamlingCore.Samples.iOS.NativeViews;
 using XamlingCore.Samples.Views.Home;
+using XamlingCore.Samples.Views.MasterDetailHome.Home;
+using XamlingCore.Samples.Views.MasterDetailHome.Tabs;
 using XamlingCore.Samples.Views.Root.MasterDetailRoot;
 using XamlingCore.XamarinThings.Content.Navigation;
 using XamlingCore.XamarinThings.Frame;
@@ -24,7 +26,7 @@ namespace XamlingCore.Samples.iOS
     {
         // class-level declarations
         UIWindow window;
-        private XiOSCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue> xCore;
+        private XiOSCore<XRootFrame, HomeTabsViewModel, ProjectGlue> xCore;
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
@@ -43,7 +45,7 @@ namespace XamlingCore.Samples.iOS
             //x.Init();
             
             //boot using master detail setup
-            xCore = new XiOSCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue>();
+            xCore = new XiOSCore<XRootFrame, HomeTabsViewModel, ProjectGlue>();
             xCore.Init();
 
             return true;
