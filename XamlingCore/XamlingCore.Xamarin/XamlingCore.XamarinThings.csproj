@@ -49,6 +49,7 @@
     <Compile Include="Content\TabbedPages\XTabbedPageView.cs" />
     <Compile Include="Content\TabbedPages\XTabbedPageViewModel.cs" />
     <Compile Include="Contract\IFrameNavigator.cs" />
+    <Compile Include="Contract\IIconView.cs" />
     <Compile Include="Contract\IViewResolver.cs" />
     <Compile Include="Contract\IFrameManager.cs" />
     <Compile Include="Core\XCore.cs" />

@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
+using XamlingCore.XamarinThings.Contract;
 
-namespace XamlingCore.Samples.Views.MasterDetailHome.Tabs.Home
+namespace XamlingCore.Samples.Views.MasterDetailHome.Tabs.Home.First
 {
-    public class FirstContentView : ContentView
+    public class FirstContentView : ContentView, IIconView
     {
         public FirstContentView()
         {
             var l = new Label();
+
+            Icon = "settings_vertical.png";
 
             l.TextColor = Color.FromHex("BBBBBB");
             l.SetBinding(Label.TextProperty, "Title");
@@ -28,5 +26,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Tabs.Home
 
             Content = layout;
         }
+
+        public FileImageSource Icon { get; set; }
     }
 }

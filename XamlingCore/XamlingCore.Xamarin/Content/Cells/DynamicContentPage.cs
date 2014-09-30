@@ -29,7 +29,13 @@ namespace XamlingCore.XamarinThings.Content.Cells
             Content = v;
 
             SetBinding(TitleProperty, new Binding("Title"));
-            Icon = "settings.png";
+
+            var icon = Content as IIconView;
+            if (icon != null)
+            {
+                Icon = icon.Icon;
+            }
+
             base.OnBindingContextChanged();
         }
     }
