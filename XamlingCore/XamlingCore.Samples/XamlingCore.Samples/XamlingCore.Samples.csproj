@@ -90,6 +90,12 @@
     </Compile>
     <Compile Include="Views\MasterDetailHome\Menu\MasterDetailMenuPageView.cs" />
     <Compile Include="Views\MasterDetailHome\Menu\MasterDetailMenuPageView.model.cs" />
+    <Compile Include="Views\MasterDetailHome\Modal\ModalView.model.cs">
+      <DependentUpon>ModalView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Modal\ModalView.xaml.cs">
+      <DependentUpon>ModalView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MasterDetailHome\Tabs\HomeTabsView.cs" />
     <Compile Include="Views\MasterDetailHome\Tabs\HomeTabsView.model.cs" />
     <Compile Include="Views\MasterDetailHome\Tabs\Home\First\FirstContentView.cs" />
@@ -188,6 +194,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailHome\Modal\ModalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

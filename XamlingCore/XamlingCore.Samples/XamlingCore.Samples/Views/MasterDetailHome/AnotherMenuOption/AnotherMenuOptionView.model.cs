@@ -1,6 +1,8 @@
 ﻿using System.Windows.Input;
 using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
+using XamlingCore.Samples.Views.MasterDetailHome.Loaders;
+using XamlingCore.Samples.Views.MasterDetailHome.Modal;
 
 namespace XamlingCore.Samples.Views.MasterDetailHome.AnotherMenuOption
 {
@@ -16,7 +18,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.AnotherMenuOption
 
         void _onPop()
         {
-            NavigateToModal(null);
+            NavigateToModal<ModalViewModel>();
         }
     }
 }
