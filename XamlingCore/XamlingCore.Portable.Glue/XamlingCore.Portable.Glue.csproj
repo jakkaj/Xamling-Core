@@ -70,6 +70,7 @@
     <Compile Include="DefaultXCoreModule.cs" />
     <Compile Include="GlueBase.cs" />
     <Compile Include="Glue\XAutofacModule.cs" />
+    <Compile Include="Locale\XLocale.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

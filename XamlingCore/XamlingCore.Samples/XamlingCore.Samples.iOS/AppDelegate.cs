@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Runtime.Versioning;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
@@ -7,6 +9,7 @@ using Xamarin.Forms.Platform.iOS;
 using XamlingCore.iOS;
 using XamlingCore.iOS.Implementations;
 using XamlingCore.Portable.Contract.Services;
+using XamlingCore.Portable.Glue.Locale;
 using XamlingCore.Samples.iOS.Glue;
 using XamlingCore.Samples.iOS.NativeViews;
 using XamlingCore.Samples.Views.Home;
@@ -34,6 +37,8 @@ namespace XamlingCore.Samples.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            XLocale.CultureInfo = new CultureInfo(NSLocale.PreferredLanguages[0]);
+            
             Forms.Init();
 
             _configurePretties();
@@ -41,7 +46,7 @@ namespace XamlingCore.Samples.iOS
             //boot using standard navigation page 
             //var x = new XiOSCore<XRootFrame, XNavigationPageTypedViewModel<MainNavigationHomeViewModel>, ProjectGlue>();
             //x.Init();
-            
+            var c = XLocale.CultureInfo;
             //boot using master detail setup
             xCore = new XiOSCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue>();
             xCore.Init();

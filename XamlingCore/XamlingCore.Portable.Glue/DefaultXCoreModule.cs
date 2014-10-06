@@ -13,6 +13,7 @@ using XamlingCore.Portable.Data.Cache;
 using XamlingCore.Portable.Data.Repos;
 using XamlingCore.Portable.Data.Repos.Base;
 using XamlingCore.Portable.Data.Serialise;
+using XamlingCore.Portable.Glue.Locale;
 using XamlingCore.Portable.Net.Downloaders;
 using XamlingCore.Portable.Service.Localisation;
 using XamlingCore.Portable.Service.Location;
@@ -25,12 +26,11 @@ namespace XamlingCore.Portable.Glue
 {
     public class DefaultXCoreModule : Module
     {
-        public static CultureInfo CultureInfo { get; set; }
-        public static ResourceManager ResourceManager { get; set; }
+       
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(_ => new LocalisationService(CultureInfo, ResourceManager)).As<ILocalisationService>().SingleInstance();
+            builder.Register(_ => new LocalisationService(XLocale.CultureInfo, XLocale.ResourceManager)).As<ILocalisationService>().SingleInstance();
 
             builder.RegisterType<NetworkService>().As<INetworkService>().SingleInstance();
             builder.RegisterType<LocalStorageFileRepo>().As<ILocalStorageFileRepo>().SingleInstance();
