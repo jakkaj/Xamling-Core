@@ -13,6 +13,10 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Tabs
 {
     public class HomeTabsViewModel : XTabbedPageViewModel
     {
+        public HomeTabsViewModel()
+        {
+            Title = "Home";
+        }
         public override void OnInitialise()
         {
             AddPage(CreateContentModel<FirstContentViewModel>());
