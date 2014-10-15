@@ -1,5 +1,5 @@
 ﻿using Xamarin.Forms;
-using XamlingCore.XamarinThings.Content.Cells;
+using XamlingCore.XamarinThings.Content.Dynamic;
 
 namespace XamlingCore.XamarinThings.Content.Lists
 {

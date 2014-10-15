@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using XamlingCore.XamarinThings.Content.Cells;
+using XamlingCore.XamarinThings.Content.Dynamic;
 using XamlingCore.XamarinThings.Content.MasterDetail;
 
 namespace XamlingCore.XamarinThings.Content.TabbedPages

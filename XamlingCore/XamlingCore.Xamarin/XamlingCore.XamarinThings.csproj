@@ -37,9 +37,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Container\ContainerHost.cs" />
-    <Compile Include="Content\Cells\DynamicContentCell.cs" />
-    <Compile Include="Content\Cells\DynamicContentPage.cs" />
+    <Compile Include="Content\Dynamic\DynamicContentCell.cs" />
+    <Compile Include="Content\Dynamic\DynamicContentPage.cs" />
     <Compile Include="Content\Common\SectionViewModel.cs" />
+    <Compile Include="Content\Dynamic\DynamicContentView.cs" />
     <Compile Include="Content\Lists\XListView.cs" />
     <Compile Include="Content\MasterDetail\XMasterDetailView.cs" />
     <Compile Include="Content\Navigation\XNavigationPage.cs" />

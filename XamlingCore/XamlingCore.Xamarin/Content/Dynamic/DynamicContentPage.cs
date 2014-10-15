@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autofac;
 using Xamarin.Forms;
 using XamlingCore.XamarinThings.Container;
 using XamlingCore.XamarinThings.Contract;
 
-namespace XamlingCore.XamarinThings.Content.Cells
+namespace XamlingCore.XamarinThings.Content.Dynamic
 {
     public class DynamicContentPage : ContentPage
     {
