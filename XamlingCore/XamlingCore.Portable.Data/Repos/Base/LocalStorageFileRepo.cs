@@ -42,12 +42,11 @@ namespace XamlingCore.Portable.Data.Repos.Base
         public async Task<bool> Set<T>(T entity, string fileName)
             where T : class, new()
         {
-            //var folderName = Path.GetDirectoryName(fileName);
-            //await _applicationDataHelper.EnsureFolderExists(folderName);
+            var folderName = Path.GetDirectoryName(fileName);
+            await _applicationDataHelper.EnsureFolderExists(folderName);
             var s = _entitySerialiser.Serialise(entity);
             return await _applicationDataHelper.SaveString(fileName, s);
         }
-
 
         public async Task<List<T>> GetAll<T>(string folderName)
             where T : class, new()

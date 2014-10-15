@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Cache;
+using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Contract.Repos.Base;
 using XamlingCore.Portable.Model.Cache;
 using XamlingCore.Portable.Util;
@@ -13,13 +16,15 @@ namespace XamlingCore.Portable.Data.Cache
     public class EntityCache : IEntityCache
     {
         private readonly ILocalStorageFileRepo _localStorageFileRepo;
+        private readonly ILocalStorage _localStorage;
 
         private Dictionary<Type, Dictionary<string, object>> _memoryCache =
             new Dictionary<Type, Dictionary<string, object>>();
 
-        public EntityCache(ILocalStorageFileRepo localStorageFileRepo)
+        public EntityCache(ILocalStorageFileRepo localStorageFileRepo, ILocalStorage localStorage)
         {
             _localStorageFileRepo = localStorageFileRepo;
+            _localStorage = localStorage;
         }
 
         public void DisableMemoryCache()
@@ -113,6 +118,7 @@ namespace XamlingCore.Portable.Data.Cache
             }
 
             cacheItem.Item = item;
+            cacheItem.Key = key;
 
             _updateItem(item, cacheItem);
 
@@ -197,6 +203,26 @@ namespace XamlingCore.Portable.Data.Cache
             return result;
         }
 
+        public async Task<List<T>> GetAll<T>()
+            where T : class, new()
+        {
+            var path = _getDirPath<T>();
+            var locker = NamedLock.Get(path + "getall");
+
+            using (var locked = await locker.LockAsync())
+            {
+                var f = await _localStorageFileRepo.GetAll<XCacheItem<T>>(path);
+                if (f == null)
+                {
+                    return null;
+                }
+
+                var result = new List<T>();
+                result.AddRange(f.Select(_=>_.Item));
+                return result;
+            }
+        }
+
         public async Task<T> GetEntity<T>(string key, TimeSpan? maxAge = null) where T : class, new()
         {
             var locker = NamedLock.Get(key + "3");
@@ -246,6 +272,28 @@ namespace XamlingCore.Portable.Data.Cache
             }
         }
 
+        public async Task DeleteAll<T>()
+            where T : class, new()
+        {
+            var path = _getDirPath<T>();
+
+            var locker = NamedLock.Get(path + "getall");
+            
+            using (var locked = await locker.LockAsync())
+            {
+                var f = await _localStorageFileRepo.GetAll<XCacheItem<T>>(path);
+                if (f == null)
+                {
+                    return;
+                }
+
+                foreach (var item in f)
+                {
+                    await Delete<T>(item.Key);
+                }
+            }
+        }
+
         public async Task<bool> Delete<T>(string key) where T : class, new()
         {
             var fullName = _getFullKey<T>(key);
@@ -256,7 +304,9 @@ namespace XamlingCore.Portable.Data.Cache
         public async Task Clear()
         {
             _memoryCache.Clear();
-            await _localStorageFileRepo.DeleteAll("Cache");
+            throw new NotImplementedException("Not implemented becasue of problems with https://bugzilla.xamarin.com/show_bug.cgi?id=11771");
+
+            await _localStorageFileRepo.DeleteAll("cache_*");
         }
 
         void _updateItem<T>(T cacheItem, XCacheItem<T> cacheWrapper)
@@ -283,7 +333,18 @@ namespace XamlingCore.Portable.Data.Cache
 
         string _getFullKey<T>(string key)
         {
+            var path = Path.Combine(_getDirPath<T>(), string.Format("{0}.cache", key));
 
+            return path;
+        }
+
+        string _getDirPath<T>()
+        {
+            return string.Format("cache_{0}", _getTypePath<T>());
+        }
+
+        string _getTypePath<T>()
+        {
             var t = typeof(T);
             var args = t.GenericTypeArguments;
 
@@ -297,7 +358,7 @@ namespace XamlingCore.Portable.Data.Cache
                 }
             }
 
-            return string.Format("Cache\\{0}\\{1}.cache", tName, key);
+            return tName;
         }
     }
 }

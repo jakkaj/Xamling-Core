@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
@@ -69,13 +70,6 @@ namespace XamlingCore.iOS.Implementations
 
         public async System.Threading.Tasks.Task<List<string>> GetAllFilesInFolder(string folderPath)
         {
-            var path = folderPath.Split('\\').ToList();
-
-            if (path.Count == 0)
-            {
-                return null;
-            }
-
             using (var store = IsolatedStorageFile.GetUserStoreForApplication())
             {
                 string[] subDirectories =
@@ -83,6 +77,7 @@ namespace XamlingCore.iOS.Implementations
                 return subDirectories.ToList();
             }
         }
+       
 
         public async System.Threading.Tasks.Task<bool> IsZero(string fileName)
         {

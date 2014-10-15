@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace XamlingCore.Portable.Contract.Cache
@@ -13,5 +14,11 @@ namespace XamlingCore.Portable.Contract.Cache
 
         void DisableMemoryCache();
         void EnableMemoryCache();
+
+        Task<List<T>> GetAll<T>()
+            where T : class, new();
+
+        Task DeleteAll<T>()
+            where T : class, new();
     }
 }

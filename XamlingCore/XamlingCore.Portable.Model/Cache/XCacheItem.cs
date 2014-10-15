@@ -9,6 +9,8 @@ namespace XamlingCore.Portable.Model.Cache
             Id = Guid.NewGuid();
         }
 
+        public string Key { get; set; }
+
         public Guid Id { get; set; }
 
         public XCacheItem(T item)

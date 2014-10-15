@@ -40,7 +40,7 @@ namespace XamlingCore.Portable.Util.Lock
     public static class NamedLock
     {
         private static readonly Dictionary<string, AsyncLock> Locks = new Dictionary<string, AsyncLock>();
-
+        
         private static readonly AsyncLock Locker = new AsyncLock();
 
         static ManualResetEvent msr = new ManualResetEvent(true);

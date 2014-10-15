@@ -14,6 +14,89 @@ namespace XamlingCore.Tests.iOS.Tests.CacheTests
     public class CacheTests : TestBase
     {
 
+        public class MyObject
+        {
+            public string ItemName { get; set; }
+        }
+
+        [Test]
+        public void Test_Clear_And_Read_All()
+        {
+            var cache = Container.Resolve<IEntityCache>();
+
+            var msr = new ManualResetEvent(false);
+
+            Task.Run(async () =>
+            {
+                var item1 = new MyObject {ItemName = "Item1"};
+                var item2 = new MyObject { ItemName = "Item2" };
+                var item3 = new MyObject { ItemName = "Item3" };
+                var item4 = new MyObject { ItemName = "Item4" };
+
+                await cache.SetEntity(item1.ItemName, item1);
+
+                var result = await cache.GetEntity<MyObject>(item1.ItemName);
+
+                Assert.IsNotNull(result);
+
+                await cache.DeleteAll<MyObject>();
+
+                var result2 = await cache.GetEntity<MyObject>(item1.ItemName);
+                Assert.IsNull(result2);
+
+
+                await cache.SetEntity(item1.ItemName, item1);
+                await cache.SetEntity(item2.ItemName, item2);
+                await cache.SetEntity(item3.ItemName, item3);
+                await cache.SetEntity(item4.ItemName, item4);
+
+
+
+                var result3 = await cache.GetEntity<MyObject>(item1.ItemName);
+                var result4 = await cache.GetEntity<MyObject>(item2.ItemName);
+                var result5 = await cache.GetEntity<MyObject>(item3.ItemName);
+                var result6 = await cache.GetEntity<MyObject>(item4.ItemName);
+
+                Assert.IsNotNull(result3);
+                Assert.IsNotNull(result4);
+                Assert.IsNotNull(result5);
+                Assert.IsNotNull(result6);
+
+
+                var all = await cache.GetAll<MyObject>();
+                Assert.IsFalse(all.Count == 0);
+
+                await cache.Delete<MyObject>(item2.ItemName);
+
+                var result7 = await cache.GetEntity<MyObject>(item1.ItemName);
+                var result8 = await cache.GetEntity<MyObject>(item2.ItemName);
+                var result9 = await cache.GetEntity<MyObject>(item3.ItemName);
+                var result10 = await cache.GetEntity<MyObject>(item4.ItemName);
+                var result10a = await cache.GetEntity<MyObject>("Some other thing");
+
+                Assert.IsNotNull(result7);
+                Assert.IsNull(result8);
+                Assert.IsNull(result10a);
+                Assert.IsNotNull(result9);
+                Assert.IsNotNull(result10);
+
+                await cache.DeleteAll<MyObject>();
+                var result11 = await cache.GetEntity<MyObject>(item1.ItemName);
+                var result12 = await cache.GetEntity<MyObject>(item2.ItemName);
+                var result13 = await cache.GetEntity<MyObject>(item3.ItemName);
+                var result14 = await cache.GetEntity<MyObject>(item4.ItemName);
+                Assert.IsNull(result11);
+                Assert.IsNull(result12);
+                Assert.IsNull(result13);
+                Assert.IsNull(result14);
+
+                msr.Set();
+            });
+
+            var msrResult = msr.WaitOne(20000);
+            Assert.IsTrue(msrResult, "MSR not set, means assertion failed in task");
+        }
+
         [Test]
         public void Check_Parallel_Test()
         {
