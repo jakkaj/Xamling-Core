@@ -261,7 +261,7 @@ namespace XamlingCore.Portable.Data.Cache
 
         public async Task<bool> SetEntity<T>(string key, T item) where T : class, new()
         {
-            var locker = NamedLock.Get(key);
+            var locker = NamedLock.Get(key + "setentity");
             using (var locked = await locker.LockAsync())
             {
                 var fullName = _getFullKey<T>(key);
