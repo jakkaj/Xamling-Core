@@ -16,15 +16,13 @@ namespace XamlingCore.Portable.Data.Cache
     public class EntityCache : IEntityCache
     {
         private readonly ILocalStorageFileRepo _localStorageFileRepo;
-        private readonly ILocalStorage _localStorage;
 
         private Dictionary<Type, Dictionary<string, object>> _memoryCache =
             new Dictionary<Type, Dictionary<string, object>>();
 
-        public EntityCache(ILocalStorageFileRepo localStorageFileRepo, ILocalStorage localStorage)
+        public EntityCache(ILocalStorageFileRepo localStorageFileRepo)
         {
             _localStorageFileRepo = localStorageFileRepo;
-            _localStorage = localStorage;
         }
 
         public void DisableMemoryCache()
@@ -170,14 +168,14 @@ namespace XamlingCore.Portable.Data.Cache
                     return e;
                 }
             }
-            
+
             T result = null;
-            
+
             using (var l = await locker.LockAsync())
             {
                 //this checks to see if this entity was updated on another lock thread
                 e = await GetEntity<T>(key, maxAge);
-                
+
                 if (e != null)
                 {
                     if (!_emptyListFails(e, allowZeroList))
@@ -194,7 +192,7 @@ namespace XamlingCore.Portable.Data.Cache
                     await SetEntity<T>(key, result);
                 }
             }
-        
+
             if (result == null && allowExpired)
             {
                 return await GetEntity<T>(key, TimeSpan.MaxValue);
@@ -218,7 +216,7 @@ namespace XamlingCore.Portable.Data.Cache
                 }
 
                 var result = new List<T>();
-                result.AddRange(f.Select(_=>_.Item));
+                result.AddRange(f.Select(_ => _.Item));
                 return result;
             }
         }
@@ -278,7 +276,7 @@ namespace XamlingCore.Portable.Data.Cache
             var path = _getDirPath<T>();
 
             var locker = NamedLock.Get(path + "getall");
-            
+
             using (var locked = await locker.LockAsync())
             {
                 var f = await _localStorageFileRepo.GetAll<XCacheItem<T>>(path);
