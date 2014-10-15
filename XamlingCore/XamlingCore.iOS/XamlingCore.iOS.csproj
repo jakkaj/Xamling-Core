@@ -40,7 +40,9 @@
     <Compile Include="Controls\Loader\LoadingOverlayView.cs" />
     <Compile Include="Glue\iOSGlue.cs" />
     <Compile Include="Glue\Modules\DefaultiOSModule.cs" />
+    <Compile Include="Implementations\DeviceNetworkStatus.cs" />
     <Compile Include="Implementations\GoogleAnalyticsService.cs" />
+    <Compile Include="Implementations\Helpers\Reachability.cs" />
     <Compile Include="Implementations\iOSDispatcher.cs" />
     <Compile Include="Implementations\LoadStatusService.cs" />
     <Compile Include="Implementations\LocalStorage.cs" />
