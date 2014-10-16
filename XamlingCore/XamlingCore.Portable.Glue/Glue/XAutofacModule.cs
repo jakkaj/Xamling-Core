@@ -13,18 +13,20 @@ namespace XamlingCore.Portable.Glue.Glue
         private readonly string _filter;
         private readonly bool _asSelf;
         private readonly bool _singleInstance;
+        private readonly bool _propertiesAutowired;
 
         public XAutofacModule()
         {
             
         }
 
-        public XAutofacModule(Assembly targetAssembly, string filter, bool asSelf = false, bool singleInstance = true)
+        public XAutofacModule(Assembly targetAssembly, string filter, bool asSelf = false, bool singleInstance = true, bool propertiesAutowired = false)
         {
             _targetAssembly = targetAssembly;
             _filter = filter;
             _asSelf = asSelf;
             _singleInstance = singleInstance;
+            _propertiesAutowired = propertiesAutowired;
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -39,6 +41,11 @@ namespace XamlingCore.Portable.Glue.Glue
                 .Where(t => t.Name.EndsWith(_filter));
 
             b = _asSelf ? b.AsSelf() : b.AsImplementedInterfaces();
+
+            if (_propertiesAutowired)
+            {
+                b = b.PropertiesAutowired();
+            }
 
             if (_singleInstance)
             {
