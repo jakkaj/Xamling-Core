@@ -163,6 +163,20 @@ namespace XamlingCore.Portable.View.ViewModel
             IsLandscape = OrientationService.CurrentPageOrientation == XPageOrientation.Landscape;
         }
 
+        void _onParentModelSet()
+        {
+            if (_childModels == null)
+            {
+                return;
+            }
+
+            foreach (var c in _childModels)
+            {
+                c.ParentModel = ParentModel;
+            }
+        }
+
+
         public string Title
         {
             get { return _title; }
@@ -207,6 +221,7 @@ namespace XamlingCore.Portable.View.ViewModel
             set
             {
                 _parentModel = value;
+                _onParentModelSet();
             }
         }
 

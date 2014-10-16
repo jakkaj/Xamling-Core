@@ -24,6 +24,7 @@ namespace XamlingCore.Portable.View.ViewModel
     {
         private bool _isReady;
 
+        public Guid Id { get; private set; }
 
         private readonly ILoadStatusService _loadStatusService;
         private readonly IOrientationService _orientationService;
@@ -66,6 +67,8 @@ namespace XamlingCore.Portable.View.ViewModel
             _navigation = xNavigationService;
             Dispatcher = dispatcher;
             Container = c;
+
+            Id = Guid.NewGuid();
         }
 
         public abstract void Init();

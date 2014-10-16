@@ -59,7 +59,7 @@
     <ConsolePause>false</ConsolePause>
     <MtouchDebug>True</MtouchDebug>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchSdkVersion>7.1</MtouchSdkVersion>
+    <MtouchSdkVersion>8.0</MtouchSdkVersion>
     <MtouchLink>None</MtouchLink>
     <MtouchProfiling>False</MtouchProfiling>
     <MtouchExtraArgs />

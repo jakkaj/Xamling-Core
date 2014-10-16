@@ -20,9 +20,14 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Tabs.Home.First
                 Content = l
             };
 
+            var b = new Button();
+            b.Text = "Next page";
+            b.SetBinding(Button.CommandProperty, "NextPageCommand");
+
             var layout = new StackLayout();
 
             layout.Children.Add(label);
+            layout.Children.Add(b);
 
             Content = layout;
         }

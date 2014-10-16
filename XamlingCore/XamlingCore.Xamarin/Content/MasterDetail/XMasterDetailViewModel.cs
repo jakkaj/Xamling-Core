@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using Autofac;
 using Xamarin.Forms;
@@ -89,7 +90,7 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
 
             var rootFrame = XFrame.CreateRootFrame<XRootFrame>(Container);
             vm.ParentModel = rootFrame; //this vm was created here, but we need to shove it to the new frame. 
-
+            
             var rootNavigationVm = rootFrame.CreateContentModel<XNavigationPageViewModel>();
 
             var initalViewController = frameManager.Init(rootFrame, rootNavigationVm);
