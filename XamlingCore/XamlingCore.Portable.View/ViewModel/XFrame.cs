@@ -32,8 +32,6 @@ namespace XamlingCore.Portable.View.ViewModel
 
         private IXNavigation _navigation;
 
-        public ICommand NavigateBackCommand { get; set; }
-
         private bool _isLoading;
         private bool _isFullScreenLoading;
 
