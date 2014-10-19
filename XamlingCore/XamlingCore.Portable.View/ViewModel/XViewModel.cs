@@ -121,7 +121,7 @@ namespace XamlingCore.Portable.View.ViewModel
 
             PropertyDispose();
 
-            Debug.WriteLine("***Dispose*** " + _parentModel.AllViewModels.Count);
+            //Debug.WriteLine("***Dispose*** " + _parentModel.AllViewModels.Count);
 
             if (Disposed != null)
             {
