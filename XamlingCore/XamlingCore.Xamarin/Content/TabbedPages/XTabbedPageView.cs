@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Content.Dynamic;
 using XamlingCore.XamarinThings.Content.MasterDetail;
 
@@ -31,6 +32,27 @@ namespace XamlingCore.XamarinThings.Content.TabbedPages
             ItemsSource = _viewModel.SectionViewModels;
 
             base.OnBindingContextChanged();
+        }
+
+        protected override void OnCurrentPageChanged()
+        {
+            var page = CurrentPage;
+
+            if (page == null)
+            {
+                return;
+            }
+
+            var vm = page.BindingContext as XViewModel;
+
+            if (vm == null)
+            {
+                return;
+            }
+
+            Title = vm.Title;
+
+            base.OnCurrentPageChanged();
         }
     }
 }
