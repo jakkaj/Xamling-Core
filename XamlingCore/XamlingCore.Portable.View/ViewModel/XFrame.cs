@@ -34,6 +34,7 @@ namespace XamlingCore.Portable.View.ViewModel
 
         private bool _isLoading;
         private bool _isFullScreenLoading;
+        private bool _isModal;
 
         public string Title { get; set; }
         public string Description { get; set; }
@@ -270,6 +271,17 @@ namespace XamlingCore.Portable.View.ViewModel
             }
 
             return Navigation.CurrentContentObject.GetType() == type;
+        }
+
+        public bool IsModal
+        {
+            get { return _isModal; }
+            set
+            {
+                _isModal = value;
+                _navigation.IsModal = value;
+                OnPropertyChanged();
+            }
         }
 
         #region NavigationShortcuts

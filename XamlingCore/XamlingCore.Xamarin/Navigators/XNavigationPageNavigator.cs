@@ -108,6 +108,8 @@ namespace XamlingCore.XamarinThings.Navigators
             }
 
             var rootFrame = XFrame.CreateRootFrame<XRootFrame>(_scope);
+            rootFrame.IsModal = true;
+
             var frameManager = _scope.Resolve<IFrameManager>();
 
             vm.ParentModel = rootFrame;

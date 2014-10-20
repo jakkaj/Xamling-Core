@@ -12,15 +12,24 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Modal
     public class ModalViewModel : XViewModel
     {
         public ICommand UnPopCommand { get; set; }
+        public ICommand NextPageCommand { get; set; }
 
         public ModalViewModel()
         {
             UnPopCommand = new Command(_onUnPop);
+            NextPageCommand = new Command(_onNextPage);
+            Title = "First modal view";
+        }
+
+        void _onNextPage()
+        {
+            NavigateTo<ModalAnotherViewModel>();    
         }
 
         void _onUnPop()
         {
-            NavigateToModal(null);
+            NavigateBack();
+            //NavigateToModal(null);
         }
     }
 }

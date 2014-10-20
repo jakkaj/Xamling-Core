@@ -90,6 +90,12 @@
     </Compile>
     <Compile Include="Views\MasterDetailHome\Menu\MasterDetailMenuPageView.cs" />
     <Compile Include="Views\MasterDetailHome\Menu\MasterDetailMenuPageView.model.cs" />
+    <Compile Include="Views\MasterDetailHome\Modal\ModalAnotherView.model.cs">
+      <DependentUpon>ModalAnotherView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Modal\ModalAnotherView.xaml.cs">
+      <DependentUpon>ModalAnotherView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MasterDetailHome\Modal\ModalView.model.cs">
       <DependentUpon>ModalView.xaml</DependentUpon>
     </Compile>
@@ -193,7 +199,12 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailHome\Modal\ModalAnotherView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MasterDetailHome\Modal\ModalView.xaml">
       <SubType>Designer</SubType>

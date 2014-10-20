@@ -20,6 +20,8 @@ namespace XamlingCore.Portable.View.Navigation
 
         private bool _canGoBack;
 
+        public bool IsModal { get; set; }
+
         public event EventHandler<XNavigationEventArgs> Navigated;
 
         public XNavigationService()
@@ -158,6 +160,12 @@ namespace XamlingCore.Portable.View.Navigation
 
         public void NavigateBack(bool allowNullNavigation)
         {
+            if (IsModal && _navigationHistory.Count == 0)
+            {
+                NavigateToModal(null);
+                return;
+            }
+
             if (_navigationHistory.Count > 1)
             {
                 NavigateTo(_navigationHistory[_navigationHistory.Count - 1], false, true);

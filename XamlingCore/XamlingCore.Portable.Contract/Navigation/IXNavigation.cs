@@ -7,6 +7,7 @@ namespace XamlingCore.Portable.Contract.Navigation
 {
     public interface IXNavigation
     {
+        bool IsModal { get; set; }
         event EventHandler<XNavigationEventArgs> Navigated;
         bool IsReverseNavigation { get; set; }
         List<object> NavigationHistory { get; set; }
