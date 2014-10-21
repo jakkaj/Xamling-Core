@@ -1,15 +1,15 @@
 ﻿using System.Globalization;
 using System.Resources;
 using Autofac;
-using XamlingCore.Portable.Contract.Cache;
 using XamlingCore.Portable.Contract.Downloaders;
+using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Contract.Localisation;
 using XamlingCore.Portable.Contract.Navigation;
 using XamlingCore.Portable.Contract.Repos;
 using XamlingCore.Portable.Contract.Repos.Base;
 using XamlingCore.Portable.Contract.Serialise;
 using XamlingCore.Portable.Contract.Services;
-using XamlingCore.Portable.Data.Cache;
+using XamlingCore.Portable.Data.Entities;
 using XamlingCore.Portable.Data.Repos;
 using XamlingCore.Portable.Data.Repos.Base;
 using XamlingCore.Portable.Data.Serialise;
@@ -34,6 +34,8 @@ namespace XamlingCore.Portable.Glue
 
             builder.RegisterType<NetworkService>().As<INetworkService>().SingleInstance();
             builder.RegisterType<LocalStorageFileRepo>().As<ILocalStorageFileRepo>().SingleInstance();
+
+            builder.RegisterGeneric(typeof (EntityManager<>)).As(typeof (IEntityManager<>)).SingleInstance();
 
             //Core services
             builder.RegisterType<OrientationService>().As<IOrientationService>().SingleInstance();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using XamlingCore.Portable.Contract.Cache;
+using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Contract.Repos;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Messages.Location;

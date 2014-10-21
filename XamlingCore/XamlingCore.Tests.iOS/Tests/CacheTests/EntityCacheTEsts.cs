@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using NUnit.Framework;
-using XamlingCore.Portable.Contract.Cache;
+using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Tests.iOS.Base;
 
 namespace XamlingCore.Tests.iOS.Tests.CacheTests

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using XamlingCore.Portable.Contract.Cache;
+using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.ViewModel;

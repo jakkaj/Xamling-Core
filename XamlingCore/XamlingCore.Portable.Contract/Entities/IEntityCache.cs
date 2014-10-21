@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace XamlingCore.Portable.Contract.Cache
+namespace XamlingCore.Portable.Contract.Entities
 {
     public interface IEntityCache
     {

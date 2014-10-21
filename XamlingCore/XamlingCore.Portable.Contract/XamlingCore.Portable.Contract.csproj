@@ -37,8 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Cache\ICacheInfo.cs" />
-    <Compile Include="Cache\IEntityCache.cs" />
+    <Compile Include="Entities\ICacheInfo.cs" />
+    <Compile Include="Entities\IEntityCache.cs" />
+    <Compile Include="Entities\IEntityManager.cs" />
     <Compile Include="Config\IConfig.cs" />
     <Compile Include="Device\Info\IDeviceInfoService.cs" />
     <Compile Include="Device\Location\ILocationTrackingSensor.cs" />

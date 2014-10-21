@@ -81,6 +81,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Tests\CacheTests\EntityCacheTEsts.cs" />
+    <Compile Include="Tests\EntityTests\EntityInstanceTests.cs" />
     <None Include="app.config" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -115,6 +116,10 @@
     <ProjectReference Include="..\XamlingCore.Portable.Glue\XamlingCore.Portable.Glue.csproj">
       <Project>{E908CD00-22C8-4F7B-BA99-8DDF32C5F656}</Project>
       <Name>XamlingCore.Portable.Glue</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
+      <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
+      <Name>XamlingCore.Portable.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Xamarin\XamlingCore.XamarinThings.csproj">
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
