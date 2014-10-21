@@ -20,7 +20,7 @@ namespace XamlingCore.Portable.Data.Entities
 
         private readonly List<T> _memoryCache = new List<T>();
 
-        private AsyncLock _readLock = new AsyncLock();
+        private readonly AsyncLock _readLock = new AsyncLock();
         private readonly AsyncLock _saveLock = new AsyncLock();
 
         public EntityManager(IEntityCache entityCache)
@@ -50,7 +50,7 @@ namespace XamlingCore.Portable.Data.Entities
 
             foreach (var id in ids)
             {
-                returnList.Add(await _get(id));
+                returnList.Add(await _get(id, maxAge));
             }
 
             return returnList;
@@ -58,12 +58,12 @@ namespace XamlingCore.Portable.Data.Entities
 
         public async Task<T> Get(Guid id, TimeSpan? maxAge = null)
         {
-            return await _get(id);
+            return await _get(id, maxAge);
         }
 
-        private async Task<T> _get(Guid id, TimeSpan? maxAge = null)
+        private async Task<T> _get(Guid id, TimeSpan? maxAge)
         {
-            using (var lRead = await _saveLock.LockAsync())
+            using (var lRead = await _readLock.LockAsync())
             {
                 var memory = _memoryCache.FirstOrDefault(_ => _.Id == id);
 
