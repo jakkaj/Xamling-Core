@@ -36,6 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\Loader\LoadingOverlayView.cs" />
+    <Compile Include="Controls\Native\XNativeView.cs" />
+    <Compile Include="Controls\Native\XNativeViewRenderer.cs" />
+    <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Glue\iOSGlue.cs" />
     <Compile Include="Glue\Modules\DefaultiOSModule.cs" />
     <Compile Include="Implementations\DeviceNetworkStatus.cs" />
