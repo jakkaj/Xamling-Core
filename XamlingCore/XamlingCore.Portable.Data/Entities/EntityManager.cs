@@ -39,7 +39,7 @@ namespace XamlingCore.Portable.Data.Entities
             }
         } 
 
-        public async Task<List<T>> Get(List<Guid> ids)
+        public async Task<List<T>> Get(List<Guid> ids, TimeSpan? maxAge = null)
         {
             if (ids == null)
             {
@@ -56,12 +56,12 @@ namespace XamlingCore.Portable.Data.Entities
             return returnList;
         }
 
-        public async Task<T> Get(Guid id)
+        public async Task<T> Get(Guid id, TimeSpan? maxAge = null)
         {
             return await _get(id);
         }
 
-        private async Task<T> _get(Guid id)
+        private async Task<T> _get(Guid id, TimeSpan? maxAge = null)
         {
             using (var lRead = await _saveLock.LockAsync())
             {
@@ -72,7 +72,7 @@ namespace XamlingCore.Portable.Data.Entities
                     return memory;
                 }
 
-                var cache = await _entityCache.GetEntity<T>(_getKey(id));
+                var cache = await _entityCache.GetEntity<T>(_getKey(id), maxAge);
 
                 if (cache == null)
                 {

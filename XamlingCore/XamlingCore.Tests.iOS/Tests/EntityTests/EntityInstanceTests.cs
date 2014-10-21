@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using AutoMapper;
 using NUnit.Framework;
 using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Model.Contract;
@@ -64,7 +65,6 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
 						Assert.True(ReferenceEquals(i2, newE));
 						Assert.True(ReferenceEquals(i, newE));
 						Assert.True(ReferenceEquals(i, i2));
-
 					}
 
                 msr.Set();
