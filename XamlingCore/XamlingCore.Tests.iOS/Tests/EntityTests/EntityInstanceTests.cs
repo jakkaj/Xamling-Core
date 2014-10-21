@@ -50,6 +50,23 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
 
 					}
 
+					foreach(var i in testItems)
+					{
+						var newE = new TestEntity{Id = i.Id};
+
+						newE.Name = "Knight";
+
+						newE = await entityManager.Set(newE);
+
+						var i2 = await entityManager2.Get(i.Id);
+
+						Assert.IsTrue(i2.Name == newE.Name);
+						Assert.True(ReferenceEquals(i2, newE));
+						Assert.True(ReferenceEquals(i, newE));
+						Assert.True(ReferenceEquals(i, i2));
+
+					}
+
                 msr.Set();
             });
 
