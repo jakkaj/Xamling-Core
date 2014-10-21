@@ -23,10 +23,9 @@ namespace XamlingCore.Portable.Data.Entities
         private AsyncLock _readLock = new AsyncLock();
         private readonly AsyncLock _saveLock = new AsyncLock();
 
-        public EntityManager(IEntityCache entityCache, AsyncLock readLock)
+        public EntityManager(IEntityCache entityCache)
         {
-            _entityCache = entityCache;
-            _readLock = readLock;
+            _entityCache = entityCache;            
         }
 
         public async Task PurgeMemory()

@@ -21,12 +21,13 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
 
             var testItems = _testData();
 
-            entityManager.Set(testItems);
+            
 
             var msr = new ManualResetEvent(false);
 
             Task.Run(async () =>
             {
+				await entityManager.Set(testItems);
                 foreach (var i in testItems)
                 {
                     var iGot = await entityManager.Get(i.Id);
@@ -35,10 +36,24 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
                     Assert.IsTrue(ReferenceEquals(iGot, iGot2));
                     Assert.IsTrue(ReferenceEquals(i, iGot2));
                 }
+
+					foreach(var i in testItems)
+					{
+						i.Name = "Jordan";
+
+						await entityManager.Set(i);
+
+						var i2 = await entityManager2.Get(i.Id);
+
+						Assert.IsTrue(i2.Name == i.Name);
+						Assert.True(ReferenceEquals(i2, i));
+
+					}
+
                 msr.Set();
             });
 
-            var msrResult = msr.WaitOne(20000);
+            var msrResult = msr.WaitOne(4000);
             Assert.IsTrue(msrResult, "MSR not set, means assertion failed in task");
 
 
@@ -61,6 +76,8 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
         public class TestEntity : IEntity
         {
             public Guid Id { get; set; }
+
+			public string Name{ get; set; }
         }
     }
 }
