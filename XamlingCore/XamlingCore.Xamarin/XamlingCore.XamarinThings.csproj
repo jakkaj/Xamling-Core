@@ -36,7 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Container\ContainerHost.cs" />
     <Compile Include="Content\Dynamic\DynamicContentCell.cs" />
     <Compile Include="Content\Dynamic\DynamicContentPage.cs" />
     <Compile Include="Content\Common\SectionViewModel.cs" />
@@ -81,6 +80,10 @@
     <ProjectReference Include="..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
       <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
       <Name>XamlingCore.Portable.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Data\XamlingCore.Portable.Data.csproj">
+      <Project>{CEE58A71-49B1-4C9F-B22A-ECD33B6E3A6B}</Project>
+      <Name>XamlingCore.Portable.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
       <Project>{568D9A09-151C-49B3-BEE5-71529FC6869D}</Project>

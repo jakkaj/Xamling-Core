@@ -34,8 +34,16 @@ namespace XamlingCore.Portable.Data.Entities
         public async Task<List<T>> AllInBucket(string bucket, TimeSpan? maxAge = null)
         {
             var i = await _bucket.AllInBucket(bucket);
+            
+            if (i == null)
+            {
+                return null;
+            }
+
             var list = await Get(i, maxAge);
+            
             await _reconcileBucket(bucket, i, list);
+            
             return list;
         }
 
@@ -90,14 +98,18 @@ namespace XamlingCore.Portable.Data.Entities
             }
         }
 
-        async Task _reconcileBucket(string bucket, List<Guid> ids, List<T> entities)
+        async Task _reconcileBucket(string bucket, IEnumerable<Guid> ids, List<T> entities)
         {
-            foreach (var i in ids)
+            if (ids == null || entities == null)
             {
-                if (entities.FirstOrDefault(_ => _.Id == i) == null)
-                {
-                    await _bucket.RemoveFromBucket(bucket, i);
-                }
+                return;
+            }
+
+            var removes = ids.Where(i => entities.FirstOrDefault(_ => _.Id == i) == null).ToList();
+
+            foreach (var i in removes)
+            {
+                await _bucket.RemoveFromBucket(bucket, i);    
             }
         }
 
@@ -112,7 +124,11 @@ namespace XamlingCore.Portable.Data.Entities
 
             foreach (var id in ids)
             {
-                returnList.Add(await _get(id, maxAge));
+                var e = await _get(id, maxAge);
+                if (e != null)
+                {
+                    returnList.Add(e);    
+                }
             }
 
             return returnList;

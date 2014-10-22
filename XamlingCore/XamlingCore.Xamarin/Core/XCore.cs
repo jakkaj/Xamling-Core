@@ -1,9 +1,9 @@
 ﻿using Autofac;
 using XamlingCore.Portable.Contract.Glue;
+using XamlingCore.Portable.Data.Glue;
 using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.ViewModel;
-using XamlingCore.XamarinThings.Container;
 
 namespace XamlingCore.XamarinThings.Core
 {

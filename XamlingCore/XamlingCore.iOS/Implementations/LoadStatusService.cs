@@ -1,17 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using Autofac;
-using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using XamlingCore.iOS.Controls.Loader;
 using XamlingCore.iOS.Root;
-using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Contract.UI;
 using XamlingCore.Portable.View.Special;
-using XamlingCore.XamarinThings.Container;
 
 namespace XamlingCore.iOS.Implementations
 {

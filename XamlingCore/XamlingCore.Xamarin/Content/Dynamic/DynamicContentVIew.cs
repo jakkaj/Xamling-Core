@@ -1,7 +1,7 @@
 ﻿using System;
 using Autofac;
 using Xamarin.Forms;
-using XamlingCore.XamarinThings.Container;
+using XamlingCore.Portable.Data.Glue;
 using XamlingCore.XamarinThings.Contract;
 
 namespace XamlingCore.XamarinThings.Content.Dynamic

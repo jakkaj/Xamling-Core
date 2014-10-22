@@ -104,6 +104,8 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
             public Guid Id { get; set; }
 
             public string Name { get; set; }
+
+            public bool IsSomething { get; set; }
         }
     }
 }

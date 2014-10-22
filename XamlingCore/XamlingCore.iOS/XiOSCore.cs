@@ -1,20 +1,11 @@
 using System;
 using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Xml.Xsl;
 using Autofac;
-using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
-using XamlingCore.iOS.Navigation;
 using XamlingCore.iOS.Root;
 using XamlingCore.Portable.Contract.Glue;
-using XamlingCore.Portable.Messages.View;
-using XamlingCore.Portable.Messages.XamlingMessenger;
-using XamlingCore.Portable.Model.Navigation;
 using XamlingCore.Portable.View.ViewModel;
-using XamlingCore.XamarinThings.Container;
 using XamlingCore.XamarinThings.Contract;
 using XamlingCore.XamarinThings.Core;
 

@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autofac;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using XamlingCore.Portable.Data.Glue;
 using XamlingCore.Tests.iOS.Glue;
-using XamlingCore.XamarinThings.Container;
 
 namespace XamlingCore.Tests.iOS.Base
 {

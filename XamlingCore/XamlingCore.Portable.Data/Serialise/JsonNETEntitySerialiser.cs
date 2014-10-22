@@ -14,11 +14,19 @@ namespace XamlingCore.Portable.Data.Serialise
                 return JsonConvert.DeserializeObject<T>(entity, Settings);
             }
 
-            var result = JsonConvert.DeserializeObject<T>(entity);
 
-            return result;
-            
-            
+            //there is a weird really annoying bug we cannot track that casues json to get an extra } on the end sometimes
+            try
+            {
+                var resultCatch1 = JsonConvert.DeserializeObject<T>(entity);
+                return resultCatch1;
+            }
+            catch
+            {
+                entity = entity.Substring(0, entity.Length - 1);
+                var resultCatch2 = JsonConvert.DeserializeObject<T>(entity);
+                return resultCatch2;
+            }
         }
 
         public string Serialise<T>(T entity)
