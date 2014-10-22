@@ -22,13 +22,13 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
 
             var testItems = _testData();
 
-            
+
 
             var msr = new ManualResetEvent(false);
 
             Task.Run(async () =>
             {
-				await entityManager.Set(testItems);
+                await entityManager.Set(testItems);
                 foreach (var i in testItems)
                 {
                     var iGot = await entityManager.Get(i.Id);
@@ -38,34 +38,43 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
                     Assert.IsTrue(ReferenceEquals(i, iGot2));
                 }
 
-					foreach(var i in testItems)
-					{
-						i.Name = "Jordan";
+                foreach (var i in testItems)
+                {
+                    i.Name = "Jordan";
 
-						await entityManager.Set(i);
+                    await entityManager.Set(i);
 
-						var i2 = await entityManager2.Get(i.Id);
+                    var i2 = await entityManager2.Get(i.Id);
 
-						Assert.IsTrue(i2.Name == i.Name);
-						Assert.True(ReferenceEquals(i2, i));
+                    Assert.IsTrue(i2.Name == i.Name);
+                    Assert.True(ReferenceEquals(i2, i));
 
-					}
+                }
 
-					foreach(var i in testItems)
-					{
-						var newE = new TestEntity{Id = i.Id};
+                foreach (var i in testItems)
+                {
+                    var newE = new TestEntity { Id = i.Id };
 
-						newE.Name = "Knight";
+                    newE.Name = "Knight";
 
-						newE = await entityManager.Set(newE);
+                    newE = await entityManager.Set(newE);
 
-						var i2 = await entityManager2.Get(i.Id);
+                    var i2 = await entityManager2.Get(i.Id);
 
-						Assert.IsTrue(i2.Name == newE.Name);
-						Assert.True(ReferenceEquals(i2, newE));
-						Assert.True(ReferenceEquals(i, newE));
-						Assert.True(ReferenceEquals(i, i2));
-					}
+                    Assert.IsTrue(i2.Name == newE.Name);
+                    Assert.True(ReferenceEquals(i2, newE));
+                    Assert.True(ReferenceEquals(i, newE));
+                    Assert.True(ReferenceEquals(i, i2));
+                }
+
+                foreach (var i in testItems)
+                {
+                    var iGot = await entityManager.Get(i.Id);
+                    Assert.IsTrue(ReferenceEquals(iGot, i));
+                    await entityManager.Delete(i);
+                    var iGot2 = await entityManager.Get(i.Id);
+                    Assert.IsNull(iGot2);
+                }
 
                 msr.Set();
             });
@@ -94,7 +103,7 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
         {
             public Guid Id { get; set; }
 
-			public string Name{ get; set; }
+            public string Name { get; set; }
         }
     }
 }

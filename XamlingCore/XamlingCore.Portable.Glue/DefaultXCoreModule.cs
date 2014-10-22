@@ -36,6 +36,7 @@ namespace XamlingCore.Portable.Glue
             builder.RegisterType<LocalStorageFileRepo>().As<ILocalStorageFileRepo>().SingleInstance();
 
             builder.RegisterGeneric(typeof (EntityManager<>)).As(typeof (IEntityManager<>)).SingleInstance();
+            builder.RegisterType<EntityBucket>().As<IEntityBucket>().SingleInstance();
 
             //Core services
             builder.RegisterType<OrientationService>().As<IOrientationService>().SingleInstance();
