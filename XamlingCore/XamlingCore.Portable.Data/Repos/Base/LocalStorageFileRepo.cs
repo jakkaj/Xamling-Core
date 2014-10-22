@@ -46,7 +46,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
             var folderName = Path.GetDirectoryName(fileName);
             await _applicationDataHelper.EnsureFolderExists(folderName);
             var s = _entitySerialiser.Serialise(entity);
-            Debug.WriteLine("Set: " + s);
+            Debug.WriteLine("Set: " + fileName);
             return await _applicationDataHelper.SaveString(fileName, s);
         }
 
@@ -82,7 +82,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
         {
             if (!await _applicationDataHelper.FileExists(fileName)) return null;
             var d = await _applicationDataHelper.LoadString(fileName);
-            Debug.WriteLine("GEt: " + d);
+            Debug.WriteLine("GEt: " + fileName);
             return !string.IsNullOrWhiteSpace(d) ? _entitySerialiser.Deserialise<T>(d) : null;
 
         }

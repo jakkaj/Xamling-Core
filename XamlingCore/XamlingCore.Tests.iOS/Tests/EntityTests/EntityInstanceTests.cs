@@ -107,5 +107,14 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
 
             public bool IsSomething { get; set; }
         }
+
+        public class TestEntity2 : IEntity
+        {
+            public Guid Id { get; set; }
+
+            public string Name { get; set; }
+
+            public bool IsSomething { get; set; }
+        }
     }
 }

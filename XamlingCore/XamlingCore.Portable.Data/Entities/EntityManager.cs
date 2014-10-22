@@ -17,14 +17,14 @@ namespace XamlingCore.Portable.Data.Entities
     public class EntityManager<T> : IEntityManager<T> where T : class, IEntity, new()
     {
         private readonly IEntityCache _entityCache;
-        private readonly IEntityBucket _bucket;
+        private readonly IEntityBucket<T> _bucket;
 
         private readonly List<T> _memoryCache = new List<T>();
 
         private readonly AsyncLock _readLock = new AsyncLock();
         private readonly AsyncLock _saveLock = new AsyncLock();
 
-        public EntityManager(IEntityCache entityCache, IEntityBucket bucket)
+        public EntityManager(IEntityCache entityCache, IEntityBucket<T> bucket)
         {
             _entityCache = entityCache;
             _bucket = bucket;

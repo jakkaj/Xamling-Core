@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using XamlingCore.Portable.Model.Contract;
 
 namespace XamlingCore.Portable.Contract.Entities
 {
-    public interface IEntityBucket
+    public interface IEntityBucket<T> where T : class, IEntity, new()
     {
         Task<List<Guid>> AllInBucket(string bucket);
         Task<bool> IsInBucket(string bucket, Guid guid);

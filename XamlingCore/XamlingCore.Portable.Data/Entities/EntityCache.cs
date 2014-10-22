@@ -344,7 +344,7 @@ namespace XamlingCore.Portable.Data.Entities
             var t = typeof(T);
             var args = t.GenericTypeArguments;
 
-            string tName = t.Name.Replace("`", "-g-");
+            string tName = t.Name;
 
             if (args != null)
             {
@@ -353,6 +353,8 @@ namespace XamlingCore.Portable.Data.Entities
                     tName += "_" + a.Name;
                 }
             }
+
+            tName = tName.Replace("`", "-g-");
 
             return tName;
         }

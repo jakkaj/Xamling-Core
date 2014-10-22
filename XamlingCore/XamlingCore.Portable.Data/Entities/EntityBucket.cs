@@ -11,7 +11,7 @@ using XamlingCore.Portable.Util.Lock;
 
 namespace XamlingCore.Portable.Data.Entities
 {
-    public class EntityBucket : IEntityBucket
+    public class EntityBucket<T> : IEntityBucket<T> where T : class, IEntity, new()
     {
         private readonly IEntityCache _cache;
 
@@ -115,7 +115,7 @@ namespace XamlingCore.Portable.Data.Entities
 
         async Task _save()
         {
-            await _cache.SetEntity(BucketKey, _buckets);
+            await _cache.SetEntity(_getThisBucketKey(), _buckets);
         }
 
         async Task _init()
@@ -127,13 +127,39 @@ namespace XamlingCore.Portable.Data.Entities
 
             using (var l = await _lock.LockAsync())
             {
-                _buckets = await _cache.GetEntity<Dictionary<string, List<Guid>>>(BucketKey);
+                var bucketKey = _getThisBucketKey();
+                _buckets = await _cache.GetEntity<Dictionary<string, List<Guid>>>(bucketKey);
                 if (_buckets == null)
                 {
                     _buckets = new Dictionary<string, List<Guid>>();
                     await _save();
                 }
             }
+        }
+
+        string _getThisBucketKey()
+        {
+            return string.Format("{0}_{1}", BucketKey, _getTypePath());
+        }
+
+        string _getTypePath()
+        {
+            var t = typeof(T);
+            var args = t.GenericTypeArguments;
+
+            string tName = t.Name;
+
+            if (args != null)
+            {
+                foreach (var a in args)
+                {
+                    tName += "_" + a.Name;
+                }
+            }
+
+            tName = tName.Replace("`", "-g-");
+
+            return tName;
         }
 
 

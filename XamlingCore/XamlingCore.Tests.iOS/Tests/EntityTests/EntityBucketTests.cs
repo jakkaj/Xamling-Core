@@ -6,8 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using XamlingCore.Portable.Contract.Entities;
-using XamlingCore.Portable.Data.DataExtensions;
+using XamlingCore.Portable.Data.Extensions;
 using XamlingCore.Tests.iOS.Base;
 
 namespace XamlingCore.Tests.iOS.Tests.EntityTests
@@ -19,10 +20,52 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
         {
             public const string Bucket1 = "Bucket1";
             public const string Bucket2 = "Bucket2";
+            public const string Bucket3 = "Bucket1";
         }
 
         [Test]
-        public void TestInstanceCorrect()
+        public void TestBucketTypes()
+        {
+            var entityManager = Container.Resolve<IEntityManager<EntityTests.TestEntity>>();
+
+            var testItems = _testData();
+            var testItems2 = _testData2();
+
+            var msr = new ManualResetEvent(false);
+
+            Task.Run(async () =>
+            {
+                foreach (var i in testItems)
+                {
+                    await i.Set();
+                    await i.AddToBucket(TestBuckets.Bucket1);
+                }
+
+                foreach (var i in testItems2)
+                {
+                    await i.Set();
+                    await i.AddToBucket(TestBuckets.Bucket1);
+                }
+
+                //ensure that test item2 are in their own bucket one but not the other bucket 1
+
+                var allInBucket = await entityManager.AllInBucket(TestBuckets.Bucket1);
+
+                foreach (var item in testItems2)
+                {
+                    Assert.IsTrue(await item.IsInBucket(TestBuckets.Bucket1));
+                    Assert.IsNull(allInBucket.FirstOrDefault(_ => _.Id == item.Id));
+                }
+
+                msr.Set();
+            });
+
+            var msrResult = msr.WaitOne(1115000);
+            Assert.IsTrue(msrResult, "MSR not set, means assertion failed in task");
+        }
+
+        [Test]
+        public void TestBucketNames()
         {
             var entityManager = Container.Resolve<IEntityManager<EntityTests.TestEntity>>();
 
@@ -119,6 +162,19 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
             for (var i = 0; i < 15; i++)
             {
                 l.Add(new EntityTests.TestEntity {Id = Guid.NewGuid(), IsSomething = i%2 == 0});
+            }
+
+            return l;
+
+        }
+
+        private List<EntityTests.TestEntity2> _testData2()
+        {
+            var l = new List<EntityTests.TestEntity2>();
+
+            for (var i = 0; i < 15; i++)
+            {
+                l.Add(new EntityTests.TestEntity2 {Id = Guid.NewGuid(), IsSomething = i%2 == 0});
             }
 
             return l;
