@@ -51,6 +51,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\EntityBucket.cs" />
     <Compile Include="Entities\EntityCache.cs" />
     <Compile Include="Entities\EntityManager.cs" />
     <Compile Include="Entities\EntityService.cs" />

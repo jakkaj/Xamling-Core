@@ -17,15 +17,66 @@ namespace XamlingCore.Portable.Data.Entities
     public class EntityManager<T> : IEntityManager<T> where T : class, IEntity, new()
     {
         private readonly IEntityCache _entityCache;
+        private readonly IEntityBucket _bucket;
 
         private readonly List<T> _memoryCache = new List<T>();
 
         private readonly AsyncLock _readLock = new AsyncLock();
         private readonly AsyncLock _saveLock = new AsyncLock();
 
-        public EntityManager(IEntityCache entityCache)
+        public EntityManager(IEntityCache entityCache, IEntityBucket bucket)
         {
-            _entityCache = entityCache;            
+            _entityCache = entityCache;
+            _bucket = bucket;
+        }
+        
+
+        public async Task<List<T>> AllInBucket(string bucket, TimeSpan? maxAge = null)
+        {
+            var i = await _bucket.AllInBucket(bucket);
+            var list = await Get(i, maxAge);
+            await _reconcileBucket(bucket, i, list);
+            return list;
+        }
+
+        public async Task<bool> IsInBucket(string bucket, T entity)
+        {
+            if (entity == null)
+            {
+                return false;
+            }
+
+            return await _bucket.IsInBucket(bucket, entity.Id);
+        }
+
+        public async Task AddToBucket(string bucket, T entity)
+        {
+            if (entity == null)
+            {
+                return;
+            }
+
+            await _bucket.AddToBucket(bucket, entity.Id);
+        }
+
+        public async Task RemoveFromBucket(string bucket, T entity)
+        {
+            if (entity == null)
+            {
+                return;
+            }
+
+            await _bucket.RemoveFromBucket(bucket, entity.Id);
+        }
+
+        public async Task ClearAllBuckets()
+        {
+            await _bucket.ClearAll();
+        }
+
+        public async Task ClearBucket(string bucket)
+        {
+            await _bucket.ClearBucket(bucket);
         }
 
         public async Task PurgeMemory()
@@ -37,7 +88,18 @@ namespace XamlingCore.Portable.Data.Entities
                     _memoryCache.Clear();
                 }
             }
-        } 
+        }
+
+        async Task _reconcileBucket(string bucket, List<Guid> ids, List<T> entities)
+        {
+            foreach (var i in ids)
+            {
+                if (entities.FirstOrDefault(_ => _.Id == i) == null)
+                {
+                    await _bucket.RemoveFromBucket(bucket, i);
+                }
+            }
+        }
 
         public async Task<List<T>> Get(List<Guid> ids, TimeSpan? maxAge = null)
         {
@@ -109,7 +171,7 @@ namespace XamlingCore.Portable.Data.Entities
             return await _set(entity);
         }
 
-        public async Task<T> _set(T entity)
+        private async Task<T> _set(T entity)
         {
             using (var lSave = await _saveLock.LockAsync())
             {
@@ -132,6 +194,29 @@ namespace XamlingCore.Portable.Data.Entities
                 await _entityCache.SetEntity(_getKey(entity.Id), memory);
 
                 return memory;
+            }
+        }
+
+        public async Task Delete(T entity)
+        {
+            var e = await Get(entity.Id);
+
+            if (e == null)
+            {
+                return;
+            }
+
+            using (var lRead = await _readLock.LockAsync())
+            {
+                using (var lSave = await _saveLock.LockAsync())
+                {
+                    if (_memoryCache.Contains(e))
+                    {
+                        _memoryCache.Remove(e);    
+                    }
+
+                    await _entityCache.Delete<T>(_getKey(e.Id));
+                }
             }
         }
 

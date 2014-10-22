@@ -38,6 +38,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Entities\ICacheInfo.cs" />
+    <Compile Include="Entities\IEntityBucket.cs" />
     <Compile Include="Entities\IEntityCache.cs" />
     <Compile Include="Entities\IEntityManager.cs" />
     <Compile Include="Config\IConfig.cs" />
