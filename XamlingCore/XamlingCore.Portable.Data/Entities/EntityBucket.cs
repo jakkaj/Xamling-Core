@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using XamlingCore.Portable.Contract.Entities;
+using XamlingCore.Portable.Messages.Entities;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Model.Contract;
 using XamlingCore.Portable.Util.Lock;
 
@@ -20,6 +23,8 @@ namespace XamlingCore.Portable.Data.Entities
         AsyncLock _lock = new AsyncLock();
 
         private const string BucketKey = "Buckets";
+
+        
 
         public EntityBucket(IEntityCache cache)
         {
@@ -59,6 +64,7 @@ namespace XamlingCore.Portable.Data.Entities
                 {
                     b.Add(guid);
                     await _save();
+                    _notifyUpdated(bucket);
                 }
             }
         }
@@ -74,6 +80,7 @@ namespace XamlingCore.Portable.Data.Entities
                 {
                     b.Remove(guid);
                     await _save();
+                    _notifyUpdated(bucket);
                 }
             }
         }
@@ -86,6 +93,7 @@ namespace XamlingCore.Portable.Data.Entities
             {
                 _buckets.Clear();
                 await _save();
+                _notifyCleared();
             }
         }
 
@@ -99,8 +107,19 @@ namespace XamlingCore.Portable.Data.Entities
                 {
                     _buckets.Remove(bucket);
                     await _save();
+                    _notifyUpdated(bucket);
                 }
             }
+        }
+
+        void _notifyUpdated(string bucket)
+        {
+            new BucketUpdatedMessage(bucket, typeof(T)).Send();
+        }
+
+        void _notifyCleared()
+        {
+            new BucketUpdatedMessage(true).Send();
         }
 
         List<Guid> _getBucket(string bucket)
