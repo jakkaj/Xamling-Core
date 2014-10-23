@@ -51,6 +51,7 @@
     <Compile Include="Downloaders\IHttpTransferResult.cs" />
     <Compile Include="Downloaders\ISimpleHttpTranferrer.cs" />
     <Compile Include="Glue\IGlue.cs" />
+    <Compile Include="Helpers\IHashHelper.cs" />
     <Compile Include="Infrastructure\LocalStorage\ILocalStorage.cs" />
     <Compile Include="Infrastructure\Resource\IApplicationResource.cs" />
     <Compile Include="Localisation\ILocalisationService.cs" />

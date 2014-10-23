@@ -6,6 +6,7 @@ using Autofac;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using XamlingCore.iOS.Implementations;
+using XamlingCore.iOS.Implementations.Helpers;
 using XamlingCore.iOS.Navigation;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Contract.Network;
@@ -26,7 +27,8 @@ namespace XamlingCore.iOS.Glue.Modules
             builder.RegisterType<DeviceNetworkStatus>().As<IDeviceNetworkStatus>().SingleInstance();
             
             builder.RegisterType<iOSViewResolver>().AsImplementedInterfaces();
-
+            
+            builder.RegisterType<HashHelper>().AsImplementedInterfaces();
 
             base.Load(builder);
         }
