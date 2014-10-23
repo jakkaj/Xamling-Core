@@ -64,7 +64,7 @@ namespace XamlingCore.Portable.Data.Entities
                 {
                     b.Add(guid);
                     await _save();
-                    _notifyUpdated(bucket);
+                    _notifyUpdated(bucket, BucketUpdatedTypes.Add);
                 }
             }
         }
@@ -80,7 +80,7 @@ namespace XamlingCore.Portable.Data.Entities
                 {
                     b.Remove(guid);
                     await _save();
-                    _notifyUpdated(bucket);
+                    _notifyUpdated(bucket, BucketUpdatedTypes.Remove);
                 }
             }
         }
@@ -107,19 +107,19 @@ namespace XamlingCore.Portable.Data.Entities
                 {
                     _buckets.Remove(bucket);
                     await _save();
-                    _notifyUpdated(bucket);
+                    _notifyUpdated(bucket, BucketUpdatedTypes.Clear);
                 }
             }
         }
 
-        void _notifyUpdated(string bucket)
+        void _notifyUpdated(string bucket, BucketUpdatedTypes updateType)
         {
-            new BucketUpdatedMessage(bucket, typeof(T)).Send();
+            new BucketUpdatedMessage(bucket, typeof(T),updateType).Send();
         }
 
         void _notifyCleared()
         {
-            new BucketUpdatedMessage(true).Send();
+            new BucketUpdatedMessage(BucketUpdatedTypes.Clear).Send();
         }
 
         List<Guid> _getBucket(string bucket)

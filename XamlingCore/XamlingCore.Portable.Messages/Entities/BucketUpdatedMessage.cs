@@ -9,19 +9,21 @@ namespace XamlingCore.Portable.Messages.Entities
 {
     public class BucketUpdatedMessage : XMessage
     {
-        private readonly bool _isCleared;
+        
         private readonly string _bucketName;
         private readonly Type _bucketType;
+        private readonly BucketUpdatedTypes _operationType;
 
-        public BucketUpdatedMessage(bool isCleared)
+        public BucketUpdatedMessage(BucketUpdatedTypes operationType)
         {
-            _isCleared = isCleared;
+            _operationType = operationType;
         }
 
-        public BucketUpdatedMessage(string bucketName, Type bucketType)
+        public BucketUpdatedMessage(string bucketName, Type bucketType, BucketUpdatedTypes operationType)
         {
             _bucketName = bucketName;
             _bucketType = bucketType;
+            _operationType = operationType;
         }
 
         public Type BucketType
@@ -34,9 +36,18 @@ namespace XamlingCore.Portable.Messages.Entities
             get { return _bucketName; }
         }
 
-        public bool IsCleared
+        public BucketUpdatedTypes OperationType
         {
-            get { return _isCleared; }
+            get { return _operationType; }
         }
+
+      
+    }
+
+    public enum BucketUpdatedTypes
+    {
+        Add,
+        Remove,
+        Clear
     }
 }
