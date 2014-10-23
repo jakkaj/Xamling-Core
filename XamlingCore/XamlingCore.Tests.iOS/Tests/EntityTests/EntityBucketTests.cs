@@ -24,6 +24,44 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
         }
 
         [Test]
+        public void TestBucketTypesNoMSR()
+        {
+            var entityManager = Container.Resolve<IEntityManager<EntityTests.TestEntity>>();
+
+            var testItems = _testData();
+            var testItems2 = _testData2();
+
+            foreach (var i in testItems)
+            {
+                var i2 = i;
+                Task.Run(() => i2.Set());
+                Task.Run(() => i2.AddToBucket(TestBuckets.Bucket1));
+            }
+
+            foreach (var i in testItems2)
+            {
+                var i2 = i;
+                Task.Run(() => i2.Set());
+                Task.Run(() => i2.AddToBucket(TestBuckets.Bucket1));
+            }
+
+            //ensure that test item2 are in their own bucket one but not the other bucket 1
+
+            var allInBucketTask = Task.Run(() => entityManager.AllInBucket(TestBuckets.Bucket1));
+            var allInBucket = allInBucketTask.Result;
+
+            foreach (var item in testItems2)
+            {
+                var i2 = item;
+                var tTask = Task.Run(() => i2.IsInBucket(TestBuckets.Bucket1));
+                var tResult = tTask.Result;
+                Assert.IsTrue(tResult);
+                Assert.IsNull(allInBucket.FirstOrDefault(_ => _.Id == item.Id));
+            }
+        }
+
+
+        [Test]
         public void TestBucketTypes()
         {
             var entityManager = Container.Resolve<IEntityManager<EntityTests.TestEntity>>();
@@ -60,7 +98,7 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
                 msr.Set();
             });
 
-            var msrResult = msr.WaitOne(1115000);
+            var msrResult = msr.WaitOne(5000);
             Assert.IsTrue(msrResult, "MSR not set, means assertion failed in task");
         }
 
@@ -161,7 +199,7 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
 
             for (var i = 0; i < 15; i++)
             {
-                l.Add(new EntityTests.TestEntity {Id = Guid.NewGuid(), IsSomething = i%2 == 0});
+                l.Add(new EntityTests.TestEntity { Id = Guid.NewGuid(), IsSomething = i % 2 == 0 });
             }
 
             return l;
@@ -174,7 +212,7 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
 
             for (var i = 0; i < 15; i++)
             {
-                l.Add(new EntityTests.TestEntity2 {Id = Guid.NewGuid(), IsSomething = i%2 == 0});
+                l.Add(new EntityTests.TestEntity2 { Id = Guid.NewGuid(), IsSomething = i % 2 == 0 });
             }
 
             return l;

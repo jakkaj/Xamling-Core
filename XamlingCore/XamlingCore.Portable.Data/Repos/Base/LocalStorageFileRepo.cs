@@ -46,8 +46,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
             var folderName = Path.GetDirectoryName(fileName);
             await _applicationDataHelper.EnsureFolderExists(folderName);
             var s = _entitySerialiser.Serialise(entity);
-            Debug.WriteLine("Set: " + fileName);
-            return await _applicationDataHelper.SaveString(fileName, s);
+            return await _applicationDataHelper.SaveStringUTF(fileName, s);
         }
 
         public async Task<List<T>> GetAll<T>(string folderName)
@@ -81,8 +80,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
             where T : class, new()
         {
             if (!await _applicationDataHelper.FileExists(fileName)) return null;
-            var d = await _applicationDataHelper.LoadString(fileName);
-            Debug.WriteLine("GEt: " + fileName);
+            var d = await _applicationDataHelper.LoadStringUTF(fileName);
             return !string.IsNullOrWhiteSpace(d) ? _entitySerialiser.Deserialise<T>(d) : null;
 
         }

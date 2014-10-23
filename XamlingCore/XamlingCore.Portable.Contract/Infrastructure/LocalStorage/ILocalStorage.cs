@@ -21,5 +21,7 @@ namespace XamlingCore.Portable.Contract.Infrastructure.LocalStorage
         Task<bool> EnsureFolderExists(string folderPath);
         Task<List<string>> GetAllFilesInFolder(string folderPath);
         Task<bool> IsZero(string fileName);
+        System.Threading.Tasks.Task<string> LoadStringUTF(string fileName);
+        Task<bool> SaveStringUTF(string fileName, string data);
     }
 }

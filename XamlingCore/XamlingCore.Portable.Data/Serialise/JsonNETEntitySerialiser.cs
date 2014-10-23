@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Diagnostics;
+using Newtonsoft.Json;
 using XamlingCore.Portable.Contract.Serialise;
 
 namespace XamlingCore.Portable.Data.Serialise
@@ -21,12 +23,12 @@ namespace XamlingCore.Portable.Data.Serialise
                 var resultCatch1 = JsonConvert.DeserializeObject<T>(entity);
                 return resultCatch1;
             }
-            catch
+            catch(Exception ex)
             {
-                entity = entity.Substring(0, entity.Length - 1);
-                var resultCatch2 = JsonConvert.DeserializeObject<T>(entity);
-                return resultCatch2;
+               Debug.WriteLine("JSON Load corrupt: {0}", ex.ToString());
             }
+
+            return null;
         }
 
         public string Serialise<T>(T entity)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Text;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Util.Lock;
 using XamlingCore.Portable.Util.Util;
@@ -167,6 +168,30 @@ namespace XamlingCore.iOS.Implementations
             }
         }
 
+        public async System.Threading.Tasks.Task<string> LoadStringUTF(string fileName)
+        {
+            var _lock = NamedLock.Get(fileName);
+
+            using (var releaser = await _lock.LockAsync())
+            {
+                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    if (!store.FileExists(fileName))
+                    {
+                        return null;
+                    }
+
+                    using (var f = store.OpenFile(fileName, FileMode.Open))
+                    {
+                        var b = new byte[f.Length];
+                        await f.ReadAsync(b, 0, b.Length);
+                        var s = Encoding.UTF8.GetString(b);
+                        return s;
+                    }
+                }
+            }
+        }
+
         public async System.Threading.Tasks.Task Save(string fileName, byte[] data)
         {
             var _lock = NamedLock.Get(fileName);
@@ -210,6 +235,24 @@ namespace XamlingCore.iOS.Implementations
                     using (var sw = new StreamWriter(store.OpenFile(fileName, FileMode.OpenOrCreate)))
                     {
                         await sw.WriteAsync(data);
+                        return true;
+                    }
+                }
+            }
+        }
+
+        public async System.Threading.Tasks.Task<bool> SaveStringUTF(string fileName, string data)
+        {
+            var _lock = NamedLock.Get(fileName);
+
+            using (var releaser = await _lock.LockAsync())
+            {
+                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    using (var s = store.OpenFile(fileName, FileMode.OpenOrCreate))
+                    {
+                        var b = Encoding.UTF8.GetBytes(data);
+                        await s.WriteAsync(b, 0, b.Length);
                         return true;
                     }
                 }
