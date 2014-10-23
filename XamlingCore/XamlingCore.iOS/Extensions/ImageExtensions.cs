@@ -1,4 +1,8 @@
-﻿using System.Threading;
+﻿//Special thanks to Xamarin
+//https://github.com/xamarin/prebuilt-apps/blob/master/FieldService/FieldService.iOS/Utilities/UIKitExtensions.cs
+
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -33,6 +37,25 @@ namespace XamlingCore.iOS.Extensions
             using (var result = await bitMap.Stream(new CancellationToken()))
             {
                 return result.ToUIImage();
+            }
+        }
+
+        /// <summary>
+        /// Converts a UIImage to a byte array
+        /// </summary>
+        public static byte[] ToByteArray(this UIImage image)
+        {
+            if (image == null)
+                return null;
+
+            using (image)
+            {
+                using (var data = image.AsJPEG())
+                {
+                    var bytes = new byte[data.Length];
+                    Marshal.Copy(data.Bytes, bytes, 0, (int)data.Length);
+                    return bytes;
+                }
             }
         }
     }

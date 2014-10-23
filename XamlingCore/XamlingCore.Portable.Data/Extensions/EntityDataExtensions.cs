@@ -32,28 +32,32 @@ namespace XamlingCore.Portable.Data.Extensions
         }
 
 
-        public static async Task AddToBucket<T>(this T entity, string bucket) where T : class, IEntity, new()
+        public static async Task<T> AddToBucket<T>(this T entity, string bucket) where T : class, IEntity, new()
         {
             var manager = _getManagerFor(entity);
             await manager.AddToBucket(bucket, entity);
+            return entity;
         }
 
-        public static async Task RemoveFromBucket<T>(this T entity, string bucket) where T : class, IEntity, new()
+        public static async Task<T> RemoveFromBucket<T>(this T entity, string bucket) where T : class, IEntity, new()
         {
             var manager = _getManagerFor(entity);
             await manager.RemoveFromBucket(bucket, entity);
+            return entity;
         }
 
-        public static async Task Set<T>(this T entity) where T : class, IEntity, new()
+        public static async Task<T> Set<T>(this T entity) where T : class, IEntity, new()
         {
             var manager = _getManagerFor(entity);
             await manager.Set(entity);
+            return entity;
         }
 
-        public static async Task Delete<T>(this T entity) where T : class, IEntity, new()
+        public static async Task<T> Delete<T>(this T entity) where T : class, IEntity, new()
         {
             var manager = _getManagerFor(entity);
             await manager.Delete(entity);
+            return entity;
         }
     }
 }
