@@ -47,6 +47,16 @@ namespace XamlingCore.Portable.Data.Entities
             return list;
         }
 
+        public async Task MoveToBucket(string bucket, T entity)
+        {
+            if (entity == null)
+            {
+                return;
+            }
+
+            await _bucket.MoveToBucket(bucket, entity.Id);
+        }
+
         public async Task<bool> IsInBucket(string bucket, T entity)
         {
             if (entity == null)

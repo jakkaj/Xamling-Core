@@ -31,6 +31,13 @@ namespace XamlingCore.Portable.Data.Extensions
             return await manager.IsInBucket(bucket, entity);
         }
 
+        public static async Task<T> MoveToBucket<T>(this T entity, string bucket) where T : class, IEntity, new()
+        {
+            var manager = _getManagerFor(entity);
+            await manager.MoveToBucket(bucket, entity);
+            return entity;
+        }
+
 
         public static async Task<T> AddToBucket<T>(this T entity, string bucket) where T : class, IEntity, new()
         {

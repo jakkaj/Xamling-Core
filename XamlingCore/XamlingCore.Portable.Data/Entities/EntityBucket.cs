@@ -53,6 +53,39 @@ namespace XamlingCore.Portable.Data.Entities
             }
         }
 
+        public async Task MoveToBucket(string bucket, Guid guid)
+        {
+            await _init();
+
+            using (var l = await _lock.LockAsync())
+            {
+                var doSave = false;
+
+                foreach (var existingBucket in _buckets)
+                {
+                    if (existingBucket.Value.Contains(guid))
+                    {
+                        existingBucket.Value.Remove(guid);
+                        doSave = true;
+                    }    
+                }
+
+                var b = _getBucket(bucket);
+
+                if (!b.Contains(guid))
+                {
+                    b.Add(guid);
+                    doSave = true;
+                }
+
+                if (doSave)
+                {
+                    await _save();
+                    _notifyUpdated(bucket, BucketUpdatedTypes.Add);    
+                }
+            }
+        }
+
         public async Task AddToBucket(string bucket, Guid guid)
         {
             await _init();
@@ -60,6 +93,7 @@ namespace XamlingCore.Portable.Data.Entities
             using (var l = await _lock.LockAsync())
             {
                 var b = _getBucket(bucket);
+
                 if (!b.Contains(guid))
                 {
                     b.Add(guid);

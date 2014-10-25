@@ -13,5 +13,6 @@ namespace XamlingCore.Portable.Contract.Entities
         Task RemoveFromBucket(string bucket, Guid guid);
         Task ClearAll();
         Task ClearBucket(string bucket);
+        Task MoveToBucket(string bucket, Guid guid);
     }
 }

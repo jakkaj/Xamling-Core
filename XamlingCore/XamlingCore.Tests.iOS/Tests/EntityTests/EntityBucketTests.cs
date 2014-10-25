@@ -21,6 +21,7 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
             public const string Bucket1 = "Bucket1";
             public const string Bucket2 = "Bucket2";
             public const string Bucket3 = "Bucket1";
+            public const string Bucket4 = "Bucket4";
         }
 
         [Test]
@@ -93,6 +94,39 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
                 {
                     Assert.IsTrue(await item.IsInBucket(TestBuckets.Bucket1));
                     Assert.IsNull(allInBucket.FirstOrDefault(_ => _.Id == item.Id));
+                }
+
+                msr.Set();
+            });
+
+            var msrResult = msr.WaitOne(5000);
+            Assert.IsTrue(msrResult, "MSR not set, means assertion failed in task");
+        }
+
+        [Test]
+        public void TestBucketMove()
+        {
+            var entityManager = Container.Resolve<IEntityManager<EntityTests.TestEntity>>();
+
+            var testItems = _testData();
+
+            var msr = new ManualResetEvent(false);
+
+            Task.Run(async () =>
+            {
+                foreach (var i in testItems)
+                {
+                    await i.AddToBucket(TestBuckets.Bucket1);
+                }
+
+                foreach (var i in testItems)
+                {
+                    Assert.IsTrue(await i.IsInBucket(TestBuckets.Bucket1));
+                    Assert.IsFalse(await i.IsInBucket(TestBuckets.Bucket4));
+
+                    await i.MoveToBucket(TestBuckets.Bucket4);
+                    Assert.IsFalse(await i.IsInBucket(TestBuckets.Bucket1));
+                    Assert.IsTrue(await i.IsInBucket(TestBuckets.Bucket4));
                 }
 
                 msr.Set();

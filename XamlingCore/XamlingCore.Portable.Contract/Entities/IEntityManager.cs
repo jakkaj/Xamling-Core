@@ -19,5 +19,6 @@ namespace XamlingCore.Portable.Contract.Entities
         Task<List<T>> Set(List<T> entities);
         Task<T> Set(T entity);
         Task Delete(T entity);
+        Task MoveToBucket(string bucket, T entity);
     }
 }
