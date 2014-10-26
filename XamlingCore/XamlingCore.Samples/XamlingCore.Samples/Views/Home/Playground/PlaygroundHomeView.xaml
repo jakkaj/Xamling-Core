@@ -2,5 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 					   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 					   x:Class="XamlingCore.Samples.Views.Home.Playground.PlaygroundHomeView">
-	<Label Text="Playground" VerticalOptions="Center" HorizontalOptions="Center" />
+
+  <StackLayout>
+    <Label Text="Playground" VerticalOptions="Center" HorizontalOptions="Center" />
+    <Button Text="Transitions play" Command="{Binding GoToTransCommand}"/>
+  </StackLayout>
+
 </ContentPage>
