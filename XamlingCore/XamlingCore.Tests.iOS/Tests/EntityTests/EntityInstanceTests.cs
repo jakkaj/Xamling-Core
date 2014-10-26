@@ -79,7 +79,7 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
                 msr.Set();
             });
 
-            var msrResult = msr.WaitOne(5000);
+            var msrResult = msr.WaitOne(10000);
             Assert.IsTrue(msrResult, "MSR not set, means assertion failed in task");
 
 
