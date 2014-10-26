@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms;
+using XamlingCore.Samples.Views.Home.Playground;
 using XamlingCore.Samples.Views.MasterDetailHome.AnotherMenuOption;
 using XamlingCore.Samples.Views.MasterDetailHome.GoogleAnalytics;
 using XamlingCore.Samples.Views.MasterDetailHome.Home;
@@ -26,6 +27,7 @@ namespace XamlingCore.Samples.Views.Root.MasterDetailRoot
             AddPage(CreateContentModel<AnotherMenuOptionViewModel>());
             AddPage(CreateContentModel<LocationViewModel>());
             AddPage(CreateContentModel<LoadersViewModel>());
+            AddPage(CreateContentModel<PlaygroundHomeViewModel>());
 
             //Add the master view (which is like the menu bit the flies out)
             SetMaster(CreateContentModel<MasterDetailMenuPageViewModel>());

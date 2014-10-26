@@ -6,6 +6,7 @@ using Autofac;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
+using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Contract;
 
 namespace XamlingCore.iOS.Navigation
@@ -61,6 +62,11 @@ namespace XamlingCore.iOS.Navigation
             if (view != null)
             {
                 view.BindingContext = content;
+
+                if (content is XViewModel && string.IsNullOrWhiteSpace(view.Title))
+                {
+                    view.SetBinding(Page.TitleProperty, "Title");
+                }
 
                 return view;
             }

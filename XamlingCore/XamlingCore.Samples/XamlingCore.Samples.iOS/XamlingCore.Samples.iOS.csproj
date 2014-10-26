@@ -196,6 +196,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\nearby%403x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NativeViews\Forms\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
