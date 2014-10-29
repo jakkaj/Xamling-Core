@@ -25,6 +25,7 @@ namespace XamlingCore.Portable.Data.Serialise
             }
             catch(Exception ex)
             {
+                Debug.WriteLine(entity);
                Debug.WriteLine("JSON Load corrupt: {0}", ex.ToString());
             }
 
