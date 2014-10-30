@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using MonoTouch.Foundation;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Util.Lock;
 using XamlingCore.Portable.Util.Util;
@@ -12,16 +14,23 @@ namespace XamlingCore.iOS.Implementations
 {
     public class LocalStorage : ILocalStorage
     {
-        public async System.Threading.Tasks.Task<bool> Copy(string source, string destinationFolder, string newName, bool replace = true)
+        public async System.Threading.Tasks.Task<bool> Copy(string source, string newName, bool replace = true)
         {
-            var _lock = NamedLock.Get(destinationFolder + "\\" + newName);
+            var _lock = NamedLock.Get(newName);
             using (var releaser = await _lock.LockAsync())
             {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+
+                var sFile = _getPath(source);
+                var tFile = _getPath(newName);
+
+                if (!File.Exists(sFile))
                 {
-                    store.CopyFile(source, Path.Combine(destinationFolder, newName), replace);
-                    return true;
+                    return false;
                 }
+
+                File.Copy(sFile, tFile, replace);
+
+                return true;
             }
         }
 
@@ -31,75 +40,36 @@ namespace XamlingCore.iOS.Implementations
 
             using (var releaser = await _lock.LockAsync())
             {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                var path = _getPath(fileName);
+
+                if (File.Exists(path))
                 {
-                    if (store.FileExists(fileName))
-                    {
-                        store.DeleteFile(fileName);
-                        return true;
-                    }
-                    return false;
+                    File.Delete(path);    
                 }
+
+                return true;
             }
-        }
-
-        public async System.Threading.Tasks.Task<bool> EnsureFolderExists(string folderPath)
-        {
-            var _lock = NamedLock.Get(folderPath);
-
-            using (var releaser = await _lock.LockAsync())
-            {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-                {
-                    if (!store.DirectoryExists(folderPath))
-                    {
-                        store.CreateDirectory(folderPath);
-                    }
-                    return true;
-                }
-            }
-
         }
 
         public async System.Threading.Tasks.Task<bool> FileExists(string fileName)
         {
-            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-            {
-                return store.FileExists(fileName);
-            }
+            var p = _getPath(fileName);
+            return File.Exists(p);
         }
 
         public async System.Threading.Tasks.Task<List<string>> GetAllFilesInFolder(string folderPath)
         {
-            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+            var p = _getPath(folderPath);
+            if (!Directory.Exists(p))
             {
-                string[] subDirectories =
-                    store.GetFileNames(Path.Combine(folderPath, "*"));
-                return subDirectories.ToList();
+                return null;
             }
+
+            var f = Directory.GetFiles(p);
+
+            return f != null ? f.ToList() : null;
         }
        
-
-        public async System.Threading.Tasks.Task<bool> IsZero(string fileName)
-        {
-            var _lock = NamedLock.Get(fileName);
-
-            using (var releaser = await _lock.LockAsync())
-            {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-                {
-                    if (!store.FileExists(fileName))
-                    {
-                        return true;
-                    }
-
-                    using (var f = store.OpenFile(fileName, FileMode.Open))
-                    {
-                        return f.Length == 0;
-                    }
-                }
-            }
-        }
 
         public async System.Threading.Tasks.Task<byte[]> Load(string fileName)
         {
@@ -107,20 +77,14 @@ namespace XamlingCore.iOS.Implementations
 
             using (var releaser = await _lock.LockAsync())
             {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-                {
-                    if (!store.FileExists(fileName))
-                    {
-                        return null;
-                    }
+                var path = _getPath(fileName);
 
-                    using (var f = store.OpenFile(fileName, FileMode.Open))
-                    {
-                        var b = new byte[f.Length];
-                        await f.ReadAsync(b, 0, b.Length);
-                        return b;
-                    }
+                if (!File.Exists(path))
+                {
+                    return null;
                 }
+
+                return File.ReadAllBytes(path);
             }
         }
 
@@ -130,19 +94,17 @@ namespace XamlingCore.iOS.Implementations
 
             using (var releaser = await _lock.LockAsync())
             {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                var path = _getPath(fileName);
+                if (!File.Exists(path))
                 {
-                    if (!store.FileExists(fileName))
-                    {
-                        return null;
-                    }
-
-                    var f = store.OpenFile(fileName, FileMode.Open);
-
-                    return f;
+                    return null;
                 }
+
+                return File.Open(path, FileMode.Open);
             }
         }
+
+        
 
         public async System.Threading.Tasks.Task<string> LoadString(string fileName)
         {
@@ -150,45 +112,14 @@ namespace XamlingCore.iOS.Implementations
 
             using (var releaser = await _lock.LockAsync())
             {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                var path = _getPath(fileName);
+
+                if (!File.Exists(path))
                 {
-                    if (!store.FileExists(fileName))
-                    {
-                        return null;
-                    }
-
-                    using (var f = store.OpenFile(fileName, FileMode.Open))
-                    {
-                        using (var sr = new StreamReader(f))
-                        {
-                            return await sr.ReadToEndAsync();
-                        }
-                    }
+                    return null;
                 }
-            }
-        }
 
-        public async System.Threading.Tasks.Task<string> LoadStringUTF(string fileName)
-        {
-            var _lock = NamedLock.Get(fileName);
-
-            using (var releaser = await _lock.LockAsync())
-            {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-                {
-                    if (!store.FileExists(fileName))
-                    {
-                        return null;
-                    }
-
-                    using (var f = store.OpenFile(fileName, FileMode.Open))
-                    {
-                        var b = new byte[f.Length];
-                        await f.ReadAsync(b, 0, b.Length);
-                        var s = Encoding.UTF8.GetString(b);
-                        return s;
-                    }
-                }
+                return File.ReadAllText(path);
             }
         }
 
@@ -198,13 +129,10 @@ namespace XamlingCore.iOS.Implementations
 
             using (var releaser = await _lock.LockAsync())
             {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-                {
-                    using (var s = store.OpenFile(fileName, FileMode.OpenOrCreate))
-                    {
-                        await s.WriteAsync(data, 0, data.Length);
-                    }
-                }
+                var path = _getPath(fileName);
+                _createDirForFile(path);
+
+                File.WriteAllBytes(path, data);
             }
         }
 
@@ -214,12 +142,13 @@ namespace XamlingCore.iOS.Implementations
 
             using (var releaser = await _lock.LockAsync())
             {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                var path = _getPath(fileName);
+            
+                _createDirForFile(path);
+
+                using (var s = File.Create(fileName))
                 {
-                    using (var s = store.OpenFile(fileName, FileMode.OpenOrCreate))
-                    {
-                        await stream.CopyToAsync(s);
-                    }
+                    await stream.CopyToAsync(s);
                 }
             }
         }
@@ -230,33 +159,41 @@ namespace XamlingCore.iOS.Implementations
 
             using (var releaser = await _lock.LockAsync())
             {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-                {
-                    using (var sw = new StreamWriter(store.OpenFile(fileName, FileMode.OpenOrCreate)))
-                    {
-                        await sw.WriteAsync(data);
-                        return true;
-                    }
-                }
+                var path = _getPath(fileName);
+                _createDirForFile(path);
+
+                File.WriteAllText(path, data);
+                return true;
+            }
+
+        }
+
+        void _createDirForFile(string fileName)
+        {
+            var dir = Path.GetDirectoryName(fileName);
+
+            if (dir == null)
+            {
+                return;
+            }
+
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
             }
         }
 
-        public async System.Threading.Tasks.Task<bool> SaveStringUTF(string fileName, string data)
+        /// <summary>
+        /// iOS Specific get path
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private string _getPath(string fileName)
         {
-            var _lock = NamedLock.Get(fileName);
-
-            using (var releaser = await _lock.LockAsync())
-            {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-                {
-                    using (var s = store.OpenFile(fileName, FileMode.OpenOrCreate))
-                    {
-                        var b = Encoding.UTF8.GetBytes(data);
-                        await s.WriteAsync(b, 0, b.Length);
-                        return true;
-                    }
-                }
-            }
+            var documents = NSFileManager.DefaultManager.GetUrls(NSSearchPathDirectory.LibraryDirectory, NSSearchPathDomain.User)[0];
+            var str = documents.Path;
+            var result = Path.Combine(str, fileName);
+            return result;
         }
     }
 }

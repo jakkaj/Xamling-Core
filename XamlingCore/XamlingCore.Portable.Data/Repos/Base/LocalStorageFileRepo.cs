@@ -43,10 +43,8 @@ namespace XamlingCore.Portable.Data.Repos.Base
         public async Task<bool> Set<T>(T entity, string fileName)
             where T : class, new()
         {
-            var folderName = Path.GetDirectoryName(fileName);
-            await _applicationDataHelper.EnsureFolderExists(folderName);
             var s = _entitySerialiser.Serialise(entity);
-            return await _applicationDataHelper.SaveStringUTF(fileName, s);
+            return await _applicationDataHelper.SaveString(fileName, s);
         }
 
         public async Task<List<T>> GetAll<T>(string folderName)
@@ -79,8 +77,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
         public async Task<T> Get<T>(string fileName)
             where T : class, new()
         {
-            if (!await _applicationDataHelper.FileExists(fileName)) return null;
-            var d = await _applicationDataHelper.LoadStringUTF(fileName);
+            var d = await _applicationDataHelper.LoadString(fileName);
             return !string.IsNullOrWhiteSpace(d) ? _entitySerialiser.Deserialise<T>(d) : null;
 
         }

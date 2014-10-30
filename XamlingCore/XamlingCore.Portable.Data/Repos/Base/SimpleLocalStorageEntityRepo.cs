@@ -31,11 +31,6 @@ namespace XamlingCore.Portable.Data.Repos.Base
         {
             _name = typeof(T).Name;
             _name = _name.Replace("Entity", "");
-
-            using (var l = await _lock.LockAsync())
-            {
-                var exists = await _applicationDataHelper.EnsureFolderExists(_getFolderName());    
-            }
         }
 
         string _getFolderName()
