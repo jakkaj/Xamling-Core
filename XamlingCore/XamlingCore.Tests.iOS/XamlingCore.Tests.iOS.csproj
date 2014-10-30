@@ -81,6 +81,7 @@
     <Compile Include="Tests\CacheTests\EntityCacheTEsts.cs" />
     <Compile Include="Tests\EntityTests\EntityInstanceTests.cs" />
     <Compile Include="Tests\EntityTests\EntityBucketTests.cs" />
+    <Compile Include="Tests\FileTests\BasicFileWriting.cs" />
     <Compile Include="Tests\Helpers\HashHelperTests.cs" />
     <None Include="app.config" />
     <None Include="Info.plist" />

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
@@ -173,7 +174,7 @@ namespace XamlingCore.iOS.Implementations
             
                 _createDirForFile(path);
 
-                using (var s = File.Create(fileName))
+                using (var s = File.Create(path))
                 {
                     await stream.CopyToAsync(s);
                 }
@@ -198,6 +199,8 @@ namespace XamlingCore.iOS.Implementations
         void _createDirForFile(string fileName)
         {
             var dir = Path.GetDirectoryName(fileName);
+
+            //Debug.WriteLine("Creating Directory: {0}", fileName);
 
             if (dir == null)
             {
