@@ -20,5 +20,6 @@ namespace XamlingCore.Portable.Contract.Infrastructure.LocalStorage
         Task<bool> DeleteFile(string fileName);
         
         Task<List<string>> GetAllFilesInFolder(string folderPath);
+        Task<bool> IsZero(string fileName);
     }
 }

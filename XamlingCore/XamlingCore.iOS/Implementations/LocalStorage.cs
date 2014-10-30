@@ -5,6 +5,7 @@ using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 using MonoTouch.Foundation;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Util.Lock;
@@ -14,7 +15,26 @@ namespace XamlingCore.iOS.Implementations
 {
     public class LocalStorage : ILocalStorage
     {
-        public async System.Threading.Tasks.Task<bool> Copy(string source, string newName, bool replace = true)
+        public async Task<bool> IsZero(string fileName)
+        {
+            var _lock = NamedLock.Get(fileName);
+
+            using (var releaser = await _lock.LockAsync())
+            {
+                var path = _getPath(fileName);
+
+                if (!File.Exists(path))
+                {
+                    return false;
+                }
+
+                var b = await Load(fileName);
+
+                return b.Length == 0;
+            }
+        }
+
+        public async Task<bool> Copy(string source, string newName, bool replace = true)
         {
             var _lock = NamedLock.Get(newName);
             using (var releaser = await _lock.LockAsync())
@@ -28,13 +48,20 @@ namespace XamlingCore.iOS.Implementations
                     return false;
                 }
 
+                var dir = Path.GetDirectoryName(tFile);
+
+                if (dir != null && !Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
                 File.Copy(sFile, tFile, replace);
 
                 return true;
             }
         }
 
-        public async System.Threading.Tasks.Task<bool> DeleteFile(string fileName)
+        public async Task<bool> DeleteFile(string fileName)
         {
             var _lock = NamedLock.Get(fileName);
 
@@ -51,13 +78,13 @@ namespace XamlingCore.iOS.Implementations
             }
         }
 
-        public async System.Threading.Tasks.Task<bool> FileExists(string fileName)
+        public async Task<bool> FileExists(string fileName)
         {
             var p = _getPath(fileName);
             return File.Exists(p);
         }
 
-        public async System.Threading.Tasks.Task<List<string>> GetAllFilesInFolder(string folderPath)
+        public async Task<List<string>> GetAllFilesInFolder(string folderPath)
         {
             var p = _getPath(folderPath);
             if (!Directory.Exists(p))
@@ -71,7 +98,7 @@ namespace XamlingCore.iOS.Implementations
         }
        
 
-        public async System.Threading.Tasks.Task<byte[]> Load(string fileName)
+        public async Task<byte[]> Load(string fileName)
         {
             var _lock = NamedLock.Get(fileName);
 
@@ -88,7 +115,7 @@ namespace XamlingCore.iOS.Implementations
             }
         }
 
-        public async System.Threading.Tasks.Task<System.IO.Stream> LoadStream(string fileName)
+        public async Task<System.IO.Stream> LoadStream(string fileName)
         {
             var _lock = NamedLock.Get(fileName);
 
@@ -106,7 +133,7 @@ namespace XamlingCore.iOS.Implementations
 
         
 
-        public async System.Threading.Tasks.Task<string> LoadString(string fileName)
+        public async Task<string> LoadString(string fileName)
         {
             var _lock = NamedLock.Get(fileName);
 
@@ -123,7 +150,7 @@ namespace XamlingCore.iOS.Implementations
             }
         }
 
-        public async System.Threading.Tasks.Task Save(string fileName, byte[] data)
+        public async Task Save(string fileName, byte[] data)
         {
             var _lock = NamedLock.Get(fileName);
 
@@ -136,7 +163,7 @@ namespace XamlingCore.iOS.Implementations
             }
         }
 
-        public async System.Threading.Tasks.Task SaveStream(string fileName, System.IO.Stream stream)
+        public async Task SaveStream(string fileName, System.IO.Stream stream)
         {
             var _lock = NamedLock.Get(fileName);
 
@@ -153,7 +180,7 @@ namespace XamlingCore.iOS.Implementations
             }
         }
 
-        public async System.Threading.Tasks.Task<bool> SaveString(string fileName, string data)
+        public async Task<bool> SaveString(string fileName, string data)
         {
             var _lock = NamedLock.Get(fileName);
 
@@ -184,7 +211,7 @@ namespace XamlingCore.iOS.Implementations
         }
 
         /// <summary>
-        /// iOS Specific get path
+        /// iOS 8 Specific get path
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
