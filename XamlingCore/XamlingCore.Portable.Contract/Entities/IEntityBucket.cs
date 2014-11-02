@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using XamlingCore.Portable.Contract.EventArgs;
 using XamlingCore.Portable.Model.Contract;
 
 namespace XamlingCore.Portable.Contract.Entities
@@ -14,5 +15,6 @@ namespace XamlingCore.Portable.Contract.Entities
         Task ClearAll();
         Task ClearBucket(string bucket);
         Task MoveToBucket(string bucket, Guid guid);
+        event EventHandler<BucketUpdatedEventArgs> BucketsUpdated;
     }
 }

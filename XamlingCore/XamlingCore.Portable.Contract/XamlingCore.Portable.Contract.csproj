@@ -50,6 +50,7 @@
     <Compile Include="Downloaders\IHttpTransferrer.cs" />
     <Compile Include="Downloaders\IHttpTransferResult.cs" />
     <Compile Include="Downloaders\ISimpleHttpTranferrer.cs" />
+    <Compile Include="EventArgs\BucketUpdatedEventArgs.cs" />
     <Compile Include="Glue\IGlue.cs" />
     <Compile Include="Helpers\IHashHelper.cs" />
     <Compile Include="Infrastructure\LocalStorage\ILocalStorage.cs" />
@@ -71,7 +72,6 @@
     <Compile Include="Services\IGoogleAnalyticsService.cs" />
     <Compile Include="Services\ILoadStatusService.cs" />
     <Compile Include="Services\ILocationService.cs" />
-    <Compile Include="Services\INetworkService.cs" />
     <Compile Include="Services\IOrientationService.cs" />
     <Compile Include="UI\IDispatcher.cs" />
     <Compile Include="ViewModels\IItemViewModel.cs" />

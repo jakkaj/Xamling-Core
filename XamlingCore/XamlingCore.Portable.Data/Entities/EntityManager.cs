@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using XamlingCore.Portable.Contract.Entities;
+using XamlingCore.Portable.Contract.EventArgs;
 using XamlingCore.Portable.Model.Contract;
 using XamlingCore.Portable.Util.Lock;
 
@@ -24,12 +25,23 @@ namespace XamlingCore.Portable.Data.Entities
         private readonly AsyncLock _readLock = new AsyncLock();
         private readonly AsyncLock _saveLock = new AsyncLock();
 
+        public event EventHandler<BucketUpdatedEventArgs> BucketsUpdated;
+
         public EntityManager(IEntityCache entityCache, IEntityBucket<T> bucket)
         {
             _entityCache = entityCache;
             _bucket = bucket;
+
+            _bucket.BucketsUpdated += _bucket_BucketUpdated;
         }
-        
+
+        void _bucket_BucketUpdated(object sender, EventArgs e)
+        {
+            if (BucketsUpdated != null)
+            {
+                BucketsUpdated(this, e as BucketUpdatedEventArgs);
+            }
+        }        
 
         public async Task<List<T>> AllInBucket(string bucket, TimeSpan? maxAge = null)
         {

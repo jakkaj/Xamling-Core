@@ -1,4 +1,5 @@
 ﻿using System;
+using XamlingCore.Portable.Model.Network;
 
 namespace XamlingCore.Portable.Contract.Network
 {
@@ -6,5 +7,6 @@ namespace XamlingCore.Portable.Contract.Network
     {
         event EventHandler NetworkChanged;
         bool QuickNetworkCheck();
+        XNetworkType NetworkCheck();
     }   
 }

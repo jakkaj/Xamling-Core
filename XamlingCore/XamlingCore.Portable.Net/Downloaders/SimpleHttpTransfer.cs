@@ -3,15 +3,16 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Downloaders;
+using XamlingCore.Portable.Contract.Network;
 using XamlingCore.Portable.Contract.Services;
 
 namespace XamlingCore.Portable.Net.Downloaders
 {
     public class SimpleHttpHttpTransfer : ISimpleHttpTranferrer
     {
-        private readonly INetworkService _networkInformation;
+        private readonly IDeviceNetworkStatus _networkInformation;
 
-        public SimpleHttpHttpTransfer(INetworkService networkInformation)
+        public SimpleHttpHttpTransfer(IDeviceNetworkStatus networkInformation)
         {
             _networkInformation = networkInformation;
         }
@@ -20,7 +21,7 @@ namespace XamlingCore.Portable.Net.Downloaders
         {
             try
             {
-                if (_networkInformation.CheckNetworkAvailable())
+                if (_networkInformation.QuickNetworkCheck())
                 {
                     var httpClient = new HttpClient();
                     var message = new HttpRequestMessage(HttpMethod.Post, url);
@@ -46,7 +47,7 @@ namespace XamlingCore.Portable.Net.Downloaders
         {
             try
             {
-                if (_networkInformation.CheckNetworkAvailable())
+                if (_networkInformation.QuickNetworkCheck())
                 {
                     var httpClient = new HttpClient();
                     var message = new HttpRequestMessage(HttpMethod.Get, url);

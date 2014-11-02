@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using XamlingCore.Portable.Contract.Network;
+using XamlingCore.Portable.Model.Network;
 
 namespace XamlingCore.iOS.Implementations
 {
@@ -19,6 +21,21 @@ namespace XamlingCore.iOS.Implementations
             if (NetworkChanged != null)
             {
                 NetworkChanged(this, EventArgs.Empty);
+            }
+        }
+
+        public XNetworkType NetworkCheck()
+        {
+            var internetStatus = Reachability.InternetConnectionStatus();
+            switch (internetStatus)
+            {
+                case NetworkStatus.NotReachable:
+                    return XNetworkType.None;
+                case NetworkStatus.ReachableViaCarrierDataNetwork:
+                    return XNetworkType.Cellular;
+                case NetworkStatus.ReachableViaWiFiNetwork:
+                    return XNetworkType.WiFi;
+                default: return XNetworkType.Unknown;
             }
         }
 

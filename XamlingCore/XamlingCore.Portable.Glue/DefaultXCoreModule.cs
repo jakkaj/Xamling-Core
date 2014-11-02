@@ -1,23 +1,18 @@
-﻿using System.Globalization;
-using System.Resources;
-using Autofac;
+﻿using Autofac;
 using XamlingCore.Portable.Contract.Downloaders;
 using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Contract.Localisation;
 using XamlingCore.Portable.Contract.Navigation;
-using XamlingCore.Portable.Contract.Repos;
 using XamlingCore.Portable.Contract.Repos.Base;
 using XamlingCore.Portable.Contract.Serialise;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Data.Entities;
-using XamlingCore.Portable.Data.Repos;
 using XamlingCore.Portable.Data.Repos.Base;
 using XamlingCore.Portable.Data.Serialise;
 using XamlingCore.Portable.Glue.Locale;
 using XamlingCore.Portable.Net.Downloaders;
 using XamlingCore.Portable.Service.Localisation;
 using XamlingCore.Portable.Service.Location;
-using XamlingCore.Portable.Service.Network;
 using XamlingCore.Portable.Service.Orientation;
 using XamlingCore.Portable.Service.Settings;
 using XamlingCore.Portable.View.Navigation;
@@ -31,8 +26,7 @@ namespace XamlingCore.Portable.Glue
         protected override void Load(ContainerBuilder builder)
         {
             builder.Register(_ => new LocalisationService(XLocale.CultureInfo, XLocale.ResourceManager)).As<ILocalisationService>().SingleInstance();
-
-            builder.RegisterType<NetworkService>().As<INetworkService>().SingleInstance();
+            
             builder.RegisterType<LocalStorageFileRepo>().As<ILocalStorageFileRepo>().SingleInstance();
 
             builder.RegisterGeneric(typeof (EntityManager<>)).As(typeof (IEntityManager<>)).SingleInstance();

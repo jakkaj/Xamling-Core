@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using XamlingCore.Portable.Contract.Entities;
+using XamlingCore.Portable.Contract.EventArgs;
 using XamlingCore.Portable.Messages.Entities;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Model.Contract;
@@ -24,7 +25,7 @@ namespace XamlingCore.Portable.Data.Entities
 
         private const string BucketKey = "Buckets";
 
-        
+        public event EventHandler<BucketUpdatedEventArgs> BucketsUpdated;
 
         public EntityBucket(IEntityCache cache)
         {
@@ -149,6 +150,11 @@ namespace XamlingCore.Portable.Data.Entities
         void _notifyUpdated(string bucket, BucketUpdatedTypes updateType)
         {
             new BucketUpdatedMessage(bucket, typeof(T),updateType).Send();
+            
+            if (BucketsUpdated != null)
+            {
+                BucketsUpdated(this, new BucketUpdatedEventArgs(bucket));
+            }
         }
 
         void _notifyCleared()
