@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Contract.EventArgs;
+using XamlingCore.Portable.Messages.Entities;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Model.Contract;
 using XamlingCore.Portable.Util.Lock;
 
@@ -230,6 +232,8 @@ namespace XamlingCore.Portable.Data.Entities
                 }
 
                 await _entityCache.SetEntity(_getKey(entity.Id), memory);
+
+                new EntityUpdatedMessage<T>(entity).Send();
 
                 return memory;
             }

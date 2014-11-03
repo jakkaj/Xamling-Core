@@ -44,6 +44,7 @@
     <Compile Include="Device\PageOrientationChangedMessage.cs" />
     <Compile Include="Device\SupportedOrientationChangedMessage.cs" />
     <Compile Include="Entities\BucketUpdatedMessage.cs" />
+    <Compile Include="Entities\EntityUpdated.cs" />
     <Compile Include="Location\LocationSettingsChangedMessage.cs" />
     <Compile Include="Location\LowResLocationUpdatedMessage.cs" />
     <Compile Include="Navigation\ForceAppExitUsingNavigation.cs" />
