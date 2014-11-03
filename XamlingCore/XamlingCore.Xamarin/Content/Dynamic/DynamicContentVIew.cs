@@ -10,8 +10,8 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
     {
         public DynamicContentView(BindableObject bindingParent)
         {
+            IsVisible = false;
             SetBindingParent(bindingParent);
-            
         }
         public void SetBindingParent(BindableObject v)
         {
@@ -62,6 +62,7 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
             if (newValue == null)
             {
                 viewer.Content = null;
+                viewer.IsVisible = false;
                 return;
             }
 
@@ -78,6 +79,7 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
             }
 
             viewer.Content = v;
+            viewer.IsVisible = true;
         }
     }
 }
