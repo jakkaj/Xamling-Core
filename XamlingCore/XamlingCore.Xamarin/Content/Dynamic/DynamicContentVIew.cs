@@ -11,6 +11,7 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
         public DynamicContentView(BindableObject bindingParent)
         {
             SetBindingParent(bindingParent);
+            
         }
         public void SetBindingParent(BindableObject v)
         {

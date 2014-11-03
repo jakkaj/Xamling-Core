@@ -41,6 +41,8 @@ namespace XamlingCore.Portable.View.ViewModel
 
         protected internal ILifetimeScope Container { get; set; }
 
+        private XViewModel _ancillaryViewModel;
+
         public T CreateContentModel<T>(Action<T> initialisedCallback)
              where T : XViewModel
         {
@@ -231,6 +233,16 @@ namespace XamlingCore.Portable.View.ViewModel
             set
             {
                 _isLandscape = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public XViewModel AncillaryViewModel
+        {
+            get { return _ancillaryViewModel; }
+            set
+            {
+                _ancillaryViewModel = value;
                 OnPropertyChanged();
             }
         }

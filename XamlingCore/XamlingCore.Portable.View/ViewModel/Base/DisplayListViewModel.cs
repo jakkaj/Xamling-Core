@@ -54,9 +54,15 @@ namespace XamlingCore.Portable.View.ViewModel.Base
             }
         }
 
+        public virtual void OnItemsChanged()
+        {
+            
+        }
+
         public virtual void OnMore()
         {
 
+            OnItemsChanged();
         }
 
         public TWrapViewModelType SelectedItem
@@ -80,6 +86,7 @@ namespace XamlingCore.Portable.View.ViewModel.Base
                 NoItems = Items == null || Items.Count == 0;
 
                 OnPropertyChanged();
+                OnItemsChanged();
             }
         }
 
