@@ -24,7 +24,10 @@ namespace XamlingCore.iOS.Implementations
             {
                 var path = _getPath(fileName);
 
-                if (!File.Exists(path))
+                var r = Task.Run(() => File.Exists(path));
+                await r;
+
+                if (!r.Result)
                 {
                     return false;
                 }
@@ -44,7 +47,10 @@ namespace XamlingCore.iOS.Implementations
                 var sFile = _getPath(source);
                 var tFile = _getPath(newName);
 
-                if (!File.Exists(sFile))
+                var r = Task.Run(() => File.Exists(sFile));
+                await r;
+
+                if (!r.Result)
                 {
                     return false;
                 }
@@ -56,7 +62,9 @@ namespace XamlingCore.iOS.Implementations
                     Directory.CreateDirectory(dir);
                 }
 
-                File.Copy(sFile, tFile, replace);
+                var r2 = Task.Run(() => File.Copy(sFile, tFile, replace));
+
+                await r2;
 
                 return true;
             }
@@ -70,9 +78,13 @@ namespace XamlingCore.iOS.Implementations
             {
                 var path = _getPath(fileName);
 
-                if (File.Exists(path))
+                var r = Task.Run(() => File.Exists(path));
+                await r;
+
+                if (r.Result)
                 {
-                    File.Delete(path);    
+                    var r2 = Task.Run(() => File.Delete(path));
+                    await r2;
                 }
 
                 return true;
@@ -82,7 +94,10 @@ namespace XamlingCore.iOS.Implementations
         public async Task<bool> FileExists(string fileName)
         {
             var p = _getPath(fileName);
-            return File.Exists(p);
+
+            var r = Task.Run(() => File.Exists(p));
+            await r;
+            return r.Result;
         }
 
         public async Task<List<string>> GetAllFilesInFolder(string folderPath)
@@ -112,7 +127,9 @@ namespace XamlingCore.iOS.Implementations
                     return null;
                 }
 
-                return File.ReadAllBytes(path);
+                var r = Task.Run(() => File.ReadAllBytes(path));
+                await r;
+                return r.Result;
             }
         }
 
@@ -128,7 +145,9 @@ namespace XamlingCore.iOS.Implementations
                     return null;
                 }
 
-                return File.Open(path, FileMode.Open);
+                var r = Task.Run(() => File.Open(path, FileMode.Open));
+                await r;
+                return r.Result;
             }
         }
 
@@ -147,7 +166,9 @@ namespace XamlingCore.iOS.Implementations
                     return null;
                 }
 
-                return File.ReadAllText(path);
+                var r = Task.Run(() => File.ReadAllText(path));
+                await r;
+                return r.Result;
             }
         }
 
@@ -159,8 +180,9 @@ namespace XamlingCore.iOS.Implementations
             {
                 var path = _getPath(fileName);
                 _createDirForFile(path);
-
-                File.WriteAllBytes(path, data);
+                
+                var r = Task.Run(() => File.WriteAllBytes(path, data));
+                await r;
             }
         }
 
@@ -190,7 +212,8 @@ namespace XamlingCore.iOS.Implementations
                 var path = _getPath(fileName);
                 _createDirForFile(path);
 
-                File.WriteAllText(path, data);
+                var r = Task.Run(()=>File.WriteAllText(path, data));
+                await r;
                 return true;
             }
 
