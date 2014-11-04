@@ -177,7 +177,11 @@ namespace XamlingCore.iOS.Implementations.Location
         private CLLocationManager GetManager()
         {
             CLLocationManager m = null;
-            new NSObject().InvokeOnMainThread(() => m = new CLLocationManager());
+            new NSObject().InvokeOnMainThread(() =>
+                                              {
+                                                  m = new CLLocationManager();
+                                                  m.RequestAlwaysAuthorization();
+                                              });
             return m;
         }
 

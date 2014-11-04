@@ -33,5 +33,9 @@
 	<string></string>
 	<key>NSMainNibFile~ipad</key>
 	<string></string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Just keeping tabs on you.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+    <string>Please allow Location services</string>
 </dict>
 </plist>
