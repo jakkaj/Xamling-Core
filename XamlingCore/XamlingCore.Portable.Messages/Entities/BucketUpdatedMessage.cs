@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Messages.XamlingMessenger;
+using XamlingCore.Portable.Model.Contract;
 
 namespace XamlingCore.Portable.Messages.Entities
 {
-    public class BucketUpdatedMessage : XMessage
+    public class BucketUpdatedMessage<T> : XMessage where T: class, IEntity, new()
     {
         
         private readonly string _bucketName;
-        private readonly Type _bucketType;
         private readonly BucketUpdatedTypes _operationType;
 
         public BucketUpdatedMessage(BucketUpdatedTypes operationType)
@@ -19,18 +19,12 @@ namespace XamlingCore.Portable.Messages.Entities
             _operationType = operationType;
         }
 
-        public BucketUpdatedMessage(string bucketName, Type bucketType, BucketUpdatedTypes operationType)
+        public BucketUpdatedMessage(string bucketName, BucketUpdatedTypes operationType)
         {
             _bucketName = bucketName;
-            _bucketType = bucketType;
             _operationType = operationType;
         }
-
-        public Type BucketType
-        {
-            get { return _bucketType; }
-        }
-
+      
         public string BucketName
         {
             get { return _bucketName; }

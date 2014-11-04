@@ -35,6 +35,11 @@ namespace XamlingCore.iOS
             set { _rootView = value; }
         }
 
+        public TRootVM RootViewModel
+        {
+            get { return _root; }
+        }
+
         public void Init()
         {
             InitRoot();
@@ -44,7 +49,7 @@ namespace XamlingCore.iOS
             _root = RootFrame.CreateContentModel<TRootVM>();
             _frameManager = RootFrame.Container.Resolve<IFrameManager>();
 
-            var initalViewController = _frameManager.Init(RootFrame, _root);
+            var initalViewController = _frameManager.Init(RootFrame, RootViewModel);
             
             _window = new UIWindow(UIScreen.MainScreen.Bounds);
 
@@ -61,7 +66,7 @@ namespace XamlingCore.iOS
         {
             if (viewName.ToLower().IndexOf("storyboard") != -1)
             {
-                _root.Dispatcher.Invoke(() =>
+                RootViewModel.Dispatcher.Invoke(() =>
                 {
                     var sb = UIStoryboard.FromName(viewName, null);
                     var controller = sb.InstantiateInitialViewController() as UIViewController;
@@ -83,7 +88,7 @@ namespace XamlingCore.iOS
                 throw new Exception("Could not find native view: " + t.FullName);
             }
 
-            _root.Dispatcher.Invoke(() =>
+            RootViewModel.Dispatcher.Invoke(() =>
             {
                 var controller = Container.Resolve(t) as UIViewController;
 

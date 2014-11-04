@@ -149,7 +149,7 @@ namespace XamlingCore.Portable.Data.Entities
 
         void _notifyUpdated(string bucket, BucketUpdatedTypes updateType)
         {
-            new BucketUpdatedMessage(bucket, typeof(T),updateType).Send();
+            new BucketUpdatedMessage<T>(bucket, updateType).Send();
             
             if (BucketsUpdated != null)
             {
@@ -159,7 +159,7 @@ namespace XamlingCore.Portable.Data.Entities
 
         void _notifyCleared()
         {
-            new BucketUpdatedMessage(BucketUpdatedTypes.Clear).Send();
+            new BucketUpdatedMessage<T>(BucketUpdatedTypes.Clear).Send();
         }
 
         List<Guid> _getBucket(string bucket)

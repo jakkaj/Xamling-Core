@@ -47,6 +47,9 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Location
 
         void _locationService_LocationUpdated(object sender, EventArgs e)
         {
+
+            var r = _locationService.IsLocationResolved();
+
             //todo: need to bind this to form display
             Debug.WriteLine("Location Updated");
             var loc = _locationService.CurrentLocation;
