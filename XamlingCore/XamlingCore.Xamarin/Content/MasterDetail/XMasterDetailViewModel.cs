@@ -22,8 +22,9 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
         private Page _masterContent;
         private Page _detailContent;
 
-        private XViewModel _masterViewModel;
-        
+        protected XViewModel MasterViewModel;
+
+        protected XViewModel CurrentDetail;
 
         public Command<XViewModel> NavigateToViewModelCommand { get; set; }
 
@@ -37,9 +38,9 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
 
         protected void SetMaster(XViewModel masterPage)
         {
-            _masterViewModel = masterPage;
+            MasterViewModel = masterPage;
 
-            var selectable = _masterViewModel as ISelectableItem<XViewModel>;
+            var selectable = MasterViewModel as ISelectableItem<XViewModel>;
             if (selectable != null)
             {
                 selectable.SelectionChanged += selectable_SelectionChanged;
@@ -53,7 +54,7 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             if (s != null)
             {
                 var currentVm = s.Item;
-                _showNavPage(currentVm);
+                ShowNavPage(currentVm);
             }
         }
 
@@ -61,7 +62,7 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
 
         protected void Build()
         {
-            var v = _masterViewModel as IDataListViewModel<XViewModel>;
+            var v = MasterViewModel as IDataListViewModel<XViewModel>;
 
             if (v == null)
             {
@@ -72,20 +73,30 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
 
             //Resolves the view and also sets the binding context
             //teh view that is associated with the view model will be used
-            var masterAreaView = _viewResolver.Resolve(_masterViewModel);
+            var masterAreaView = _viewResolver.Resolve(MasterViewModel);
             MasterContent = masterAreaView;
 
             var firstPage = SectionViewModels.First();
 
-            _showNavPage(firstPage);
+            ShowNavPage(firstPage);
             
 
             firstPage.OnActivated();
-            _masterViewModel.OnActivated();
+            MasterViewModel.OnActivated();
         }
 
-        void _showNavPage(XViewModel vm)
+        protected virtual bool OnShowingPage(XViewModel vm)
         {
+            return true;
+        }
+
+        protected void ShowNavPage(XViewModel vm)
+        {
+            if (!OnShowingPage(vm))
+            {
+                return;
+            }
+
             var frameManager = Container.Resolve<IFrameManager>();
 
             var rootFrame = XFrame.CreateRootFrame<XRootFrame>(Container);
@@ -107,6 +118,7 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             rootFrame.NavigateTo(vm);
 
             DetailContent = initalViewController;
+            CurrentDetail = vm;
         }
 
         void _onNavigateToPage(XViewModel navigateViewModel)
@@ -116,9 +128,9 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
 
         public override void Dispose()
         {
-            if (_masterViewModel == null) return;
+            if (MasterViewModel == null) return;
 
-            var selectable = _masterViewModel as ISelectableItem<XViewModel>;
+            var selectable = MasterViewModel as ISelectableItem<XViewModel>;
             if (selectable != null)
             {
                 selectable.SelectionChanged -= selectable_SelectionChanged;

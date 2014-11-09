@@ -16,6 +16,12 @@ namespace XamlingCore.XamarinThings.UI
 
         public async Task<bool> DisplayAlert(string title, string message, string accept, string cancel)
         {
+            if (cancel == null)
+            {
+                await _p.DisplayAlert(title, message, accept);
+                return true;
+            }
+
             var result = await _p.DisplayAlert(title, message, accept, cancel);
             return result;
         }

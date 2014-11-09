@@ -157,18 +157,22 @@ namespace XamlingCore.Portable.View.ViewModel
             return (obj) => Dispatcher.Invoke(() => method(obj as T));
         }
 
-        protected async Task<T> Loader<T>(Task<T> awaiter, string text = null)
+        public async Task<T> Loader<T>(Task<T> awaiter, string text = null)
         {
             return await LoadStatusService.Loader(awaiter, text);
         }
 
-        protected async Task Loader(Task awaiter, string text = null)
+        public async Task Loader(Task awaiter, string text = null)
         {
             await LoadStatusService.Loader(awaiter, text);
         }
 
-        protected string GetResource(string resourceName)
+        public string GetResource(string resourceName)
         {
+            if (resourceName == null)
+            {
+                return null;
+            }
             return LocalisationService.Get(resourceName);
         }
 
@@ -301,12 +305,12 @@ namespace XamlingCore.Portable.View.ViewModel
             ParentModel.NavigateTo(content, noHistory);
         }
 
-        protected void NavigateBack()
+        public void NavigateBack()
         {
             ParentModel.NavigateBack();
         }
 
-        protected void NavigateBack(bool allowNullNavigation)
+        public void NavigateBack(bool allowNullNavigation)
         {
             ParentModel.NavigateBack(allowNullNavigation);
         }
