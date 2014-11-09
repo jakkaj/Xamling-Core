@@ -1,11 +1,24 @@
 ﻿using System;
 using Xamarin.Forms;
+using XamlingCore.Portable.Contract.Device;
 
 namespace XamlingCore.XamarinThings.Content.MasterDetail
 {
     public class XMasterDetailView : MasterDetailPage
     {
+        private readonly IOrientationSensor _orientationSensor;
         private XMasterDetailViewModel _viewModel;
+
+        public XMasterDetailView(IOrientationSensor orientationSensor)
+        {
+            _orientationSensor = orientationSensor;
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            _orientationSensor.OnRotated();
+            base.OnSizeAllocated(width, height);
+        }
 
         protected override void OnBindingContextChanged()
         {

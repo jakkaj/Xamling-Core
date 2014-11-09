@@ -11,6 +11,8 @@ namespace XamlingCore.iOS.Controls.Native
     {
         private TFormsType _view;
 
+        protected TViewModelType ViewModel { get; set; }
+
         protected override void OnElementChanged(ElementChangedEventArgs<TFormsType> e)
         {
             base.OnElementChanged(e);
@@ -20,7 +22,10 @@ namespace XamlingCore.iOS.Controls.Native
                 if (e.NewElement != null)
                 {
                     var ntV = new TNativeType();
-                    ntV.SetupVm(e.NewElement.BindingContext as TViewModelType);
+
+                    ViewModel = e.NewElement.BindingContext as TViewModelType;
+
+                    ntV.SetupVm(ViewModel);
                     SetNativeControl(ntV);
                     OnControlCreated(ntV);
                 }

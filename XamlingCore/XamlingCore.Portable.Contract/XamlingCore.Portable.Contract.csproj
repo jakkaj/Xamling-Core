@@ -37,6 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Device\IOrientationSensor.cs" />
     <Compile Include="Device\Location\IMotionSensor.cs" />
     <Compile Include="Entities\ICacheInfo.cs" />
     <Compile Include="Entities\IEntityBucket.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using XamlingCore.Portable.Contract.Device;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Messages.Device;
 using XamlingCore.Portable.Messages.XamlingMessenger;
@@ -8,6 +9,19 @@ namespace XamlingCore.Portable.Service.Orientation
 {
     public class OrientationService : IOrientationService
     {
+        private readonly IOrientationSensor _orientationSensor;
+
+        public OrientationService(IOrientationSensor orientationSensor)
+        {
+            _orientationSensor = orientationSensor;
+            _orientationSensor.OrientationChanged += _orientationSensor_OrientationChanged;
+        }
+
+        void _orientationSensor_OrientationChanged(object sender, EventArgs e)
+        {
+            SetOrientation(_orientationSensor.Orientation, _orientationSensor.UpsideDown);
+        }
+
         public event EventHandler OrientationChanged;
 
         protected virtual void OnOrientationChanged()
@@ -19,6 +33,11 @@ namespace XamlingCore.Portable.Service.Orientation
 
         public void SetOrientation(XPageOrientation orientation, bool isUpsideDown)
         {
+            if (CurrentPageOrientation == orientation)
+            {
+                return;
+            }
+
             IsUpsideDown = isUpsideDown;
             CurrentPageOrientation = orientation;
             OnOrientationChanged();

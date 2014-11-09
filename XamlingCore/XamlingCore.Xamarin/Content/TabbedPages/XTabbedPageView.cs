@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using XamlingCore.Portable.Contract.Device;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Content.Dynamic;
 using XamlingCore.XamarinThings.Content.MasterDetail;
@@ -13,11 +14,19 @@ namespace XamlingCore.XamarinThings.Content.TabbedPages
 {
     public class XTabbedPageView : TabbedPage
     {
+        private readonly IOrientationSensor _orientationSensor;
         private XTabbedPageViewModel _viewModel;
 
-        public XTabbedPageView()
+        public XTabbedPageView(IOrientationSensor orientationSensor)
         {
+            _orientationSensor = orientationSensor;
             ItemTemplate = new DataTemplate(typeof(DynamicContentPage));
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            _orientationSensor.OnRotated();
+            base.OnSizeAllocated(width, height);
         }
 
         protected override void OnBindingContextChanged()
