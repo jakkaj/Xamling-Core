@@ -53,6 +53,7 @@
     <Compile Include="Implementations\Location\GeolocationSingleUpdateDelegate.cs" />
     <Compile Include="Implementations\Location\GeoLocator.cs" />
     <Compile Include="Implementations\Location\Position.cs" />
+    <Compile Include="Implementations\MotionSensor.cs" />
     <Compile Include="Navigation\iOSViewResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Root\XiOSRoot.cs" />

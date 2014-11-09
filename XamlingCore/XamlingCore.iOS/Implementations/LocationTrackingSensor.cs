@@ -31,7 +31,7 @@ namespace XamlingCore.iOS.Implementations
             if (IsTracking) return;
 
             if (!_geolocator.IsListening)
-                _geolocator.StartListening(5000, 1, false);
+                _geolocator.StartListening(5000, 1, true);
 
             IsTracking = true;
             _fire();
@@ -70,6 +70,7 @@ namespace XamlingCore.iOS.Implementations
                     loc.Latitude = t.Result.Latitude;
                     loc.Longitude = t.Result.Longitude;
                     loc.Accuracy = t.Result.Accuracy;
+                    loc.Heading = t.Result.Heading;
                     return loc;
                 }, _scheduler);
             return loc;
@@ -95,6 +96,7 @@ namespace XamlingCore.iOS.Implementations
         private void Init()
         {
             CurrentLocation = new XLocation();
+            
         }
 
         private void Setup()
@@ -139,7 +141,11 @@ namespace XamlingCore.iOS.Implementations
             CurrentLocation.Accuracy = location.Accuracy;
             CurrentLocation.Latitude = location.Latitude;
             CurrentLocation.Longitude = location.Longitude;
-
+            CurrentLocation.Heading = location.Heading;
+            CurrentLocation.HeadingAvailable = _geolocator.SupportsHeading;
+            CurrentLocation.Speed = location.Speed;
+            CurrentLocation.Altitude = location.Altitude;
+            CurrentLocation.AltitudeAccuracy = location.AltitudeAccuracy;
             // assume that any location event that came through is valid
             // and also assume this property means sorrthe location is legit
             CurrentLocation.IsResolved = true;

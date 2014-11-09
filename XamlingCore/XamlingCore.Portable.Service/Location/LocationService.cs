@@ -132,7 +132,12 @@ namespace XamlingCore.Portable.Service.Location
                     IsResolved = _locationSensor.CurrentLocation.IsResolved,
                     Latitude = _locationSensor.CurrentLocation.Latitude,
                     Longitude = _locationSensor.CurrentLocation.Longitude,
-                    Status = _locationSensor.CurrentLocation.Status
+                    Status = _locationSensor.CurrentLocation.Status,
+                    Altitude = _locationSensor.CurrentLocation.Altitude,
+                    AltitudeAccuracy = _locationSensor.CurrentLocation.AltitudeAccuracy,
+                    Heading = _locationSensor.CurrentLocation.Heading,
+                    HeadingAvailable =  _locationSensor.CurrentLocation.HeadingAvailable,
+                    Speed = _locationSensor.CurrentLocation.Speed
                 };
 
                 CurrentLocation = loc;

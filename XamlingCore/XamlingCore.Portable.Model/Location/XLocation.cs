@@ -8,5 +8,10 @@
         public XPositionStatus Status { get; set; }
         public bool IsResolved { get; set; }
         public bool IsEnabled { get; set; }
+        public double Heading { get; set; }
+        public bool HeadingAvailable { get; set; }
+        public double Altitude { get; set; }
+        public double AltitudeAccuracy { get; set; }
+        public double Speed { get; set; }
     }
 }

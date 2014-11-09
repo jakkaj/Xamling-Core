@@ -193,7 +193,7 @@ namespace XamlingCore.iOS.Implementations.Location
             Position p = (this.position == null) ? new Position() : new Position(this.position);
 
             p.Heading = e.NewHeading.TrueHeading;
-
+            
             this.position = p;
 
             OnPositionChanged(new PositionEventArgs(p));

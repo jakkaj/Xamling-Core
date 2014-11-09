@@ -31,6 +31,8 @@ namespace XamlingCore.iOS.Glue.Modules
             
             builder.RegisterType<HashHelper>().AsImplementedInterfaces();
 
+            builder.RegisterType<MotionSensor>().AsImplementedInterfaces();
+
             base.Load(builder);
         }
     }
