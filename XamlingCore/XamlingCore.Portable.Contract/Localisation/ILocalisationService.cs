@@ -4,7 +4,7 @@ namespace XamlingCore.Portable.Contract.Localisation
 {
     public interface ILocalisationService
     {
-        string GetLocalisedResource(string resourceName);
+        string Get(string resourceName);
         string GetCultureName();
         CultureInfo GetCulture();
     }

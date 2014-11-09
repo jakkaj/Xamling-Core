@@ -157,7 +157,7 @@ namespace XamlingCore.Portable.View.ViewModel
 
         protected string GetResource(string resourceName)
         {
-            return LocalisationService.GetLocalisedResource(resourceName);
+            return LocalisationService.Get(resourceName);
         }
 
         void _setOrientation(object obj = null)

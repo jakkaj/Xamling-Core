@@ -52,6 +52,7 @@
     <Compile Include="Contract\IIconView.cs" />
     <Compile Include="Contract\IViewResolver.cs" />
     <Compile Include="Contract\IFrameManager.cs" />
+    <Compile Include="Controls\XEntryCell.cs" />
     <Compile Include="Core\XCore.cs" />
     <Compile Include="Core\XCorePlatform.cs" />
     <Compile Include="Frame\XRootFrame.cs" />
