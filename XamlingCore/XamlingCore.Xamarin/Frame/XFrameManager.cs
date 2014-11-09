@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Contract;
 using XamlingCore.XamarinThings.Navigators;
+using XamlingCore.XamarinThings.UI;
 
 namespace XamlingCore.XamarinThings.Frame
 {
@@ -11,6 +12,8 @@ namespace XamlingCore.XamarinThings.Frame
     {
         private readonly ILifetimeScope _scope;
         private readonly IViewResolver _viewResolver;
+
+        private FormsAlertHandler _alertHandler;
 
         public XFrameManager(ILifetimeScope scope, IViewResolver viewResolver)
         {
@@ -30,7 +33,8 @@ namespace XamlingCore.XamarinThings.Frame
             }
 
             _configureNavigation(rootFrame, rootPage);
-
+            _configureAlerts(rootPage);
+            
             rootFrame.Init();
 
             return rootPage;
@@ -44,6 +48,11 @@ namespace XamlingCore.XamarinThings.Frame
             {
                 FrameNavigator = new XNavigationPageNavigator(_scope, rootFrame, rootPage as NavigationPage, _viewResolver);
             }
+        }
+
+        void _configureAlerts(Page rootPage)
+        {
+            _alertHandler = new FormsAlertHandler(rootPage);
         }
 
         public IFrameNavigator FrameNavigator { get; set; }

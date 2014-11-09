@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using Autofac;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
@@ -29,6 +30,8 @@ namespace XamlingCore.iOS
         private UIViewController _rootView;
         private TRootVM _root;
 
+        private Page _rootPage;
+
         public UIViewController RootView
         {
             get { return _rootView; }
@@ -50,7 +53,9 @@ namespace XamlingCore.iOS
             _frameManager = RootFrame.Container.Resolve<IFrameManager>();
 
             var initalViewController = _frameManager.Init(RootFrame, RootViewModel);
-            
+
+            _rootPage = initalViewController;
+
             _window = new UIWindow(UIScreen.MainScreen.Bounds);
 
             RootView = initalViewController.CreateViewController();
@@ -61,7 +66,7 @@ namespace XamlingCore.iOS
 
             _window.MakeKeyAndVisible();
         }
-
+     
         public override void ShowNativeView(string viewName)
         {
             if (viewName.ToLower().IndexOf("storyboard") != -1)

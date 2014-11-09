@@ -53,6 +53,7 @@
     <Compile Include="Contract\IViewResolver.cs" />
     <Compile Include="Contract\IFrameManager.cs" />
     <Compile Include="Controls\XEntryCell.cs" />
+    <Compile Include="Controls\XTextCell.cs" />
     <Compile Include="Core\XCore.cs" />
     <Compile Include="Core\XCorePlatform.cs" />
     <Compile Include="Frame\XRootFrame.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Navigators\XNavigationPageNavigator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Content\MasterDetail\XMasterDetailViewModel.cs" />
+    <Compile Include="UI\UIAlertHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

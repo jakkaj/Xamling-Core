@@ -43,6 +43,8 @@ namespace XamlingCore.Portable.View.ViewModel
 
         private XViewModel _ancillaryViewModel;
 
+        public static Func<string, string, string, string, Task<bool>> NativeAlert { get; set; }
+
         public T CreateContentModel<T>(Action<T> initialisedCallback)
              where T : XViewModel
         {
@@ -132,6 +134,16 @@ namespace XamlingCore.Portable.View.ViewModel
             }
 
             IsDisposed = true;
+        }
+
+        protected async Task<bool> DisplayAlert(string title, string message, string accept, string cancel)
+        {
+            var t = GetResource(title) ?? title;
+            var m = GetResource(message) ?? message;
+            var a = GetResource(accept) ?? accept;
+            var c = GetResource(cancel) ?? cancel;
+
+            return await NativeAlert(t, m, a, c);
         }
 
         protected Action<object> WrapCall(Action<object> method)

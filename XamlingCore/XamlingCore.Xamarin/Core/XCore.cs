@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System.Threading.Tasks;
+using Autofac;
+using Xamarin.Forms;
 using XamlingCore.Portable.Contract.Glue;
 using XamlingCore.Portable.Data.Glue;
 using XamlingCore.Portable.Messages.View;
@@ -26,7 +28,10 @@ namespace XamlingCore.XamarinThings.Core
             RootFrame = XFrame.CreateRootFrame<TRootFrame>(glue.Container.BeginLifetimeScope());
 
             XMessenger.Default.Register<ShowNativeViewMessage>(this, _onShowNativeView);
+
+            
         }
+
 
         void _onShowNativeView(object m)
         {
