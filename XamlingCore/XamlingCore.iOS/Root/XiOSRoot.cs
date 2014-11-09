@@ -11,5 +11,6 @@ namespace XamlingCore.iOS.Root
     public static class XiOSRoot
     {
         public static UIViewController RootViewController { get; set; }
+        public static UIWindow RootWindow { get; set; }
     }
 }

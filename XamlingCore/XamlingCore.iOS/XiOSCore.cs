@@ -61,7 +61,7 @@ namespace XamlingCore.iOS
             RootView = initalViewController.CreateViewController();
 
             XiOSRoot.RootViewController = RootView;
-
+            XiOSRoot.RootWindow = _window;
             _window.RootViewController = RootView;
 
             _window.MakeKeyAndVisible();

@@ -118,7 +118,7 @@ namespace XamlingCore.XamarinThings.Navigators
 
             var initalViewController = frameManager.Init(rootFrame, rootNavigationVm);
             rootFrame.NavigateTo(vm);
-
+            
             await _xamarinNavigation.PushModalAsync(initalViewController);
         }
 

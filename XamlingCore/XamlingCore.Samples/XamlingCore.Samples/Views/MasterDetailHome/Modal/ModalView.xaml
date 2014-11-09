@@ -4,6 +4,7 @@
 					   x:Class="XamlingCore.Samples.Views.MasterDetailHome.Modal.ModalView">
   <StackLayout>
     <Label Text="This is modal" VerticalOptions="Center" HorizontalOptions="Center" />
+    <Button Text="Full screen, 5 sec" Command="{Binding FullScreenFiveSecCommand}"/>
     <Button Command="{Binding UnPopCommand}" Text="Un Pop"/>
     <Button Command="{Binding NextPageCommand}" Text="Next >>"/>
   </StackLayout>

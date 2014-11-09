@@ -1,8 +1,11 @@
+using System.Diagnostics;
 using MonoTouch.UIKit;
+using Xamarin.Forms;
 using XamlingCore.iOS.Controls.Loader;
 using XamlingCore.iOS.Root;
 using XamlingCore.Portable.Contract.UI;
 using XamlingCore.Portable.View.Special;
+using XamlingCore.XamarinThings.Contract;
 
 namespace XamlingCore.iOS.Implementations
 {
@@ -50,7 +53,27 @@ namespace XamlingCore.iOS.Implementations
 
             _spinnerInstance.Text = text;
 
-            XiOSRoot.RootViewController.View.Add(_spinnerInstance);
+            _getController().Add(_spinnerInstance);
+        }
+
+        UIView _getController()
+        {
+            var v = XiOSRoot.RootViewController.View;
+
+            var t = XiOSRoot.RootWindow;
+
+            var nav = t.RootViewController.NavigationController;
+
+            if (nav != null)
+            {
+                var tvc = nav.TopViewController;
+                if (tvc != null)
+                {
+                    return tvc.View;
+                }
+            }
+
+            return v;
         }
 
         void _hideFullScreen()
