@@ -138,6 +138,11 @@ namespace XamlingCore.Portable.View.ViewModel
 
         protected async Task<bool> DisplayAlert(string title, string message, string accept, string cancel)
         {
+            if (NativeAlert == null)
+            {
+                return false;
+            }
+
             var t = GetResource(title) ?? title;
             var m = GetResource(message) ?? message;
             var a = GetResource(accept) ?? accept;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Autofac;
 using Xamarin.Forms;
 using XamlingCore.Portable.Contract.ViewModels;
@@ -85,14 +86,14 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             MasterViewModel.OnActivated();
         }
 
-        protected virtual bool OnShowingPage(XViewModel vm)
+        protected async virtual Task<bool> OnShowingPage(XViewModel vm)
         {
             return true;
         }
 
-        protected void ShowNavPage(XViewModel vm)
+        protected async void ShowNavPage(XViewModel vm)
         {
-            if (!OnShowingPage(vm))
+            if (!await OnShowingPage(vm))
             {
                 return;
             }
