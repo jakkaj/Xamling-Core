@@ -43,6 +43,7 @@
     <Compile Include="Contract\ISelectableItem.cs" />
     <Compile Include="Contract\ISelectedItem.cs" />
     <Compile Include="Localisation\XLocalisedResources.cs" />
+    <Compile Include="Location\XCompass.cs" />
     <Compile Include="Location\XLocation.cs" />
     <Compile Include="Location\XLocationSearchResult.cs" />
     <Compile Include="Location\XPositionStatus.cs" />
