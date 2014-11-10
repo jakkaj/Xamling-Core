@@ -16,5 +16,13 @@ namespace XamlingCore.XamarinThings.Controls
                 SetBinding(TextProperty, new Binding(value, BindingMode.TwoWay));
             }
         }
+
+        public string EnabledBind
+        {
+            set
+            {
+                SetBinding(IsEnabledProperty, new Binding(value, BindingMode.OneWay));
+            }
+        }
     }
 }
