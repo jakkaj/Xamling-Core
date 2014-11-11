@@ -8,10 +8,12 @@ using MonoTouch.UIKit;
 using XamlingCore.iOS.Implementations;
 using XamlingCore.iOS.Implementations.Helpers;
 using XamlingCore.iOS.Navigation;
+using XamlingCore.Portable.Contract.Downloaders;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Contract.Network;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Contract.UI;
+using XamlingCore.Portable.Net.Downloaders;
 using XamlingCore.XamarinThings.Frame;
 
 namespace XamlingCore.iOS.Glue.Modules
@@ -33,6 +35,8 @@ namespace XamlingCore.iOS.Glue.Modules
 
             builder.RegisterType<MotionSensor>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<OrientationSensor>().AsImplementedInterfaces().SingleInstance();
+
+            builder.RegisterType<NativeHttpClientTransferrer>().As<IHttpTransferrer>().SingleInstance();
 
             base.Load(builder);
         }

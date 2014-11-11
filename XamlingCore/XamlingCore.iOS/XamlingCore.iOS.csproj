@@ -77,6 +77,10 @@
       <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
       <Name>XamlingCore.Portable.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Net\XamlingCore.Portable.Net.csproj">
+      <Project>{DA91F91F-3A71-4C7D-9FD5-4F0DC6E3DC86}</Project>
+      <Name>XamlingCore.Portable.Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Util\XamlingCore.Portable.Util.csproj">
       <Project>{BF649817-277F-44C1-AF23-C90D6DAF5901}</Project>
       <Name>XamlingCore.Portable.Util</Name>

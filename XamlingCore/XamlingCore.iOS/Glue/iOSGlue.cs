@@ -16,10 +16,10 @@ namespace XamlingCore.iOS.Glue
         public override void Init()
         {
             base.Init();
-            
+            Builder.RegisterModule<DefaultXCoreModule>();
             Builder.RegisterModule<DefaultiOSModule>();
             Builder.RegisterModule<XamarinGlue>();
-            Builder.RegisterModule<DefaultXCoreModule>();
+            
         }
     }
 }
