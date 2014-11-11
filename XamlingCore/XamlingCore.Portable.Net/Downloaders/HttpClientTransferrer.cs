@@ -51,6 +51,7 @@ namespace XamlingCore.Portable.Net.Downloaders
 
             if (downloadConfig == null)
             {
+                
                 throw new NotImplementedException(string.Format("No download config for URL: {0}", url));
             }
 
@@ -151,6 +152,7 @@ namespace XamlingCore.Portable.Net.Downloaders
                     if (obj.ByteData != null)
                     {
                         var content = new ByteArrayContent(obj.ByteData, 0, obj.ByteData.Length);
+                        
                         message.Content = content;
                     }
 
@@ -162,14 +164,15 @@ namespace XamlingCore.Portable.Net.Downloaders
 
                     try
                     {
-                        Debug.WriteLine("Downloading: {0}", obj.Url);
+                        Debug.WriteLine("{0}: {1}", downloadConfig.Verb.ToLower() == "get" ? "Downloading": "Uploading", obj.Url);
 
                         using (var result = await httpClient.SendAsync(message))
                         {
+                            Debug.WriteLine("Finished: {0}", obj.Url);
                             return await _httpTransferService.GetResult(result, downloadConfig);
                         }
 
-                        Debug.WriteLine("Finished: {0}", obj.Url);
+                       
 
                     }
                     catch (HttpRequestException ex)

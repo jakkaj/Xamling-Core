@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -20,7 +21,12 @@ namespace XamlingCore.Portable.Net.Service
 
         public async virtual Task OnUnsuccessfulResult(HttpResponseMessage result, IHttpTransferConfig originalConfig)
         {
-
+            string resultText = null;
+            if (result.Content != null)
+            {
+                resultText = await result.Content.ReadAsStringAsync();
+            }
+            Debug.WriteLine("Unsuccess: {0} - {1}", result.StatusCode, resultText ?? " no more info");
         }
 
         protected virtual void OnDownloadException(Exception ex, string source, IHttpTransferConfig originalConfig)
@@ -31,7 +37,7 @@ namespace XamlingCore.Portable.Net.Service
         public virtual IHttpTransferResult GetExceptionResult(Exception ex, string source, IHttpTransferConfig originalConfig)
         {
             OnDownloadException(ex, source, originalConfig);
-            return new HttpTransferResult {DownloadException = ex, Result = null, IsSuccessCode = false};
+            return new HttpTransferResult { DownloadException = ex, Result = null, IsSuccessCode = false };
         }
 
         public async virtual Task<IHttpTransferResult> GetResult(HttpResponseMessage result, IHttpTransferConfig originalConfig)
@@ -71,6 +77,6 @@ namespace XamlingCore.Portable.Net.Service
                 return GetExceptionResult(ex, "DownloadConfigService", originalConfig);
             }
         }
-        
+
     }
 }
