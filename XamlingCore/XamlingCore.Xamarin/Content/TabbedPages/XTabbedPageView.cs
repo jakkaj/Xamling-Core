@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using XamlingCore.Portable.Contract.Device;
 using XamlingCore.Portable.View.ViewModel;
+using XamlingCore.XamarinThings.Content.Common;
 using XamlingCore.XamarinThings.Content.Dynamic;
 using XamlingCore.XamarinThings.Content.MasterDetail;
 
@@ -60,6 +61,13 @@ namespace XamlingCore.XamarinThings.Content.TabbedPages
             }
 
             Title = vm.Title;
+
+            var thisvm = BindingContext as SectionViewModel;
+            
+            if (thisvm != null)
+            {
+                thisvm.CurrentSection = vm;
+            }
 
             base.OnCurrentPageChanged();
         }

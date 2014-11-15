@@ -12,6 +12,8 @@ namespace XamlingCore.XamarinThings.Content.Common
     {
         private readonly ObservableCollection<XViewModel> _sectionViewModels = new ObservableCollection<XViewModel>();
 
+        public XViewModel CurrentSection { get; set; }
+
         protected void AddPage(XViewModel sectionPage)
         {
             SectionViewModels.Add(sectionPage);
