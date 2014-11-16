@@ -58,8 +58,14 @@ namespace XamlingCore.iOS
 
             _window = new UIWindow(UIScreen.MainScreen.Bounds);
 
-            RootView = initalViewController.CreateViewController();
+            var rv = RootFrame.Container.Resolve<RootViewController>();
+            var childView = initalViewController.CreateViewController();
 
+            rv.AddChildViewController(childView);
+            rv.View.AddSubview(childView.View);
+
+            RootView = rv;
+            
             XiOSRoot.RootViewController = RootView;
             XiOSRoot.RootWindow = _window;
             _window.RootViewController = RootView;

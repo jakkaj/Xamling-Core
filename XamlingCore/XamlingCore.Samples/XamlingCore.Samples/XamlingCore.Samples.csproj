@@ -115,6 +115,12 @@
     <Compile Include="Views\MasterDetailHome\Modal\ModalView.xaml.cs">
       <DependentUpon>ModalView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MasterDetailHome\Orientation\OrientationView.model.cs">
+      <DependentUpon>OrientationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Orientation\OrientationView.xaml.cs">
+      <DependentUpon>OrientationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MasterDetailHome\Tabs\HomeTabsView.cs" />
     <Compile Include="Views\MasterDetailHome\Tabs\HomeTabsView.model.cs" />
     <Compile Include="Views\MasterDetailHome\Tabs\Home\First\FirstContentView.cs" />
@@ -231,6 +237,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Home\Playground\ViewTransitions\TransitionsTestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailHome\Orientation\OrientationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

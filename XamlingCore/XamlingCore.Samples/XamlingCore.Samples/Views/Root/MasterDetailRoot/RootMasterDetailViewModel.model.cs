@@ -6,6 +6,7 @@ using XamlingCore.Samples.Views.MasterDetailHome.Home;
 using XamlingCore.Samples.Views.MasterDetailHome.Loaders;
 using XamlingCore.Samples.Views.MasterDetailHome.Location;
 using XamlingCore.Samples.Views.MasterDetailHome.Menu;
+using XamlingCore.Samples.Views.MasterDetailHome.Orientation;
 using XamlingCore.Samples.Views.MasterDetailHome.Tabs;
 using XamlingCore.XamarinThings.Content.MasterDetail;
 using XamlingCore.XamarinThings.Contract;
@@ -28,6 +29,7 @@ namespace XamlingCore.Samples.Views.Root.MasterDetailRoot
             AddPage(CreateContentModel<LocationViewModel>());
             AddPage(CreateContentModel<LoadersViewModel>());
             AddPage(CreateContentModel<PlaygroundHomeViewModel>());
+            AddPage(CreateContentModel<OrientationViewModel>());
 
             //Add the master view (which is like the menu bit the flies out)
             SetMaster(CreateContentModel<MasterDetailMenuPageViewModel>());

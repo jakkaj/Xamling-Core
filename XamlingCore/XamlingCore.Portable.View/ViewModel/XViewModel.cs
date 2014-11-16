@@ -39,7 +39,7 @@ namespace XamlingCore.Portable.View.ViewModel
         protected internal IOrientationService OrientationService;
         protected internal ILocalisationService LocalisationService;
 
-        protected internal ILifetimeScope Container { get; set; }
+        public ILifetimeScope Container { get; internal set; }
 
         private XViewModel _ancillaryViewModel;
 

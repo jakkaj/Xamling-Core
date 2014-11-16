@@ -13,6 +13,7 @@ namespace XamlingCore.Portable.Service.Orientation
 
         public OrientationService(IOrientationSensor orientationSensor)
         {
+            SupportedPageOrientation = XSupportedPageOrientation.Both;
             _orientationSensor = orientationSensor;
             _orientationSensor.OrientationChanged += _orientationSensor_OrientationChanged;
         }
@@ -45,11 +46,14 @@ namespace XamlingCore.Portable.Service.Orientation
 
         public void SetSupportedOrientation(XSupportedPageOrientation supported)
         {
+            SupportedPageOrientation = supported;
             new SupportedOrientationChangedMessage(supported).Send();
         }
 
         public XPageOrientation CurrentPageOrientation { get; protected set; }
 
         public bool IsUpsideDown { get; protected set; }
+
+        public XSupportedPageOrientation SupportedPageOrientation { get; private set; }
     }
 }

@@ -8,6 +8,7 @@ using MonoTouch.UIKit;
 using XamlingCore.iOS.Implementations;
 using XamlingCore.iOS.Implementations.Helpers;
 using XamlingCore.iOS.Navigation;
+using XamlingCore.iOS.Root;
 using XamlingCore.Portable.Contract.Downloaders;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Contract.Network;
@@ -22,6 +23,8 @@ namespace XamlingCore.iOS.Glue.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<RootViewController>().AsSelf().SingleInstance();
+
             builder.RegisterType<LocalStorage>().As<ILocalStorage>().SingleInstance();
             builder.RegisterType<LoadStatusService>().As<ILoadStatusService>().SingleInstance();
             builder.RegisterType<EnvironmentService>().As<IEnvironmentService>().SingleInstance();
