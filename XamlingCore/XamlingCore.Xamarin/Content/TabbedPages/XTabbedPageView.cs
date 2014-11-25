@@ -46,6 +46,18 @@ namespace XamlingCore.XamarinThings.Content.TabbedPages
 
         protected override void OnCurrentPageChanged()
         {
+            var thisvm = BindingContext as SectionViewModel;
+
+            if (thisvm == null)
+            {
+                return;
+            }
+
+            if (thisvm.CurrentSection != null)
+            {
+                thisvm.CurrentSection.OnDeactivated();
+            }
+
             var page = CurrentPage;
 
             if (page == null)
@@ -62,12 +74,10 @@ namespace XamlingCore.XamarinThings.Content.TabbedPages
 
             Title = vm.Title;
 
-            var thisvm = BindingContext as SectionViewModel;
-            
-            if (thisvm != null)
-            {
-                thisvm.CurrentSection = vm;
-            }
+            vm.OnActivated();
+
+
+            thisvm.CurrentSection = vm;
 
             base.OnCurrentPageChanged();
         }

@@ -17,6 +17,8 @@ namespace XamlingCore.iOS.Root
             _orientationService = orientationService;
         }
 
+       
+
         public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations()
         {
             switch (_orientationService.SupportedPageOrientation)
