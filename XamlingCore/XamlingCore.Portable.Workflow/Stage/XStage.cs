@@ -1,68 +1,50 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Autofac;
-using XamlingCore.Portable.Model.Contract;
-using XamlingCore.Portable.Workflow.Contract;
 
 namespace XamlingCore.Portable.Workflow.Stage
 {
-    public abstract class XStage<TEntityType> where TEntityType : IEntity
+    public class XStage
     {
-        private Func<TEntityType, Task<XStageResult<TEntityType>>> _processor;
+        public Func<Guid, Task<XStageResult>> Function { get; set; }
+        
+        public bool RequiresNetwork { get; set; }
 
-        ILifetimeScope Scope { get; set; }
+        public int Retries { get; set; }
 
-        readonly List<IXBucket> _buckets = new List<IXBucket>();
+        public string StageId { get; set; }
 
-        public bool RequiresInternet { get; protected set; }
+        public string ProcessingText { get; set; }
 
-        public int MaximumRetries { get; protected set; }
+        public string FailText { get; set; }
+       
+        public bool IsLongProcess { get; set; }
 
-        public string StageId { get; protected set; }
-
-        protected XStage(string stageId)
+        public XStage(string stageId)
         {
             StageId = stageId;
         }
 
-        public async Task<XStageResult<TEntityType>> Process(TEntityType entity)
+        public XStage(string stageId, string processingText, string failText, Func<Guid, Task<XStageResult>> function,
+            bool isLongProcess = false, bool requiresNetwork = false, int retries = 0)
         {
-            if (_processor == null) throw new NullReferenceException(_getErrorString("Processor function callback not set"));
+            IsLongProcess = isLongProcess;
+            StageId = stageId;
+            ProcessingText = processingText;
+            FailText = failText;
+            Function = function;
+            RequiresNetwork = requiresNetwork;
+            Retries = retries;
+        }
 
-            //update the buckets
+        public async Task<XStageResult> Process(Guid id)
+        {
+            if (Function == null) throw new NullReferenceException(_getErrorString("Processor function callback not set"));
 
-            //do the process
-
-            var result = await _processor(entity);
+            var result = await Function(id);
 
             return result;
         }
-
-
-        public XStage<TEntityType> SetProcessor(Func<TEntityType, Task<XStageResult<TEntityType>>> processor)
-        {
-            if (processor == null) throw new ArgumentNullException("processor");
-            _processor = processor;
-            return this;
-        }
-
-        public XStage<TEntityType> AddBucket<TBucketType>() where TBucketType : class, IXBucket
-        {
-            var bucket = Scope.Resolve<TBucketType>();
-
-            if (bucket == null) throw new NullReferenceException(_getErrorString("Could not resolve bucket " + typeof(TBucketType).FullName));
-
-            if (_buckets.Contains(bucket))
-            {
-                _buckets.Add(bucket);
-            }
-
-            return this;
-        }
-
+      
         string _getErrorString(string text)
         {
             return string.Format("[{0}] - Processor - {1}", StageId ?? "NoNameStage", text);

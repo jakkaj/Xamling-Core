@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XamlingCore.Portable.Model.Contract;
 
 namespace XamlingCore.Portable.Workflow.Stage
 {
-    public class XStageResult<TEntityType> where TEntityType : IEntity
+    public class XStageResult
     {
         private readonly bool _isSuccess;
-        private readonly TEntityType _entity;
+        private readonly Guid _id;
 
-        public XStageResult(bool isSuccess, TEntityType entity)
+        public XStageResult(bool isSuccess, Guid id)
         {
             _isSuccess = isSuccess;
-            _entity = entity;
+            _id = id;
         }
 
         public bool IsSuccess
@@ -23,9 +18,9 @@ namespace XamlingCore.Portable.Workflow.Stage
             get { return _isSuccess; }
         }
 
-        public TEntityType Entity
+        public Guid Id
         {
-            get { return _entity; }
+            get { return _id; }
         }
     }
 }

@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using XamlingCore.Portable.Model.Contract;
-using XamlingCore.Portable.Workflow.Contract;
+﻿using System.Collections.Generic;
+using XamlingCore.Portable.Contract.Network;
 
 namespace XamlingCore.Portable.Workflow.Flow
 {
     public class XWorkflowHub
     {
-        private readonly ILifetimeScope _scope;
+        private readonly IDeviceNetworkStatus _networkStatus;
 
-        public XWorkflowHub(ILifetimeScope scope)
+        public XWorkflowHub(IDeviceNetworkStatus networkStatus)
         {
-            _scope = scope;
+            _networkStatus = networkStatus;
         }
 
-        public async Task StartWorkflow<TFlowType, TEntityType>(TEntityType entity)
-            where TFlowType : IXFlow<TEntityType> 
-            where TEntityType : IEntity
+        readonly List<XFlow> _flows = new List<XFlow>(); 
+        public XFlow AddFlow()
         {
-            var flow = _scope.Resolve<TFlowType>();
-            await flow.Add(entity);
+            var f = new XFlow(_networkStatus);
+            _flows.Add(f);
+
+            return f;
         }
     }
 }

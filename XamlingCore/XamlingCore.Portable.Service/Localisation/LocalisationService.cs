@@ -17,7 +17,8 @@ namespace XamlingCore.Portable.Service.Localisation
 
         public string Get(string resourceName)
         {
-            return _resourceManager.GetString(resourceName, _resourceCulture);
+            var result =  _resourceManager.GetString(resourceName, _resourceCulture);
+            return result ?? resourceName;
         }
 
         public CultureInfo GetCulture()

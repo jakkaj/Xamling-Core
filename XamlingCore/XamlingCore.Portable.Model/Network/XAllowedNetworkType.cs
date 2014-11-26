@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XamlingCore.Portable.Workflow.Contract
+namespace XamlingCore.Portable.Model.Network
 {
-    public interface IXBucket
+    public enum XAllowedNetworkType
     {
+        Any = 0,
+        WiFiOnly = 1
     }
 }

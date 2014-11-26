@@ -1,145 +1,257 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Resources;
-using System.Text;
 using System.Threading.Tasks;
-using XamlingCore.Portable.Model.Contract;
+using XamlingCore.Portable.Contract.Network;
 using XamlingCore.Portable.Util.Lock;
-using XamlingCore.Portable.Workflow.Contract;
 using XamlingCore.Portable.Workflow.Stage;
 
 namespace XamlingCore.Portable.Workflow.Flow
 {
-    public class XStageWrapper<TEntityType> where TEntityType : IEntity
+    public class XFlow
     {
-        public XStage<TEntityType> Current { get; set; }
-        public XStageWrapper<TEntityType> Next { get; set; }
-        public XStage<TEntityType> Fail { get; set; }
-        public Guid //this is wher im up to - 
-           //entire system should be using entity manager and id's only to 
-           //make rehydreation much easier. 
-    }
+        private readonly IDeviceNetworkStatus _networkStatus;
+        private string _flowId;
+        private string _friendlyName;
 
-    public class XFlow<TEntityType> where TEntityType : IEntity
-    {
-        List<XStageWrapper<TEntityType>> _stages = new List<XStageWrapper<TEntityType>>();
+        private bool _complete;
 
-        readonly Dictionary<XStageWrapper<TEntityType>, TEntityType> _liveStages = new Dictionary<XStageWrapper<TEntityType>, TEntityType>();
-        Dictionary<XStage<TEntityType>, TEntityType> _failedStages = new Dictionary<XStage<TEntityType>, TEntityType>();
+        readonly List<XStage> _stages = new List<XStage>();
 
-        AsyncLock _liveStageLock = new AsyncLock();
+        readonly List<XFlowState> _state = new List<XFlowState>(); 
 
-        public XStage<TEntityType> DefaultFailStage { get; set; } 
+        private AsyncLock _stateLock = new AsyncLock();
 
-        public XFlow<TEntityType> Add(XStage<TEntityType> stage)
+        public XFlow(IDeviceNetworkStatus networkStatus)
         {
-            var lastStage = _stages.LastOrDefault();
+            _networkStatus = networkStatus;
+        }
 
-            var wrapper = new XStageWrapper<TEntityType> {Current = stage};
-
-            if (lastStage != null)
-            {
-                lastStage.Next = wrapper;
-            }
-
-            _stages.Add(wrapper);
+        public XFlow Setup(string flowId, string friendlyName)
+        {
+            _flowId = flowId;
+            _friendlyName = friendlyName;
 
             return this;
         }
 
-        public XFlow<TEntityType> Fail(XStage<TEntityType> stage)
+        public XFlow AddStage(string stageId, string processingText, string failText, Func<Guid, Task<XStageResult>> function,
+            bool isLongProcess = false, bool requiresNetwork = false, int retries = 0)
         {
-            var lastStage = _stages.Last();
-
-            if (lastStage == null)
+            if (_complete)
             {
-                throw new ArgumentException("Attempt to add fail when no previous stages");
+                throw new InvalidOperationException("Cannot add stage after complete");
             }
-
-            lastStage.Fail = stage;
+            var stage = new XStage(stageId, processingText, failText, function, isLongProcess, requiresNetwork, retries);
+            _stages.Add(stage);
 
             return this;
         }
 
-        public async Task Start(TEntityType entity)
+        public XFlow Complete()
         {
-            var firstStage = _stages.First();
+            _complete = true;
 
-            if (firstStage == null)
-            {
-                throw new ArgumentException("Attempt to start a flow when no stages configured");
-            }
-
-            _liveStages.Add(firstStage, entity);
-
-            _processStages();
+            return this;
         }
 
-        private async void _processStages()
+        public async Task<bool> Start(Guid id)
         {
-            using (var l = await _liveStageLock.LockAsync())
+            var flowState = new XFlowState
             {
-                foreach (var stagingPair in _liveStages.Where(_ => !_.Key.Current.IsProcessing))
+                Id = Guid.NewGuid(),
+                ItemId = id,
+                State = XFlowStates.WaitingToStart,
+                StageId = null
+            };
+
+            using (var l = await _stateLock.LockAsync())
+            {
+                var existing = _state.FirstOrDefault(_ => _.ItemId == id);
+
+                if (existing != null)
                 {
-                    var c = stagingPair;
-                    //get the next and process it
-                    await Task.Run(() => _processNext(c.Key, c.Value));
+                    //if it's not failed or completed then clear it and start gain. 
+                    if (existing.State != XFlowStates.Fail && existing.State != XFlowStates.Success)
+                    {
+                        return false;
+                    }
+
+                    _state.Remove(existing);
+                }
+
+                _state.Add(flowState);
+            }
+
+            Process();
+
+            return true;
+          
+        }
+
+        public async void Process()
+        {
+            using (var l = await _stateLock.LockAsync())
+            {
+                foreach (var state in _state)
+                {
+                    if (state.State == XFlowStates.WaitingForNextStage)
+                    {
+                        var nextStageResult = _moveNextStage(state);
+                        
+                        if (!nextStageResult)
+                        {
+                            _finish(state);
+                            continue;
+                        }
+
+                        state.State = XFlowStates.WaitingToStart;
+                    }
+
+                    if (state.State == XFlowStates.WaitingToStart || 
+                        state.State != XFlowStates.WaitingForNetwork || 
+                        state.State == XFlowStates.WaitingForRetry)
+                    {
+                        _runStage(state);
+                    }
                 }
             }
         }
 
-        async void _processNext(XStageWrapper<TEntityType> wrapper, TEntityType entity)
+        void _runStage(XFlowState state)
         {
-            await Task.Yield();
-            //keep in mind here that the process can return a different entity
-            //for example, it might go to the server and get an entirely new entity
-            //to replace the current entity with
-            var result = await wrapper.Current.Process(entity);
-
-            Task.Yield();
-
-            if (result.IsSuccess)
+            if (state.State != XFlowStates.WaitingForNetwork && state.State != XFlowStates.WaitingForNextStage &&
+                state.State != XFlowStates.WaitingToStart)
             {
-                _nextStage(wrapper, result.Entity);
+                return;
             }
-            else
-            {
-                //if it has a fail the put in to that bucket, else just put in to the generic fail bucket for this flow
-                _failStage(wrapper, result.Entity);
-            }
-        }
 
-        async void _failStage(XStageWrapper<TEntityType> wrapper, TEntityType entity)
-        {
-            using (var l = await _liveStageLock.LockAsync())
+            Task.Run(async () =>
             {
-                _liveStages.Remove(wrapper);
-                if (wrapper.Fail != null)
+                var stage = _getStage(state);
+
+                if (stage.RequiresNetwork && !_networkStatus.QuickNetworkCheck())
                 {
-                    _failedStages.Add(wrapper.Fail, entity);
+                    state.State = XFlowStates.WaitingForNetwork;
+                    return;
+                }
+
+                state.Text = stage.ProcessingText;
+
+                state.State = XFlowStates.InProgress;
+
+                var result = await stage.Function(state.ItemId);
+
+                if (result.Id != Guid.Empty)
+                {
+                    state.ItemId = result.Id;
+                }
+
+                if (!result.IsSuccess)
+                {
+                    _failResult(state);
                 }
                 else
                 {
-                    if (DefaultFailStage == null)
-                    {
-                        Debugger.Break();
-                        return;
-                    }
-                    _failedStages.Add(DefaultFailStage, entity);
+                    _successResult(state);
                 }
-            }
+            });
         }
 
-        async void _nextStage(XStageWrapper<TEntityType> wrapper, TEntityType entity)
+        async void _failResult(XFlowState state)
         {
-            using (var l = await _liveStageLock.LockAsync())
+            state.PreviousStageSuccess = false;
+            
+            var stage = _getStage(state);
+
+            state.Text = stage.FailText;
+
+            if (stage.Retries > 0)
             {
-                _liveStages.Remove(wrapper);
-                _liveStages.Add(wrapper.Next, entity);
+                if (state.FailureCount <= stage.Retries)
+                {
+                    //let's retry
+                    state.FailureCount ++;
+                    state.State = XFlowStates.WaitingForRetry;
+                    return;
+                }
             }
+
+            _finish(state);
+        }
+
+        async void _successResult(XFlowState state)
+        {
+            state.Text = "";
+            state.PreviousStageSuccess = true;
+            state.State = XFlowStates.WaitingForNextStage;
+            Process();
+        }
+
+        bool _moveNextStage(XFlowState state)
+        {
+            if (state.StageId == null)
+            {
+                var firstStage = _stages.First();
+                state.StageId = firstStage.StageId;
+                return true;
+            }
+
+            var stage = _getStage(state);
+
+            var index = _stages.IndexOf(stage);
+
+            var newIndex = index + 1;
+
+            if (newIndex >= _stages.Count)
+            {
+                //this is the last stage, so return false;
+                return false;
+            }
+
+            var newStage = _stages[newIndex];
+
+            state.StageId = newStage.StageId;
+            state.FailureCount = 0;
+            return true;
+        }
+
+        void _finish(XFlowState state)
+        {
+            if (state.PreviousStageSuccess)
+            {
+               state.State = XFlowStates.Success;
+               return;
+            }
+
+            state.State = XFlowStates.Fail;
+        }
+
+        XStage _getStage(XFlowState state)
+        {
+            var stage = _stages.First(_ => _.StageId == state.StageId);
+
+            return stage;
+        }
+
+        async Task _load()
+        {
+
+        }
+
+        async Task _save()
+        {
+
+        }
+
+        public string FriendlyName
+        {
+            get { return _friendlyName; }
+        }
+
+        public string FlowId
+        {
+            get { return _flowId; }
         }
     }
 }
