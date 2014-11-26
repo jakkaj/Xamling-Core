@@ -9,7 +9,7 @@ using XamlingCore.Portable.Workflow.Contract;
 
 namespace XamlingCore.Portable.Workflow.Stage
 {
-    public class XStage<TEntityType> where TEntityType : IEntity
+    public abstract class XStage<TEntityType> where TEntityType : IEntity
     {
         private Func<TEntityType, Task<XStageResult<TEntityType>>> _processor;
 
@@ -19,12 +19,14 @@ namespace XamlingCore.Portable.Workflow.Stage
 
         public bool RequiresInternet { get; protected set; }
 
-        public bool IsProcessing { get; internal set; }
-
         public int MaximumRetries { get; protected set; }
-        public int RetryCount { get; set; }
 
-        public string StageName { get; protected set; }
+        public string StageId { get; protected set; }
+
+        protected XStage(string stageId)
+        {
+            StageId = stageId;
+        }
 
         public async Task<XStageResult<TEntityType>> Process(TEntityType entity)
         {
@@ -63,7 +65,7 @@ namespace XamlingCore.Portable.Workflow.Stage
 
         string _getErrorString(string text)
         {
-            return string.Format("[{0}] - Processor - {1}", StageName ?? "NoNameStage", text);
+            return string.Format("[{0}] - Processor - {1}", StageId ?? "NoNameStage", text);
         }
     }
 }
