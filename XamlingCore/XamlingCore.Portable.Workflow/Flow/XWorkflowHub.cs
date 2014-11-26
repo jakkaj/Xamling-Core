@@ -25,11 +25,21 @@ namespace XamlingCore.Portable.Workflow.Flow
 
         public XFlow AddFlow(string flowId, string friendlyName)
         {
+            if (GetFlow(flowId) != null)
+            {
+                throw new InvalidOperationException(string.Format("Flow already created with flowId: {0}", flowId));
+            }
+
             var f = new XFlow(_networkStatus, _entitySerialiser, _localStorage).Setup(flowId, friendlyName);
             
             _flows.Add(f);
 
             return f;
+        }
+
+        public XFlow GetFlow(string flowId)
+        {
+            return _flows.FirstOrDefault(_ => _.FlowId == flowId);
         }
 
         public async Task<XFlow> Start(string flowId, Guid id)

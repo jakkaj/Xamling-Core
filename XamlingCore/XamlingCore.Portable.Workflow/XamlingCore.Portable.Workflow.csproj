@@ -70,6 +70,10 @@
       <Project>{BF649817-277F-44C1-AF23-C90D6DAF5901}</Project>
       <Name>XamlingCore.Portable.Util</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
+      <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
+      <Name>XamlingCore.Portable.View</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

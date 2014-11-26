@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
@@ -22,13 +23,17 @@ namespace XamlingCore.Portable.Workflow.Flow
 
         readonly List<XStage> _stages = new List<XStage>();
 
-        readonly List<XFlowState> _state = new List<XFlowState>(); 
+        readonly List<XFlowState> _state = new List<XFlowState>();
 
         private AsyncLock _stateLock = new AsyncLock();
         private AsyncLock _saveLock = new AsyncLock();
 
         public event EventHandler FlowsUpdated;
-        
+
+        private bool _processAgain;
+
+        private CancellationTokenSource _cancelWaitToken;
+
         public XFlow(IDeviceNetworkStatus networkStatus, IEntitySerialiser entitySerialiser, ILocalStorage localStorage)
         {
             _networkStatus = networkStatus;
@@ -47,7 +52,7 @@ namespace XamlingCore.Portable.Workflow.Flow
         public XFlow AddStage(string stageId, string processingText, string failText, Func<Guid, Task<XStageResult>> function,
             bool isLongProcess = false, bool requiresNetwork = false, int retries = 0)
         {
-           
+
             var stage = new XStage(stageId, processingText, failText, function, isLongProcess, requiresNetwork, retries);
             _stages.Add(stage);
 
@@ -63,6 +68,11 @@ namespace XamlingCore.Portable.Workflow.Flow
             Process();
 
             return this;
+        }
+
+        public XFlowState GetState(Guid id)
+        {
+            return _state.FirstOrDefault(_ => _.ItemId == id);
         }
 
         public async Task<List<XFlowState>> GetInProgressItems()
@@ -101,12 +111,18 @@ namespace XamlingCore.Portable.Workflow.Flow
 
         public async Task<bool> Start(Guid id)
         {
+            if (!IsComplete)
+            {
+                throw new InvalidOperationException("Cannot start flows until Complete() is called");
+            }
+
             var flowState = new XFlowState
             {
                 Id = Guid.NewGuid(),
                 ItemId = id,
                 State = XFlowStates.WaitingForNextStage,
-                StageId = null
+                StageId = null,
+                Timestamp = DateTime.UtcNow
             };
 
             using (var l = await _stateLock.LockAsync())
@@ -127,38 +143,71 @@ namespace XamlingCore.Portable.Workflow.Flow
                 _state.Add(flowState);
             }
 
-            Process();
+            await _save();
+
+            _cancelProcessWait();
 
             return true;
-          
+
+        }
+
+        void _cancelProcessWait()
+        {
+            if (_cancelWaitToken != null)
+            {
+                _cancelWaitToken.Cancel();
+            }
         }
 
         public async void Process()
         {
-            using (var l = await _stateLock.LockAsync())
+            while (true)
             {
-                foreach (var state in _state)
+                using (var l = await _stateLock.LockAsync())
                 {
-                    if (state.State == XFlowStates.WaitingForNextStage)
+                    foreach (var state in _state)
                     {
-                        var nextStageResult = _moveNextStage(state);
-                        
-                        if (!nextStageResult)
+                        if (state.State == XFlowStates.WaitingForNextStage)
                         {
-                            _finish(state);
-                            continue;
+                            var nextStageResult = _moveNextStage(state);
+
+                            if (!nextStageResult)
+                            {
+                                _finish(state);
+                                continue;
+                            }
+
+                            state.State = XFlowStates.WaitingToStart;
                         }
 
-                        state.State = XFlowStates.WaitingToStart;
-                    }
-
-                    if (state.State == XFlowStates.WaitingToStart || 
-                        state.State != XFlowStates.WaitingForNetwork || 
-                        state.State == XFlowStates.WaitingForRetry)
-                    {
-                        _runStage(state);
+                        if (state.State == XFlowStates.WaitingToStart ||
+                            state.State == XFlowStates.WaitingForNetwork ||
+                            state.State == XFlowStates.WaitingForRetry)
+                        {
+                            _runStage(state);
+                        }
                     }
                 }
+
+                Task.Yield();
+                if (!_processAgain)
+                {
+                   
+                    _cancelWaitToken = new CancellationTokenSource();
+
+                    try
+                    {
+                        await Task.Delay(10000, _cancelWaitToken.Token);
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("XFlow cancelled wait");
+                    }
+
+                    _cancelWaitToken = null;
+                   
+                }
+                _processAgain = false;
             }
         }
 
@@ -183,6 +232,7 @@ namespace XamlingCore.Portable.Workflow.Flow
                 state.Text = stage.ProcessingText;
 
                 state.State = XFlowStates.InProgress;
+                state.Timestamp = DateTime.UtcNow;
 
                 await _save();
 
@@ -193,21 +243,25 @@ namespace XamlingCore.Portable.Workflow.Flow
                     state.ItemId = result.Id;
                 }
 
+                
+
                 if (!result.IsSuccess)
                 {
-                    _failResult(state);
+                    await _failResult(state);
                 }
                 else
                 {
-                    _successResult(state);
+                   await  _successResult(state);
                 }
+                _processAgain = true;
+                _cancelProcessWait();
             });
         }
 
-        async void _failResult(XFlowState state)
+        async Task _failResult(XFlowState state)
         {
             state.PreviousStageSuccess = false;
-            
+
             var stage = _getStage(state);
 
             state.Text = stage.FailText;
@@ -217,8 +271,9 @@ namespace XamlingCore.Portable.Workflow.Flow
                 if (state.FailureCount <= stage.Retries)
                 {
                     //let's retry
-                    state.FailureCount ++;
+                    state.FailureCount++;
                     state.State = XFlowStates.WaitingForRetry;
+                    state.Timestamp = DateTime.UtcNow;
                     await _save();
                     return;
                 }
@@ -227,15 +282,13 @@ namespace XamlingCore.Portable.Workflow.Flow
             _finish(state);
         }
 
-        async void _successResult(XFlowState state)
+        async Task _successResult(XFlowState state)
         {
             state.Text = "";
             state.PreviousStageSuccess = true;
             state.State = XFlowStates.WaitingForNextStage;
-
+            state.Timestamp = DateTime.UtcNow;
             await _save();
-
-            Process();
         }
 
         bool _moveNextStage(XFlowState state)
@@ -268,14 +321,18 @@ namespace XamlingCore.Portable.Workflow.Flow
 
         async void _finish(XFlowState state)
         {
+            state.Complete = true;
             if (state.PreviousStageSuccess)
             {
-               state.State = XFlowStates.Success;
-               await _save();
-               return;
+                state.State = XFlowStates.Success;
+                state.Timestamp = DateTime.UtcNow;
+                await _save();
+                return;
             }
 
             state.State = XFlowStates.Fail;
+            state.Timestamp = DateTime.UtcNow;
+
             await _save();
         }
 
@@ -297,12 +354,12 @@ namespace XamlingCore.Portable.Workflow.Flow
                 }
 
                 var ser = await _localStorage.LoadString(file);
-                
+
                 if (string.IsNullOrWhiteSpace(ser))
                 {
                     return;
                 }
-                
+
                 var loadedState = _entitySerialiser.Deserialise<List<XFlowState>>(ser);
 
                 if (loadedState == null || loadedState.Count == 0)
@@ -323,7 +380,7 @@ namespace XamlingCore.Portable.Workflow.Flow
                         //this item was processing when hte app quit... set it to wiating to run to try again
                         item.State = XFlowStates.WaitingToStart;
                     }
-                    
+
                     _state.Add(item);
                 }
             }
