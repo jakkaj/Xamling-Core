@@ -156,10 +156,6 @@
       <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
       <Name>XamlingCore.Portable.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
-      <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
-      <Name>XamlingCore.Portable.View</Name>
-    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Workflow\XamlingCore.Portable.Workflow.csproj">
       <Project>{9D082ABD-F398-4A28-BE80-9AF2BA5B1BE9}</Project>
       <Name>XamlingCore.Portable.Workflow</Name>

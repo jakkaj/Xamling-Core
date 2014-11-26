@@ -4,6 +4,7 @@ using Autofac;
 using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Data.Glue;
 using XamlingCore.Portable.Model.Contract;
+using XamlingCore.Portable.Workflow.Flow;
 
 namespace XamlingCore.Portable.Data.Extensions
 {
@@ -24,6 +25,22 @@ namespace XamlingCore.Portable.Data.Extensions
             return _getContainer().Resolve<IEntityManager<T>>();
         }
 
+        static XWorkflowHub _getHub()
+        {
+            return _getContainer().Resolve<XWorkflowHub>();
+        }
+
+        public static async Task<XFlow> StartWorkflow<T>(this T entity, string flowId) where T : class, IEntity, new()
+        {
+            var flow = await _getHub().Start(flowId, entity.Id);
+            return flow;
+        }
+
+        public static XFlowState GetWorkflowState<T>(this T entity, string flowId) where T : class, IEntity, new()
+        {
+            var flowState =  _getHub().GetFlowState(flowId, entity.Id);
+            return flowState;
+        }
 
         public static async Task<bool> IsInBucket<T>(this T entity, string bucket) where T : class, IEntity, new()
         {

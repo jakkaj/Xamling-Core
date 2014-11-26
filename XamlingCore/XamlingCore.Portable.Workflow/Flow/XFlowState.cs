@@ -1,10 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using XamlingCore.Portable.Model.Contract;
 using XamlingCore.Portable.View.ViewModel.Base;
+using XamlingCore.Portable.Workflow.Annotations;
 
 namespace XamlingCore.Portable.Workflow.Flow
 {
-    public class XFlowState : NotifyBase, IEntity
+    public class XFlowState : INotifyPropertyChanged, IEntity
     {
         private Guid _itemId;
         private XFlowStates _state;
@@ -113,6 +116,15 @@ namespace XamlingCore.Portable.Workflow.Flow
                 _text = value;
                 OnPropertyChanged();
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

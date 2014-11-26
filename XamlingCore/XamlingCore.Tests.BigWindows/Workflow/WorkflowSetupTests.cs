@@ -100,67 +100,67 @@ namespace XamlingCore.Tests.BigWindows.Workflow
 
         }
 
-        [TestMethod]
-        public async Task TestPersist()
-        {
+        //[TestMethod]
+        //public async Task TestPersist()
+        //{
 
 
-            var hub = Resolve<XWorkflowHub>();
+        //    var hub = Resolve<XWorkflowHub>();
 
-            Guid flowTemp = Guid.NewGuid();
+        //    Guid flowTemp = Guid.NewGuid();
 
-            var flow = await hub.AddFlow(flowTemp.ToString(), "Nice name test flow")
-                .AddStage("TestFlow.Prepare", "Preparing...", "Preparation Failed", _passResult, false)
-                .AddStage("TestFlow.Stage2", "Stage 2...", "Stage 2 failed", _passResult, false)
-                .AddStage("TestFlow.FinalStage", "Stage final...", "Stage final failed", _passResult, false)
-                .Complete();
+        //    var flow = await hub.AddFlow(flowTemp.ToString(), "Nice name test flow")
+        //        .AddStage("TestFlow.Prepare", "Preparing...", "Preparation Failed", _passResult, false)
+        //        .AddStage("TestFlow.Stage2", "Stage 2...", "Stage 2 failed", _passResult, false)
+        //        .AddStage("TestFlow.FinalStage", "Stage final...", "Stage final failed", _passResult, false)
+        //        .Complete();
 
-            var itemGuid = Guid.NewGuid();
-
-
-            var activeFlow = await hub.Start(flowTemp.ToString(), itemGuid);
-
-            var state = activeFlow.GetState(itemGuid);
-            state.PropertyChanged += state_PropertyChanged;
-            await Task.Run(async () =>
-            {
-                while (true)
-                {
+        //    var itemGuid = Guid.NewGuid();
 
 
-                    if (state.State == XFlowStates.Success)
-                    {
-                        Assert.AreEqual(state.StageId, "TestFlow.FinalStage");
-                        Assert.AreEqual(state.Text, "");
-                        Assert.AreEqual((await activeFlow.GetInProgressItems()).Count, 0);
-                        break;
-                    }
+        //    var activeFlow = await hub.Start(flowTemp.ToString(), itemGuid);
+
+        //    var state = activeFlow.GetState(itemGuid);
+        //    state.PropertyChanged += state_PropertyChanged;
+        //    await Task.Run(async () =>
+        //    {
+        //        while (true)
+        //        {
 
 
-                    //Debug.WriteLine("StageId: {0}, Text: {1}", state.StageId, state.Text);
+        //            if (state.State == XFlowStates.Success)
+        //            {
+        //                Assert.AreEqual(state.StageId, "TestFlow.FinalStage");
+        //                Assert.AreEqual(state.Text, "");
+        //                Assert.AreEqual((await activeFlow.GetInProgressItems()).Count, 0);
+        //                break;
+        //            }
 
 
-                    await Task.Yield();
-                }
+        //            //Debug.WriteLine("StageId: {0}, Text: {1}", state.StageId, state.Text);
+
+
+        //            await Task.Yield();
+        //        }
 
 
 
-            });
+        //    });
 
-            Assert.IsTrue((await activeFlow.GetInProgressItems()).Count == 0);
-            Assert.IsTrue((await activeFlow.GetFailedItems()).Count == 0);
-            Assert.IsTrue((await activeFlow.GetAllItems()).Count == 1);
-            var hub2 = Resolve<XWorkflowHub>();
-            var flow2 = await hub2.AddFlow(flowTemp.ToString(), "Nice name test flow")
-               .AddStage("TestFlow.Prepare", "Preparing...", "Preparation Failed", _passResult, false)
-               .AddStage("TestFlow.Stage2", "Stage 2...", "Stage 2 failed", _failResult, false)
-               .AddStage("TestFlow.FinalStage", "Stage final...", "Stage final failed", _passResult, false)
-               .Complete();
+        //    Assert.IsTrue((await activeFlow.GetInProgressItems()).Count == 0);
+        //    Assert.IsTrue((await activeFlow.GetFailedItems()).Count == 0);
+        //    Assert.IsTrue((await activeFlow.GetAllItems()).Count == 1);
+        //    var hub2 = Resolve<XWorkflowHub>();
+        //    var flow2 = await hub2.AddFlow(flowTemp.ToString(), "Nice name test flow")
+        //       .AddStage("TestFlow.Prepare", "Preparing...", "Preparation Failed", _passResult, false)
+        //       .AddStage("TestFlow.Stage2", "Stage 2...", "Stage 2 failed", _failResult, false)
+        //       .AddStage("TestFlow.FinalStage", "Stage final...", "Stage final failed", _passResult, false)
+        //       .Complete();
 
-            Assert.IsTrue((await flow2.GetInProgressItems()).Count == 0);
-            Assert.IsTrue((await flow2.GetFailedItems()).Count == 0);
-            Assert.IsTrue((await flow2.GetAllItems()).Count == 1);
-        }
+        //    Assert.IsTrue((await flow2.GetInProgressItems()).Count == 0);
+        //    Assert.IsTrue((await flow2.GetFailedItems()).Count == 0);
+        //    Assert.IsTrue((await flow2.GetAllItems()).Count == 1);
+        //}
 
 
         [TestMethod]

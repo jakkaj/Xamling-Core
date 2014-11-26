@@ -53,6 +53,10 @@
       <Project>{BF649817-277F-44C1-AF23-C90D6DAF5901}</Project>
       <Name>XamlingCore.Portable.Util</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Workflow\XamlingCore.Portable.Workflow.csproj">
+      <Project>{9D082ABD-F398-4A28-BE80-9AF2BA5B1BE9}</Project>
+      <Name>XamlingCore.Portable.Workflow</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\EntityDataExtensions.cs" />

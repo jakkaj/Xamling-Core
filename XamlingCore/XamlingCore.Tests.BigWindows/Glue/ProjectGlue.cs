@@ -14,7 +14,7 @@ namespace XamlingCore.Tests.BigWindows.Glue
         {
             base.Init();
             Builder.RegisterModule<DefaultXCoreModule>();
-            Builder.RegisterModule<DefaultWorkflowModule>();
+            //Builder.RegisterModule<DefaultWorkflowModule>();
 
             Builder.RegisterType<WinMockDeviceNetworkStatus>().As<IDeviceNetworkStatus>().SingleInstance();
             Builder.RegisterType<LocalStorageWindows8>().As<ILocalStorage>().SingleInstance();
