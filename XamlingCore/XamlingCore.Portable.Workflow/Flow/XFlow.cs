@@ -184,7 +184,7 @@ namespace XamlingCore.Portable.Workflow.Flow
 
                 state.State = XFlowStates.InProgress;
 
-
+                await _save();
 
                 var result = await stage.Function(state.ItemId);
 

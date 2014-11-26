@@ -99,6 +99,59 @@ namespace XamlingCore.Tests.BigWindows.Workflow
 
         }
 
+        [TestMethod]
+        public async Task TestPersist()
+        {
+
+
+            var hub = Resolve<XWorkflowHub>();
+
+            Guid flowTemp = Guid.NewGuid();
+
+            var flow = await hub.AddFlow(flowTemp.ToString(), "Nice name test flow")
+                .AddStage("TestFlow.Prepare", "Preparing...", "Preparation Failed", _passResult, false)
+                .AddStage("TestFlow.Stage2", "Stage 2...", "Stage 2 failed", _failResult, false)
+                .AddStage("TestFlow.FinalStage", "Stage final...", "Stage final failed", _passResult, false)
+                .Complete();
+
+
+
+            var activeFlow = await hub.Start(flowTemp.ToString(), Guid.NewGuid());
+
+
+
+            await Task.Run(async () =>
+            {
+                while (true)
+                {
+                    await Task.Delay(1000);
+                    var f = activeFlow;
+
+                    if ((await activeFlow.GetInProgressItems()).Count == 0)
+                    {
+                        break;
+                    }
+                }
+
+
+
+            });
+
+            Assert.IsTrue((await activeFlow.GetInProgressItems()).Count == 0);
+            Assert.IsTrue((await activeFlow.GetFailedItems()).Count == 1);
+            Assert.IsTrue((await activeFlow.GetAllItems()).Count == 1);
+
+            var flow2 = await hub.AddFlow(flowTemp.ToString(), "Nice name test flow")
+               .AddStage("TestFlow.Prepare", "Preparing...", "Preparation Failed", _passResult, false)
+               .AddStage("TestFlow.Stage2", "Stage 2...", "Stage 2 failed", _failResult, false)
+               .AddStage("TestFlow.FinalStage", "Stage final...", "Stage final failed", _passResult, false)
+               .Complete();
+
+            Assert.IsTrue((await flow2.GetInProgressItems()).Count == 0);
+            Assert.IsTrue((await flow2.GetFailedItems()).Count == 1);
+            Assert.IsTrue((await flow2.GetAllItems()).Count == 1);
+        }
+
         async Task<XStageResult> _failResult(Guid itemId)
         {
             await Task.Delay(500);

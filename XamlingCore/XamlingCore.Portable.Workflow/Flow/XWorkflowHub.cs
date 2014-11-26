@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Contract.Network;
+using XamlingCore.Portable.Contract.Serialise;
 
 namespace XamlingCore.Portable.Workflow.Flow
 {
     public class XWorkflowHub
     {
         private readonly IDeviceNetworkStatus _networkStatus;
+        private readonly IEntitySerialiser _entitySerialiser;
+        private readonly ILocalStorage _localStorage;
 
-        public XWorkflowHub(IDeviceNetworkStatus networkStatus)
+        public XWorkflowHub(IDeviceNetworkStatus networkStatus, IEntitySerialiser entitySerialiser, ILocalStorage localStorage)
         {
             _networkStatus = networkStatus;
+            _entitySerialiser = entitySerialiser;
+            _localStorage = localStorage;
         }
 
         readonly List<XFlow> _flows = new List<XFlow>(); 
 
         public XFlow AddFlow(string flowId, string friendlyName)
         {
-            var f = new XFlow(_networkStatus).Setup(flowId, friendlyName);
+            var f = new XFlow(_networkStatus, _entitySerialiser, _localStorage).Setup(flowId, friendlyName);
             
             _flows.Add(f);
 
