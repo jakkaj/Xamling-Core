@@ -17,7 +17,7 @@ namespace XamlingCore.Portable.Workflow.Stage
 
         public string FailText { get; set; }
        
-        public bool IsLongProcess { get; set; }
+        public bool IsDisconnectedProcess { get; set; }
 
         public XStage(string stageId)
         {
@@ -25,9 +25,9 @@ namespace XamlingCore.Portable.Workflow.Stage
         }
 
         public XStage(string stageId, string processingText, string failText, Func<Guid, Task<XStageResult>> function,
-            bool isLongProcess = false, bool requiresNetwork = false, int retries = 0)
+            bool isDisconnectedProcess = false, bool requiresNetwork = false, int retries = 0)
         {
-            IsLongProcess = isLongProcess;
+            IsDisconnectedProcess = isDisconnectedProcess;
             StageId = stageId;
             ProcessingText = processingText;
             FailText = failText;

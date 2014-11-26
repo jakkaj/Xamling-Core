@@ -50,10 +50,10 @@ namespace XamlingCore.Portable.Workflow.Flow
         }
 
         public XFlow AddStage(string stageId, string processingText, string failText, Func<Guid, Task<XStageResult>> function,
-            bool isLongProcess = false, bool requiresNetwork = false, int retries = 0)
+            bool isDisconnectedProcess = false, bool requiresNetwork = false, int retries = 0)
         {
 
-            var stage = new XStage(stageId, processingText, failText, function, isLongProcess, requiresNetwork, retries);
+            var stage = new XStage(stageId, processingText, failText, function, isDisconnectedProcess, requiresNetwork, retries);
             _stages.Add(stage);
 
             return this;
@@ -83,6 +83,32 @@ namespace XamlingCore.Portable.Workflow.Flow
                     _state.Where(item => item.State != XFlowStates.Success && item.State != XFlowStates.Fail).ToList();
             }
 
+        }
+
+        public async Task<bool> ResumeDisconnected(Guid id, bool result)
+        {
+            var state = GetState(id);
+
+            var stage = _getStage(state);
+
+            if (!stage.IsDisconnectedProcess)
+            {
+                return false;
+            }
+
+            if (result)
+            {
+                await _successResult(state);
+            }
+            else
+            {
+                await _failResult(state);
+            }
+
+            _processAgain = true;
+            _cancelProcessWait();
+
+            return true;
         }
 
         public async Task<List<XFlowState>> GetFailedItems()
@@ -169,6 +195,7 @@ namespace XamlingCore.Portable.Workflow.Flow
                     {
                         if (state.State == XFlowStates.WaitingForNextStage)
                         {
+                            
                             var nextStageResult = _moveNextStage(state);
 
                             if (!nextStageResult)
@@ -233,6 +260,15 @@ namespace XamlingCore.Portable.Workflow.Flow
 
                 state.State = XFlowStates.InProgress;
                 state.Timestamp = DateTime.UtcNow;
+
+
+                if (stage.IsDisconnectedProcess)
+                {
+                    state.State = XFlowStates.DisconnectedProcessing;
+                    await _save();
+                    Debug.WriteLine("Stopping flow for disconnected state, will resume when asked.");
+                    return;
+                }
 
                 await _save();
 
@@ -375,7 +411,7 @@ namespace XamlingCore.Portable.Workflow.Flow
                         continue;
                     }
 
-                    if (item.State == XFlowStates.Processing)
+                    if (item.State == XFlowStates.InProgress)
                     {
                         //this item was processing when hte app quit... set it to wiating to run to try again
                         item.State = XFlowStates.WaitingToStart;

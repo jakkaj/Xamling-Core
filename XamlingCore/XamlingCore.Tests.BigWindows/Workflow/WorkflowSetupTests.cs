@@ -16,7 +16,52 @@ namespace XamlingCore.Tests.BigWindows.Workflow
     [TestClass]
     public class WorkflowSetupTests : TestBase
     {
+        [TestMethod]
+        public async Task TestSetupDisconnect()
+        {
 
+
+            var hub = Resolve<XWorkflowHub>();
+
+            var idFlow = Guid.NewGuid();
+
+            var flow = await hub.AddFlow(idFlow.ToString(), "Nice name test flow")
+                .AddStage("TestFlow.Prepare", "Preparing...", "Preparation Failed", _passResult, false)
+                .AddStage("TestFlow.Stage2", "Stage 2...", "Stage 2 failed", _passResult, true)
+                .AddStage("TestFlow.FinalStage", "Stage final...", "Stage final failed", _passResult, false)
+                .Complete();
+
+
+            var id = Guid.NewGuid();
+            var activeFlow = await hub.Start(idFlow.ToString(), id);
+
+            var state = activeFlow.GetState(id);
+
+            await Task.Run(async () =>
+            {
+                while (true)
+                {
+                    await Task.Delay(1000);
+
+                    if (state.State == XFlowStates.DisconnectedProcessing)
+                    {
+                        await activeFlow.ResumeDisconnected(id, true);
+                    }
+
+                    if ((await activeFlow.GetInProgressItems()).Count == 0)
+                    {
+                        break;
+                    }
+                }
+
+
+
+            });
+
+            Assert.IsTrue((await activeFlow.GetInProgressItems()).Count == 0);
+            Assert.IsTrue((await activeFlow.GetFailedItems()).Count == 0);
+            Assert.IsTrue((await activeFlow.GetAllItems()).Count >= 1);
+        }
 
         [TestMethod]
         public async Task TestSetupPass()
