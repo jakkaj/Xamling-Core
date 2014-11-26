@@ -18,7 +18,7 @@ namespace XamlingCore.Tests.BigWindows.Workflow
        
 
         [TestMethod]
-        public async Task TestSetup()
+        public async Task TestSetupPass()
         {
            
 
@@ -54,7 +54,48 @@ namespace XamlingCore.Tests.BigWindows.Workflow
 
            Assert.IsTrue(activeFlow.InProgressItems.Count == 0);
 
-            
+           Assert.IsTrue(activeFlow.FailedItems.Count == 0);
+        }
+
+        [TestMethod]
+        public async Task TestSetupFail()
+        {
+
+
+            var hub = Resolve<XWorkflowHub>();
+
+            var flow = hub.AddFlow("TestFlow", "Nice name test flow")
+                .AddStage("TestFlow.Prepare", "Preparing...", "Preparation Failed", _passResult, false)
+                .AddStage("TestFlow.Stage2", "Stage 2...", "Stage 2 failed", _failResult, false)
+                .AddStage("TestFlow.FinalStage", "Stage final...", "Stage final failed", _passResult, false);
+
+
+
+            var activeFlow = await hub.Start("TestFlow", Guid.NewGuid());
+
+
+
+            await Task.Run(async () =>
+            {
+                while (true)
+                {
+                    await Task.Delay(1000);
+                    var f = activeFlow;
+
+                    if (f.InProgressItems.Count == 0)
+                    {
+                        break;
+                    }
+                }
+
+
+
+            });
+
+            Assert.IsTrue(activeFlow.InProgressItems.Count == 0);
+            Assert.IsTrue(activeFlow.FailedItems.Count == 1);
+
+
         }
 
         async Task<XStageResult> _failResult(Guid itemId)
