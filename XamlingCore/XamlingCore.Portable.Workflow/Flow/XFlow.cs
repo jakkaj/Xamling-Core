@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using XamlingCore.Portable.Contract.Entities;
+using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Contract.Network;
+using XamlingCore.Portable.Contract.Serialise;
 using XamlingCore.Portable.Util.Lock;
 using XamlingCore.Portable.Workflow.Stage;
 
@@ -11,6 +15,8 @@ namespace XamlingCore.Portable.Workflow.Flow
     public class XFlow
     {
         private readonly IDeviceNetworkStatus _networkStatus;
+        private readonly IEntitySerialiser _entitySerialiser;
+        private readonly ILocalStorage _localStorage;
         private string _flowId;
         private string _friendlyName;
 
@@ -19,10 +25,15 @@ namespace XamlingCore.Portable.Workflow.Flow
         readonly List<XFlowState> _state = new List<XFlowState>(); 
 
         private AsyncLock _stateLock = new AsyncLock();
+        private AsyncLock _saveLock = new AsyncLock();
 
-        public XFlow(IDeviceNetworkStatus networkStatus)
+        public event EventHandler FlowsUpdated;
+        
+        public XFlow(IDeviceNetworkStatus networkStatus, IEntitySerialiser entitySerialiser, ILocalStorage localStorage)
         {
             _networkStatus = networkStatus;
+            _entitySerialiser = entitySerialiser;
+            _localStorage = localStorage;
         }
 
         public XFlow Setup(string flowId, string friendlyName)
@@ -43,9 +54,13 @@ namespace XamlingCore.Portable.Workflow.Flow
             return this;
         }
 
-        public XFlow Complete()
+        public async Task<XFlow> Complete()
         {
+            await _load();
+
             IsComplete = true;
+
+            Process();
 
             return this;
         }
@@ -169,6 +184,8 @@ namespace XamlingCore.Portable.Workflow.Flow
 
                 state.State = XFlowStates.InProgress;
 
+
+
                 var result = await stage.Function(state.ItemId);
 
                 if (result.Id != Guid.Empty)
@@ -202,6 +219,7 @@ namespace XamlingCore.Portable.Workflow.Flow
                     //let's retry
                     state.FailureCount ++;
                     state.State = XFlowStates.WaitingForRetry;
+                    await _save();
                     return;
                 }
             }
@@ -214,6 +232,9 @@ namespace XamlingCore.Portable.Workflow.Flow
             state.Text = "";
             state.PreviousStageSuccess = true;
             state.State = XFlowStates.WaitingForNextStage;
+
+            await _save();
+
             Process();
         }
 
@@ -245,15 +266,17 @@ namespace XamlingCore.Portable.Workflow.Flow
             return true;
         }
 
-        void _finish(XFlowState state)
+        async void _finish(XFlowState state)
         {
             if (state.PreviousStageSuccess)
             {
                state.State = XFlowStates.Success;
+               await _save();
                return;
             }
 
             state.State = XFlowStates.Fail;
+            await _save();
         }
 
         XStage _getStage(XFlowState state)
@@ -265,12 +288,71 @@ namespace XamlingCore.Portable.Workflow.Flow
 
         async Task _load()
         {
+            using (var l = await _saveLock.LockAsync())
+            {
+                var file = _getFileName();
+                if (!await _localStorage.FileExists(file))
+                {
+                    return;
+                }
 
+                var ser = await _localStorage.LoadString(file);
+                
+                if (string.IsNullOrWhiteSpace(ser))
+                {
+                    return;
+                }
+                
+                var loadedState = _entitySerialiser.Deserialise<List<XFlowState>>(ser);
+
+                if (loadedState == null || loadedState.Count == 0)
+                {
+                    return;
+                }
+
+                foreach (var item in loadedState)
+                {
+                    if (_stages.FirstOrDefault(_ => _.StageId == item.StageId) == null)
+                    {
+                        Debug.WriteLine("Warning ** Missing stage when loading workflow state: " + item.StageId);
+                        continue;
+                    }
+
+                    if (item.State == XFlowStates.Processing)
+                    {
+                        //this item was processing when hte app quit... set it to wiating to run to try again
+                        item.State = XFlowStates.WaitingToStart;
+                    }
+                    
+                    _state.Add(item);
+                }
+            }
+
+            await _save();
         }
 
         async Task _save()
         {
+            using (var l = await _saveLock.LockAsync())
+            {
+                var ser = _entitySerialiser.Serialise(_state);
+                await _localStorage.SaveString(_getFileName(), ser);
+            }
 
+            _fireUpdated();
+        }
+
+        string _getFileName()
+        {
+            return string.Format("{0}.flow", FlowId);
+        }
+
+        void _fireUpdated()
+        {
+            if (FlowsUpdated != null)
+            {
+                FlowsUpdated(this, EventArgs.Empty);
+            }
         }
 
         public string FriendlyName
