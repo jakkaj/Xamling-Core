@@ -42,7 +42,7 @@ namespace XamlingCore.Tests.BigWindows.Workflow
                    await Task.Delay(1000);
                    var f = activeFlow;
 
-                   if (f.InProgressItems.Count == 0)
+                   if ((await activeFlow.GetInProgressItems()).Count == 0)
                    {
                        break;
                    }
@@ -52,9 +52,9 @@ namespace XamlingCore.Tests.BigWindows.Workflow
                
            });
 
-           Assert.IsTrue(activeFlow.InProgressItems.Count == 0);
-
-           Assert.IsTrue(activeFlow.FailedItems.Count == 0);
+           Assert.IsTrue((await activeFlow.GetInProgressItems()).Count == 0);
+           Assert.IsTrue((await activeFlow.GetFailedItems()).Count == 0);
+           Assert.IsTrue((await activeFlow.GetAllItems()).Count == 1);
         }
 
         [TestMethod]
@@ -82,7 +82,7 @@ namespace XamlingCore.Tests.BigWindows.Workflow
                     await Task.Delay(1000);
                     var f = activeFlow;
 
-                    if (f.InProgressItems.Count == 0)
+                    if ((await activeFlow.GetInProgressItems()).Count == 0)
                     {
                         break;
                     }
@@ -92,8 +92,9 @@ namespace XamlingCore.Tests.BigWindows.Workflow
 
             });
 
-            Assert.IsTrue(activeFlow.InProgressItems.Count == 0);
-            Assert.IsTrue(activeFlow.FailedItems.Count == 1);
+            Assert.IsTrue((await activeFlow.GetInProgressItems()).Count == 0);
+            Assert.IsTrue((await activeFlow.GetFailedItems()).Count == 1);
+            Assert.IsTrue((await activeFlow.GetAllItems()).Count == 1);
 
 
         }

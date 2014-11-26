@@ -40,9 +40,19 @@ namespace XamlingCore.Portable.Workflow.Flow
             return f;
         }
 
-        public List<XFlow> GetInProgressFlow()
+        public async Task<List<XFlow>> GetInProgressFlow()
         {
-            return _flows.Where(item => item.InProgressItems.Count > 0).ToList();
+            var l = new List<XFlow>();
+
+            foreach (var item in _flows)
+            {
+
+                if ((await item.GetInProgressItems()).Count > 0)
+                {
+                    l.Add(item);
+                }
+            }
+            return l;
         }
     }
 }

@@ -50,22 +50,39 @@ namespace XamlingCore.Portable.Workflow.Flow
             return this;
         }
 
-        public List<XFlowState> InProgressItems
+        public async Task<List<XFlowState>> GetInProgressItems()
         {
-            get
+            using (var l = await _stateLock.LockAsync())
             {
-                return _state.Where(item => item.State != XFlowStates.Success && item.State != XFlowStates.Fail).ToList();
+                return
+                    _state.Where(item => item.State != XFlowStates.Success && item.State != XFlowStates.Fail).ToList();
             }
+
         }
 
-        public List<XFlowState> FailedItems
+        public async Task<List<XFlowState>> GetFailedItems()
         {
-            get
+            using (var l = await _stateLock.LockAsync())
             {
                 return _state.Where(item => item.State == XFlowStates.Fail).ToList();
             }
         }
-       
+
+        public async Task<List<XFlowState>> GetSuccessItems()
+        {
+            using (var l = await _stateLock.LockAsync())
+            {
+                return _state.Where(item => item.State == XFlowStates.Success).ToList();
+            }
+        }
+
+        public async Task<List<XFlowState>> GetAllItems()
+        {
+            using (var l = await _stateLock.LockAsync())
+            {
+                return _state.ToList();
+            }
+        }
 
         public async Task<bool> Start(Guid id)
         {
