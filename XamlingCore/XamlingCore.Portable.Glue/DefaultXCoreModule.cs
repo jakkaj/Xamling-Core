@@ -16,6 +16,7 @@ using XamlingCore.Portable.Service.Location;
 using XamlingCore.Portable.Service.Orientation;
 using XamlingCore.Portable.Service.Settings;
 using XamlingCore.Portable.View.Navigation;
+using XamlingCore.Portable.Workflow.Glue;
 
 namespace XamlingCore.Portable.Glue
 {
@@ -49,6 +50,7 @@ namespace XamlingCore.Portable.Glue
 
             builder.RegisterType<HttpClientTransferrer>().As<IHttpTransferrer>().SingleInstance();
 
+            builder.RegisterModule<DefaultWorkflowModule>();
 
 
             base.Load(builder);

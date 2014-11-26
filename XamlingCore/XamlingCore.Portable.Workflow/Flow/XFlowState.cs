@@ -17,6 +17,8 @@ namespace XamlingCore.Portable.Workflow.Flow
         private string _stageId;
         public Guid Id { get; set; }
 
+        public event EventHandler FlowCompleted;
+
         public Guid ItemId
         {
             get { return _itemId; }
@@ -53,6 +55,12 @@ namespace XamlingCore.Portable.Workflow.Flow
             set
             {
                 _complete = value;
+
+                if (value && FlowCompleted!=null)
+                {
+                    FlowCompleted(this, EventArgs.Empty);
+                }
+
                 OnPropertyChanged();
             }
         }

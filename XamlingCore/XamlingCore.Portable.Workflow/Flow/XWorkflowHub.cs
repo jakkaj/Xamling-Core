@@ -42,6 +42,18 @@ namespace XamlingCore.Portable.Workflow.Flow
             return _flows.FirstOrDefault(_ => _.FlowId == flowId);
         }
 
+        public XFlowState GetFlowState(string flowId, Guid id)
+        {
+            var flow = GetFlow(flowId);
+
+            if (flow == null)
+            {
+                return null;
+            }
+
+            return flow.GetState(id);
+        }
+
         public async Task<XFlow> Start(string flowId, Guid id)
         {
             var f = _flows.FirstOrDefault(_ => _.FlowId == flowId);

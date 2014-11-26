@@ -12,7 +12,7 @@ namespace XamlingCore.Portable.Workflow.Glue
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<XWorkflowHub>().AsSelf();
+            builder.RegisterType<XWorkflowHub>().AsSelf().SingleInstance();
             base.Load(builder);
         }
     }
