@@ -36,6 +36,18 @@ namespace XamlingCore.Portable.Data.Extensions
             return flow;
         }
 
+        public static XFlow GetFlow<T>(this T entity, string flowId) where T : class, IEntity, new()
+        {
+            var flow =  _getHub().GetFlow(flowId);
+            return flow;
+        }
+
+        public static async Task<bool> ResumeDisconnectedFlow<T>(this T entity, string flowId, bool result) where T : class, IEntity, new()
+        {
+            var flow =  GetFlow(entity, flowId);
+            return await flow.ResumeDisconnected(entity.Id, result);
+        }
+
         public static XFlowState GetWorkflowState<T>(this T entity, string flowId) where T : class, IEntity, new()
         {
             var flowState =  _getHub().GetFlowState(flowId, entity.Id);
