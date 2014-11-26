@@ -49,6 +49,12 @@ namespace XamlingCore.Portable.Workflow.Flow
             return this;
         }
 
+        public XFlow Merge(XFlow other)
+        {
+            _stages.AddRange(other._stages);
+            return this;
+        }
+
         public XFlow AddStage(string stageId, string processingText, string failText, Func<Guid, Task<XStageResult>> function,
             bool isDisconnectedProcess = false, bool requiresNetwork = false, int retries = 0)
         {
