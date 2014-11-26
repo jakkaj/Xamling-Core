@@ -14,8 +14,6 @@ namespace XamlingCore.Portable.Workflow.Flow
         private string _flowId;
         private string _friendlyName;
 
-        private bool _complete;
-
         readonly List<XStage> _stages = new List<XStage>();
 
         readonly List<XFlowState> _state = new List<XFlowState>(); 
@@ -38,10 +36,7 @@ namespace XamlingCore.Portable.Workflow.Flow
         public XFlow AddStage(string stageId, string processingText, string failText, Func<Guid, Task<XStageResult>> function,
             bool isLongProcess = false, bool requiresNetwork = false, int retries = 0)
         {
-            if (_complete)
-            {
-                throw new InvalidOperationException("Cannot add stage after complete");
-            }
+           
             var stage = new XStage(stageId, processingText, failText, function, isLongProcess, requiresNetwork, retries);
             _stages.Add(stage);
 
@@ -50,10 +45,27 @@ namespace XamlingCore.Portable.Workflow.Flow
 
         public XFlow Complete()
         {
-            _complete = true;
+            IsComplete = true;
 
             return this;
         }
+
+        public List<XFlowState> InProgressItems
+        {
+            get
+            {
+                return _state.Where(item => item.State != XFlowStates.Success && item.State != XFlowStates.Fail).ToList();
+            }
+        }
+
+        public List<XFlowState> FailedItems
+        {
+            get
+            {
+                return _state.Where(item => item.State == XFlowStates.Fail).ToList();
+            }
+        }
+       
 
         public async Task<bool> Start(Guid id)
         {
@@ -61,7 +73,7 @@ namespace XamlingCore.Portable.Workflow.Flow
             {
                 Id = Guid.NewGuid(),
                 ItemId = id,
-                State = XFlowStates.WaitingToStart,
+                State = XFlowStates.WaitingForNextStage,
                 StageId = null
             };
 
@@ -253,5 +265,7 @@ namespace XamlingCore.Portable.Workflow.Flow
         {
             get { return _flowId; }
         }
+
+        public bool IsComplete { get; private set; }
     }
 }
