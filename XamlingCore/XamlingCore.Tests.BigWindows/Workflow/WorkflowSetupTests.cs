@@ -270,6 +270,70 @@ namespace XamlingCore.Tests.BigWindows.Workflow
            
         }
 
+        [TestMethod]
+        public async Task TestMultiplesParallel()
+        {
+
+
+            var hub = Resolve<XWorkflowHub>();
+
+            Guid flowTemp = Guid.NewGuid();
+
+            var flow = await hub.AddFlow(flowTemp.ToString(), "Nice name test flow")
+                .AddStage("TestFlow.Prepare", "Preparing...", "Preparation Failed", _passResult, false)
+                .AddStage("TestFlow.Stage2", "Stage 2...", "Stage 2 failed", _passResult, false)
+                .AddStage("TestFlow.FinalStage", "Stage final...", "Stage final failed", _passResult, false)
+                .Complete();
+            var ids = new List<Guid>();
+
+            for (var i = 0; i < 20; i++)
+            {
+                Debug.WriteLine("Testing: {0}", i);
+                var g = Guid.NewGuid();
+                ids.Add(g);
+                var activeFlow = await hub.Start(flowTemp.ToString(), g);
+                var state = activeFlow.GetState(g);
+                
+            }
+
+            await Task.Run(async () =>
+            {
+                while (true)
+                {
+
+
+                    if ((await flow.GetInProgressItems()).Count == 0)
+                    {
+
+                        break;
+                    }
+
+
+                    //Debug.WriteLine("StageId: {0}, Text: {1}", state.StageId, state.Text);
+
+
+                    await Task.Delay(500);
+                }
+
+
+
+            });
+
+            Assert.IsTrue((await flow.GetInProgressItems()).Count == 0);
+            Assert.IsTrue((await flow.GetFailedItems()).Count == 0);
+            Assert.IsTrue((await flow.GetAllItems()).Count == 20);
+
+            foreach (var item in ids)
+            {
+                var thisState = flow.GetState(item);
+                Assert.AreEqual(thisState.State, XFlowStates.Success);
+
+            }
+
+
+
+        }
+
         void state_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Text")
@@ -289,7 +353,7 @@ namespace XamlingCore.Tests.BigWindows.Workflow
         async Task<XStageResult> _passResult(Guid itemId)
         {
             await Task.Delay(100);
-            Debug.WriteLine("Run Success Result");
+            Debug.WriteLine("Run Success Result: " + itemId);
             return new XStageResult(true, itemId);
         }
     }

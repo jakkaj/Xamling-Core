@@ -34,6 +34,8 @@ namespace XamlingCore.Portable.Workflow.Flow
 
         private CancellationTokenSource _cancelWaitToken;
 
+        private bool _persistOnComplete = true;
+
         public XFlow(IDeviceNetworkStatus networkStatus, IEntitySerialiser entitySerialiser, ILocalStorage localStorage)
         {
             _networkStatus = networkStatus;
@@ -56,12 +58,18 @@ namespace XamlingCore.Portable.Workflow.Flow
         }
 
         public XFlow AddStage(string stageId, string processingText, string failText, Func<Guid, Task<XStageResult>> function,
-            bool isDisconnectedProcess = false, bool requiresNetwork = false, int retries = 0)
+            bool isDisconnectedProcess = false, bool requiresNetwork = false, int retries = 0, Func<Guid, Task<XStageResult>> failFunction = null)
         {
 
-            var stage = new XStage(stageId, processingText, failText, function, isDisconnectedProcess, requiresNetwork, retries);
+            var stage = new XStage(stageId, processingText, failText, function, isDisconnectedProcess, requiresNetwork, retries, failFunction);
             _stages.Add(stage);
 
+            return this;
+        }
+
+        public XFlow PersistOnComplete(bool persist)
+        {
+            _persistOnComplete = persist;
             return this;
         }
 
@@ -185,9 +193,27 @@ namespace XamlingCore.Portable.Workflow.Flow
 
         void _cancelProcessWait()
         {
-            if (_cancelWaitToken != null)
+            Task.Run(() =>
             {
-                _cancelWaitToken.Cancel();
+                if (_cancelWaitToken != null)
+                {
+                    _cancelWaitToken.Cancel();
+                }
+            });
+
+        }
+
+        async Task<List<XFlowState>> _getWaitingStates()
+        {
+            using (var l = await _stateLock.LockAsync())
+            {
+                var states = _state.Where(_ => _.State == XFlowStates.WaitingForNextStage
+                                               || _.State == XFlowStates.WaitingToStart
+                                               || _.State == XFlowStates.WaitingForNetwork
+                                               || _.State == XFlowStates.WaitingForRetry)
+                    .ToList();
+
+                return states;
             }
         }
 
@@ -195,13 +221,17 @@ namespace XamlingCore.Portable.Workflow.Flow
         {
             while (true)
             {
-                using (var l = await _stateLock.LockAsync())
+                var states = await _getWaitingStates();
+
+                var currentTasks = new List<Task>();
+
+                if (states != null)
                 {
-                    foreach (var state in _state)
+                    foreach (var state in states)
                     {
                         if (state.State == XFlowStates.WaitingForNextStage)
                         {
-                            
+
                             var nextStageResult = _moveNextStage(state);
 
                             if (!nextStageResult)
@@ -217,15 +247,22 @@ namespace XamlingCore.Portable.Workflow.Flow
                             state.State == XFlowStates.WaitingForNetwork ||
                             state.State == XFlowStates.WaitingForRetry)
                         {
-                            _runStage(state);
+                            var t = _runStage(state);
+
+                            if (t != null)
+                            {
+                                currentTasks.Add(t);
+                            }
                         }
                     }
-                }
 
+                    await Task.WhenAll(currentTasks);
+                }
                 Task.Yield();
-                if (!_processAgain)
+
+                if (!_processAgain && (await _getWaitingStates()).Count == 0)
                 {
-                   
+
                     _cancelWaitToken = new CancellationTokenSource();
 
                     try
@@ -238,21 +275,22 @@ namespace XamlingCore.Portable.Workflow.Flow
                     }
 
                     _cancelWaitToken = null;
-                   
+
                 }
                 _processAgain = false;
+                Task.Yield();
             }
         }
 
-        void _runStage(XFlowState state)
+        Task _runStage(XFlowState state)
         {
             if (state.State != XFlowStates.WaitingForNetwork && state.State != XFlowStates.WaitingForNextStage &&
                 state.State != XFlowStates.WaitingToStart)
             {
-                return;
+                return null;
             }
 
-            Task.Run(async () =>
+            var t = Task.Run(async () =>
             {
                 var stage = _getStage(state);
 
@@ -285,7 +323,7 @@ namespace XamlingCore.Portable.Workflow.Flow
                     state.ItemId = result.Id;
                 }
 
-                
+                state.PreviousStageResult = result;
 
                 if (!result.IsSuccess)
                 {
@@ -293,11 +331,13 @@ namespace XamlingCore.Portable.Workflow.Flow
                 }
                 else
                 {
-                   await  _successResult(state);
+                    await _successResult(state);
                 }
                 _processAgain = true;
                 _cancelProcessWait();
             });
+
+            return t;
         }
 
         async Task _failResult(XFlowState state)
@@ -321,6 +361,8 @@ namespace XamlingCore.Portable.Workflow.Flow
                 }
             }
 
+            await stage.FailFunction(state.ItemId);
+
             _finish(state);
         }
 
@@ -328,8 +370,45 @@ namespace XamlingCore.Portable.Workflow.Flow
         {
             state.Text = "";
             state.PreviousStageSuccess = true;
+
+            if (state.PreviousStageResult.CompleteNow)
+            {
+                //the result has asked for the workflow to complete early
+                //this could be because the rest isn't needed, e.g. an entity was detected
+                //locally so there is no need to get it form the server. 
+                _finish(state);
+                return;
+            }
+
             state.State = XFlowStates.WaitingForNextStage;
             state.Timestamp = DateTime.UtcNow;
+            await _save();
+        }
+
+        async void _finish(XFlowState state)
+        {
+            if (!_persistOnComplete)
+            {
+                if (_state.Contains(state))
+                {
+                    _state.Remove(state);
+                }
+                await _save();
+                return;
+            }
+
+            state.Complete = true;
+            if (state.PreviousStageSuccess)
+            {
+                state.State = XFlowStates.Success;
+                state.Timestamp = DateTime.UtcNow;
+                await _save();
+                return;
+            }
+
+            state.State = XFlowStates.Fail;
+            state.Timestamp = DateTime.UtcNow;
+
             await _save();
         }
 
@@ -361,22 +440,7 @@ namespace XamlingCore.Portable.Workflow.Flow
             return true;
         }
 
-        async void _finish(XFlowState state)
-        {
-            state.Complete = true;
-            if (state.PreviousStageSuccess)
-            {
-                state.State = XFlowStates.Success;
-                state.Timestamp = DateTime.UtcNow;
-                await _save();
-                return;
-            }
 
-            state.State = XFlowStates.Fail;
-            state.Timestamp = DateTime.UtcNow;
-
-            await _save();
-        }
 
         XStage _getStage(XFlowState state)
         {
@@ -434,8 +498,11 @@ namespace XamlingCore.Portable.Workflow.Flow
         {
             using (var l = await _saveLock.LockAsync())
             {
-                var ser = _entitySerialiser.Serialise(_state);
-                await _localStorage.SaveString(_getFileName(), ser);
+                using (var l2 = await _stateLock.LockAsync())
+                {
+                    var ser = _entitySerialiser.Serialise(_state);
+                    await _localStorage.SaveString(_getFileName(), ser);
+                }
             }
 
             _fireUpdated();

@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using XamlingCore.Portable.Model.Contract;
 using XamlingCore.Portable.View.ViewModel.Base;
 using XamlingCore.Portable.Workflow.Annotations;
+using XamlingCore.Portable.Workflow.Stage;
 
 namespace XamlingCore.Portable.Workflow.Flow
 {
@@ -19,6 +20,8 @@ namespace XamlingCore.Portable.Workflow.Flow
         private string _text;
         private string _stageId;
         public Guid Id { get; set; }
+
+        private XStageResult _previousStageResult;
 
         public event EventHandler FlowCompleted;
 
@@ -114,6 +117,16 @@ namespace XamlingCore.Portable.Workflow.Flow
             set
             {
                 _text = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public XStageResult PreviousStageResult
+        {
+            get { return _previousStageResult; }
+            set
+            {
+                _previousStageResult = value;
                 OnPropertyChanged();
             }
         }
