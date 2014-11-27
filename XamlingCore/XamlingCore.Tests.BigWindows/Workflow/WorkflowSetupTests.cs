@@ -17,6 +17,60 @@ namespace XamlingCore.Tests.BigWindows.Workflow
     public class WorkflowSetupTests : TestBase
     {
         [TestMethod]
+        public async Task TestMergeFlows()
+        {
+
+
+            var hub = Resolve<XWorkflowHub>();
+
+            var idFlow = Guid.NewGuid();
+            var idFlow2 = Guid.NewGuid();
+            var flow = await hub.AddFlow(idFlow.ToString(), "Nice name test flow")
+                .AddStage("TestFlow.Preparea", "Preparing...", "Preparation Failed", _passResult, false)
+                .AddStage("TestFlow.Stage2a", "Stage 2...", "Stage 2 failed", _passResult, true)
+                .AddStage("TestFlow.FinalStagea", "Stage final...", "Stage final failed", _passResult, false)
+                .Complete();
+
+            var flow2 = await hub.AddFlow(idFlow2.ToString(), "Nice name test flow")
+                .AddStage("TestFlow2.Prepare2", "Preparing...", "Preparation Failed", _passResult, false)
+                .Merge(flow)
+                .AddStage("TestFlow.FinalStage2", "Stage final...", "Stage final failed", _passResult, false)
+                .Complete();
+
+
+            var id = Guid.NewGuid();
+            var activeFlow = await hub.Start(idFlow2.ToString(), id);
+
+            var state = activeFlow.GetState(id);
+
+            await Task.Run(async () =>
+            {
+                while (true)
+                {
+                    await Task.Delay(1000);
+
+                    if (state.State == XFlowStates.DisconnectedProcessing)
+                    {
+                        await activeFlow.ResumeDisconnected(id, true);
+                    }
+
+                    if ((await activeFlow.GetInProgressItems()).Count == 0)
+                    {
+                        break;
+                    }
+                }
+
+
+
+            });
+
+            Assert.IsTrue((await activeFlow.GetInProgressItems()).Count == 0);
+            Assert.IsTrue((await activeFlow.GetFailedItems()).Count == 0);
+            Assert.IsTrue((await activeFlow.GetAllItems()).Count >= 1);
+        }
+
+
+        [TestMethod]
         public async Task TestSetupDisconnect()
         {
 

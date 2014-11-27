@@ -103,6 +103,11 @@ namespace XamlingCore.Portable.Workflow.Flow
         {
             var state = GetState(id);
 
+            if (state == null)
+            {
+                return false;
+            }
+
             var stage = _getStage(state);
 
             if (!stage.IsDisconnectedProcess)
@@ -284,7 +289,7 @@ namespace XamlingCore.Portable.Workflow.Flow
 
         Task _runStage(XFlowState state)
         {
-            if (state.State != XFlowStates.WaitingForNetwork && state.State != XFlowStates.WaitingForNextStage &&
+            if (state.State != XFlowStates.WaitingForNetwork && state.State != XFlowStates.WaitingForRetry &&
                 state.State != XFlowStates.WaitingToStart)
             {
                 return null;
@@ -316,23 +321,42 @@ namespace XamlingCore.Portable.Workflow.Flow
 
                 await _save();
 
-                var result = await stage.Function(state.ItemId);
+                XStageResult failResult = null;
 
-                if (result.Id != Guid.Empty)
+                try
                 {
-                    state.ItemId = result.Id;
+                    var result = await stage.Function(state.ItemId);
+
+                    if (result.Id != Guid.Empty)
+                    {
+                        state.ItemId = result.Id;
+                    }
+
+                    state.PreviousStageResult = result;
+
+                    if (!result.IsSuccess)
+                    {
+                        await _failResult(state);
+                    }
+                    else
+                    {
+                        await _successResult(state);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    failResult = new XStageResult(false, state.ItemId, null, exception: ex.ToString());
                 }
 
-                state.PreviousStageResult = result;
-
-                if (!result.IsSuccess)
+                if (failResult != null)
                 {
+                    Debug.WriteLine("Caugh exception process: {0}", failResult.Exception);
+                    state.PreviousStageResult = failResult;
                     await _failResult(state);
                 }
-                else
-                {
-                    await _successResult(state);
-                }
+
+
                 _processAgain = true;
                 _cancelProcessWait();
             });
@@ -361,7 +385,7 @@ namespace XamlingCore.Portable.Workflow.Flow
                 }
             }
 
-            await stage.FailFunction(state.ItemId);
+            await stage.Fail(state.ItemId);
 
             _finish(state);
         }
@@ -371,7 +395,7 @@ namespace XamlingCore.Portable.Workflow.Flow
             state.Text = "";
             state.PreviousStageSuccess = true;
 
-            if (state.PreviousStageResult.CompleteNow)
+            if (state.PreviousStageResult != null && state.PreviousStageResult.CompleteNow)
             {
                 //the result has asked for the workflow to complete early
                 //this could be because the rest isn't needed, e.g. an entity was detected
@@ -475,11 +499,17 @@ namespace XamlingCore.Portable.Workflow.Flow
 
                 foreach (var item in loadedState)
                 {
+                    if (string.IsNullOrWhiteSpace(item.StageId))
+                    {
+                        Debug.WriteLine("Dud stage id from saved item, ignoring");
+                        continue;
+                    } 
+
                     if (_stages.FirstOrDefault(_ => _.StageId == item.StageId) == null)
                     {
                         Debug.WriteLine("Warning ** Missing stage when loading workflow state: " + item.StageId);
                         continue;
-                    }
+                    }                    
 
                     if (item.State == XFlowStates.InProgress)
                     {
