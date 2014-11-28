@@ -351,8 +351,12 @@ namespace XamlingCore.Portable.Workflow.Flow
 
                 if (failResult != null)
                 {
-                    Debug.WriteLine("Caugh exception process: {0}", failResult.Exception);
                     state.PreviousStageResult = failResult;
+
+                    var stateString = _entitySerialiser.Serialise(state);
+
+                    Debug.WriteLine("Caught exception process: {0}", stateString);
+
                     await _failResult(state);
                 }
 
@@ -386,7 +390,11 @@ namespace XamlingCore.Portable.Workflow.Flow
             }
 
             await stage.Fail(state.ItemId);
-
+            Debug.WriteLine("Stage Failed [{0}] {1} - {2}", 
+                state.ItemId, 
+                state.PreviousStageResult != null ? state.PreviousStageResult.ExtraText : "No Extra Text", 
+                state.PreviousStageResult != null ? state.PreviousStageResult.Exception : "No Exception");
+            Debug.WriteLine("Failure stage: {0}", stage.ProcessingText);
             _finish(state);
         }
 
@@ -503,13 +511,13 @@ namespace XamlingCore.Portable.Workflow.Flow
                     {
                         Debug.WriteLine("Dud stage id from saved item, ignoring");
                         continue;
-                    } 
+                    }
 
                     if (_stages.FirstOrDefault(_ => _.StageId == item.StageId) == null)
                     {
                         Debug.WriteLine("Warning ** Missing stage when loading workflow state: " + item.StageId);
                         continue;
-                    }                    
+                    }
 
                     if (item.State == XFlowStates.InProgress)
                     {

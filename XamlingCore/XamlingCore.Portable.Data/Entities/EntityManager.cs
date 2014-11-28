@@ -224,6 +224,10 @@ namespace XamlingCore.Portable.Data.Entities
 
         private async Task<T> _set(T entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
             using (var lSave = await _saveLock.LockAsync())
             {
                 var memory = _memoryCache.FirstOrDefault(_ => _.Id == entity.Id);
