@@ -171,7 +171,18 @@ namespace XamlingCore.Portable.Data.Entities
 
                 if (memory != null)
                 {
-                    return memory;
+                    if (maxAge != null)
+                    {
+                        var age = await _entityCache.GetAge<T>(_getKey(id));
+                        if (age < maxAge)
+                        {
+                            return memory;
+                        }
+                    }
+                    else
+                    {
+                        return memory;
+                    }
                 }
 
                 var cache = await _entityCache.GetEntity<T>(_getKey(id), maxAge);

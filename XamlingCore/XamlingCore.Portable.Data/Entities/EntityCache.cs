@@ -219,6 +219,39 @@ namespace XamlingCore.Portable.Data.Entities
             }
         }
 
+        public async Task<TimeSpan?> GetAge<T>(string key) where T : class, new()
+        {
+            var locker = NamedLock.Get(key + "3");
+            using (var locked = await locker.LockAsync())
+            {
+                var fullName = _getFullKey<T>(key);
+
+                var f = _getMemory<T>(key);
+
+                if (f == null)
+                {
+                    f = await _localStorageFileRepo.Get<XCacheItem<T>>(fullName);
+
+                    if (f != null && f.Item != null)
+                    {
+                        _updateItem(f.Item, f);
+                        _setMemory(key, f.Item, f.DateStamp);
+                    }
+                }
+
+                if (f == null)
+                {
+                    return null;
+                }
+
+                _updateItemCacheSource(f.Item, true);
+
+                var ts = DateTime.UtcNow.Subtract(f.DateStamp);
+
+                return ts;
+            }
+        }
+
         public async Task<T> GetEntity<T>(string key, TimeSpan? maxAge = null) where T : class, new()
         {
             var locker = NamedLock.Get(key + "3");

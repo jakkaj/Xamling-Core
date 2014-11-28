@@ -20,5 +20,7 @@ namespace XamlingCore.Portable.Contract.Entities
 
         Task DeleteAll<T>()
             where T : class, new();
+
+        Task<TimeSpan?> GetAge<T>(string key) where T : class, new();
     }
 }
