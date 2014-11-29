@@ -11,5 +11,20 @@ namespace XamlingCore.iOS.Implementations
         {
             return UIDevice.CurrentDevice.SystemName + " " + UIDevice.CurrentDevice.SystemVersion;
         }
+
+        public int GetScreenWidth()
+        {
+            return (int) UIScreen.MainScreen.Bounds.Width;
+        }
+
+        public int GetScreenHeight()
+        {
+            return (int) UIScreen.MainScreen.Bounds.Height;
+        }
+
+        public float GetScreenScale()
+        {
+            return UIScreen.MainScreen.Scale;
+        }
     }
 }
