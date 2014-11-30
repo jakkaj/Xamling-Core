@@ -302,6 +302,7 @@ namespace XamlingCore.Portable.Workflow.Flow
                 if (stage.RequiresNetwork && !_networkStatus.QuickNetworkCheck())
                 {
                     state.State = XFlowStates.WaitingForNetwork;
+                    await Task.Yield();
                     return;
                 }
 

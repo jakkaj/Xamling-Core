@@ -119,6 +119,7 @@
     <Compile Include="Glue\ProjectGlue.cs" />
     <Compile Include="Impl\DeviceNetworkStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Workflow\WorkflowConnectivityTests.cs" />
     <Compile Include="Workflow\WorkflowSetupTests.cs" />
   </ItemGroup>
   <ItemGroup>
