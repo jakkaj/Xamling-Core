@@ -167,7 +167,8 @@ namespace XamlingCore.Portable.Workflow.Flow
                 ItemId = id,
                 State = XFlowStates.WaitingForNextStage,
                 StageId = null,
-                Timestamp = DateTime.UtcNow
+                Timestamp = DateTime.UtcNow,
+                ParentFlow = this
             };
 
             using (var l = await _stateLock.LockAsync())

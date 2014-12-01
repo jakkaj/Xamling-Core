@@ -46,6 +46,7 @@
     <Compile Include="Downloaders\HttpTransferResult.cs" />
     <Compile Include="Downloaders\HttpClientTransferrer.cs" />
     <Compile Include="Downloaders\SimpleHttpTransfer.cs" />
+    <Compile Include="Downloaders\SimpleNativeHttpTransferer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\HttpTransferConfigServiceBase.cs" />
   </ItemGroup>

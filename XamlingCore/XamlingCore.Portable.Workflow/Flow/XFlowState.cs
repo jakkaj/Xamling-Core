@@ -25,6 +25,8 @@ namespace XamlingCore.Portable.Workflow.Flow
 
         public event EventHandler FlowCompleted;
 
+        public XFlow ParentFlow { get; set; }
+
         public Guid ItemId
         {
             get { return _itemId; }
