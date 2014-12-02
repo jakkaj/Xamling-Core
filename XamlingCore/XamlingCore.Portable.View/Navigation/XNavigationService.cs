@@ -42,6 +42,13 @@ namespace XamlingCore.Portable.View.Navigation
 
         public void NavigateToModal(object content)
         {
+            var dispose = ModalContentObject as IDisposable;
+
+            if (dispose != null)
+            {
+                dispose.Dispose();
+            }
+
             ModalContentObject = content;
             if (Navigated != null)
             {
