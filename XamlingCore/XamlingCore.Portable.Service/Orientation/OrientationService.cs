@@ -11,6 +11,8 @@ namespace XamlingCore.Portable.Service.Orientation
     {
         private readonly IOrientationSensor _orientationSensor;
 
+        public event EventHandler SupportedOrientationChanged;
+
         public OrientationService(IOrientationSensor orientationSensor)
         {
             SupportedPageOrientation = XSupportedPageOrientation.Both;
@@ -20,7 +22,7 @@ namespace XamlingCore.Portable.Service.Orientation
 
         void _orientationSensor_OrientationChanged(object sender, EventArgs e)
         {
-            SetOrientation(_orientationSensor.Orientation, _orientationSensor.UpsideDown);
+            SetCurrentOrientation(_orientationSensor.Orientation, _orientationSensor.UpsideDown);
         }
 
         public event EventHandler OrientationChanged;
@@ -32,7 +34,7 @@ namespace XamlingCore.Portable.Service.Orientation
             if (handler != null) handler(this, EventArgs.Empty);
         }
 
-        public void SetOrientation(XPageOrientation orientation, bool isUpsideDown)
+        public void SetCurrentOrientation(XPageOrientation orientation, bool isUpsideDown)
         {
             if (CurrentPageOrientation == orientation)
             {
@@ -48,6 +50,10 @@ namespace XamlingCore.Portable.Service.Orientation
         {
             SupportedPageOrientation = supported;
             new SupportedOrientationChangedMessage(supported).Send();
+            if (SupportedOrientationChanged != null)
+            {
+                SupportedOrientationChanged(this, EventArgs.Empty);
+            }
         }
 
         public XPageOrientation CurrentPageOrientation { get; protected set; }

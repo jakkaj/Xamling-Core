@@ -10,6 +10,7 @@ namespace XamlingCore.Portable.Contract.Services
         XSupportedPageOrientation SupportedPageOrientation { get; }
         event EventHandler OrientationChanged;
         void SetSupportedOrientation(XSupportedPageOrientation supported);
-        void SetOrientation(XPageOrientation orientation, bool isUpsideDown);
+        void SetCurrentOrientation(XPageOrientation orientation, bool isUpsideDown);
+        event EventHandler SupportedOrientationChanged;
     }
 }

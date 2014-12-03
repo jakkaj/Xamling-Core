@@ -11,13 +11,41 @@ namespace XamlingCore.iOS.Root
     public class RootViewController : UIViewController
     {
         private readonly IOrientationService _orientationService;
-
+        private UIViewController _controller;
+        private UIWindow _window;
         public RootViewController(IOrientationService orientationService)
         {
             _orientationService = orientationService;
+
+            _orientationService.OrientationChanged += _orientationService_OrientationChanged;
+            _orientationService.SupportedOrientationChanged += _orientationService_SupportedOrientationChanged;
         }
 
-       
+        public void SetChild(UIViewController controller, UIWindow window)
+        {
+            _controller = controller;
+            _window = window;
+
+            AddChildViewController(_controller);
+            View.AddSubview(_controller.View);
+        }
+
+        void _refreshChild()
+        {
+            _window.RootViewController = new UIViewController();
+
+            _window.RootViewController = this;
+        }
+
+        void _orientationService_SupportedOrientationChanged(object sender, EventArgs e)
+        {
+            _refreshChild();
+        }
+
+        void _orientationService_OrientationChanged(object sender, EventArgs e)
+        {
+           
+        }
 
         public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations()
         {
