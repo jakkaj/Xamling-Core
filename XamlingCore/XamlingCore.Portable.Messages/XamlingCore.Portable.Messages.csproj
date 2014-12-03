@@ -51,6 +51,7 @@
     <Compile Include="Network\CouldNotContactServersErrorMessage.cs" />
     <Compile Include="Network\NetworkChangedMessage.cs" />
     <Compile Include="Network\NoNetworkErrorMessage.cs" />
+    <Compile Include="Network\TransferProgressMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\SettingsUpdatedMessage.cs" />
     <Compile Include="System\ApplicationDeactivatedMessage.cs" />

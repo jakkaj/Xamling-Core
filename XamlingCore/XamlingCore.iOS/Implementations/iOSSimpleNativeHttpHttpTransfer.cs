@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using ModernHttpClient;
 using XamlingCore.Portable.Contract.Downloaders;
 using XamlingCore.Portable.Contract.Network;
+using XamlingCore.Portable.Messages.Network;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 
 namespace XamlingCore.iOS.Implementations
 {
@@ -28,8 +30,7 @@ namespace XamlingCore.iOS.Implementations
                     var httpClient = new HttpClient(native);
                     var message = new HttpRequestMessage(HttpMethod.Post, url);
 
-                    native.RegisterForProgress(message, (bytes, totalBytes, expected) =>
-                       Debug.WriteLine("Simple Progress: {0}, {1}, {2}, {3}", url, bytes, totalBytes, expected));
+                    native.RegisterForProgress(message, (bytes, totalBytes, expected) => new TransferProgressMessage(url, bytes, totalBytes, expected, true).Send());
 
                     var content = new ByteArrayContent(data);
 
@@ -54,8 +55,11 @@ namespace XamlingCore.iOS.Implementations
             {
                 if (_networkInformation.QuickNetworkCheck())
                 {
-                    var httpClient = new HttpClient();
+                    var native = new NativeMessageHandler();
+                    var httpClient = new HttpClient(native);
                     var message = new HttpRequestMessage(HttpMethod.Get, url);
+
+                    native.RegisterForProgress(message, (bytes, totalBytes, expected) => new TransferProgressMessage(url, bytes, totalBytes, expected, false).Send());
 
                     var result = await httpClient.SendAsync(message);
 

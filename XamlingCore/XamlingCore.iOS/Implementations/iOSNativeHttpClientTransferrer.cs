@@ -7,6 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using XamlingCore.Portable.Contract.Downloaders;
+using XamlingCore.Portable.Messages.Network;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Net.Downloaders;
 
 namespace XamlingCore.iOS.Implementations
@@ -53,7 +55,7 @@ namespace XamlingCore.iOS.Implementations
 
             if (downloadConfig == null)
             {
-                
+
                 throw new NotImplementedException(string.Format("No download config for URL: {0}", url));
             }
 
@@ -105,8 +107,7 @@ namespace XamlingCore.iOS.Implementations
                 using (var message = new HttpRequestMessage(method, obj.Url))
                 {
 
-                    native.RegisterForProgress(message, (bytes, totalBytes, expected) =>
-                        Debug.WriteLine("Download Progress: {0}, {1}, {2}, {3}", downloadConfig.Url, bytes, totalBytes, expected));
+                    native.RegisterForProgress(message, (bytes, totalBytes, expected) => new TransferProgressMessage(obj.Url, bytes, totalBytes, expected, downloadConfig.Verb.ToLower() != "get").Send());
 
                     if (downloadConfig.Headers != null)
                     {
@@ -141,7 +142,7 @@ namespace XamlingCore.iOS.Implementations
                     if (obj.ByteData != null)
                     {
                         var content = new ByteArrayContent(obj.ByteData, 0, obj.ByteData.Length);
-                        
+
                         message.Content = content;
                     }
 
@@ -153,7 +154,7 @@ namespace XamlingCore.iOS.Implementations
 
                     try
                     {
-                        Debug.WriteLine("{0}: {1}", downloadConfig.Verb.ToLower() == "get" ? "Downloading": "Uploading", obj.Url);
+                        Debug.WriteLine("{0}: {1}", downloadConfig.Verb.ToLower() == "get" ? "Downloading" : "Uploading", obj.Url);
 
                         using (var result = await httpClient.SendAsync(message))
                         {
@@ -161,7 +162,7 @@ namespace XamlingCore.iOS.Implementations
                             return await _httpTransferService.GetResult(result, downloadConfig);
                         }
 
-                       
+
 
                     }
                     catch (HttpRequestException ex)
