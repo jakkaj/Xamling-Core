@@ -17,5 +17,7 @@ namespace XamlingCore.XamarinThings.Content.Navigation
             _orientationSensor.OnRotated();
             base.OnSizeAllocated(width, height);
         }
+
+       
     }
 }

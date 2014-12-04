@@ -1,5 +1,6 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
+using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.View.ViewModel;
 
 namespace XamlingCore.iOS.Controls.Native
@@ -12,6 +13,10 @@ namespace XamlingCore.iOS.Controls.Native
         private TFormsType _view;
 
         protected TViewModelType ViewModel { get; set; }
+
+
+        private readonly IOrientationService _orientationService;
+
 
         protected override void OnElementChanged(ElementChangedEventArgs<TFormsType> e)
         {
@@ -33,6 +38,8 @@ namespace XamlingCore.iOS.Controls.Native
                 _view = e.NewElement;
             }
         }
+
+       
 
         public virtual void OnControlCreated(TNativeType control)
         {

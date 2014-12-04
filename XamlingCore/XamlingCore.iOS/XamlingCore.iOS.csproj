@@ -38,6 +38,8 @@
     <Compile Include="Controls\Loader\LoadingOverlayView.cs" />
     <Compile Include="Controls\Native\XNativeView.cs" />
     <Compile Include="Controls\Native\XNativeViewRenderer.cs" />
+    <Compile Include="Controls\Pages\iOSPageRenderer.cs" />
+    <Compile Include="Controls\Pages\iOSXNavigationPageRenderer.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Glue\iOSGlue.cs" />
     <Compile Include="Glue\Modules\DefaultiOSModule.cs" />
@@ -55,6 +57,7 @@
     <Compile Include="Implementations\Location\Position.cs" />
     <Compile Include="Implementations\MotionSensor.cs" />
     <Compile Include="Implementations\iOSNativeHttpClientTransferrer.cs" />
+    <Compile Include="Implementations\NativeViewWrapper.cs" />
     <Compile Include="Implementations\OrientationSensor.cs" />
     <Compile Include="Implementations\iOSSimpleNativeHttpHttpTransfer.cs" />
     <Compile Include="Navigation\iOSViewResolver.cs" />
@@ -67,6 +70,10 @@
     <ProjectReference Include="..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
       <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
       <Name>XamlingCore.Portable.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Data\XamlingCore.Portable.Data.csproj">
+      <Project>{CEE58A71-49B1-4C9F-B22A-ECD33B6E3A6B}</Project>
+      <Name>XamlingCore.Portable.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Glue\XamlingCore.Portable.Glue.csproj">
       <Project>{E908CD00-22C8-4F7B-BA99-8DDF32C5F656}</Project>

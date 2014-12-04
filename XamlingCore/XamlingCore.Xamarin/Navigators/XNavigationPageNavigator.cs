@@ -31,7 +31,7 @@ namespace XamlingCore.XamarinThings.Navigators
             _container = rootFrame.Container;
             _rootNavigationPage = page;
             _viewResolver = viewResolver;
-
+           
             _configure();
         }
 

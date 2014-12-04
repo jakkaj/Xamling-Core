@@ -46,6 +46,7 @@
     <Compile Include="Content\Navigation\XNavigationPageTypedView.cs" />
     <Compile Include="Content\Navigation\XNavigationPageTypeView.model.cs" />
     <Compile Include="Content\Navigation\XNavigationPageView.model.cs" />
+    <Compile Include="Content\Pages\XContentPage.cs" />
     <Compile Include="Content\TabbedPages\XTabbedPageView.cs" />
     <Compile Include="Content\TabbedPages\XTabbedPageViewModel.cs" />
     <Compile Include="Contract\IFrameNavigator.cs" />
