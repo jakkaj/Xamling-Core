@@ -34,6 +34,7 @@ namespace XamlingCore.iOS.Implementations
 
         bool _orientationUpdated()
         {
+            
             XPageOrientation _orientation = Orientation;
             if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeLeft ||
                 UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight)

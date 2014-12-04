@@ -14,6 +14,8 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             _orientationSensor = orientationSensor;
         }
 
+        
+
         protected override void OnSizeAllocated(double width, double height)
         {
             _orientationSensor.OnRotated();
