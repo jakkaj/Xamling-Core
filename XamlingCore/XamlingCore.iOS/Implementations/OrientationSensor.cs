@@ -49,12 +49,12 @@ namespace XamlingCore.iOS.Implementations
             UpsideDown = UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight
                          || UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.PortraitUpsideDown;
 
-            if (_orientation != Orientation)
-            {
+            //if (_orientation != Orientation)
+           // {
                 Orientation = _orientation;
                 return true;
-            }
-            return false;
+           // }
+//return false;
         }
     }
 }

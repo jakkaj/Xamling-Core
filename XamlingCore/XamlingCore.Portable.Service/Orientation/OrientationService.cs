@@ -42,11 +42,6 @@ namespace XamlingCore.Portable.Service.Orientation
 
         public void SetCurrentOrientation(XPageOrientation orientation, bool isUpsideDown)
         {
-            if (CurrentPageOrientation == orientation)
-            {
-                return;
-            }
-
             _deviceOrientation = orientation;
             _deviceIsUpsideDown = isUpsideDown;
 
