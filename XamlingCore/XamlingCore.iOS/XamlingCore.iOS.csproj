@@ -38,6 +38,7 @@
     <Compile Include="Controls\Loader\LoadingOverlayView.cs" />
     <Compile Include="Controls\Native\XNativeView.cs" />
     <Compile Include="Controls\Native\XNativeViewRenderer.cs" />
+    <Compile Include="Controls\Pages\iOSMasterDetailPageRenderer.cs" />
     <Compile Include="Controls\Pages\iOSPageRenderer.cs" />
     <Compile Include="Controls\Pages\iOSXNavigationPageRenderer.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />

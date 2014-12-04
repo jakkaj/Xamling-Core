@@ -39,7 +39,7 @@ namespace XamlingCore.iOS.Root
 
         void _orientationService_SupportedOrientationChanged(object sender, EventArgs e)
         {
-            _refreshChild();
+            //_refreshChild();
         }
 
         void _orientationService_OrientationChanged(object sender, EventArgs e)

@@ -1,4 +1,7 @@
-﻿//using Autofac;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Text;
+//using Autofac;
 //using MonoTouch.UIKit;
 //using Xamarin.Forms;
 //using Xamarin.Forms.Platform.iOS;
@@ -6,20 +9,20 @@
 //using XamlingCore.Portable.Contract.Services;
 //using XamlingCore.Portable.Data.Glue;
 //using XamlingCore.Portable.Model.Orientation;
-//using XamlingCore.XamarinThings.Content.Pages;
+//using XamlingCore.XamarinThings.Content.MasterDetail;
+//using XamlingCore.XamarinThings.Content.Navigation;
 
-//[assembly: ExportRenderer(typeof(XContentPage), typeof(iOSPageRenderer))]
+//[assembly: ExportRenderer(typeof(XMasterDetailView), typeof(iOSMasterDetailPageRenderer))]
 //namespace XamlingCore.iOS.Controls.Pages
 //{
-//    public class iOSPageRenderer : PageRenderer
+//    public class iOSMasterDetailPageRenderer : PhoneMasterDetailRenderer 
 //    {
 //        private readonly IOrientationService _orientationService;
 
-//        public iOSPageRenderer()
+//        public iOSMasterDetailPageRenderer()
 //        {
 //            _orientationService = ContainerHost.Container.Resolve<IOrientationService>();
 //        }
-
 //        public override bool ShouldAutomaticallyForwardRotationMethods
 //        {
 //            get { return true; }

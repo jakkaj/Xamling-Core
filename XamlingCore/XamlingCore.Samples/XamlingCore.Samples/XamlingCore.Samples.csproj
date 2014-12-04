@@ -121,6 +121,8 @@
     <Compile Include="Views\MasterDetailHome\Orientation\OrientationView.xaml.cs">
       <DependentUpon>OrientationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MasterDetailHome\Orientation\Temp\TempView.cs" />
+    <Compile Include="Views\MasterDetailHome\Orientation\Temp\TempView.model.cs" />
     <Compile Include="Views\MasterDetailHome\Tabs\HomeTabsView.cs" />
     <Compile Include="Views\MasterDetailHome\Tabs\HomeTabsView.model.cs" />
     <Compile Include="Views\MasterDetailHome\Tabs\Home\First\FirstContentView.cs" />

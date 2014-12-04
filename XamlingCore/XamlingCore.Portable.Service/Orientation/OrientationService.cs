@@ -72,14 +72,14 @@ namespace XamlingCore.Portable.Service.Orientation
                 switch (SupportedPageOrientation)
                 {
                     case XSupportedPageOrientation.Both:
-                        return CurrentPageOrientation;
+                        return _deviceOrientation;
                     case XSupportedPageOrientation.Landscape:
                         return XPageOrientation.Landscape;
                     case XSupportedPageOrientation.Portrait:
                         return XPageOrientation.Portrait;
                 }
 
-                return CurrentPageOrientation;
+                return _currentPageOrientation;
             }
             protected set { _currentPageOrientation = value; }
         }

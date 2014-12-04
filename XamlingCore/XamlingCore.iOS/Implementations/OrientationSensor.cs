@@ -23,29 +23,38 @@ namespace XamlingCore.iOS.Implementations
 
         public void OnRotated()
         {
-            _orientationUpdated();
-            
-            if (OrientationChanged != null)
+            if (_orientationUpdated())
             {
-                OrientationChanged(this, EventArgs.Empty);
+                if (OrientationChanged != null)
+                {
+                    OrientationChanged(this, EventArgs.Empty);
+                }
             }
         }
 
-        void _orientationUpdated()
+        bool _orientationUpdated()
         {
+            XPageOrientation _orientation = Orientation;
             if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeLeft ||
                 UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight)
             {
-                Orientation = XPageOrientation.Landscape;
+                _orientation = XPageOrientation.Landscape;
             }
             if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.Portrait ||
                 UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.PortraitUpsideDown)
             {
-                Orientation = XPageOrientation.Portrait;
+                _orientation = XPageOrientation.Portrait;
             }
 
             UpsideDown = UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight
                          || UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.PortraitUpsideDown;
+
+            if (_orientation != Orientation)
+            {
+                Orientation = _orientation;
+                return true;
+            }
+            return false;
         }
     }
 }
