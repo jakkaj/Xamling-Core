@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Device\IOrientationSensor.cs" />
     <Compile Include="Device\Location\IMotionSensor.cs" />
+    <Compile Include="Device\Service\IDeviceUtilityService.cs" />
     <Compile Include="Entities\ICacheInfo.cs" />
     <Compile Include="Entities\IEntityBucket.cs" />
     <Compile Include="Entities\IEntityCache.cs" />

@@ -4,6 +4,8 @@ using XamlingCore.iOS.Implementations;
 using XamlingCore.iOS.Implementations.Helpers;
 using XamlingCore.iOS.Navigation;
 using XamlingCore.iOS.Root;
+using XamlingCore.iOS.Services;
+using XamlingCore.Portable.Contract.Device.Service;
 using XamlingCore.Portable.Contract.Downloaders;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Contract.Network;
@@ -34,6 +36,8 @@ namespace XamlingCore.iOS.Glue.Modules
 
             builder.RegisterType<iOSNativeHttpClientTransferrer>().As<IHttpTransferrer>().SingleInstance();
             builder.RegisterType<iOSSimpleNativeHttpHttpTransfer>().As<ISimpleHttpTranferrer>().SingleInstance();
+
+            builder.RegisterType<DeviceUtilityService>().As<IDeviceUtilityService>().SingleInstance();
             base.Load(builder);
         }
     }
