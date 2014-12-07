@@ -43,21 +43,21 @@ namespace XamlingCore.Portable.Data.Entities
             {
                 BucketsUpdated(this, e as BucketUpdatedEventArgs);
             }
-        }        
+        }
 
         public async Task<List<T>> AllInBucket(string bucket, TimeSpan? maxAge = null)
         {
             var i = await _bucket.AllInBucket(bucket);
-            
+
             if (i == null)
             {
                 return null;
             }
 
             var list = await Get(i, maxAge);
-            
+
             await _reconcileBucket(bucket, i, list);
-            
+
             return list;
         }
 
@@ -133,11 +133,11 @@ namespace XamlingCore.Portable.Data.Entities
 
             foreach (var i in removes)
             {
-                await _bucket.RemoveFromBucket(bucket, i);    
+                await _bucket.RemoveFromBucket(bucket, i);
             }
         }
 
-        public async Task<List<T>> Get(List<Guid> ids, TimeSpan? maxAge = null)
+        public async Task<List<T>> Get(List<Guid> ids, Func<Task<T>> sourceTask, TimeSpan? maxAge = null)
         {
             if (ids == null)
             {
@@ -148,22 +148,27 @@ namespace XamlingCore.Portable.Data.Entities
 
             foreach (var id in ids)
             {
-                var e = await _get(id, maxAge);
+                var e = await _get(id, sourceTask, maxAge);
                 if (e != null)
                 {
-                    returnList.Add(e);    
+                    returnList.Add(e);
                 }
             }
 
             return returnList;
         }
 
-        public async Task<T> Get(Guid id, TimeSpan? maxAge = null)
+        public async Task<List<T>> Get(List<Guid> ids, TimeSpan? maxAge = null)
         {
-            return await _get(id, maxAge);
+            return await Get(ids, null, maxAge);
         }
 
-        private async Task<T> _get(Guid id, TimeSpan? maxAge)
+        public async Task<T> Get(Guid id, TimeSpan? maxAge = null)
+        {
+            return await _get(id, null, maxAge);
+        }
+
+        private async Task<T> _get(Guid id, Func<Task<T>> sourceTask, TimeSpan? maxAge)
         {
             using (var lRead = await _readLock.LockAsync())
             {
@@ -185,7 +190,16 @@ namespace XamlingCore.Portable.Data.Entities
                     }
                 }
 
-                var cache = await _entityCache.GetEntity<T>(_getKey(id), maxAge);
+                T cache = null;
+
+                if (sourceTask != null)
+                {
+                    cache = await _entityCache.GetEntity<T>(_getKey(id), sourceTask, maxAge);
+                }
+                else
+                {
+                    cache = await _entityCache.GetEntity<T>(_getKey(id), maxAge);
+                }
 
                 if (cache == null)
                 {
@@ -215,7 +229,7 @@ namespace XamlingCore.Portable.Data.Entities
             }
 
             return returnList;
-        } 
+        }
 
         public async Task<T> Set(T entity)
         {
@@ -269,7 +283,7 @@ namespace XamlingCore.Portable.Data.Entities
                 {
                     if (_memoryCache.Contains(e))
                     {
-                        _memoryCache.Remove(e);    
+                        _memoryCache.Remove(e);
                     }
 
                     await _entityCache.Delete<T>(_getKey(e.Id));
