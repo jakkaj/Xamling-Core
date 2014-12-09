@@ -1,6 +1,7 @@
 using Autofac;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Contract.Network;
+using XamlingCore.Portable.Data.Glue;
 using XamlingCore.Portable.Glue;
 using XamlingCore.Portable.Workflow.Glue;
 using XamlingCore.Tests.BigWindows.Impl;
@@ -20,7 +21,7 @@ namespace XamlingCore.Tests.BigWindows.Glue
             Builder.RegisterType<LocalStorageWindows8>().As<ILocalStorage>().SingleInstance();
 
             Container = Builder.Build();
-
+            ContainerHost.Container = Container;
         }
     }
 }
