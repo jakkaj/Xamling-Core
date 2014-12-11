@@ -17,17 +17,25 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Loaders
 
         public ICommand NavigateBackCommand { get; set; }
 
+        public ICommand ModalCommand { get; set; }
+
         public LoadersViewModel()
         {
             Title = "Loaders";
             FullScreenFiveSecCommand = new Command(_onFullScreen);
             TrayAddCommand = new Command(_onTrayAdd);
             NavigateBackCommand = new Command(_onNavigateBack);
+            ModalCommand = new Command(_onModal);
         }
 
         void _onNavigateBack()
         {
             NavigateBack();
+        }
+
+        void _onModal()
+        {
+            NavigateToModal(CreateContentModel<LoadersViewModel>());
         }
 
         async void _onFullScreen()

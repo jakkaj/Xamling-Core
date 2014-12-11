@@ -39,7 +39,7 @@ namespace XamlingCore.iOS.Controls.Pages
         {
             //var view = new RootViewController(_orientationService);
 
-       
+
             //view.View.Add(viewController.View);
             //foreach (var item in viewController.View.Subviews)
             //{
@@ -53,8 +53,9 @@ namespace XamlingCore.iOS.Controls.Pages
 
             //base.PushViewController(view, animated);
             ////_quickToggle();
+
            
-            
+
             base.PushViewController(viewController, animated);
         }
 
@@ -77,7 +78,7 @@ namespace XamlingCore.iOS.Controls.Pages
 
         public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations()
         {
-            Debug.WriteLine("Navigation Orientation: {0}", _orientationService.SupportedPageOrientation);
+           
             switch (_orientationService.SupportedPageOrientation)
             {
                 case XSupportedPageOrientation.Both:

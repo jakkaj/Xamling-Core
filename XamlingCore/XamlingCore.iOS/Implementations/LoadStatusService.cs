@@ -53,27 +53,7 @@ namespace XamlingCore.iOS.Implementations
 
             _spinnerInstance.Text = text;
 
-            _getController().Add(_spinnerInstance);
-        }
-
-        UIView _getController()
-        {
-            var v = XiOSRoot.RootViewController.View;
-
-            var t = XiOSRoot.RootWindow;
-
-            var nav = t.RootViewController.NavigationController;
-
-            if (nav != null)
-            {
-                var tvc = nav.TopViewController;
-                if (tvc != null)
-                {
-                    return tvc.View;
-                }
-            }
-
-            return v;
+            XiOSRoot.RootWindow.AddSubview(_spinnerInstance);
         }
 
         void _hideFullScreen()

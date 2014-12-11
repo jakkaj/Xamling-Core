@@ -30,16 +30,9 @@ namespace XamlingCore.iOS.Root
             View.AddSubview(_controller.View);
         }
 
-        void _refreshChild()
-        {
-            _window.RootViewController = new UIViewController();
-
-            _window.RootViewController = this;
-        }
-
         void _orientationService_SupportedOrientationChanged(object sender, EventArgs e)
         {
-            //_refreshChild();
+        
         }
 
         void _orientationService_OrientationChanged(object sender, EventArgs e)

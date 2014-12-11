@@ -9,6 +9,7 @@
     <Button Text="Full screen, 5 sec" Command="{Binding FullScreenFiveSecCommand}"/>
     <Button Text="Start a tray loader" Command="{Binding TrayAddCommand}"/>
     <Button Text="Navigate Back" Command="{Binding NavigateBackCommand}"/>
+    <Button Text="Modal this" Command="{Binding ModalCommand}"/>
   </StackLayout>
 
 </ContentPage>
