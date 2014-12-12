@@ -54,6 +54,7 @@
     <Compile Include="Contract\IIconView.cs" />
     <Compile Include="Contract\IViewResolver.cs" />
     <Compile Include="Contract\IFrameManager.cs" />
+    <Compile Include="Controls\XEntry.cs" />
     <Compile Include="Controls\XEntryCell.cs" />
     <Compile Include="Controls\XSwitchCell.cs" />
     <Compile Include="Controls\XTextCell.cs" />

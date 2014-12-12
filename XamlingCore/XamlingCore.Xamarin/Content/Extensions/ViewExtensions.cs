@@ -9,17 +9,23 @@ namespace XamlingCore.XamarinThings.Content.Extensions
 {
     public static class ViewExtensions
     {
-        public static ContentView Wrap(this View item, Thickness padding = default (Thickness))
+        public static ContentView Wrap(this View item,
+            Thickness padding = default (Thickness),
+            LayoutOptions horizontalLayoutOptions = default(LayoutOptions),
+            LayoutOptions verticalLayoutOptions = default(LayoutOptions))
         {
             if(padding == default (Thickness))
             {
                 padding = new Thickness(10, 10, 10, 10);
             }
 
+
             var f = new ContentView
             {
                 Padding = padding,
-                Content = item
+                Content = item,
+                HorizontalOptions = horizontalLayoutOptions,
+                VerticalOptions = verticalLayoutOptions
             };
 
             return f;
