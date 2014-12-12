@@ -54,8 +54,8 @@ namespace XamlingCore.Portable.View.Special
             return awaiter.Result;
         }
 
-        protected abstract void ShowIndicator(string text);
-        protected abstract void HideIndicator();
+        public abstract void ShowIndicator(string text);
+        public abstract void HideIndicator();
         
         private ManualResetEvent mre;
 

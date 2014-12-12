@@ -17,7 +17,7 @@ namespace XamlingCore.iOS.Implementations
         {
         }
 
-        protected override void ShowIndicator(string text)
+        public override void ShowIndicator(string text)
         {
             if (!string.IsNullOrWhiteSpace(text))
             {
@@ -35,7 +35,7 @@ namespace XamlingCore.iOS.Implementations
             }
         }
 
-        protected override void HideIndicator()
+        public override void HideIndicator()
         {
             _hideFullScreen();
             _hideTray();
