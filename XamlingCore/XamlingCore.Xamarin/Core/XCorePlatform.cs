@@ -12,7 +12,8 @@ namespace XamlingCore.XamarinThings.Core
         public enum XCorePlatforms
         {
             iOS,
-            Android
+            Android,
+            Windows8
         }
     }
 
