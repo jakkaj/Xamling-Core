@@ -130,6 +130,7 @@
   <ItemGroup>
     <Compile Include="Glue\Modules\DefaultWindows8Module.cs" />
     <Compile Include="Glue\Windows8Glue.cs" />
+    <Compile Include="Implementations\DeviceNetworkStatus.cs" />
     <Compile Include="Implementations\LoadStatusService.cs" />
     <Compile Include="Implementations\LocalStorage.cs" />
     <Compile Include="Implementations\OrientationSensor.cs" />
