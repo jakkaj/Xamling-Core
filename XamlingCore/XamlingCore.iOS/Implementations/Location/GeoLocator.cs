@@ -180,7 +180,7 @@ namespace XamlingCore.iOS.Implementations.Location
             new NSObject().InvokeOnMainThread(() =>
                                               {
                                                   m = new CLLocationManager();
-                                                  m.RequestAlwaysAuthorization();
+                                                  m.RequestWhenInUseAuthorization();
                                               });
             return m;
         }
