@@ -249,6 +249,14 @@ namespace XamlingCore.Portable.Workflow.Flow
                             state.State = XFlowStates.WaitingToStart;
                         }
 
+                        if (state.State == XFlowStates.WaitingForRetry)
+                        {
+                            if (DateTime.UtcNow.Subtract(state.Timestamp) < TimeSpan.FromSeconds(15))
+                            {
+                                continue;
+                            }
+                        }
+
                         if (state.State == XFlowStates.WaitingToStart ||
                             state.State == XFlowStates.WaitingForNetwork ||
                             state.State == XFlowStates.WaitingForRetry)
@@ -282,6 +290,10 @@ namespace XamlingCore.Portable.Workflow.Flow
 
                     _cancelWaitToken = null;
 
+                }
+                else
+                {
+                    await Task.Delay(2000);
                 }
                 _processAgain = false;
                 Task.Yield();
