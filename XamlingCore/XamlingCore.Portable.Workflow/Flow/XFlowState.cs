@@ -16,6 +16,7 @@ namespace XamlingCore.Portable.Workflow.Flow
         private bool _previousStageSuccess;
         private int _failureCount;
         private bool _dismissed;
+        private bool _isSuccessful;
         private DateTime _timestamp;
         private string _text;
         private string _stageId;
@@ -129,6 +130,16 @@ namespace XamlingCore.Portable.Workflow.Flow
             set
             {
                 _previousStageResult = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsSuccessful
+        {
+            get { return _isSuccessful; }
+            set
+            {
+                _isSuccessful = value;
                 OnPropertyChanged();
             }
         }

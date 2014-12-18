@@ -447,12 +447,14 @@ namespace XamlingCore.Portable.Workflow.Flow
             if (state.PreviousStageSuccess)
             {
                 state.State = XFlowStates.Success;
+                state.IsSuccessful = true;
                 state.Timestamp = DateTime.UtcNow;
                 await _save();
                 return;
             }
 
             state.State = XFlowStates.Fail;
+            state.IsSuccessful = false;
             state.Timestamp = DateTime.UtcNow;
 
             await _save();
