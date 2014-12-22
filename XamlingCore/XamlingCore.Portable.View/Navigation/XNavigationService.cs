@@ -71,7 +71,7 @@ namespace XamlingCore.Portable.View.Navigation
             if (content != null)
             {
 
-                if (_navigationHistory.Count > 0 && CurrentContentObject != null)
+                if (CurrentContentObject != null)
                 {
                     PreviousContentObject = CurrentContentObject;
                 }

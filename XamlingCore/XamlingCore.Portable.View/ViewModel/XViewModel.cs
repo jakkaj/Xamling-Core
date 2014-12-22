@@ -292,7 +292,7 @@ namespace XamlingCore.Portable.View.ViewModel
           where T : XViewModel
         {
             var vm = CreateContentModel<T>(initialisedCallback);
-            NavigateTo(vm);
+            NavigateTo(vm, noHistory);
         }
 
         public void NavigateTo(object content)
