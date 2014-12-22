@@ -11,7 +11,7 @@
     <iconUrl>http://xamling.net/Media/Images/logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Xamling Core for development the Xamling way</description>
-    <releaseNotes>Contact Jordan @jakkaj jakkaj@xamling.net. </releaseNotes>
+    <releaseNotes>Contact Jordan @jakkaj info@xamling.net. </releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags>Xamling XamlingCore MVVM Portable</tags>
     <dependencies>
