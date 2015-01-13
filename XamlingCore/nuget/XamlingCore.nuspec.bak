@@ -3,7 +3,7 @@
   <metadata>
     <id>XamlingCore</id>
 	<title>Xamling Core</title>
-    <version>2.0.109</version>
+    <version>2.0.112</version>
     <authors>Jordan</authors>
     <owners>Jordan</owners>
     <licenseUrl>http://opensource.org/licenses/MS-PL</licenseUrl>
@@ -19,7 +19,7 @@
        <dependency id="AutoMapper" version="3.3.0" />
        <dependency id="Microsoft.Net.Http" version="2.2.28" />
        <dependency id="Newtonsoft.Json" version="6.0.6" />
-	   <dependency id="modernhttpclient" version="2.1.4" />
+	   <dependency id="modernhttpclient" version="2.1.5" />
 
     </dependencies>
   </metadata>
