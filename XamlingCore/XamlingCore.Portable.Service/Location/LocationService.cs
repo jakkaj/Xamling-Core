@@ -83,6 +83,11 @@ namespace XamlingCore.Portable.Service.Location
                 return false;
             }
 
+            if (CurrentLocation.Status != XPositionStatus.Ready)
+            {
+                return false;
+            }
+
             if (_absCheck(CurrentLocation.Latitude) || _absCheck(CurrentLocation.Longitude))
             {
                 return false;

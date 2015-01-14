@@ -71,6 +71,7 @@ namespace XamlingCore.iOS.Implementations
                     loc.Longitude = t.Result.Longitude;
                     loc.Accuracy = t.Result.Accuracy;
                     loc.Heading = t.Result.Heading;
+                    loc.Status = XPositionStatus.Ready;
                     return loc;
                 }, _scheduler);
             return loc;
@@ -89,7 +90,7 @@ namespace XamlingCore.iOS.Implementations
         }
 
         public bool IsLocationEnabledInDeviceSettings()
-        {
+        {   
             return CLLocationManager.LocationServicesEnabled;
         }
 
@@ -149,6 +150,7 @@ namespace XamlingCore.iOS.Implementations
             // assume that any location event that came through is valid
             // and also assume this property means sorrthe location is legit
             CurrentLocation.IsResolved = true;
+            CurrentLocation.Status = XPositionStatus.Ready;
 
             _fire();
         }
