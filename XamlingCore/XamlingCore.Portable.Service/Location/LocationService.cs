@@ -73,6 +73,11 @@ namespace XamlingCore.Portable.Service.Location
 
         public bool IsLocationResolved()
         {
+            if (!_locationSensor.IsLocationEnabledInDeviceSettings())
+            {
+                return false;
+            }
+
             if (CurrentLocation == null)
             {
                 return false;
