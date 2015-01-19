@@ -30,9 +30,9 @@ namespace XamlingCore.Portable.Workflow.Flow
 
         public event EventHandler FlowsUpdated;
 
-        private bool _processAgain;
-
         private CancellationTokenSource _cancelWaitToken;
+
+        private List<XFlowState> _inProgressStates = new List<XFlowState>(); 
 
         private bool _persistOnComplete = true;
 
@@ -60,6 +60,13 @@ namespace XamlingCore.Portable.Workflow.Flow
         public XFlow AddStage(string stageId, string processingText, string failText, Func<Guid, Task<XStageResult>> function,
             bool isDisconnectedProcess = false, bool requiresNetwork = false, int retries = 0, Func<Guid, Task<XStageResult>> failFunction = null)
         {
+
+            var stageCount = _stages.Count(_ => _.StageId.Contains(stageId));
+
+            if (stageCount > 0)
+            {
+                stageId += string.Format("_{0}", stageCount);
+            }
 
             var stage = new XStage(stageId, processingText, failText, function, isDisconnectedProcess, requiresNetwork, retries, failFunction);
             _stages.Add(stage);
@@ -123,8 +130,7 @@ namespace XamlingCore.Portable.Workflow.Flow
             {
                 await _failResult(state);
             }
-
-            _processAgain = true;
+          
             _cancelProcessWait();
 
             return true;
@@ -270,33 +276,25 @@ namespace XamlingCore.Portable.Workflow.Flow
                         }
                     }
 
-                    await Task.WhenAll(currentTasks);
+                    //await Task.WhenAll(currentTasks);
                 }
+
                 Task.Yield();
 
-                if (!_processAgain && (await _getWaitingStates()).Count == 0)
+                _cancelWaitToken = new CancellationTokenSource();
+
+                try
                 {
-
-                    _cancelWaitToken = new CancellationTokenSource();
-
-                    try
-                    {
-                        await Task.Delay(10000, _cancelWaitToken.Token);
-                    }
-                    catch
-                    {
-                        Debug.WriteLine("XFlow cancelled wait");
-                    }
-
-                    _cancelWaitToken = null;
-
+                    await Task.Delay(8000, _cancelWaitToken.Token);
                 }
-                else
+                catch
                 {
-                    await Task.Delay(2000);
+                    Debug.WriteLine("XFlow cancelled wait");
                 }
-                _processAgain = false;
-                Task.Yield();
+
+                await Task.Delay(2000);
+
+                _cancelWaitToken = null;
             }
         }
 
@@ -307,6 +305,12 @@ namespace XamlingCore.Portable.Workflow.Flow
             {
                 return null;
             }
+
+            if (_inProgressStates.Contains(state))
+            {
+                return null;
+            }
+                
 
             var t = Task.Run(async () =>
             {
@@ -339,14 +343,23 @@ namespace XamlingCore.Portable.Workflow.Flow
 
                 try
                 {
-                    var result = await stage.Function(state.ItemId);
+                    if (_inProgressStates.Contains(state))
+                    {
+                        return;
+                    }
 
+                    _inProgressStates.Add(state);
+                    
+                    var result = await stage.Function(state.ItemId);
+                    
                     if (result.Id != Guid.Empty)
                     {
                         state.ItemId = result.Id;
                     }
 
                     state.PreviousStageResult = result;
+
+                    _inProgressStates.Remove(state);
 
                     if (!result.IsSuccess)
                     {
@@ -360,6 +373,7 @@ namespace XamlingCore.Portable.Workflow.Flow
                 }
                 catch (Exception ex)
                 {
+                    _inProgressStates.Remove(state);
                     failResult = new XStageResult(false, state.ItemId, null, exception: ex.ToString());
                 }
 
@@ -373,9 +387,7 @@ namespace XamlingCore.Portable.Workflow.Flow
 
                     await _failResult(state);
                 }
-
-
-                _processAgain = true;
+               
                 _cancelProcessWait();
             });
 
@@ -399,14 +411,15 @@ namespace XamlingCore.Portable.Workflow.Flow
                     state.State = XFlowStates.WaitingForRetry;
                     state.Timestamp = DateTime.UtcNow;
                     await _save();
+                    _cancelProcessWait();
                     return;
                 }
             }
 
             await stage.Fail(state.ItemId);
-            Debug.WriteLine("Stage Failed [{0}] {1} - {2}", 
-                state.ItemId, 
-                state.PreviousStageResult != null ? state.PreviousStageResult.ExtraText : "No Extra Text", 
+            Debug.WriteLine("Stage Failed [{0}] {1} - {2}",
+                state.ItemId,
+                state.PreviousStageResult != null ? state.PreviousStageResult.ExtraText : "No Extra Text",
                 state.PreviousStageResult != null ? state.PreviousStageResult.Exception : "No Exception");
             Debug.WriteLine("Failure stage: {0}", stage.ProcessingText);
             _finish(state);
@@ -428,7 +441,10 @@ namespace XamlingCore.Portable.Workflow.Flow
 
             state.State = XFlowStates.WaitingForNextStage;
             state.Timestamp = DateTime.UtcNow;
+
             await _save();
+
+            _cancelProcessWait();
         }
 
         async void _finish(XFlowState state)

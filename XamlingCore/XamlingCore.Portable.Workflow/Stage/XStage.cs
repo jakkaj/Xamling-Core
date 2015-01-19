@@ -11,8 +11,7 @@ namespace XamlingCore.Portable.Workflow.Stage
         public bool RequiresNetwork { get; set; }
 
         public int Retries { get; set; }
-
-        public string StageFriendlyId { get; set; }
+        
         public string StageId { get; set; }
 
         public string ProcessingText { get; set; }
@@ -23,25 +22,23 @@ namespace XamlingCore.Portable.Workflow.Stage
 
         public XStage(string stageId)
         {
-            StageId = Guid.NewGuid().ToString();
-            StageFriendlyId = stageId;
+            StageId = stageId;
         }
 
         public XStage(string stageId, string processingText, string failText, Func<Guid, Task<XStageResult>> function,
             bool isDisconnectedProcess = false, bool requiresNetwork = false, int retries = 0, Func<Guid, Task<XStageResult>> failFunction = null)
         {
 
-            StageId = Guid.NewGuid().ToString();
+            StageId = stageId;
 
             IsDisconnectedProcess = isDisconnectedProcess;
-            StageFriendlyId = stageId;
+          
             ProcessingText = processingText;
             FailText = failText;
             Function = function;
             FailFunction = failFunction;
             RequiresNetwork = requiresNetwork;
             Retries = retries;
-
         }
 
         public async Task<XStageResult> Fail(Guid id)

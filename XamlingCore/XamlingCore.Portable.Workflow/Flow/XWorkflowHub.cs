@@ -21,8 +21,9 @@ namespace XamlingCore.Portable.Workflow.Flow
             _localStorage = localStorage;
         }
 
-        readonly List<XFlow> _flows = new List<XFlow>(); 
+        readonly List<XFlow> _flows = new List<XFlow>();
 
+        
         public XFlow AddFlow(string flowId, string friendlyName)
         {
             if (GetFlow(flowId) != null)

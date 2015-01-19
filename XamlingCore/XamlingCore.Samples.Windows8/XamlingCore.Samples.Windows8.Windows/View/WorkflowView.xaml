@@ -1,5 +1,5 @@
 ﻿<view:XWindows8Page
-    x:Class="XamlingCore.Samples.Windows8.View.HomeView"
+    x:Class="XamlingCore.Samples.Windows8.View.WorkflowView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:XamlingCore.Samples.Windows8.View"
@@ -10,10 +10,8 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel>
-            <TextBlock Text="{Binding Text}"/>
-            <Button Command="{Binding NextPageCommand}" Content="Next page"></Button>
-            <Button Command="{Binding WorkflowsCommand}" Content="Workflows"></Button>
+            <Button Command="{Binding RunFlowsStagaA}" Content="RunFlowsStagaA"></Button>
+            <Button Command="{Binding RunFlowsStagaB}" Content="RunFlowsStagaB"></Button>
         </StackPanel>
-       
     </Grid>
 </view:XWindows8Page>

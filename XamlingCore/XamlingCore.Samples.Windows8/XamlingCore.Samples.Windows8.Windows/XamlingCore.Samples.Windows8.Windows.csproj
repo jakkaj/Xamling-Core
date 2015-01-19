@@ -143,6 +143,10 @@
       <Project>{b3d7c301-2df7-4c16-9f49-7dda8689556e}</Project>
       <Name>XamlingCore.Portable.View</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Portable.Workflow\XamlingCore.Portable.Workflow.csproj">
+      <Project>{9D082ABD-F398-4A28-BE80-9AF2BA5B1BE9}</Project>
+      <Name>XamlingCore.Portable.Workflow</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Windows8\XamlingCore.Windows8.csproj">
       <Project>{00BF8A1F-E777-432E-AA20-17B074393FB1}</Project>
       <Name>XamlingCore.Windows8</Name>
@@ -171,6 +175,13 @@
     <Compile Include="View\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\WorkflowView.model.cs">
+      <DependentUpon>WorkflowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WorkflowView.xaml.cs">
+      <DependentUpon>WorkflowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workflow\WorkflowExamples.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -195,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WorkflowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -13,13 +13,20 @@ namespace XamlingCore.Samples.Windows8.View
     {
         public ICommand NextPageCommand { get; set; }
 
+        public ICommand WorkflowsCommand { get; set; }
+
         private string _text;
 
         public HomeViewModel()
         {
             NextPageCommand = new Command(_onNextPage);
-
+            WorkflowsCommand = new Command(_onWorkflows);
             Text = "This is a test";
+        }
+
+        void _onWorkflows()
+        {
+            NavigateTo<WorkflowViewModel>();
         }
 
         void _onNextPage()
