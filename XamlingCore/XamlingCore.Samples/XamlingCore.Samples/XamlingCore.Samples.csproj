@@ -89,6 +89,11 @@
       <DependentUpon>HomeView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\MasterDetailHome\List\LongListItemView.cs" />
+    <Compile Include="Views\MasterDetailHome\List\LongListItemView.model.cs" />
+    <Compile Include="Views\MasterDetailHome\List\LongListView.cs" />
+    <Compile Include="Views\MasterDetailHome\List\LongListView.model.cs" />
+    <Compile Include="Views\MasterDetailHome\List\XXListView.cs" />
     <Compile Include="Views\MasterDetailHome\Loaders\LoadersView.model.cs">
       <DependentUpon>LoadersView.xaml</DependentUpon>
     </Compile>
@@ -164,6 +169,10 @@
     <ProjectReference Include="..\..\XamlingCore.Portable.Net\XamlingCore.Portable.Net.csproj">
       <Project>{DA91F91F-3A71-4C7D-9FD5-4F0DC6E3DC86}</Project>
       <Name>XamlingCore.Portable.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Portable.Util\XamlingCore.Portable.Util.csproj">
+      <Project>{BF649817-277F-44C1-AF23-C90D6DAF5901}</Project>
+      <Name>XamlingCore.Portable.Util</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
       <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>

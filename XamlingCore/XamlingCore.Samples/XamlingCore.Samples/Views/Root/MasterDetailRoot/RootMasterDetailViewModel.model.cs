@@ -3,6 +3,7 @@ using XamlingCore.Samples.Views.Home.Playground;
 using XamlingCore.Samples.Views.MasterDetailHome.AnotherMenuOption;
 using XamlingCore.Samples.Views.MasterDetailHome.GoogleAnalytics;
 using XamlingCore.Samples.Views.MasterDetailHome.Home;
+using XamlingCore.Samples.Views.MasterDetailHome.List;
 using XamlingCore.Samples.Views.MasterDetailHome.Loaders;
 using XamlingCore.Samples.Views.MasterDetailHome.Location;
 using XamlingCore.Samples.Views.MasterDetailHome.Menu;
@@ -30,6 +31,7 @@ namespace XamlingCore.Samples.Views.Root.MasterDetailRoot
             AddPage(CreateContentModel<LoadersViewModel>());
             AddPage(CreateContentModel<PlaygroundHomeViewModel>());
             AddPage(CreateContentModel<OrientationViewModel>());
+            AddPage(CreateContentModel<LongListViewModel>());
 
             //Add the master view (which is like the menu bit the flies out)
             SetMaster(CreateContentModel<MasterDetailMenuPageViewModel>());
