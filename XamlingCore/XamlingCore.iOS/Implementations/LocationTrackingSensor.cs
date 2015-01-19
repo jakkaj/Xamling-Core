@@ -71,6 +71,8 @@ namespace XamlingCore.iOS.Implementations
                     loc.Longitude = t.Result.Longitude;
                     loc.Accuracy = t.Result.Accuracy;
                     loc.Heading = t.Result.Heading;
+                    loc.IsEnabled = true;
+                    loc.IsResolved = true;
                     loc.Status = XPositionStatus.Ready;
                     return loc;
                 }, _scheduler);
@@ -121,7 +123,25 @@ namespace XamlingCore.iOS.Implementations
 
         private void OnListeningError(object sender, PositionErrorEventArgs e)
         {
-            throw new Exception(e.Error.ToString());
+            switch (e.Error)
+            {
+                case GeolocationError.PositionUnavailable:
+                    CurrentLocation.IsResolved = false;
+                    CurrentLocation.Status = XPositionStatus.NotAvailble;
+                    _fire();
+                    break;
+                case GeolocationError.Unauthorized:
+                    CurrentLocation.IsResolved = false;
+                    CurrentLocation.IsEnabled = false;
+                    CurrentLocation.Status = XPositionStatus.Disabled;
+                    _fire();
+                    break;
+                default:
+                     CurrentLocation.IsResolved = false;
+                   CurrentLocation.Status = XPositionStatus.NotInitialized;
+                    _fire();
+                    break;
+            }
         }
 
         private void OnPositionChanged(object sender, PositionEventArgs e)
@@ -139,18 +159,23 @@ namespace XamlingCore.iOS.Implementations
 
         private void _sendUpdate(Position location)
         {
-            CurrentLocation.Accuracy = location.Accuracy;
-            CurrentLocation.Latitude = location.Latitude;
-            CurrentLocation.Longitude = location.Longitude;
-            CurrentLocation.Heading = location.Heading;
-            CurrentLocation.HeadingAvailable = _geolocator.SupportsHeading;
-            CurrentLocation.Speed = location.Speed;
-            CurrentLocation.Altitude = location.Altitude;
-            CurrentLocation.AltitudeAccuracy = location.AltitudeAccuracy;
-            // assume that any location event that came through is valid
-            // and also assume this property means sorrthe location is legit
-            CurrentLocation.IsResolved = true;
-            CurrentLocation.Status = XPositionStatus.Ready;
+            if (location == null)
+                CurrentLocation.IsResolved = false;
+            else
+            {
+                CurrentLocation.Accuracy = location.Accuracy;
+                CurrentLocation.Latitude = location.Latitude;
+                CurrentLocation.Longitude = location.Longitude;
+                CurrentLocation.Heading = location.Heading;
+                CurrentLocation.HeadingAvailable = _geolocator.SupportsHeading;
+                CurrentLocation.Speed = location.Speed;
+                CurrentLocation.Altitude = location.Altitude;
+                CurrentLocation.AltitudeAccuracy = location.AltitudeAccuracy;
+                // assume that any location event that came through is valid
+                // and also assume this property means sorrthe location is legit
+                CurrentLocation.IsResolved = true;
+                CurrentLocation.Status = XPositionStatus.Ready;
+            }
 
             _fire();
         }
