@@ -89,6 +89,8 @@
       <DependentUpon>HomeView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\MasterDetailHome\List\InPlaceLoaderView.cs" />
+    <Compile Include="Views\MasterDetailHome\List\InPlaceLoaderView.model.cs" />
     <Compile Include="Views\MasterDetailHome\List\LongListItemView.cs" />
     <Compile Include="Views\MasterDetailHome\List\LongListItemView.model.cs" />
     <Compile Include="Views\MasterDetailHome\List\LongListView.cs" />

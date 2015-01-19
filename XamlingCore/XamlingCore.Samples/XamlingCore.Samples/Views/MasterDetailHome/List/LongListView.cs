@@ -12,9 +12,9 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.List
     {
         public LongListView()
         {
-            var l = new XXListView();
+            var l = new XListView();
             l.SetBinding(ListView.ItemsSourceProperty, "Items");
-            l.SetBinding(XXListView.NeedMoreDataCommandProperty, "NeedsMoreDataCommand");
+            l.SetBinding(XListView.NeedMoreDataCommandProperty, "NeedsMoreDataCommand");
             Content = l;
         }
     }

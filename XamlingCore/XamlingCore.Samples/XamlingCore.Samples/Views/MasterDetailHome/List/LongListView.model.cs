@@ -13,7 +13,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.List
 {
     public class LongListViewModel : XViewModel
     {
-        ObservableCollection<LongListItemViewModel> _items = new ObservableCollection<LongListItemViewModel>();
+        ObservableCollection<XViewModel> _items = new ObservableCollection<XViewModel>();
 
         public ICommand NeedsMoreDataCommand { get; set; }
 
@@ -25,8 +25,17 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.List
             NeedsMoreDataCommand = new Command(_onNeedMoreData);
         }
 
-        private void _onNeedMoreData()
+        private async void _onNeedMoreData()
         {
+            if (_items.LastOrDefault() is InPlaceLoaderViewModel)
+            {
+                return;
+            }
+            
+            var a = CreateContentModel<InPlaceLoaderViewModel>();
+            _items.Add(a);
+            await Task.Delay(3000);
+            _items.Remove(a);
             for (var i = 0; i < pageSize; i++)
             {
                 var c = _items.Count;
@@ -47,7 +56,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.List
             base.OnInitialise();
         }
 
-        public ObservableCollection<LongListItemViewModel> Items
+        public ObservableCollection<XViewModel> Items
         {
             get { return _items; }
             set
