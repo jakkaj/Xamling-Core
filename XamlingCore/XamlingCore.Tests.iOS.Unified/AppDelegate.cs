@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
-using MonoTouch.NUnit.UI;
 using UIKit;
-using NUnit.UI;
+using MonoTouch.NUnit.UI;
 
-namespace XamlingCore.Tests.iOS
+namespace XamlingCore.Tests.iOS.Unified
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the 
     // User Interface of the application, as well as listening (and optionally responding) to 
@@ -31,7 +30,7 @@ namespace XamlingCore.Tests.iOS
             // create a new window instance based on the screen size
             window = new UIWindow(UIScreen.MainScreen.Bounds);
             runner = new TouchRunner(window);
-            //runner.AutoStart = true;
+
             // register every tests included in the main application/assembly
             runner.Add(System.Reflection.Assembly.GetExecutingAssembly());
 

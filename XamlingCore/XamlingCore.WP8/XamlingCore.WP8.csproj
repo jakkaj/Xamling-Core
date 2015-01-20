@@ -98,10 +98,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper">
+    <Reference Include="AutoMapper, Version=3.3.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AutoMapper.3.3.0\lib\wp8\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper.WP8">
+    <Reference Include="AutoMapper.WP8, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AutoMapper.3.3.0\lib\wp8\AutoMapper.WP8.dll</HintPath>
     </Reference>
   </ItemGroup>
