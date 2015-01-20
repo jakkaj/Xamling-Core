@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 using Xamarin.Forms;
 using XamlingCore.Portable.Contract.Services;
+using XamlingCore.Portable.Model.Location;
 using XamlingCore.Portable.View.ViewModel;
 
 namespace XamlingCore.Samples.Views.MasterDetailHome.Location
@@ -26,6 +27,17 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Location
             _locationService.LocationUpdated += _locationService_LocationUpdated;
         }
 
+        private XLocation loc2 = new XLocation();
+
+        public XLocation CurrentLocation
+        {
+            get { return loc2; }
+            set
+            {
+                loc2 = value;
+                OnPropertyChanged(); }
+        }
+
         void _startLocation()
         {
             Debug.WriteLine("Start Location Command");
@@ -40,28 +52,16 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Location
 
         async void _getLocation()
         {
-            var loc = await _locationService.GetQuickLocation();
-            Debug.WriteLine("lat: {0}, long: {1}, Accuracy: {2}, Status: {3}, Enabled {4}, Resolved {5}", loc.Latitude, loc.Longitude, loc.Accuracy, loc.Status, loc.IsEnabled, loc.IsResolved);
-
+            CurrentLocation = await _locationService.GetQuickLocation();
         }
+
+
 
         void _locationService_LocationUpdated(object sender, EventArgs e)
         {
-
-            var r = _locationService.IsLocationResolved();
-
-            //todo: need to bind this to form display
-            Debug.WriteLine("Location Updated");
-            var loc = _locationService.CurrentLocation;
-            if (loc == null)
-            {
-                Debug.WriteLine("No Location Data");
-            }
-            else
-            { 
-                Debug.WriteLine("lat: {0}, long: {1}, Accuracy: {2}, Status: {3}, Enabled {4}, Resolved {5}", loc.Latitude, loc.Longitude, loc.Accuracy, loc.Status, loc.IsEnabled, loc.IsResolved);
-            }
+            CurrentLocation = _locationService.CurrentLocation;
         }
+
 
     }
 }

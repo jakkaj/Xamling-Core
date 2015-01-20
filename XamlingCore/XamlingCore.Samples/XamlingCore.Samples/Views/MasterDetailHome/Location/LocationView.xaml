@@ -1,10 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 					   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-					   x:Class="XamlingCore.Samples.Views.MasterDetailHome.Location.LocationView">
+					   x:Class="XamlingCore.Samples.Views.MasterDetailHome.Location.LocationView"
+             >
+
+  
   <StackLayout>
     <Button Text="Start Location" Command="{Binding StartLocationCommand}"/>
     <Button Text="Stop Location" Command="{Binding StopLocationCommand}"/>
     <Button Text="Get Location" Command="{Binding GetLocationCommand}"/>
+
+    <Label Text="{Binding CurrentLocation.Latitude, StringFormat='Latitude = {0}'}"/>
+    <Label Text="{Binding CurrentLocation.Longitude, StringFormat='Longitude = {0}'}"/>
+    <Label Text="{Binding CurrentLocation.Accuracy, StringFormat='Accuracy = {0}'}"/>
+    <Label Text="{Binding CurrentLocation.IsEnabled, StringFormat='Enabled = {0}'}"/>
+    <Label Text="{Binding CurrentLocation.IsResolved, StringFormat='Resolved = {0}'}"/>
+    <Label Text="{Binding CurrentLocation.Status, StringFormat='Status = {0}'}"/>
+    <Label Text="{Binding CurrentLocation.Altitude, StringFormat='Altitude = {0}'}"/>
+    <Label Text="{Binding CurrentLocation.Heading, StringFormat='Heading = {0}'}"/>
+
   </StackLayout>
 </ContentPage>
