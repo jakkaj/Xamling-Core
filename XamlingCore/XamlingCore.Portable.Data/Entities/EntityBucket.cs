@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.ServiceModel.Channels;
-using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
 using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Contract.EventArgs;
 using XamlingCore.Portable.Messages.Entities;

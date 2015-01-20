@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Device.Location;
 using Windows.Devices.Geolocation;
-using AutoMapper;
 using XamlingCore.Portable.Model.Location;
 
 namespace XamlingCore.WP8.Helpers
@@ -24,12 +23,15 @@ namespace XamlingCore.WP8.Helpers
 
         public static XLocation ConvertXLocation(Geocoordinate geocoordinate, XLocation existing)
         {
-            return Mapper.Map(geocoordinate, existing);
+            geocoordinate.CopyProperties(existing);
+            return existing;
         }
 
         public static XPositionStatus ConvertLocationStatus(PositionStatus status)
         {
-            return Mapper.Map<XPositionStatus>(status);
+            var p = new XPositionStatus();
+            status.CopyProperties(p);
+            return p;
         }
 
         public static double Distance(double lat, double lng, XLocation b)

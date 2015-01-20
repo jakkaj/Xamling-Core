@@ -37,6 +37,15 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\XamlingCore.Platform.Shared\Auth\JsonWebTokenParser.cs">
+      <Link>Shared\Auth\JsonWebTokenParser.cs</Link>
+    </Compile>
+    <Compile Include="..\XamlingCore.Platform.Shared\Glue\XAutofacAutoRegisterExtensions.cs">
+      <Link>Shared\Glue\XAutofacAutoRegisterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\XamlingCore.Platform.Shared\Glue\XCoreAutoRegistrations.cs">
+      <Link>Shared\Glue\XCoreAutoRegistrations.cs</Link>
+    </Compile>
     <Compile Include="Controls\Loader\LoadingOverlayView.cs" />
     <Compile Include="Controls\Native\XNativeView.cs" />
     <Compile Include="Controls\Native\XNativeViewRenderer.cs" />
