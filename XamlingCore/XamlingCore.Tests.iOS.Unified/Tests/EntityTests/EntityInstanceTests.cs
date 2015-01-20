@@ -60,7 +60,7 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
 
                     var i2 = await entityManager2.Get(i.Id);
 
-                    Assert.IsTrue(i2.Name == newE.Name);
+                    Assert.True(i2.Name == newE.Name);
                     Assert.True(ReferenceEquals(i2, newE));
                     Assert.True(ReferenceEquals(i, newE));
                     Assert.True(ReferenceEquals(i, i2));

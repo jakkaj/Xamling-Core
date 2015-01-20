@@ -173,6 +173,9 @@
     <Content Include="Entitlements.plist" />
     <Content Include="Notes\BugNOtes.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\MapperTests\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

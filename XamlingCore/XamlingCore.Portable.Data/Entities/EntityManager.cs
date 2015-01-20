@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using XamlingCore.Portable.Contract.Entities;
@@ -236,8 +237,6 @@ namespace XamlingCore.Portable.Data.Entities
             return await _set(entity);
         }
 
-        static List<Type> _mappedTypes = new List<Type>(); 
-
         private async Task<T> _set(T entity)
         {
             if (entity == null)
@@ -255,20 +254,11 @@ namespace XamlingCore.Portable.Data.Entities
                     _memoryCache.Add(entity);
                     memory = entity;
                 }
-                
-                var t = typeof (T);
-                
-                if (!_mappedTypes.Contains(t))
-                {
-                    //Mapper.CreateMap<T, T>(); //Automapper is killing us! On 64 bit this call and the one below just stops the app from working with a hard SIGSEGV
 
-                    _mappedTypes.Add(t);
-                }
-               
                 if (!ReferenceEquals(memory, entity))
                 {
                     //update the in memory version, save it to cache, return in memory version
-                   // Mapper.Map(entity, memory);
+                    entity.CopyProperties(memory);
                 }
 
                 await _entityCache.SetEntity(_getKey(entity.Id), memory);
@@ -307,4 +297,6 @@ namespace XamlingCore.Portable.Data.Entities
             return string.Format("em_{0}", id);
         }
     }
+
+
 }
