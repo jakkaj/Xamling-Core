@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace XamlingCore.iOS.Implementations
+﻿namespace XamlingCore.iOS.Unified.Implementations
 {
     public class NativeViewWrapper
     {

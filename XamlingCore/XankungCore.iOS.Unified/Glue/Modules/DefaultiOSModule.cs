@@ -1,10 +1,11 @@
 using Autofac;
 using Foundation;
 using XamlingCore.iOS.Implementations;
-using XamlingCore.iOS.Implementations.Helpers;
-using XamlingCore.iOS.Navigation;
-using XamlingCore.iOS.Root;
-using XamlingCore.iOS.Services;
+using XamlingCore.iOS.Unified.Implementations;
+using XamlingCore.iOS.Unified.Implementations.Helpers;
+using XamlingCore.iOS.Unified.Navigation;
+using XamlingCore.iOS.Unified.Root;
+using XamlingCore.iOS.Unified.Services;
 using XamlingCore.Portable.Contract.Device.Service;
 using XamlingCore.Portable.Contract.Downloaders;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
@@ -12,7 +13,7 @@ using XamlingCore.Portable.Contract.Network;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Contract.UI;
 
-namespace XamlingCore.iOS.Glue.Modules
+namespace XamlingCore.iOS.Unified.Glue.Modules
 {
     public class DefaultiOSModule : Module
     {

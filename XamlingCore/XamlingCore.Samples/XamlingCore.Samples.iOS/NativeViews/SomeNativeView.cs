@@ -4,8 +4,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using Xamarin.Forms;
 
 namespace XamlingCore.Samples.iOS.NativeViews

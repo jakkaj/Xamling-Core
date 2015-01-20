@@ -3,7 +3,7 @@ using Xamarin.Forms.Platform.iOS;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.View.ViewModel;
 
-namespace XamlingCore.iOS.Controls.Native
+namespace XamlingCore.iOS.Unified.Controls.Native
 {
     public abstract class XNativeViewRenderer<TFormsType, TNativeType, TViewModelType> : ViewRenderer<TFormsType, TNativeType>
         where TFormsType : View

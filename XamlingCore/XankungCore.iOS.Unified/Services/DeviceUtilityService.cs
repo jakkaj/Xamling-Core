@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Foundation;
+﻿using Foundation;
 using UIKit;
 using XamlingCore.Portable.Contract.Device.Service;
 
-namespace XamlingCore.iOS.Services
+namespace XamlingCore.iOS.Unified.Services
 {
     public class DeviceUtilityService : IDeviceUtilityService
     {

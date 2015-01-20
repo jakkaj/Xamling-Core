@@ -1,12 +1,10 @@
-using System.Diagnostics;
 using UIKit;
-using XamlingCore.iOS.Controls.Loader;
-using XamlingCore.iOS.Root;
+using XamlingCore.iOS.Unified.Controls.Loader;
+using XamlingCore.iOS.Unified.Root;
 using XamlingCore.Portable.Contract.UI;
 using XamlingCore.Portable.View.Special;
-using XamlingCore.XamarinThings.Contract;
 
-namespace XamlingCore.iOS.Implementations
+namespace XamlingCore.iOS.Unified.Implementations
 {
     public class LoadStatusService : LoadStatusServiceBase
     {

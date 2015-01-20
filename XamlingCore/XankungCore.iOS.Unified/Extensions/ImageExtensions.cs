@@ -8,7 +8,7 @@ using Foundation;
 using UIKit;
 using Xamarin.Forms;
 
-namespace XamlingCore.iOS.Extensions
+namespace XamlingCore.iOS.Unified.Extensions
 {
     public static class ImageExtensions
     {

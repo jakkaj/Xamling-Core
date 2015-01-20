@@ -1,13 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Foundation;
-using UIKit;
 using XamlingCore.Portable.Contract.UI;
 
-namespace XamlingCore.iOS.Implementations
+namespace XamlingCore.iOS.Unified.Implementations
 {
     public class iOSDispatcher : IDispatcher
     {

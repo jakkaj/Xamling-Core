@@ -2,8 +2,8 @@
 //Thanks :)
 
 using System;
-using MonoTouch.CoreGraphics;
-using MonoTouch.UIKit;
+using CoreGraphics;
+using UIKit;
 
 namespace XamlingCore.Samples.iOS.Shared.Util
 {

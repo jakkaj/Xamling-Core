@@ -1,18 +1,12 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.IO.IsolatedStorage;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using Foundation;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Util.Lock;
-using XamlingCore.Portable.Util.Util;
 
-namespace XamlingCore.iOS.Implementations
+namespace XamlingCore.iOS.Unified.Implementations
 {
     public class LocalStorage : ILocalStorage
     {

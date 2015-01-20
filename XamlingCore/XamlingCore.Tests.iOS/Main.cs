@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using MonoTouch.Foundation;
+using Foundation;
 using MonoTouch.UIKit;
+using UIKit;
 
 namespace XamlingCore.Tests.iOS
 {

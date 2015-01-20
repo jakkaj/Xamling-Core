@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Autofac;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using XamlingCore.iOS.Glue;
 using XamlingCore.Portable.Glue.Glue;
 

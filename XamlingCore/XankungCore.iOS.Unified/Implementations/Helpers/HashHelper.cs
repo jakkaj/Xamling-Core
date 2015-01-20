@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System.Text;
+using XamlingCore.iOS.Implementations.Helpers;
 
-namespace XamlingCore.iOS.Implementations.Helpers
+namespace XamlingCore.iOS.Unified.Implementations.Helpers
 {
     public class HashHelper : IHashHelper
     {

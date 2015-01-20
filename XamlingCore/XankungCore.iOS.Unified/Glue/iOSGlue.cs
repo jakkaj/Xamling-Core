@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autofac;
-using Foundation;
-using UIKit;
-using XamlingCore.iOS.Glue.Modules;
+using XamlingCore.iOS.Unified.Glue.Modules;
 using XamlingCore.Portable.Glue;
 using XamlingCore.XamarinThings.Glue;
 
-namespace XamlingCore.iOS.Glue
+namespace XamlingCore.iOS.Unified.Glue
 {
     public class iOSGlue : GlueBase 
     {

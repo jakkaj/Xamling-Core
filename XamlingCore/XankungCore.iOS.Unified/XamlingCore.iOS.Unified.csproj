@@ -45,6 +45,7 @@
     <Compile Include="Controls\Pages\iOSXNavigationPageRenderer.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Glue\iOSGlue.cs" />
+    <Compile Include="Glue\iOSXCoreAutoRegistration.cs" />
     <Compile Include="Glue\Modules\DefaultiOSModule.cs" />
     <Compile Include="Implementations\DeviceNetworkStatus.cs" />
     <Compile Include="Implementations\EnvironmentService.cs" />

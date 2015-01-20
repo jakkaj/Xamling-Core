@@ -1,15 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Autofac;
-using Foundation;
-using UIKit;
 using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Contract;
 
-namespace XamlingCore.iOS.Navigation
+namespace XamlingCore.iOS.Unified.Navigation
 {
     public class iOSViewResolver : IViewResolver
     {

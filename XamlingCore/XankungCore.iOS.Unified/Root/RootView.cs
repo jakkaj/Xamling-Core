@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 using UIKit;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Model.Orientation;
 
-namespace XamlingCore.iOS.Root
+namespace XamlingCore.iOS.Unified.Root
 {
     public class RootViewController : UIViewController
     {

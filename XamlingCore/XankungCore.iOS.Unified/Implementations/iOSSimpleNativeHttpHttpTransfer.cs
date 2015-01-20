@@ -8,7 +8,7 @@ using XamlingCore.Portable.Contract.Network;
 using XamlingCore.Portable.Messages.Network;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 
-namespace XamlingCore.iOS.Implementations
+namespace XamlingCore.iOS.Unified.Implementations
 {
     public class iOSSimpleNativeHttpHttpTransfer : ISimpleHttpTranferrer
     {

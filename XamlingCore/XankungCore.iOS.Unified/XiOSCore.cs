@@ -1,16 +1,15 @@
 using System;
 using System.Reflection;
-using System.Threading.Tasks;
 using Autofac;
 using UIKit;
 using Xamarin.Forms;
-using XamlingCore.iOS.Root;
+using XamlingCore.iOS.Unified.Root;
 using XamlingCore.Portable.Contract.Glue;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Contract;
 using XamlingCore.XamarinThings.Core;
 
-namespace XamlingCore.iOS
+namespace XamlingCore.iOS.Unified
 {
     /// <summary>
     /// Boots the app to the initial frame

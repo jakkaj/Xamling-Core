@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Globalization;
 using System.Runtime.Versioning;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XamlingCore.iOS;
 using XamlingCore.iOS.Implementations;
+using XamlingCore.iOS.Unified;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Glue.Locale;
 using XamlingCore.Samples.iOS.Glue;

@@ -112,10 +112,6 @@
     <Reference Include="monotouch" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XamlingCore.iOS\XamlingCore.iOS.csproj">
-      <Project>{1EF4C889-A64B-49A7-A393-B37B6E371DFB}</Project>
-      <Name>XamlingCore.iOS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
       <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
       <Name>XamlingCore.Portable.Contract</Name>

@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CoreLocation;
 using Foundation;
 using UIKit;
 
-namespace XamlingCore.iOS.Implementations.Location
+namespace XamlingCore.iOS.Unified.Implementations.Location
 {
     // This Geolocater is a direct port of the Xamarin.Mobile 
     // geolocation class - https://github.com/xamarin/Xamarin.Mobile/tree/master/MonoTouch/Xamarin.Mobile/Geolocation

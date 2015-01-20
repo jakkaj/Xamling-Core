@@ -4,14 +4,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <ProjectGuid>{F8595FD7-8406-4CC9-A6F8-FADE87D94F7A}</ProjectGuid>
-    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
     <RootNamespace>XamlingCore.Samples.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>FormsTemplateiOS</AssemblyName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>d5826d34</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>d19a687a</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -119,10 +119,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\XamlingCore.iOS\XamlingCore.iOS.csproj">
-      <Project>{1EF4C889-A64B-49A7-A393-B37B6E371DFB}</Project>
-      <Name>XamlingCore.iOS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
       <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
       <Name>XamlingCore.Portable.Contract</Name>
@@ -151,6 +147,11 @@
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>XamlingCore.XamarinThings</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\XankungCore.iOS.Unified\XamlingCore.iOS.Unified.csproj">
+      <Project>{59A9B568-3793-434F-97B0-B627D3BF4C9B}</Project>
+      <Name>XamlingCore.iOS.Unified</Name>
+      <IsAppExtension>false</IsAppExtension>
+    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Samples\XamlingCore.Samples.csproj">
       <Name>XamlingCore.Samples</Name>
       <Project>{07465752-9C33-46CB-B0C9-F7DED7FA7FFC}</Project>
@@ -160,24 +161,25 @@
     <BundleResource Include="Resources\settings.png" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="monotouch" />
-    <Reference Include="Autofac">
-      <HintPath>..\..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Xamarin.Forms.1.3.1.6296\lib\MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
+      <HintPath>..\..\packages\Xamarin.Forms.1.3.1.6296\lib\Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Platform.iOS.Classic">
-      <HintPath>..\..\packages\Xamarin.Forms.1.3.1.6296\lib\MonoTouch10\Xamarin.Forms.Platform.iOS.Classic.dll</HintPath>
+    <Reference Include="Xamarin.Forms.Platform.iOS">
+      <HintPath>..\..\packages\Xamarin.Forms.1.3.1.6296\lib\Xamarin.iOS10\Xamarin.Forms.Platform.iOS.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Xamarin.Forms.1.3.1.6296\lib\MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
+      <HintPath>..\..\packages\Xamarin.Forms.1.3.1.6296\lib\Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\settings%402x.png" />
@@ -216,7 +218,7 @@
     <BundleResource Include="Resources\nearby%403x.png" />
   </ItemGroup>
   <ItemGroup />
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UIKit;
+﻿using UIKit;
+using XamlingCore.iOS.Implementations;
 
-namespace XamlingCore.iOS.Implementations
+namespace XamlingCore.iOS.Unified.Implementations
 {
     public class EnvironmentService : IEnvironmentService
     {

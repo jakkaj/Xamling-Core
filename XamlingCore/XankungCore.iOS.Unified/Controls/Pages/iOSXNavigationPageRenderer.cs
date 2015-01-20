@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Autofac;
-using Foundation;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using XamlingCore.iOS.Controls.Pages;
-using XamlingCore.iOS.Root;
+using XamlingCore.iOS.Unified.Controls.Pages;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Data.Glue;
 using XamlingCore.Portable.Model.Orientation;
 using XamlingCore.XamarinThings.Content.Navigation;
-using XamlingCore.XamarinThings.Content.Pages;
 
 [assembly: ExportRenderer(typeof(XNavigationPageView), typeof(iOSNavigationPageRenderer))]
-namespace XamlingCore.iOS.Controls.Pages
+namespace XamlingCore.iOS.Unified.Controls.Pages
 {
     public class iOSNavigationPageRenderer : NavigationRenderer
     {

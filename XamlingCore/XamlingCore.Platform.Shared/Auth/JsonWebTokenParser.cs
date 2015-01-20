@@ -7,8 +7,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

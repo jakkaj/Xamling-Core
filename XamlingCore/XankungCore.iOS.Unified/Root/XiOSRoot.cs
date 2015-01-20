@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Foundation;
 using UIKit;
 
-namespace XamlingCore.iOS.Root
+namespace XamlingCore.iOS.Unified.Root
 {
     public static class XiOSRoot
     {

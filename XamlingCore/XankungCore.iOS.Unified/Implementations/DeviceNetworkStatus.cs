@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
+using XamlingCore.iOS.Unified.Implementations.Helpers;
 using XamlingCore.Portable.Contract.Network;
 using XamlingCore.Portable.Model.Network;
 
-namespace XamlingCore.iOS.Implementations
+namespace XamlingCore.iOS.Unified.Implementations
 {
     public class DeviceNetworkStatus : IDeviceNetworkStatus
     {

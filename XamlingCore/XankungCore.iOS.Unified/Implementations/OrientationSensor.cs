@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using UIKit;
-using XamlingCore.iOS.Root;
 using XamlingCore.Portable.Contract.Device;
 using XamlingCore.Portable.Model.Orientation;
 
-namespace XamlingCore.iOS.Implementations
+namespace XamlingCore.iOS.Unified.Implementations
 {
     public class OrientationSensor : IOrientationSensor
     {

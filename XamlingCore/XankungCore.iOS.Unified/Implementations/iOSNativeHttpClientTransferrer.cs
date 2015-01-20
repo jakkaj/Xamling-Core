@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using ModernHttpClient;
 using XamlingCore.Portable.Contract.Downloaders;
@@ -11,7 +10,7 @@ using XamlingCore.Portable.Messages.Network;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Net.Downloaders;
 
-namespace XamlingCore.iOS.Implementations
+namespace XamlingCore.iOS.Unified.Implementations
 {
     public class iOSNativeHttpClientTransferrer : IHttpTransferrer
     {

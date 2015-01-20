@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using MonoTouch.UIKit;
-using XamlingCore.iOS.Controls.Native;
+﻿using System.Drawing;
+using UIKit;
+using XamlingCore.iOS.Unified.Controls.Native;
 using XamlingCore.Samples.Views.Home.Playground.ViewTransitions;
 
 namespace XamlingCore.Samples.iOS.NativeViews.Forms.Playground.Transitions

@@ -1,13 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using CoreGraphics;
-using Foundation;
 using UIKit;
 
-namespace XamlingCore.iOS.Controls.Loader
+namespace XamlingCore.iOS.Unified.Controls.Loader
 {
     public abstract class LoadingOverlayViewBase : UIView
     {

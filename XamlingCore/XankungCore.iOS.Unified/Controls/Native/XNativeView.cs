@@ -3,7 +3,7 @@ using System.Drawing;
 using UIKit;
 using XamlingCore.Portable.View.ViewModel;
 
-namespace XamlingCore.iOS.Controls.Native
+namespace XamlingCore.iOS.Unified.Controls.Native
 {
     public abstract class XNativeView<T> : UIView where T : XViewModel
     {

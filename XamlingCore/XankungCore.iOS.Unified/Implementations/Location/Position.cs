@@ -1,12 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-using Foundation;
-using UIKit;
-
-namespace XamlingCore.iOS.Implementations.Location
+namespace XamlingCore.iOS.Unified.Implementations.Location
 {
 
     // This is a direct port of the Xamarin.Mobile class 

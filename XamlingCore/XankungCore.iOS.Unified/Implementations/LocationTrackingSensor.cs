@@ -3,11 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using CoreLocation;
 using Foundation;
-using XamlingCore.iOS.Implementations.Location;
+using XamlingCore.iOS.Unified.Implementations.Location;
 using XamlingCore.Portable.Contract.Device.Location;
 using XamlingCore.Portable.Model.Location;
 
-namespace XamlingCore.iOS.Implementations
+namespace XamlingCore.iOS.Unified.Implementations
 {
     public class LocationTrackingSensor : ILocationTrackingSensor
     {

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using CoreMotion;
 using Foundation;
 using XamlingCore.Portable.Contract.Device.Location;
 using XamlingCore.Portable.Model.Location;
 
-namespace XamlingCore.iOS.Implementations
+namespace XamlingCore.iOS.Unified.Implementations
 {
     public class MotionSensor : IMotionSensor
     {
