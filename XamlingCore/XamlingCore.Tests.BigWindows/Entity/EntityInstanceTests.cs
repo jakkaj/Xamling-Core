@@ -78,14 +78,11 @@ namespace XamlingCore.Tests.BigWindows.Entity
             {
                 var i2 = await entityManager2.Get(i.Id);
 
-
                 var newE = new TestEntity { Id = i.Id };
 
                 newE.Name = "Knight";
 
                 newE = await entityManager.Set(newE);
-
-                
 
                 Assert.IsTrue(i2.Name == "Knight");
                 Assert.IsTrue(ReferenceEquals(i2, newE));
