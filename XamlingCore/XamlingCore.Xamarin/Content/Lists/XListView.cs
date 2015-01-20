@@ -8,7 +8,7 @@ namespace XamlingCore.XamarinThings.Content.Lists
 {
     public class XListView : ListView
     {
-        public ICommand NeedMoreDataCommand { get; set; }
+        public ICommand MoreDataCommand { get; set; }
 
         public XListView()
         {
@@ -33,21 +33,21 @@ namespace XamlingCore.XamarinThings.Content.Lists
             }
             if (c[c.Count - 1] == e.Item)
             {
-                if (NeedMoreDataCommand != null)
+                if (MoreDataCommand != null)
                 {
-                    NeedMoreDataCommand.Execute(null);
+                    MoreDataCommand.Execute(null);
                 }
             }
         }
 
-        public static readonly BindableProperty NeedMoreDataCommandProperty =
-       BindableProperty.Create<XListView, ICommand>(p => p.NeedMoreDataCommand, null, BindingMode.OneWay, null, _onDataContextChanged);
+        public static readonly BindableProperty MoreDataCommandProperty =
+       BindableProperty.Create<XListView, ICommand>(p => p.MoreDataCommand, null, BindingMode.OneWay, null, _onDataContextChanged);
 
 
         private static void _onDataContextChanged(BindableObject obj, ICommand oldValue, ICommand newValue)
         {
             var thisObj = obj as XListView;
-            if (thisObj != null) thisObj.NeedMoreDataCommand = newValue;
+            if (thisObj != null) thisObj.MoreDataCommand = newValue;
         }   
 
         

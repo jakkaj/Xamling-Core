@@ -15,14 +15,14 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.List
     {
         ObservableCollection<XViewModel> _items = new ObservableCollection<XViewModel>();
 
-        public ICommand NeedsMoreDataCommand { get; set; }
+        public ICommand MoreDataCommand { get; set; }
 
         private const int pageSize = 100;
 
         public LongListViewModel()
         {
             Title = "Long lists";
-            NeedsMoreDataCommand = new Command(_onNeedMoreData);
+            MoreDataCommand = new Command(_onNeedMoreData);
         }
 
         private async void _onNeedMoreData()
