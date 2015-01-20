@@ -64,7 +64,13 @@ namespace XamlingCore.iOS.Implementations
                 .ContinueWith(t =>
                 {
                     if (t.IsFaulted)
-                        throw new Exception(((GeolocationException) t.Exception.InnerException).Error.ToString());
+                    {
+                        CurrentLocation.IsResolved = false;
+                        CurrentLocation.IsEnabled = false;
+                        CurrentLocation.Status = XPositionStatus.Disabled;
+                        _fire();
+                        return loc;
+                    }
                     if (t.IsCanceled)
                         return new XLocation();
                     loc.Latitude = t.Result.Latitude;
