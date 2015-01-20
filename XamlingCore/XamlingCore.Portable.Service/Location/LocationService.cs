@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using XamlingCore.Portable.Contract.Device.Location;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Messages.Location;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Model.Location;
-using XamlingCore.Portable.Util;
 using XamlingCore.Portable.Util.Lock;
-using XamlingCore.Portable.Util.Util;
 
 namespace XamlingCore.Portable.Service.Location
 {
@@ -126,7 +123,7 @@ namespace XamlingCore.Portable.Service.Location
             return new XLocation { IsEnabled = false };
         }
 
-        async void _locationSensor_LocationUpdated(object sender, System.EventArgs e)
+        async void _locationSensor_LocationUpdated(object sender, EventArgs e)
         {
             using (var l = await _lock.LockAsync())
             {

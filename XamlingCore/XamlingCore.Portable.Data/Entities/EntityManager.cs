@@ -255,11 +255,7 @@ namespace XamlingCore.Portable.Data.Entities
                 }
 
                 Mapper.CreateMap<T, T>();
-
-                var p = new T();
-
-                Mapper.Map(entity, p);
-
+               
                 if (!ReferenceEquals(memory, entity))
                 {
                     //update the in memory version, save it to cache, return in memory version
