@@ -14,7 +14,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.List
         {
             var l = new XListView();
             l.SetBinding(ListView.ItemsSourceProperty, "Items");
-            l.SetBinding(XListView.NeedMoreDataCommandProperty, "NeedsMoreDataCommand");
+            l.SetBinding(XListView.MoreDataCommandProperty, "MoreDataCommand");
             Content = l;
         }
     }

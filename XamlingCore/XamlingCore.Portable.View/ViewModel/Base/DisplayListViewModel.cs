@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 using XamlingCore.Portable.Contract.ViewModels;
 using XamlingCore.Portable.Model.Contract;
 
@@ -23,6 +25,13 @@ namespace XamlingCore.Portable.View.ViewModel.Base
         private ObservableCollection<TEntityType> _dataList; 
 
         private bool _noItems;
+
+        public ICommand MoreDataCommand { get; set; }
+
+        public DisplayListViewModel()
+        {
+            MoreDataCommand = new Command(OnMore);
+        }
 
         protected virtual void OnItemSelected(TEntityType selectedItem)
         {
