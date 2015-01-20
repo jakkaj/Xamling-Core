@@ -231,7 +231,7 @@ namespace XamlingCore.Tests.iOS.Tests.EntityTests
         {
             var l = new List<EntityTests.TestEntity>();
 
-            for (var i = 0; i < 15; i++)
+            for (var i = 0; i < 100; i++)
             {
                 l.Add(new EntityTests.TestEntity { Id = Guid.NewGuid(), IsSomething = i % 2 == 0 });
             }

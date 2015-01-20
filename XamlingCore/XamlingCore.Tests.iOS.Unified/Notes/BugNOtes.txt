@@ -1,0 +1,6 @@
+﻿Seems we're hitting a 64 bit issue. 
+
+http://mono.1490590.n4.nabble.com/no-subject-td4661672.html
+
+When system is under pressure it crashes. Or something similar. 
+

@@ -236,6 +236,8 @@ namespace XamlingCore.Portable.Data.Entities
             return await _set(entity);
         }
 
+        static List<Type> _mappedTypes = new List<Type>(); 
+
         private async Task<T> _set(T entity)
         {
             if (entity == null)
@@ -253,13 +255,20 @@ namespace XamlingCore.Portable.Data.Entities
                     _memoryCache.Add(entity);
                     memory = entity;
                 }
+                
+                var t = typeof (T);
+                
+                if (!_mappedTypes.Contains(t))
+                {
+                    //Mapper.CreateMap<T, T>(); //Automapper is killing us! On 64 bit this call and the one below just stops the app from working with a hard SIGSEGV
 
-                Mapper.CreateMap<T, T>();
+                    _mappedTypes.Add(t);
+                }
                
                 if (!ReferenceEquals(memory, entity))
                 {
                     //update the in memory version, save it to cache, return in memory version
-                    Mapper.Map(entity, memory);
+                   // Mapper.Map(entity, memory);
                 }
 
                 await _entityCache.SetEntity(_getKey(entity.Id), memory);

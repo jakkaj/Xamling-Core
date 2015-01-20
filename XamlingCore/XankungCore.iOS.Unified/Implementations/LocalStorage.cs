@@ -1,10 +1,14 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
 using Foundation;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Util.Lock;
+using AsyncLock = ModernHttpClient.AsyncLock;
 
 namespace XamlingCore.iOS.Unified.Implementations
 {
@@ -19,7 +23,7 @@ namespace XamlingCore.iOS.Unified.Implementations
                 var path = _getPath(fileName);
 
                 var r = File.Exists(path);
-                
+
 
                 if (!r)
                 {
@@ -85,7 +89,7 @@ namespace XamlingCore.iOS.Unified.Implementations
             var p = _getPath(fileName);
 
             var r = File.Exists(p);
-            
+
             return r;
         }
 
@@ -101,7 +105,7 @@ namespace XamlingCore.iOS.Unified.Implementations
 
             return f != null ? f.ToList() : null;
         }
-       
+
 
         public async Task<byte[]> Load(string fileName)
         {
@@ -117,7 +121,7 @@ namespace XamlingCore.iOS.Unified.Implementations
                 }
 
                 var r = File.ReadAllBytes(path);
-             
+
                 return r;
             }
         }
@@ -139,7 +143,7 @@ namespace XamlingCore.iOS.Unified.Implementations
             }
         }
 
-        
+
 
         public async Task<string> LoadString(string fileName)
         {
@@ -155,7 +159,7 @@ namespace XamlingCore.iOS.Unified.Implementations
                 }
 
                 var r = File.ReadAllText(path);
-                
+
                 return r;
             }
         }
@@ -168,7 +172,7 @@ namespace XamlingCore.iOS.Unified.Implementations
             {
                 var path = _getPath(fileName);
                 _createDirForFile(path);
-                
+
                 File.WriteAllBytes(path, data);
             }
         }
@@ -180,7 +184,7 @@ namespace XamlingCore.iOS.Unified.Implementations
             using (var releaser = await _lock.LockAsync())
             {
                 var path = _getPath(fileName);
-            
+
                 _createDirForFile(path);
 
                 using (var s = File.Create(path))
@@ -190,6 +194,7 @@ namespace XamlingCore.iOS.Unified.Implementations
             }
         }
 
+        static AsyncLock wl = new AsyncLock();
         public async Task<bool> SaveString(string fileName, string data)
         {
             var _lock = NamedLock.Get(fileName);
@@ -228,11 +233,18 @@ namespace XamlingCore.iOS.Unified.Implementations
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
+
+        private static string path = null;
+
         private string _getPath(string fileName)
         {
-            var documents = NSFileManager.DefaultManager.GetUrls(NSSearchPathDirectory.LibraryDirectory, NSSearchPathDomain.User)[0];
-            var str = documents.Path;
-            var result = Path.Combine(str, fileName);
+            if (path == null)
+            {
+                var documents = NSFileManager.DefaultManager.GetUrls(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomain.User)[0];
+                path = documents.Path;
+            }
+
+            var result = Path.Combine(path, fileName);
             return result;
         }
     }
