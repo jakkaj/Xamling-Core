@@ -112,7 +112,7 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
                 var navPage = initalViewController as NavigationPage;
                 if (navPage != null)
                 {
-                    navPage.Tint = NavigationTint.Value;
+                    navPage.BackgroundColor = NavigationTint.Value;
                 }
             }
 

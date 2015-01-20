@@ -20,7 +20,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>7.0</string>
+	<string>8.1</string>
 	<key>CFBundleDisplayName</key>
 	<string>XamlingCore.Samples</string>
 	<key>CFBundleIdentifier</key>
@@ -36,6 +36,6 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Just keeping tabs on you.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-    <string>Please allow Location services</string>
+	<string>Please allow Location services</string>
 </dict>
 </plist>
