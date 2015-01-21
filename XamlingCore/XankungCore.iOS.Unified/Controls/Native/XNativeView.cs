@@ -34,6 +34,8 @@ namespace XamlingCore.iOS.Unified.Controls.Native
             OnInitialise();
         }
 
+
+
         void _vm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             OnViewModelPropertyChanged(e.PropertyName);
@@ -48,5 +50,10 @@ namespace XamlingCore.iOS.Unified.Controls.Native
 
 
         protected abstract void OnInitialise();
+
+        public virtual void OnReady()
+        {
+            
+        }
     }
 }

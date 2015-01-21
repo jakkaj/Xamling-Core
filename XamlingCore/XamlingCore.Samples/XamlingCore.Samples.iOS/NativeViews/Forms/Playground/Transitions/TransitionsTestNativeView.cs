@@ -18,5 +18,10 @@ namespace XamlingCore.Samples.iOS.NativeViews.Forms.Playground.Transitions
             
             AddSubview(_testButton);
         }
+
+        public override void OnReady()
+        {
+            
+        }
     }
 }
