@@ -75,6 +75,18 @@
     <Compile Include="Views\MasterDetailHome\GoogleAnalytics\GoogleAnalyticsView.xaml.cs">
       <DependentUpon>GoogleAnalyticsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MasterDetailHome\Home\HomePageFourView.model.cs">
+      <DependentUpon>HomePageFourView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Home\HomePageFourView.xaml.cs">
+      <DependentUpon>HomePageFourView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Home\HomePageThreeView.model.cs">
+      <DependentUpon>HomePageThreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Home\HomePageThreeView.xaml.cs">
+      <DependentUpon>HomePageThreeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MasterDetailHome\Home\HomePageTwoView.model.cs">
       <DependentUpon>HomePageTwoView.xaml</DependentUpon>
     </Compile>
@@ -261,7 +273,18 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailHome\Home\HomePageThreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailHome\Home\HomePageFourView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -17,9 +17,9 @@ namespace XamlingCore.iOS.Unified.Controls.Native
 
         private readonly IOrientationService _orientationService;
 
-
         protected override void OnElementChanged(ElementChangedEventArgs<TFormsType> e)
         {
+            
             base.OnElementChanged(e);
 
             if (Control == null)
@@ -33,6 +33,7 @@ namespace XamlingCore.iOS.Unified.Controls.Native
                     ntV.SetupVm(ViewModel);
                     SetNativeControl(ntV);
                     OnControlCreated(ntV);
+                    ntV.OnReady();
                 }
 
                 _view = e.NewElement;
