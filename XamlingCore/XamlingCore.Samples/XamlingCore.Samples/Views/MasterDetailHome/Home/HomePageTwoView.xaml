@@ -4,7 +4,7 @@
 					   x:Class="XamlingCore.Samples.Views.MasterDetailHome.Home.HomePageTwoView">
   <StackLayout>
     <Label Text="Home page 2" VerticalOptions="Center" HorizontalOptions="Center" />
-    <Button Text="Pop" Command="{Binding PopCommand}"/>
+   
     <Button Text="Next" Command="{Binding NextCommand}"/>
   </StackLayout>
 

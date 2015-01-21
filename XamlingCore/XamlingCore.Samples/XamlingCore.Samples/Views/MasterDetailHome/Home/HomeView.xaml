@@ -5,6 +5,6 @@
   <StackLayout>
     <Label Text="Welcome to the main home thing" VerticalOptions="Center" HorizontalOptions="Center" />
     <Button Text="Click me" Command="{Binding NextPageCommand}"/>
-    <Button Text="Show a native view" Command="{Binding ShowNativeViewCommand}"/>
+    <!--<Button Text="Show a native view" Command="{Binding ShowNativeViewCommand}"/>-->
   </StackLayout>
 </ContentPage>

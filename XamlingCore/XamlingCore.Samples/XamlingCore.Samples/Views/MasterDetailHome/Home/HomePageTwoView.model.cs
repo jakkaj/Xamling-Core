@@ -22,7 +22,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 
         void _onNext()
         {
-            NavigateTo<AnotherMenuOptionViewModel>();
+            NavigateTo<HomePageThreeViewModel>();
         }
 
         void _onPop()

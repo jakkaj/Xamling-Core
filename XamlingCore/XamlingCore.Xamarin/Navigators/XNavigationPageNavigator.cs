@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using Xamarin.Forms;
@@ -142,6 +143,15 @@ namespace XamlingCore.XamarinThings.Navigators
             }
 
             await _xamarinNavigation.PushAsync(p);
+
+
+            if (currentPage != null && 
+                !_xNavigation.NavigationHistory.Contains(currentPage.BindingContext) && 
+                _xamarinNavigation.NavigationStack.Contains(currentPage)
+                )
+            {
+                _xamarinNavigation.RemovePage(currentPage);   
+            }
         }
 
         async void _navigationBackward()
