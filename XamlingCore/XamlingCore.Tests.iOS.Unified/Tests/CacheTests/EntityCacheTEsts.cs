@@ -19,6 +19,62 @@ namespace XamlingCore.Tests.iOS.Tests.CacheTests
             public string ItemName { get; set; }
         }
 
+        public class MyOtherObject
+        {
+            public string ItemName { get; set; }
+        }
+        [Test]
+        public void Test_Cache_Clear_All()
+        {
+            var cache = Container.Resolve<IEntityCache>();
+
+            var msr = new ManualResetEvent(false);
+
+            Task.Run(async () =>
+            {
+
+                var item1 = new MyObject { ItemName = "Item1" };
+                var item2 = new MyObject { ItemName = "Item2" };
+
+                var item1a = new MyOtherObject { ItemName = "Item1" };
+                var item2a = new MyOtherObject { ItemName = "Item2" };
+
+
+                await cache.SetEntity(item1.ItemName, item1);
+                await cache.SetEntity(item2.ItemName, item2);
+                await cache.SetEntity(item1a.ItemName, item1a);
+                await cache.SetEntity(item2a.ItemName, item2a);
+
+                var result1 = await cache.GetEntity<MyObject>(item1.ItemName);
+                var result2 = await cache.GetEntity<MyObject>(item2.ItemName);
+                var result3 = await cache.GetEntity<MyOtherObject>(item1a.ItemName);
+                var result4 = await cache.GetEntity<MyOtherObject>(item2a.ItemName);
+
+                Assert.IsNotNull(result1);
+                Assert.IsNotNull(result2);
+                Assert.IsNotNull(result3);
+                Assert.IsNotNull(result4);
+
+                await cache.Clear();
+
+                var result1_e = await cache.GetEntity<MyObject>(item1.ItemName);
+                var result2_e = await cache.GetEntity<MyObject>(item2.ItemName);
+                var result3_e = await cache.GetEntity<MyOtherObject>(item1a.ItemName);
+                var result4_e = await cache.GetEntity<MyOtherObject>(item2a.ItemName);
+
+                Assert.IsNull(result1_e);
+                Assert.IsNull(result2_e);
+                Assert.IsNull(result3_e);
+                Assert.IsNull(result4_e);
+
+
+                msr.Set();
+            });
+
+            var msrResult = msr.WaitOne(20000);
+            Assert.IsTrue(msrResult, "MSR not set, means assertion failed in task");
+        }
+
         [Test]
         public void Test_Clear_And_Read_All()
         {

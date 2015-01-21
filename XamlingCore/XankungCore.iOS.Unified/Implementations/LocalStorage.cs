@@ -101,7 +101,7 @@ namespace XamlingCore.iOS.Unified.Implementations
                 return null;
             }
 
-            var f = Directory.GetFiles(p);
+            var f = Directory.GetFiles(p, "*.*", SearchOption.AllDirectories);
 
             return f != null ? f.ToList() : null;
         }
@@ -205,7 +205,7 @@ namespace XamlingCore.iOS.Unified.Implementations
                 _createDirForFile(path);
 
                 File.WriteAllText(path, data);
-                
+
                 return true;
             }
 

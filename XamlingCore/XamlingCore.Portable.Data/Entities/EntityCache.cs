@@ -333,9 +333,9 @@ namespace XamlingCore.Portable.Data.Entities
         public async Task Clear()
         {
             _memoryCache.Clear();
-            throw new NotImplementedException("Not implemented becasue of problems with https://bugzilla.xamarin.com/show_bug.cgi?id=11771");
+            //throw new NotImplementedException("Not implemented becasue of problems with https://bugzilla.xamarin.com/show_bug.cgi?id=11771");
 
-            await _localStorageFileRepo.DeleteAll("cache_*");
+            await _localStorageFileRepo.DeleteAll("cache");
         }
 
         void _updateItem<T>(T cacheItem, XCacheItem<T> cacheWrapper)
@@ -369,7 +369,10 @@ namespace XamlingCore.Portable.Data.Entities
 
         string _getDirPath<T>()
         {
-            return string.Format("cache_{0}", _getTypePath<T>());
+            var p = string.Format("cache_{0}", _getTypePath<T>());
+            p = Path.Combine("cache", p);
+
+            return p;
         }
 
         string _getTypePath<T>()
