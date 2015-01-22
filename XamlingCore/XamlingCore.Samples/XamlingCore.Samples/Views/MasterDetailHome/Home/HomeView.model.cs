@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.ViewModel;
+using XamlingCore.Samples.Views.MasterDetailHome.Home.DynamicContentExamples;
 using XamlingCore.Samples.Views.MasterDetailHome.Tabs;
 
 namespace XamlingCore.Samples.Views.MasterDetailHome.Home
@@ -18,6 +20,9 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
         private readonly IEntityCache _cache;
         public ICommand NextPageCommand { get; set; }
         public ICommand ShowNativeViewCommand { get; set; }
+
+        private XViewModel _dynamicViewModel;
+
         public HomeViewModel(IEntityCache cache)
         {
             _cache = cache;
@@ -28,7 +33,30 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 
         public override void OnInitialise()
         {
+            _doThings();
+
             base.OnInitialise();
+        }
+
+        async void _doThings()
+        {
+            DynamicViewModel = CreateContentModel<FirstDynamicViewModel>();
+            
+
+            while (true)
+            {
+                await Task.Delay(3000);
+                if (DynamicViewModel is FirstDynamicViewModel)
+                {
+                    DynamicViewModel = CreateContentModel<SecondDynamicViewModel>();
+                }
+                else
+                {
+                    DynamicViewModel = CreateContentModel<FirstDynamicViewModel>();
+                }
+            }
+
+           
         }
 
         void _onShowNativeView()
@@ -41,6 +69,16 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
         { 
             //NavigateTo<HomeTabsViewModel>();
             NavigateTo<HomePageTwoViewModel>();
+        }
+
+        public XViewModel DynamicViewModel
+        {
+            get { return _dynamicViewModel; }
+            set
+            {
+                _dynamicViewModel = value;
+                OnPropertyChanged();
+            }
         }
 
         

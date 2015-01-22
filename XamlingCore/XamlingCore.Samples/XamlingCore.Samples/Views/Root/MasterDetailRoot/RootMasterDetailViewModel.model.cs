@@ -26,7 +26,7 @@ namespace XamlingCore.Samples.Views.Root.MasterDetailRoot
 
             //add a couple of pages.
 
-            AddPackage<HomeTabsViewModel>();
+            AddPackage<HomeViewModel>();
             AddPackage<AnotherMenuOptionViewModel>();
             AddPackage<LocationViewModel>();
             AddPackage<LoadersViewModel>();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Autofac;
 using Xamarin.Forms;
 using XamlingCore.Portable.Data.Glue;
@@ -51,7 +52,7 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
             BindableProperty.Create<DynamicContentView, object>(p => p.DataContext, null, BindingMode.TwoWay, null, _onDataContextChanged);
 
 
-        private static void _onDataContextChanged(BindableObject obj, object oldValue, object newValue)
+        private async static void _onDataContextChanged(BindableObject obj, object oldValue, object newValue)
         {
             var viewer = obj as DynamicContentView;
             if (viewer == null)
@@ -78,8 +79,18 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
                 throw new InvalidOperationException("Could not find view for this view model: " + vm.GetType().FullName);
             }
 
-            viewer.Content = v;
-            viewer.IsVisible = true;
+            if (!await viewer.ContentSetOverride(v))
+            {
+                viewer.Content = v;
+                viewer.IsVisible = true;
+            }
+            
+            
+        }
+
+        protected virtual async Task<bool> ContentSetOverride(View content)
+        {
+            return false;
         }
     }
 }

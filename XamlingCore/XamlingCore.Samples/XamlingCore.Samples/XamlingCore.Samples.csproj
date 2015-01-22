@@ -75,6 +75,18 @@
     <Compile Include="Views\MasterDetailHome\GoogleAnalytics\GoogleAnalyticsView.xaml.cs">
       <DependentUpon>GoogleAnalyticsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MasterDetailHome\Home\DynamicContentExamples\FirstDynamicView.model.cs">
+      <DependentUpon>FirstDynamicView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Home\DynamicContentExamples\FirstDynamicView.xaml.cs">
+      <DependentUpon>FirstDynamicView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Home\DynamicContentExamples\SecondDynamicView.model.cs">
+      <DependentUpon>SecondDynamicView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Home\DynamicContentExamples\SecondDynamicView.xaml.cs">
+      <DependentUpon>SecondDynamicView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MasterDetailHome\Home\HomePageFourView.model.cs">
       <DependentUpon>HomePageFourView.xaml</DependentUpon>
     </Compile>
@@ -281,6 +293,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MasterDetailHome\Home\HomePageFourView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailHome\Home\DynamicContentExamples\FirstDynamicView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailHome\Home\DynamicContentExamples\SecondDynamicView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
