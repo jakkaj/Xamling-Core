@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using CoreGraphics;
 using UIKit;
@@ -13,28 +14,46 @@ namespace XamlingCore.iOS.Unified.Controls.Forms
 
     public class TransitionContentRenderer : ViewRenderer<TransitionContentView, UIView>
     {
+        public TransitionContentRenderer()
+        {
+            
+        }
+
         private double _duration = .5;
         protected override void OnElementChanged(ElementChangedEventArgs<TransitionContentView> e)
         {
             base.OnElementChanged(e);
+            
+            if (e.OldElement != null)
+            {
+                e.OldElement.Dispose();
+            }
+
             var element = e.NewElement;
+
+            if (element == null)
+            {
+                return;
+            }
 
             _duration = element.Duration;
 
             element.SetPreCallback(_onContentChanging);
             element.SetPostCallback(_onContentChanged);
+
+            
         }
 
         private async Task _onContentChanging()
         {
             await _fadeOut();
-            this.Alpha = 0;
+            this.Alpha = new nfloat(.01);
 
         }
 
         private async Task _onContentChanged()
         {
-            this.Alpha = 0;
+            this.Alpha = new nfloat(.01);
             await _fadeIn();
         }
 
@@ -47,7 +66,7 @@ namespace XamlingCore.iOS.Unified.Controls.Forms
                 UIView.Animate(_duration, 0, UIViewAnimationOptions.CurveEaseIn,
                     () =>
                     {
-                        this.Alpha = 0;
+                        this.Alpha = new nfloat(.01);
                     }, () =>
                     {
                         tcs.SetResult(true);
@@ -68,7 +87,7 @@ namespace XamlingCore.iOS.Unified.Controls.Forms
                 UIView.Animate(_duration, 0, UIViewAnimationOptions.CurveEaseOut,
                     () =>
                     {
-                        this.Alpha = 1;
+                        this.Alpha = new nfloat(1);
                     }, () =>
                     {
                         tcs.SetResult(true);
@@ -80,6 +99,8 @@ namespace XamlingCore.iOS.Unified.Controls.Forms
 
             return await tcs.Task;
         }
+
+        
 
     }
 

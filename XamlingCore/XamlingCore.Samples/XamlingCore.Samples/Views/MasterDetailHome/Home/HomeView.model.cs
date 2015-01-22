@@ -44,7 +44,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
            
             int count = 0;
 
-            await Task.Delay(3000);
+            await Task.Delay(4000);
 
             DynamicViewModel = CreateContentModel<FirstDynamicViewModel>();
 

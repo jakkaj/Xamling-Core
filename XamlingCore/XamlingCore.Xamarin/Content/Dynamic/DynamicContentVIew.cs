@@ -30,7 +30,7 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
         {
             
         }
-
+        
         protected override void OnParentSet()
         {
             base.OnParentSet();

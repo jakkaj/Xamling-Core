@@ -9,5 +9,8 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home.DynamicContentExamples
 {
     public class FirstDynamicViewModel : XViewModel
     {
+        
+
+        
     }
 }
