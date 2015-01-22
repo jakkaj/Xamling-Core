@@ -26,6 +26,20 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
             v.BindingContextChanged += v_BindingContextChanged;
         }
 
+        public DynamicContentView()
+        {
+            
+        }
+
+        protected override void OnParentSet()
+        {
+            base.OnParentSet();
+            if (BindingContext == null)
+            {
+                SetBindingParent(Parent);
+            }
+        }
+
         void v_BindingContextChanged(object sender, EventArgs e)
         {
             var bo = sender as BindableObject;

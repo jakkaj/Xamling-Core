@@ -29,6 +29,11 @@ namespace XamlingCore.XamarinThings.Content.Forms
             Duration = .5;
         }
 
+        public TransitionContentView()
+        {
+            
+        }
+
         public void SetPreCallback(Func<Task> callback)
         {
             _preCallback = callback;
