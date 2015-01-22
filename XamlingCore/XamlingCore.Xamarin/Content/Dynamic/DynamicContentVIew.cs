@@ -62,8 +62,11 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 
             if (newValue == null)
             {
-                viewer.Content = null;
-                viewer.IsVisible = false;
+                if (!await viewer.ContentSetOverride(null))
+                {
+                    viewer.Content = null;
+                    viewer.IsVisible = false;
+                }
                 return;
             }
 

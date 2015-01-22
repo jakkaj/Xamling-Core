@@ -42,16 +42,28 @@ namespace XamlingCore.XamarinThings.Content.Forms
 
         protected async override Task<bool> ContentSetOverride(View content)
         {
-            if (Content == null)
+            while (_preCallback == null)
             {
-                return false;
+                await Task.Yield();
             }
 
             await _preCallback();
 
+            if (!IsVisible)
+            {
+                IsVisible = true;
+            }
+
             Content = content;
 
             await _postCallback();
+
+            if (content == null)
+            {
+                IsVisible = false;
+            }
+
+
 
             return true;
         }

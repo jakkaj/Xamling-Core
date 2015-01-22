@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -40,10 +41,14 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 
         async void _doThings()
         {
-            DynamicViewModel = CreateContentModel<FirstDynamicViewModel>();
-            
+           
+            int count = 0;
 
-            while (true)
+            await Task.Delay(3000);
+
+            DynamicViewModel = CreateContentModel<FirstDynamicViewModel>();
+
+            while (count < 3)
             {
                 await Task.Delay(3000);
                 if (DynamicViewModel is FirstDynamicViewModel)
@@ -54,9 +59,35 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
                 {
                     DynamicViewModel = CreateContentModel<FirstDynamicViewModel>();
                 }
+                count ++;
+
+                
             }
 
-           
+            DynamicViewModel = null;
+
+
+             count = 0;
+
+            while (count < 3)
+            {
+                await Task.Delay(3000);
+                if (DynamicViewModel is FirstDynamicViewModel)
+                {
+                    DynamicViewModel = CreateContentModel<SecondDynamicViewModel>();
+                }
+                else
+                {
+                    DynamicViewModel = CreateContentModel<FirstDynamicViewModel>();
+                }
+                count++;
+
+
+            }
+
+            DynamicViewModel = null;
+
+
         }
 
         void _onShowNativeView()
