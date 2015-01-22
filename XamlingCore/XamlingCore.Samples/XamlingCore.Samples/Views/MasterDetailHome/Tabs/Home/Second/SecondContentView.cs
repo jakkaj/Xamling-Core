@@ -12,7 +12,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Tabs.Home.Second
     {
         public SecondContentView()
         {
-            this.SetBinding(Page.TitleProperty, "Title");
+            //this.SetBinding(Page.TitleProperty, "Title");
 
             var l = new Label();
 

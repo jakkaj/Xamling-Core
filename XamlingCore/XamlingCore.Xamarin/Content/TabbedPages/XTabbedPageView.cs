@@ -71,8 +71,9 @@ namespace XamlingCore.XamarinThings.Content.TabbedPages
             {
                 return;
             }
-
+            
             Title = vm.Title;
+            page.Title = vm.Title;
 
             vm.OnActivated();
 

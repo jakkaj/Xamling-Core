@@ -56,7 +56,7 @@
     <MtouchLink>None</MtouchLink>
     <MtouchExtraArgs>
     </MtouchExtraArgs>
-    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <MtouchArch>ARMv7</MtouchArch>
     <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
     <MtouchI18n>
     </MtouchI18n>
@@ -99,6 +99,7 @@
   <ItemGroup>
     <Compile Include="NativeViews\Forms\Playground\Transitions\TransitionsTestViewRender.cs" />
     <Compile Include="NativeViews\Forms\Playground\Transitions\TransitionsTestNativeView.cs" />
+    <Compile Include="NativeViews\Renderer\NavigationRender.cs" />
     <Compile Include="NativeViews\Storyboards\AnotherActualViewController.cs" />
     <Compile Include="NativeViews\Storyboards\AnotherActualViewController.designer.cs">
       <DependentUpon>AnotherActualViewController.cs</DependentUpon>
@@ -217,7 +218,15 @@
   <ItemGroup>
     <BundleResource Include="Resources\nearby%403x.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\Default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-568h%402x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

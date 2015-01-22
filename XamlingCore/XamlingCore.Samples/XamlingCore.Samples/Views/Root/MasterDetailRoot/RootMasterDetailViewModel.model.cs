@@ -25,13 +25,22 @@ namespace XamlingCore.Samples.Views.Root.MasterDetailRoot
             NavigationTint = Color.Silver;
 
             //add a couple of pages.
-            AddPage(CreateContentModel<HomeViewModel>());
-            AddPage(CreateContentModel<AnotherMenuOptionViewModel>());
-            AddPage(CreateContentModel<LocationViewModel>());
-            AddPage(CreateContentModel<LoadersViewModel>());
-            AddPage(CreateContentModel<PlaygroundHomeViewModel>());
-            AddPage(CreateContentModel<OrientationViewModel>());
-            AddPage(CreateContentModel<LongListViewModel>());
+
+            AddPackage<HomeTabsViewModel>();
+            AddPackage<AnotherMenuOptionViewModel>();
+            AddPackage<LocationViewModel>();
+            AddPackage<LoadersViewModel>();
+            AddPackage<PlaygroundHomeViewModel>();
+            AddPackage<OrientationViewModel>();
+            AddPackage<LongListViewModel>();
+
+            //AddPage(CreateContentModel<HomeTabsViewModel>());
+            //AddPage(CreateContentModel<AnotherMenuOptionViewModel>());
+            //AddPage(CreateContentModel<LocationViewModel>());
+            //AddPage(CreateContentModel<LoadersViewModel>());
+            //AddPage(CreateContentModel<PlaygroundHomeViewModel>());
+            //AddPage(CreateContentModel<OrientationViewModel>());
+            //AddPage(CreateContentModel<LongListViewModel>());
 
             //Add the master view (which is like the menu bit the flies out)
             SetMaster(CreateContentModel<MasterDetailMenuPageViewModel>());

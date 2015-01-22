@@ -8,7 +8,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Tabs
     {
         public HomeTabsViewModel()
         {
-            Title = "Home";
+            
         }
         public override void OnInitialise()
         {

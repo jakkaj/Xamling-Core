@@ -13,5 +13,11 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Tabs.Home.Second
         {
             this.Title = "SecondView";
         }
+
+        public override void OnInitialise()
+        {
+            this.Title = "Second panel";
+            base.OnInitialise();
+        }
     }
 }

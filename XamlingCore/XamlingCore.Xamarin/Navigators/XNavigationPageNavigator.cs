@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
 using Xamarin.Forms;
 using XamlingCore.Portable.Contract.Navigation;
@@ -24,6 +23,8 @@ namespace XamlingCore.XamarinThings.Navigators
 
         private INavigation _xamarinNavigation;
 
+
+
         public XNavigationPageNavigator(ILifetimeScope scope, XFrame rootFrame, NavigationPage page, IViewResolver viewResolver)
         {
             _scope = scope;
@@ -34,6 +35,8 @@ namespace XamlingCore.XamarinThings.Navigators
             _viewResolver = viewResolver;
            
             _configure();
+
+            
         }
 
         public void _configure()
@@ -43,7 +46,7 @@ namespace XamlingCore.XamarinThings.Navigators
             _rootNavigationPage.Popped += _rootNavigationPage_Popped;
             _rootNavigationPage.PoppedToRoot += _rootNavigationPage_PoppedToRoot;
             _rootNavigationPage.Pushed += _rootNavigationPage_Pushed;
-            
+           
             _xamarinNavigation = _rootNavigationPage.Navigation;
 
             if (_xNavigation.CurrentContentObject != null)
@@ -51,7 +54,7 @@ namespace XamlingCore.XamarinThings.Navigators
                 _setView(NavigationDirection.Forward);
             }
         }
-
+     
         void _rootNavigationPage_Pushed(object sender, NavigationEventArgs e)
         {
             _synchroniseNavigation(NavigationDirection.Forward);

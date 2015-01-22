@@ -62,7 +62,7 @@ namespace XamlingCore.Samples.iOS
             UINavigationBar.Appearance.BarTintColor = UIColor.White;
             UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes()
             {
-                TextColor = UIColor.White
+                TextColor = UIColor.Black
             });
         }
     }

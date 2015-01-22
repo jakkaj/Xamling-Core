@@ -2,6 +2,7 @@ using System;
 using Autofac;
 using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
+using XamlingCore.XamarinThings.Content.Navigation;
 using XamlingCore.XamarinThings.Contract;
 using XamlingCore.XamarinThings.Navigators;
 using XamlingCore.XamarinThings.UI;

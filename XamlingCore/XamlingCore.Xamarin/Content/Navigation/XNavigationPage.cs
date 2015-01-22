@@ -1,4 +1,7 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 using XamlingCore.Portable.Contract.Device;
 
 namespace XamlingCore.XamarinThings.Content.Navigation

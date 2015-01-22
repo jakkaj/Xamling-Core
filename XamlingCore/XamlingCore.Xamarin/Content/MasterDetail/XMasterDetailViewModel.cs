@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
+using Autofac.Core;
 using Xamarin.Forms;
 using XamlingCore.Portable.Contract.ViewModels;
 using XamlingCore.Portable.Model.Contract;
@@ -31,10 +32,19 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
 
         public Color? NavigationTint { get; set; }
 
+        List<INavigationPackage> _packages = new List<INavigationPackage>(); 
+
         protected XMasterDetailViewModel(IViewResolver viewResolver)
         {
             _viewResolver = viewResolver;
             NavigateToViewModelCommand = new Command<XViewModel>(_onNavigateToPage);
+        }
+
+        protected void AddPackage<T>() where T : XViewModel
+        {
+            var package = new NavigationPackage<T>(Container);
+            _packages.Add(package);
+            AddPage(package.ViewModel);
         }
 
         protected void SetMaster(XViewModel masterPage)
@@ -55,11 +65,11 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             if (s != null)
             {
                 var currentVm = s.Item;
-                ShowNavPage(currentVm);
+                ShowNavPage(_packages.FirstOrDefault(_=>_.ViewModel == currentVm));
             }
         }
 
-        
+
 
         protected void Build()
         {
@@ -77,12 +87,12 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             var masterAreaView = _viewResolver.Resolve(MasterViewModel);
             MasterContent = masterAreaView;
 
-            var firstPage = SectionViewModels.First();
+            var firstPage = _packages.First();
 
             ShowNavPage(firstPage);
-            
 
-            firstPage.OnActivated();
+
+            firstPage.ViewModel.OnActivated();
             MasterViewModel.OnActivated();
         }
 
@@ -91,35 +101,17 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             return true;
         }
 
-        protected async void ShowNavPage(XViewModel vm)
+        protected async void ShowNavPage(INavigationPackage package)
         {
-            if (!await OnShowingPage(vm))
+            if (!await OnShowingPage(package.ViewModel))
             {
                 return;
             }
 
-            var frameManager = Container.Resolve<IFrameManager>();
+            package.Showing();
 
-            var rootFrame = XFrame.CreateRootFrame<XRootFrame>(Container);
-            vm.ParentModel = rootFrame; //this vm was created here, but we need to shove it to the new frame. 
-            
-            var rootNavigationVm = rootFrame.CreateContentModel<XNavigationPageViewModel>();
-
-            var initalViewController = frameManager.Init(rootFrame, rootNavigationVm);
-
-            if (NavigationTint != null)
-            {
-                var navPage = initalViewController as NavigationPage;
-                if (navPage != null)
-                {
-                    navPage.BackgroundColor = NavigationTint.Value;
-                }
-            }
-
-            rootFrame.NavigateTo(vm);
-
-            DetailContent = initalViewController;
-            CurrentDetail = vm;
+            DetailContent = package.Page;
+            CurrentDetail = package.ViewModel;
         }
 
         void _onNavigateToPage(XViewModel navigateViewModel)
@@ -160,6 +152,41 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             }
         }
 
-        
+        protected interface INavigationPackage
+        {
+            XViewModel ViewModel { get; set; }
+            Page Page { get; set; }
+            void Showing();
+        }
+
+        protected class NavigationPackage<T> : INavigationPackage where T : XViewModel
+        {
+            private readonly ILifetimeScope _container;
+
+            public NavigationPackage(ILifetimeScope container)
+            {
+                _container = container;
+
+                var frameManager = _container.Resolve<IFrameManager>();
+                RootFrame = XFrame.CreateRootFrame<XRootFrame>(_container);
+                var rootNavigationVm = RootFrame.CreateContentModel<XNavigationPageViewModel>();
+                Page = frameManager.Init(RootFrame, rootNavigationVm);
+                ViewModel = RootFrame.CreateContentModel<T>();
+            }
+
+            public XRootFrame RootFrame { get; set; }
+
+            public XViewModel ViewModel { get; set; }
+
+            public Page Page { get; set; }
+
+            public void Showing()
+            {
+                if (RootFrame.CurrentContentObject != ViewModel)
+                {
+                    RootFrame.NavigateTo(ViewModel);
+                }
+            }
+        }
     }
 }
