@@ -47,7 +47,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
         {
             using (var l = await _lock.LockAsync())
             {
-                return await _localStorageFileRepo.GetAll<T>(_getFolderName());
+                return await _localStorageFileRepo.GetAll<T>(_getFolderName(), false);
             }
         }
 

@@ -93,7 +93,7 @@ namespace XamlingCore.iOS.Unified.Implementations
             return r;
         }
 
-        public async Task<List<string>> GetAllFilesInFolder(string folderPath)
+        public async Task<List<string>> GetAllFilesInFolder(string folderPath, bool recurse)
         {
             var p = _getPath(folderPath);
             if (!Directory.Exists(p))
@@ -101,7 +101,7 @@ namespace XamlingCore.iOS.Unified.Implementations
                 return null;
             }
 
-            var f = Directory.GetFiles(p, "*.*", SearchOption.AllDirectories);
+            var f = Directory.GetFiles(p, "*.*", recurse ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
 
             return f != null ? f.ToList() : null;
         }

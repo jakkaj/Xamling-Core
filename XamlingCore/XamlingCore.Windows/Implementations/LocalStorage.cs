@@ -94,7 +94,7 @@ namespace XamlingCore.Windows.Implementations
             return r.Result;
         }
 
-        public async Task<List<string>> GetAllFilesInFolder(string folderPath)
+        public async Task<List<string>> GetAllFilesInFolder(string folderPath, bool recurse)
         {
             var p = _getPath(folderPath);
             if (!Directory.Exists(p))

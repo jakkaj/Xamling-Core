@@ -19,9 +19,9 @@ namespace XamlingCore.Portable.Data.Repos.Base
             _entitySerialiser = entitySerialiser;
         }
 
-        public async Task DeleteAll(string folderName)
+        public async Task DeleteAll(string folderName, bool recurse)
         {
-            var files = await _applicationDataHelper.GetAllFilesInFolder(folderName);
+            var files = await _applicationDataHelper.GetAllFilesInFolder(folderName, recurse);
 
             if (files == null)
             {
@@ -47,10 +47,10 @@ namespace XamlingCore.Portable.Data.Repos.Base
             return await _applicationDataHelper.SaveString(fileName, s);
         }
 
-        public async Task<List<T>> GetAll<T>(string folderName)
+        public async Task<List<T>> GetAll<T>(string folderName, bool recurse)
             where T : class, new()
         {
-            var files = await _applicationDataHelper.GetAllFilesInFolder(folderName);
+            var files = await _applicationDataHelper.GetAllFilesInFolder(folderName, recurse);
 
             if (files == null)
             {

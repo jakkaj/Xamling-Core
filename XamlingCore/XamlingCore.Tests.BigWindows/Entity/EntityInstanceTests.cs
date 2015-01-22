@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using XamlingCore.Portable.Contract.Entities;
+using XamlingCore.Portable.Data.Entities;
 using XamlingCore.Portable.Data.Extensions;
 using XamlingCore.Portable.Model.Contract;
 using XamlingCore.Tests.BigWindows.Base;
@@ -16,6 +17,28 @@ namespace XamlingCore.Tests.BigWindows.Entity
     [TestClass]
     public class EntityInstanceTests : TestBase
     {
+        [TestMethod]
+        public async Task Clear_Manager_Test()
+        {
+            var p = new Person { Id = Guid.NewGuid() };
+            
+
+            var service = Resolve<IEntityManager<Person>>();
+            var cache = Resolve<IEntityCache>();
+
+
+            await p.Set();
+
+            var pgot = await service.Get(p.Id);
+            Assert.IsNotNull(pgot);
+
+            await cache.Clear();
+            await service.ClearAll();
+
+            var pgot2 = await service.Get(p.Id);
+            Assert.IsNull(pgot2);
+        }
+
         [TestMethod]
         public async Task EntitySaveAndLoad()
         {

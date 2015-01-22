@@ -207,7 +207,7 @@ namespace XamlingCore.Portable.Data.Entities
 
             using (var locked = await locker.LockAsync())
             {
-                var f = await _localStorageFileRepo.GetAll<XCacheItem<T>>(path);
+                var f = await _localStorageFileRepo.GetAll<XCacheItem<T>>(path, false);
                 if (f == null)
                 {
                     return null;
@@ -310,7 +310,7 @@ namespace XamlingCore.Portable.Data.Entities
 
             using (var locked = await locker.LockAsync())
             {
-                var f = await _localStorageFileRepo.GetAll<XCacheItem<T>>(path);
+                var f = await _localStorageFileRepo.GetAll<XCacheItem<T>>(path, true);
                 if (f == null)
                 {
                     return;
@@ -335,7 +335,7 @@ namespace XamlingCore.Portable.Data.Entities
             _memoryCache.Clear();
             //throw new NotImplementedException("Not implemented becasue of problems with https://bugzilla.xamarin.com/show_bug.cgi?id=11771");
 
-            await _localStorageFileRepo.DeleteAll("cache");
+            await _localStorageFileRepo.DeleteAll("cache", true);
         }
 
         void _updateItem<T>(T cacheItem, XCacheItem<T> cacheWrapper)

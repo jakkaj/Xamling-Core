@@ -13,9 +13,9 @@ namespace XamlingCore.Portable.Contract.Repos.Base
         Task<T> Get<T>(string fileName)
             where T : class, new();
 
-        Task<List<T>> GetAll<T>(string folderName)
+        Task<List<T>> GetAll<T>(string folderName, bool recurse)
             where T : class, new();
 
-        Task DeleteAll(string folderName);
+        Task DeleteAll(string folderName, bool recurse);
     }
 }

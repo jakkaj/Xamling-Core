@@ -6,7 +6,7 @@ using XamlingCore.Portable.Model.Contract;
 
 namespace XamlingCore.Portable.Contract.Entities
 {
-    public interface IEntityManager<T> where T : class, IEntity, new()
+    public interface IEntityManager<T> : IEntityManager where T : class, IEntity, new()
     {
         Task<List<T>> AllInBucket(string bucket, TimeSpan? maxAge = null);
         Task<bool> IsInBucket(string bucket, T entity);
@@ -22,5 +22,11 @@ namespace XamlingCore.Portable.Contract.Entities
         Task Delete(T entity);
         Task MoveToBucket(string bucket, T entity);
         event EventHandler<BucketUpdatedEventArgs> BucketsUpdated;
+    }
+
+    public interface IEntityManager
+    {
+        Task Clear();
+        Task ClearAll();
     }
 }

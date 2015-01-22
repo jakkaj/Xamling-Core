@@ -28,15 +28,18 @@ namespace XamlingCore.Portable.Data.Entities
 
         public event EventHandler<BucketUpdatedEventArgs> BucketsUpdated;
 
+        private static List<IEntityManager> _allManagers = new List<IEntityManager>();
+
         public EntityManager(IEntityCache entityCache, IEntityBucket<T> bucket)
         {
+            _allManagers.Add(this);
             _entityCache = entityCache;
             _bucket = bucket;
 
             _bucket.BucketsUpdated += _bucket_BucketUpdated;
         }
 
-        void _bucket_BucketUpdated(object sender, EventArgs e)
+        private void _bucket_BucketUpdated(object sender, EventArgs e)
         {
             if (BucketsUpdated != null)
             {
@@ -121,7 +124,7 @@ namespace XamlingCore.Portable.Data.Entities
             }
         }
 
-        async Task _reconcileBucket(string bucket, IEnumerable<Guid> ids, List<T> entities)
+        private async Task _reconcileBucket(string bucket, IEnumerable<Guid> ids, List<T> entities)
         {
             if (ids == null || entities == null)
             {
@@ -293,6 +296,25 @@ namespace XamlingCore.Portable.Data.Entities
         private string _getKey(Guid id)
         {
             return string.Format("em_{0}", id);
+        }
+
+        public async Task Clear()
+        {
+            using (var lRead = await _readLock.LockAsync())
+            {
+                using (var lSave = await _saveLock.LockAsync())
+                {
+                    _memoryCache.Clear();
+                }
+            }
+        }
+
+        public async Task ClearAll()
+        {
+            foreach (var i in _allManagers)
+            {
+                await i.Clear();
+            }
         }
     }
 

@@ -26,7 +26,7 @@ namespace XamlingCore.Windows8.Implementations
             }
         }
 
-        public async Task<List<string>> GetAllFilesInFolder(string folderPath)
+        public async Task<List<string>> GetAllFilesInFolder(string folderPath, bool recurse)
         {
 
             var path = folderPath.Split('\\').ToList();
@@ -48,8 +48,34 @@ namespace XamlingCore.Windows8.Implementations
 
             var files = await currentFolder.GetFilesAsync();
 
-            return files.Select(_ => _.Name).ToList();
+            var filesString = files.Select(_ => _.Name).ToList();
+
+            if (recurse)
+            {
+                var filesStringChildren = await _getAllFilesInFolderRecurse(currentFolder, await currentFolder.GetParentAsync());
+                filesString.AddRange(filesStringChildren);
+            }
+
+            return filesString;
         }
+
+        async Task<List<string>> _getAllFilesInFolderRecurse(StorageFolder currentFolder, StorageFolder topFolder)
+        {
+            List<string> files = new List<string>();
+
+            foreach(var f in await currentFolder.GetFoldersAsync())
+            {
+                files.AddRange(await _getAllFilesInFolderRecurse(f, topFolder));
+            }
+
+            var filesResult = await currentFolder.GetFilesAsync();
+
+            var filesString = filesResult.Select(_ => _.Path.Replace(topFolder.Path, "").Trim('\\')).ToList();
+            files.AddRange(filesString);
+            return files;
+        }
+
+        
 
         public async Task<bool> EnsureFolderExists(string folderPath)
         {
