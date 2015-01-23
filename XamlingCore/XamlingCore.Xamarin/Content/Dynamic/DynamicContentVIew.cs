@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Autofac;
 using Xamarin.Forms;
@@ -39,6 +40,13 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
         protected override void OnParentSet()
         {
             base.OnParentSet();
+
+            if (Parent == null)
+            {
+                Dispose();
+                return;
+            }
+
             if (BindingContext == null)
             {
                 SetBindingParent(Parent);
@@ -55,6 +63,7 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
             }
 
             BindingContext = bo.BindingContext;
+
         }
 
         public object DataContext
@@ -73,6 +82,10 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 
         private async static void _onDataContextChanged(BindableObject obj, object oldValue, object newValue)
         {
+            if (obj.BindingContext == null)
+            {
+                return;
+            }
           
             var viewer = obj as DynamicContentView;
             if (viewer == null)
@@ -93,8 +106,12 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
                     {
                         return;
                     }
-                    viewer.Content = null;
-                    viewer.IsVisible = false;
+                    try
+                    {
+                        viewer.Content = null;
+                        viewer.IsVisible = false;
+                    }catch{}
+                
                 }
                 return;
             }

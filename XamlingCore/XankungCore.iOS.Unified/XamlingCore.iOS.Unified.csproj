@@ -150,10 +150,6 @@
       <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
       <Name>XamlingCore.Portable.View</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Samples\XamlingCore.Samples\XamlingCore.Samples.csproj">
-      <Project>{07465752-9C33-46CB-B0C9-F7DED7FA7FFC}</Project>
-      <Name>XamlingCore.Samples</Name>
-    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Xamarin\XamlingCore.XamarinThings.csproj">
       <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
       <Name>XamlingCore.XamarinThings</Name>
