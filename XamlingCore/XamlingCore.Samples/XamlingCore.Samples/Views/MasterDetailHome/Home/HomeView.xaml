@@ -2,11 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 					   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 					   xmlns:forms="clr-namespace:XamlingCore.XamarinThings.Content.Forms;assembly=XamlingCore.XamarinThings"
+					   xmlns:dev="clr-namespace:XamlingCore.Samples.Views.Dev;assembly=XamlingCore.Samples"
 					   x:Class="XamlingCore.Samples.Views.MasterDetailHome.Home.HomeView">
   <StackLayout>
     <Label Text="Welcome to the main home thing" VerticalOptions="Center" HorizontalOptions="Center" />
     <Button Text="Click me" Command="{Binding NextPageCommand}"/>
     <forms:TransitionContentView DataContext="{Binding DynamicViewModel}" Duration="1000"/>
+    <dev:SpinnyThing HeightRequest="60" WidthRequest="60" HorizontalOptions="Center" VerticalOptions="Center"/>
     <!--<Button Text="Show a native view" Command="{Binding ShowNativeViewCommand}"/>-->
   </StackLayout>
 </ContentPage>

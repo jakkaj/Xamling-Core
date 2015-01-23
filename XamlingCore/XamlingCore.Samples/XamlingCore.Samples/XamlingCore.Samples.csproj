@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Dev\SpinnyThing.cs" />
     <Compile Include="Views\Home\MainNavigationHomeView.model.cs">
       <DependentUpon>MainNavigationHomeView.xaml</DependentUpon>
     </Compile>
