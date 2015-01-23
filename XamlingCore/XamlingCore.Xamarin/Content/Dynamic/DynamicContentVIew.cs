@@ -7,10 +7,15 @@ using XamlingCore.XamarinThings.Contract;
 
 namespace XamlingCore.XamarinThings.Content.Dynamic
 {
-    public class DynamicContentView : ContentView
+    public class DynamicContentView : ContentView, IDisposable
     {
+        private BindableObject _bindingParent;
+
+        private bool _isDisposed;
+
         public DynamicContentView(BindableObject bindingParent)
         {
+            _bindingParent = bindingParent;
             IsVisible = false;
             SetBindingParent(bindingParent);
         }
@@ -68,8 +73,14 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 
         private async static void _onDataContextChanged(BindableObject obj, object oldValue, object newValue)
         {
+          
             var viewer = obj as DynamicContentView;
             if (viewer == null)
+            {
+                return;
+            }
+
+            if (viewer._isDisposed)
             {
                 return;
             }
@@ -78,6 +89,10 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
             {
                 if (!await viewer.ContentSetOverride(null))
                 {
+                    if (viewer._isDisposed)
+                    {
+                        return;
+                    }
                     viewer.Content = null;
                     viewer.IsVisible = false;
                 }
@@ -98,6 +113,10 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 
             if (!await viewer.ContentSetOverride(v))
             {
+                if (viewer._isDisposed)
+                {
+                    return;
+                }
                 viewer.Content = v;
                 viewer.IsVisible = true;
             }
@@ -108,6 +127,17 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
         protected virtual async Task<bool> ContentSetOverride(View content)
         {
             return false;
+        }
+
+        public virtual void Dispose()
+        {
+            if (_bindingParent != null)
+            {
+                _bindingParent.BindingContextChanged -= v_BindingContextChanged;
+                _bindingParent = null;
+            }
+            BindingContext = null;
+            DataContext = null;
         }
     }
 }

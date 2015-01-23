@@ -6,7 +6,7 @@
   <StackLayout>
     <Label Text="Welcome to the main home thing" VerticalOptions="Center" HorizontalOptions="Center" />
     <Button Text="Click me" Command="{Binding NextPageCommand}"/>
-    <forms:TransitionContentView DataContext="{Binding DynamicViewModel}" Duration="1"/>
+    <forms:TransitionContentView DataContext="{Binding DynamicViewModel}" Duration="1000"/>
     <!--<Button Text="Show a native view" Command="{Binding ShowNativeViewCommand}"/>-->
   </StackLayout>
 </ContentPage>

@@ -2,10 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 					   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 					   xmlns:forms="clr-namespace:XamlingCore.XamarinThings.Content.Forms;assembly=XamlingCore.XamarinThings"
+					   xmlns:dynamic="clr-namespace:XamlingCore.XamarinThings.Content.Dynamic;assembly=XamlingCore.XamarinThings"
 					   x:Class="XamlingCore.Samples.Views.MasterDetailHome.Home.HomePageTwoView">
   <StackLayout>
     <Label Text="Home page 2" VerticalOptions="Center" HorizontalOptions="Center" />
-    <forms:TransitionContentView DataContext="{Binding DynamicViewModel}" Duration="1"/>
+    
+    <forms:TransitionContentView DataContext="{Binding DynamicViewModel }" Duration="1000" />
+    <!--<dynamic:DynamicContentView DataContext="{Binding DynamicViewModel}"/>-->
     <Button Text="Next" Command="{Binding NextCommand}"/>
   </StackLayout>
 

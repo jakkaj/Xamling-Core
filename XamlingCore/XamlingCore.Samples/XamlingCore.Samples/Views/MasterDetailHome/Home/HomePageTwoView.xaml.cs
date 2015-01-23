@@ -8,6 +8,12 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
         {  
             InitializeComponent();
             Title = "HomePageTwo";
+
+            //var root = this.Content as StackLayout;
+            //var transition = new TransitionContentView(this);
+            //transition.Duration = .5;
+            //transition.SetBinding(TransitionContentView.DataContextProperty, "DynamicViewModel");
+            //root.Children.Add(transition);
         }
     }
 }
