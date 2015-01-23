@@ -34,9 +34,9 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 
         public DynamicContentView()
         {
-            
+
         }
-        
+
         protected override void OnParentSet()
         {
             base.OnParentSet();
@@ -86,7 +86,7 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
             {
                 return;
             }
-          
+
             var viewer = obj as DynamicContentView;
             if (viewer == null)
             {
@@ -108,10 +108,11 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
                     }
                     try
                     {
-                        viewer.Content = null;
                         viewer.IsVisible = false;
-                    }catch{}
-                
+                        viewer.Content = null;
+                    }
+                    catch { }
+
                 }
                 return;
             }
@@ -134,11 +135,19 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
                 {
                     return;
                 }
-                viewer.Content = v;
-                viewer.IsVisible = true;
+
+                try
+                {
+                    viewer.IsVisible = true;
+                    viewer.Content = v;
+                }
+                catch
+                {
+                    
+                }
+                
+
             }
-            
-            
         }
 
         protected virtual async Task<bool> ContentSetOverride(View content)

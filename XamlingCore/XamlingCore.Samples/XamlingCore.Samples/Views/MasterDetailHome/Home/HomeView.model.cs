@@ -48,6 +48,12 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 
             DynamicViewModel = CreateContentModel<FirstDynamicViewModel>();
 
+            await Task.Delay(2000);
+            DynamicViewModel = null;
+
+            return;
+
+
             while (count < 3)
             {
                 await Task.Delay(3000);

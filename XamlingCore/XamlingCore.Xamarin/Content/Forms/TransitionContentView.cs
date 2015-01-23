@@ -33,14 +33,23 @@ namespace XamlingCore.XamarinThings.Content.Forms
         
         protected async override Task<bool> ContentSetOverride(View content)
         {
-            await this.FadeTo(0, Convert.ToUInt32(Duration), Easing.SinIn);
-
             if (!IsVisible)
             {
                 IsVisible = true;
             }
 
-            Content = content;
+            await this.FadeTo(0, Convert.ToUInt32(Duration), Easing.SinIn);
+
+            try
+            {
+                Content = content;
+            }
+            catch
+            {
+                
+            }
+
+            
 
             if (Content == null)
             {
