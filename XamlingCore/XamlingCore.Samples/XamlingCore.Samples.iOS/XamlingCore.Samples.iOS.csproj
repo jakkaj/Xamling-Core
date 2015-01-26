@@ -99,7 +99,6 @@
   <ItemGroup>
     <Compile Include="NativeViews\Forms\Playground\Transitions\TransitionsTestViewRender.cs" />
     <Compile Include="NativeViews\Forms\Playground\Transitions\TransitionsTestNativeView.cs" />
-    <Compile Include="NativeViews\Renderer\NavigationRender.cs" />
     <Compile Include="NativeViews\Storyboards\AnotherActualViewController.cs" />
     <Compile Include="NativeViews\Storyboards\AnotherActualViewController.designer.cs">
       <DependentUpon>AnotherActualViewController.cs</DependentUpon>
