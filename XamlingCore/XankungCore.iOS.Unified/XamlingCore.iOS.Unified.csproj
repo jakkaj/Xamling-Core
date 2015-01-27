@@ -48,6 +48,7 @@
     </Compile>
     <Compile Include="Controls\Loader\LoadingOverlayView.cs" />
     <Compile Include="Controls\Loader\SpinnyThingRenderer.cs" />
+    <Compile Include="Controls\Native\XNativePageRenderer.cs" />
     <Compile Include="Controls\Native\XNativeView.cs" />
     <Compile Include="Controls\Native\XNativeViewRenderer.cs" />
     <Compile Include="Controls\Pages\iOSMasterDetailPageRenderer.cs" />

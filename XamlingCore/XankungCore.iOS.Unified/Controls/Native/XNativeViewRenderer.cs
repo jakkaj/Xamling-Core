@@ -19,7 +19,6 @@ namespace XamlingCore.iOS.Unified.Controls.Native
 
         protected override void OnElementChanged(ElementChangedEventArgs<TFormsType> e)
         {
-            
             base.OnElementChanged(e);
 
             if (Control == null)
