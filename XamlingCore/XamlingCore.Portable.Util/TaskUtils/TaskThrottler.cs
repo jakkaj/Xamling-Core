@@ -1,8 +1,11 @@
-﻿//With the guidance from teh various posts on this StackOverflow
-//http://stackoverflow.com/questions/22492383/throttling-asynchronous-tasks
+﻿//With the guidance from teh various posts on this StackOverflow http://stackoverflow.com/questions/22492383/throttling-asynchronous-tasks
+//Rolled in with some AsyncLock bits from http://www.hanselman.com/blog/ComparingTwoTechniquesInNETAsynchronousCoordinationPrimitives.aspx
+//And a little of my own flavour
+
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Util.Lock;
@@ -22,9 +25,22 @@ namespace XamlingCore.Portable.Util.TaskUtils
 
         private SemaphoreSlim _semaphore;
 
+        private readonly Task<IDisposable> m_releaser;
+
         public TaskThrottler(int concurrentItems = 10)
         {
             _semaphore = new SemaphoreSlim(concurrentItems);
+            m_releaser = Task.FromResult((IDisposable)new Releaser(this));
+        }
+
+        public Task<IDisposable> LockAsync()
+        {
+            var wait = _semaphore.WaitAsync();
+            return wait.IsCompleted ?
+                        m_releaser :
+                        wait.ContinueWith((_, state) => (IDisposable)state,
+                            m_releaser.Result, CancellationToken.None,
+            TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
         }
 
 
@@ -74,7 +90,7 @@ namespace XamlingCore.Portable.Util.TaskUtils
 
         private static readonly Dictionary<string, TaskThrottler> Throttles = new Dictionary<string, TaskThrottler>();
 
-        static ManualResetEvent msr = new ManualResetEvent(true);
+        static SemaphoreSlim msr = new SemaphoreSlim(1);
 
         public static TaskThrottler GetNetwork(int concurrentItems = 10)
         {
@@ -88,7 +104,7 @@ namespace XamlingCore.Portable.Util.TaskUtils
                 return Throttles[name];
             }
 
-            msr.WaitOne();
+            msr.Wait();
 
             if (Throttles.ContainsKey(name))
             {
@@ -97,10 +113,17 @@ namespace XamlingCore.Portable.Util.TaskUtils
 
             var newThrottle = new TaskThrottler(concurrentItems ?? 10);
             Throttles.Add(name, newThrottle);
-
-            msr.Set();
+            Debug.WriteLine("Added name");
+            msr.Release();
 
             return newThrottle;
+        }
+
+        private sealed class Releaser : IDisposable
+        {
+            private readonly TaskThrottler m_toRelease;
+            internal Releaser(TaskThrottler toRelease) { m_toRelease = toRelease; }
+            public void Dispose() { m_toRelease._semaphore.Release(); }
         }
 
     }

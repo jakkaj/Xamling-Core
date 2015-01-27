@@ -16,6 +16,33 @@ namespace XamlingCore.Tests.BigWindows.Tasks
     [TestClass]
     public class TaskThrottleTests
     {
+
+        [TestMethod]
+        public async Task TestAsyncThrottlingUsingDisposeMethod()
+        {
+            //this is a very poor method for loops, good for throttling across many threads.
+            for (var i = 0; i < 500; i++)
+            {
+
+                var i2 = i;
+
+                Task.Run(async () =>
+                {
+                    using (var l = await TaskThrottler.Get("Test", 2).LockAsync())
+                    {
+                        Debug.WriteLine("Added: {0}", i2);
+                        await _doSomeWork();
+                    }
+                });
+
+
+            }
+
+
+            await Task.Delay(50000);
+
+        }
+
         [TestMethod]
         public async Task TestAsyncThrottlingReturns()
         {

@@ -40,10 +40,10 @@ namespace XamlingCore.Portable.Util.Lock
     public static class NamedLock
     {
         private static readonly Dictionary<string, AsyncLock> Locks = new Dictionary<string, AsyncLock>();
-        
+
         private static readonly AsyncLock Locker = new AsyncLock();
 
-        static ManualResetEvent msr = new ManualResetEvent(true);
+        static SemaphoreSlim msr = new SemaphoreSlim(1);
 
         public static AsyncLock Get(string name)
         {
@@ -51,8 +51,8 @@ namespace XamlingCore.Portable.Util.Lock
             {
                 return Locks[name];
             }
-            
-            msr.WaitOne();
+
+            msr.Wait();
 
 
             if (Locks.ContainsKey(name))
@@ -63,18 +63,16 @@ namespace XamlingCore.Portable.Util.Lock
             var newLock = new AsyncLock();
             Locks.Add(name, newLock);
 
-            msr.Set();
+            msr.Release();
 
             return newLock;
         }
 
         public static async Task Clear()
         {
-            using (var l = await Locker.LockAsync())
-            {
-                Locks.Clear();
-            }
-
+            msr.Wait();
+            Locks.Clear();
+            msr.Release();
         }
     }
 }
