@@ -19,6 +19,7 @@ namespace XamlingCore.Portable.Util.TaskUtils
     /// </summary>
     public class TaskThrottler
     {
+        private readonly string _name;
         private int _concurrentItems;
 
         private int _currentCount = 0;
@@ -27,15 +28,24 @@ namespace XamlingCore.Portable.Util.TaskUtils
 
         private readonly Task<IDisposable> m_releaser;
 
-        public TaskThrottler(int concurrentItems = 10)
+        protected TaskThrottler(string name, int concurrentItems = 10)
         {
+            _name = name;
+            _concurrentItems = concurrentItems;
             _semaphore = new SemaphoreSlim(concurrentItems);
             m_releaser = Task.FromResult((IDisposable)new Releaser(this));
         }
 
         public Task<IDisposable> LockAsync()
         {
+            
             var wait = _semaphore.WaitAsync();
+
+            if (!wait.IsCompleted)
+            {
+                Debug.WriteLine("TaskThrottler throttled " + _name + " at " + _concurrentItems);
+            }
+
             return wait.IsCompleted ?
                         m_releaser :
                         wait.ContinueWith((_, state) => (IDisposable)state,
@@ -111,7 +121,7 @@ namespace XamlingCore.Portable.Util.TaskUtils
                 return Throttles[name];
             }
 
-            var newThrottle = new TaskThrottler(concurrentItems ?? 10);
+            var newThrottle = new TaskThrottler(name, concurrentItems ?? 10);
             Throttles.Add(name, newThrottle);
             Debug.WriteLine("Added name");
             msr.Release();
