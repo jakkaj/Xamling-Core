@@ -20,9 +20,6 @@ namespace XamlingCore.Portable.Util.TaskUtils
 
         private int _currentCount = 0;
 
-        AsyncLock _throttleLock = new AsyncLock();
-        AsyncLock _countLock = new AsyncLock();
-
         private SemaphoreSlim _semaphore;
 
         public TaskThrottler(int concurrentItems = 10)
