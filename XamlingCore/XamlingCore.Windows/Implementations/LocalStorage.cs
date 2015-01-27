@@ -32,6 +32,11 @@ namespace XamlingCore.Windows.Implementations
             }
         }
 
+        public string GetFullPath(string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> Copy(string source, string newName, bool replace = true)
         {
             var _lock = NamedLock.Get(newName);

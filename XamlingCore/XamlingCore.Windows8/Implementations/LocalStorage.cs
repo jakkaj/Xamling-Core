@@ -26,6 +26,11 @@ namespace XamlingCore.Windows8.Implementations
             }
         }
 
+        public string GetFullPath(string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<string>> GetAllFilesInFolder(string folderPath, bool recurse)
         {
 

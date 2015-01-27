@@ -34,8 +34,6 @@ namespace XamlingCore.Tests.BigWindows.Tasks
                         await _doSomeWork();
                     }
                 });
-
-
             }
 
 

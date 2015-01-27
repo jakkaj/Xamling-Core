@@ -14,6 +14,11 @@ namespace XamlingCore.iOS.Unified.Implementations
 {
     public class LocalStorage : ILocalStorage
     {
+        public string GetFullPath(string fileName)
+        {
+            return _getPath(fileName);
+        }
+
         public async Task<bool> IsZero(string fileName)
         {
             var _lock = NamedLock.Get(fileName);
