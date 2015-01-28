@@ -38,7 +38,7 @@ namespace XamlingCore.Portable.Util.TaskUtils
 
         public Task<IDisposable> LockAsync()
         {
-            
+
             var wait = _semaphore.WaitAsync();
 
             if (!wait.IsCompleted)
@@ -60,7 +60,14 @@ namespace XamlingCore.Portable.Util.TaskUtils
 
             Task.Run(async () =>
             {
-                await _semaphore.WaitAsync();
+                var wait = _semaphore.WaitAsync();
+
+                if (!wait.IsCompleted)
+                {
+                    Debug.WriteLine("TaskThrottler throttled " + _name + " at " + _concurrentItems);
+                }
+
+                await wait;
 
                 try
                 {
@@ -80,14 +87,29 @@ namespace XamlingCore.Portable.Util.TaskUtils
         {
             var t = new TaskCompletionSource<bool>();
 
+            var wait = _semaphore.WaitAsync();
+
+            if (!wait.IsCompleted)
+            {
+                //Debug.WriteLine("TaskThrottler throttled " + _name + " at " + _concurrentItems);
+            }
+            else
+            {
+                t.SetResult(true);
+            }
+
             Task.Run(async () =>
             {
-                await _semaphore.WaitAsync();
-
                 try
                 {
+                    await wait;
+
+                    if (!t.Task.IsCompleted)
+                    {
+                        t.SetResult(true);
+                    }
+
                     await sourceTask();
-                    t.SetResult(true);
                 }
                 finally
                 {

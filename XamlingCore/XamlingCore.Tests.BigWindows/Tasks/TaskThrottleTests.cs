@@ -59,12 +59,27 @@ namespace XamlingCore.Tests.BigWindows.Tasks
         [TestMethod]
         public async Task TestAsyncThrottlingNoReturns()
         {
-            var throttler = TaskThrottler.Get("Test", 500);
+            var throttler = TaskThrottler.Get("Test", 2);
             List<Task> tasks = new List<Task>();
             for (var i = 0; i < 5000; i++)
             {
                  tasks.Add(throttler.Throttle(_doSomeWork));
                
+                Debug.WriteLine("Added: {0}", i);
+            }
+
+            await Task.WhenAll(tasks);
+        }
+
+        [TestMethod]
+        public async Task TestAsyncNoThrottlingNoReturns()
+        {
+            var throttler = TaskThrottler.Get("Test", 500);
+            List<Task> tasks = new List<Task>();
+            for (var i = 0; i < 5000; i++)
+            {
+                tasks.Add(_doSomeWork());
+
                 Debug.WriteLine("Added: {0}", i);
             }
 
