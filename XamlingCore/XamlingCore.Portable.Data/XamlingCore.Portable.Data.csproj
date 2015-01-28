@@ -68,7 +68,7 @@
     <Compile Include="Glue\ContainerHost.cs" />
     <Compile Include="Mapper\SimpleMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repos\Base\BasicWebRepoBase.cs" />
+    <Compile Include="Repos\Base\WebRepo.cs" />
     <Compile Include="Repos\Base\LocalStorageFileRepo.cs" />
     <Compile Include="Repos\Base\SimpleLocalStorageEntityRepo.cs" />
     <Compile Include="Repos\LocalStorageSettingsRepo.cs" />

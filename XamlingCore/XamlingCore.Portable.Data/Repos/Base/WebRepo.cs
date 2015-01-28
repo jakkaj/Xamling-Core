@@ -9,13 +9,13 @@ using XamlingCore.Portable.Contract.Serialise;
 
 namespace XamlingCore.Portable.Data.Repos.Base
 {
-    public abstract class BasicWebRepoBase<TEntity> : IBasicWebRepoBase<TEntity> where TEntity : class, new()
+    public abstract class WebRepo<TEntity> : IWebRepo<TEntity> where TEntity : class, new()
     {
         private readonly IHttpTransferrer _downloader;
         private readonly IEntitySerialiser _entitySerialiser;
         private readonly string _service;
 
-        protected BasicWebRepoBase(IHttpTransferrer downloader, IEntitySerialiser entitySerialiser, string service)
+        protected WebRepo(IHttpTransferrer downloader, IEntitySerialiser entitySerialiser, string service)
         {
             _downloader = downloader;
             _entitySerialiser = entitySerialiser;
@@ -108,10 +108,10 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         #region DELETE
 
-        public async Task<bool> Delete(string extra = null)
+        public async Task<bool> Delete(Guid id, string extra = null)
         {
-            var result = await _downloader.Download(_service + extra, "DELETE");
-            return (result.IsSuccessCode);
+            var result = await SendRaw(null, "/" + id + extra, "DELETE");
+            return result != null && result.IsSuccessCode;
         }
 
         #endregion

@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Downloaders;
 
 namespace XamlingCore.Portable.Contract.Repos.Base
 {
-    public interface IBasicWebRepoBase<TEntity> where TEntity : class, new()
+    public interface IWebRepo<TEntity> where TEntity : class, new()
     {
         Task<TEntity> Post<TRequest>(TRequest entity, string extra = null);
         Task<TEntity> Post(string serialisedData, string extra = null);
 
-        Task<bool> Delete(string extra = null);
+        Task<bool> Delete(Guid id, string extra = null);
         Task<TEntity> Get(string extra = null);
 
         Task<TEntity> Put<TRequest>(TRequest entity, string extra = null);
