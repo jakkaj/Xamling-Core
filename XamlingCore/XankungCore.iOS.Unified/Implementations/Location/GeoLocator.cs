@@ -143,7 +143,7 @@ namespace XamlingCore.iOS.Unified.Implementations.Location
             if (minDistance < 0)
                 throw new ArgumentOutOfRangeException("minDistance");
             if (this.isListening)
-                throw new InvalidOperationException("Already listening");
+                return;
 
             this.isListening = true;
             this.manager.DesiredAccuracy = DesiredAccuracy;

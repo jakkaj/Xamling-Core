@@ -91,6 +91,11 @@ namespace XamlingCore.Portable.Workflow.Flow
             return this;
         }
 
+        public XStage GetStage(string stageId)
+        {
+            return _stages.FirstOrDefault(_ => _.StageId == stageId);
+        }
+
         public XFlowState GetState(Guid id)
         {
             return _state.FirstOrDefault(_ => _.ItemId == id);
@@ -103,7 +108,6 @@ namespace XamlingCore.Portable.Workflow.Flow
                 return
                     _state.Where(item => item.State != XFlowStates.Success && item.State != XFlowStates.Fail).ToList();
             }
-
         }
 
         public async Task<bool> ResumeDisconnected(Guid id, bool result)
@@ -427,7 +431,7 @@ namespace XamlingCore.Portable.Workflow.Flow
 
         async Task _successResult(XFlowState state)
         {
-            state.Text = "";
+            //state.Text = "";
             state.PreviousStageSuccess = true;
 
             if (state.PreviousStageResult != null && state.PreviousStageResult.CompleteNow)
@@ -539,6 +543,7 @@ namespace XamlingCore.Portable.Workflow.Flow
 
                 foreach (var item in loadedState)
                 {
+                    item.ParentFlow = this;
                     if (string.IsNullOrWhiteSpace(item.StageId))
                     {
                         Debug.WriteLine("Dud stage id from saved item, ignoring");

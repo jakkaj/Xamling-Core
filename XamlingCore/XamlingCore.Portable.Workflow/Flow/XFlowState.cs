@@ -25,8 +25,17 @@ namespace XamlingCore.Portable.Workflow.Flow
         private XStageResult _previousStageResult;
 
         public event EventHandler FlowCompleted;
+        public event EventHandler StageChanged;
 
         public XFlow ParentFlow { get; set; }
+
+        void _notifyStageChanged()
+        {
+            if (StageChanged != null)
+            {
+                StageChanged(this, EventArgs.Empty);
+            }
+        }
 
         public Guid ItemId
         {
@@ -45,6 +54,7 @@ namespace XamlingCore.Portable.Workflow.Flow
             {
                 _stageId = value;
                 OnPropertyChanged();
+                _notifyStageChanged();
             }
         }
 
@@ -55,6 +65,7 @@ namespace XamlingCore.Portable.Workflow.Flow
             {
                 _state = value;
                 OnPropertyChanged();
+                _notifyStageChanged();
             }
         }
 
@@ -71,6 +82,7 @@ namespace XamlingCore.Portable.Workflow.Flow
                 }
 
                 OnPropertyChanged();
+                _notifyStageChanged();
             }
         }
 
