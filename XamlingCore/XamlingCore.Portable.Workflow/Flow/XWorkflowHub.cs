@@ -55,7 +55,7 @@ namespace XamlingCore.Portable.Workflow.Flow
             return flow.GetState(id);
         }
 
-        public async Task<XFlow> Start(string flowId, Guid id)
+        public async Task<XFlowState> Start(string flowId, Guid id)
         {
             var f = _flows.FirstOrDefault(_ => _.FlowId == flowId);
             
@@ -64,9 +64,9 @@ namespace XamlingCore.Portable.Workflow.Flow
                 throw new NullReferenceException("Could not find flow with flowId: " + flowId);
             }
 
-            await f.Start(id);
+            var flow = await f.Start(id);
 
-            return f;
+            return flow;
         }
 
         public async Task<List<XFlow>> GetInProgressFlow()

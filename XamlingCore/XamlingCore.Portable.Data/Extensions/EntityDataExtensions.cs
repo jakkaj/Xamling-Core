@@ -30,10 +30,10 @@ namespace XamlingCore.Portable.Data.Extensions
             return _getContainer().Resolve<XWorkflowHub>();
         }
 
-        public static async Task<XFlow> StartWorkflow<T>(this T entity, string flowId) where T : class, IEntity, new()
+        public static async Task<XFlowState> StartWorkflow<T>(this T entity, string flowId) where T : class, IEntity, new()
         {
-            var flow = await _getHub().Start(flowId, entity.Id);
-            return flow;
+            var flowState = await _getHub().Start(flowId, entity.Id);
+            return flowState;
         }
 
         public static XFlow GetFlow<T>(this T entity, string flowId) where T : class, IEntity, new()

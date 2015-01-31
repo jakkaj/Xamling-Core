@@ -39,8 +39,9 @@ namespace XamlingCore.Tests.BigWindows.Workflow
 
 
             var id = Guid.NewGuid();
-            var activeFlow = await hub.Start(idFlow2.ToString(), id);
-
+            
+            var activeFlowState = await hub.Start(idFlow2.ToString(), id);
+            var activeFlow = activeFlowState.ParentFlow;
             var state = activeFlow.GetState(id);
 
             await Task.Run(async () =>
@@ -89,7 +90,7 @@ namespace XamlingCore.Tests.BigWindows.Workflow
             var id = Guid.NewGuid();
             var activeFlow = await hub.Start(idFlow.ToString(), id);
 
-            var state = activeFlow.GetState(id);
+            var state = activeFlow.ParentFlow.GetState(id);
 
             await Task.Run(async () =>
             {
@@ -99,10 +100,10 @@ namespace XamlingCore.Tests.BigWindows.Workflow
 
                     if (state.State == XFlowStates.DisconnectedProcessing)
                     {
-                        await activeFlow.ResumeDisconnected(id, true);
+                        await activeFlow.ParentFlow.ResumeDisconnected(id, true);
                     }
 
-                    if ((await activeFlow.GetInProgressItems()).Count == 0)
+                    if ((await activeFlow.ParentFlow.GetInProgressItems()).Count == 0)
                     {
                         break;
                     }
@@ -112,9 +113,9 @@ namespace XamlingCore.Tests.BigWindows.Workflow
 
             });
 
-            Assert.IsTrue((await activeFlow.GetInProgressItems()).Count == 0);
-            Assert.IsTrue((await activeFlow.GetFailedItems()).Count == 0);
-            Assert.IsTrue((await activeFlow.GetAllItems()).Count >= 1);
+            Assert.IsTrue((await activeFlow.ParentFlow.GetInProgressItems()).Count == 0);
+            Assert.IsTrue((await activeFlow.ParentFlow.GetFailedItems()).Count == 0);
+            Assert.IsTrue((await activeFlow.ParentFlow.GetAllItems()).Count >= 1);
         }
 
         [TestMethod]
@@ -143,7 +144,7 @@ namespace XamlingCore.Tests.BigWindows.Workflow
                     await Task.Delay(1000);
                     var f = activeFlow;
 
-                    if ((await activeFlow.GetInProgressItems()).Count == 0)
+                    if ((await activeFlow.ParentFlow.GetInProgressItems()).Count == 0)
                     {
                         break;
                     }
@@ -153,9 +154,9 @@ namespace XamlingCore.Tests.BigWindows.Workflow
 
             });
 
-            Assert.IsTrue((await activeFlow.GetInProgressItems()).Count == 0);
-            Assert.IsTrue((await activeFlow.GetFailedItems()).Count == 0);
-            Assert.IsTrue((await activeFlow.GetAllItems()).Count >= 1);
+            Assert.IsTrue((await activeFlow.ParentFlow.GetInProgressItems()).Count == 0);
+            Assert.IsTrue((await activeFlow.ParentFlow.GetFailedItems()).Count == 0);
+            Assert.IsTrue((await activeFlow.ParentFlow.GetAllItems()).Count >= 1);
         }
 
         [TestMethod]
@@ -182,7 +183,7 @@ namespace XamlingCore.Tests.BigWindows.Workflow
                     await Task.Delay(1000);
                     var f = activeFlow;
 
-                    if ((await activeFlow.GetInProgressItems()).Count == 0)
+                    if ((await activeFlow.ParentFlow.GetInProgressItems()).Count == 0)
                     {
                         break;
                     }
@@ -192,9 +193,9 @@ namespace XamlingCore.Tests.BigWindows.Workflow
 
             });
 
-            Assert.IsTrue((await activeFlow.GetInProgressItems()).Count == 0);
-            Assert.IsTrue((await activeFlow.GetFailedItems()).Count >= 1);
-            Assert.IsTrue((await activeFlow.GetAllItems()).Count >= 1);
+            Assert.IsTrue((await activeFlow.ParentFlow.GetInProgressItems()).Count == 0);
+            Assert.IsTrue((await activeFlow.ParentFlow.GetFailedItems()).Count >= 1);
+            Assert.IsTrue((await activeFlow.ParentFlow.GetAllItems()).Count >= 1);
 
 
         }
@@ -284,7 +285,7 @@ namespace XamlingCore.Tests.BigWindows.Workflow
                 var g = Guid.NewGuid();
                 ids.Add(g);
                 var activeFlow = await hub.Start(flowTemp.ToString(), g);
-                var state = activeFlow.GetState(g);
+                var state = activeFlow.ParentFlow.GetState(g);
                 await Task.Run(async () =>
                 {
                     while (true)
@@ -346,7 +347,7 @@ namespace XamlingCore.Tests.BigWindows.Workflow
                 var g = Guid.NewGuid();
                 ids.Add(g);
                 var activeFlow = await hub.Start(flowTemp.ToString(), g);
-                var state = activeFlow.GetState(g);
+                var state = activeFlow.ParentFlow.GetState(g);
                 
             }
 

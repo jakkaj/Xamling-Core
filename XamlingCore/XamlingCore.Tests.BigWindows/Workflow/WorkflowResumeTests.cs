@@ -25,8 +25,8 @@ namespace XamlingCore.Tests.BigWindows.Workflow
                 .AddStage("TestFlow.FinalStage", "Stage final...", "Stage final failed", _passResult, false)
                 .Complete();
 
-            var activeFlow = await hub.Start("TestFlowPass", Guid.NewGuid());
-
+            var activeFlowState = await hub.Start("TestFlowPass", Guid.NewGuid());
+            var activeFlow = activeFlowState.ParentFlow;
             Assert.IsTrue((await activeFlow.GetInProgressItems()).Count != 0);
             Assert.IsTrue((await activeFlow.GetFailedItems()).Count == 0);
 

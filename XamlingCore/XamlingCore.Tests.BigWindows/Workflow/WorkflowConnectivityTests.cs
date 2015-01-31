@@ -37,8 +37,9 @@ namespace XamlingCore.Tests.BigWindows.Workflow
 
 
 
-            var activeFlow = await hub.Start("TestFlowPass", Guid.NewGuid());
-
+           
+            var activeFlowState = await hub.Start("TestFlowPass", Guid.NewGuid());
+            var activeFlow = activeFlowState.ParentFlow;
 
 
             await Task.Run(async () =>

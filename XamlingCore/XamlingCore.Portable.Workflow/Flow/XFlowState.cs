@@ -12,7 +12,7 @@ namespace XamlingCore.Portable.Workflow.Flow
     {
         private Guid _itemId;
         private XFlowStates _state;
-        private bool _complete;
+        private bool _isComplete;
         private bool _previousStageSuccess;
         private int _failureCount;
         private bool _dismissed;
@@ -20,6 +20,7 @@ namespace XamlingCore.Portable.Workflow.Flow
         private DateTime _timestamp;
         private string _text;
         private string _stageId;
+
         public Guid Id { get; set; }
 
         private XStageResult _previousStageResult;
@@ -35,6 +36,12 @@ namespace XamlingCore.Portable.Workflow.Flow
             {
                 StageChanged(this, EventArgs.Empty);
             }
+        }
+
+        public override string ToString()
+        {
+            return string.Format(
+                "[XFlowState: StageId: {0}, ItemId: {1}, Guid: {2}]", StageId, ItemId, Id);
         }
 
         public Guid ItemId
@@ -69,12 +76,12 @@ namespace XamlingCore.Portable.Workflow.Flow
             }
         }
 
-        public bool Complete
+        public bool IsComplete
         {
-            get { return _complete; }
+            get { return _isComplete; }
             set
             {
-                _complete = value;
+                _isComplete = value;
 
                 if (value && FlowCompleted!=null)
                 {

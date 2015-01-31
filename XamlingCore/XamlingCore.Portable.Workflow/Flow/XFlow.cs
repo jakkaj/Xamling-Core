@@ -126,6 +126,8 @@ namespace XamlingCore.Portable.Workflow.Flow
                 return false;
             }
 
+            Debug.WriteLine("Resuming disconnected flow: {0}, with result {1}", state, result);
+
             if (result)
             {
                 await _successResult(state);
@@ -164,7 +166,7 @@ namespace XamlingCore.Portable.Workflow.Flow
             }
         }
 
-        public async Task<bool> Start(Guid id)
+        public async Task<XFlowState> Start(Guid id)
         {
             if (!IsComplete)
             {
@@ -190,7 +192,7 @@ namespace XamlingCore.Portable.Workflow.Flow
                     //if it's not failed or completed then clear it and start gain. 
                     if (existing.State != XFlowStates.Fail && existing.State != XFlowStates.Success)
                     {
-                        return false;
+                        return null;
                     }
 
                     _state.Remove(existing);
@@ -203,7 +205,7 @@ namespace XamlingCore.Portable.Workflow.Flow
 
             _cancelProcessWait();
 
-            return true;
+            return flowState;
 
         }
 
@@ -337,7 +339,7 @@ namespace XamlingCore.Portable.Workflow.Flow
                 {
                     state.State = XFlowStates.DisconnectedProcessing;
                     await _save();
-                    Debug.WriteLine("Stopping flow for disconnected state, will resume when asked.");
+                    Debug.WriteLine("Stopping flow for disconnected state, will resume when asked. {0}", state);
                     return;
                 }
 
@@ -463,7 +465,10 @@ namespace XamlingCore.Portable.Workflow.Flow
                 return;
             }
 
-            state.Complete = true;
+            state.IsComplete = true;
+
+            Debug.WriteLine("Completed State Flow with {0}: {1}", state.PreviousStageSuccess, state);
+
             if (state.PreviousStageSuccess)
             {
                 state.State = XFlowStates.Success;
