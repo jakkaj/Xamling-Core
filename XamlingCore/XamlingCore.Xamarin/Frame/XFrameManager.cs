@@ -14,7 +14,7 @@ namespace XamlingCore.XamarinThings.Frame
         private readonly ILifetimeScope _scope;
         private readonly IViewResolver _viewResolver;
 
-        private FormsAlertHandler _alertHandler;
+        private static FormsAlertHandler _alertHandler;
 
         public XFrameManager(ILifetimeScope scope, IViewResolver viewResolver)
         {
@@ -53,7 +53,10 @@ namespace XamlingCore.XamarinThings.Frame
 
         void _configureAlerts(Page rootPage)
         {
-            _alertHandler = new FormsAlertHandler(rootPage);
+            if (_alertHandler == null)
+            {
+                _alertHandler = new FormsAlertHandler(rootPage);
+            }
         }
 
         public IFrameNavigator FrameNavigator { get; set; }
