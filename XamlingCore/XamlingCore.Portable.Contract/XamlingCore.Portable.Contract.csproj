@@ -64,6 +64,7 @@
     <Compile Include="Navigation\IXNavigation.cs" />
     <Compile Include="Network\IDeviceNetworkStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repos\Base\IOperationWebRepo.cs" />
     <Compile Include="Repos\Base\IWebRepo.cs" />
     <Compile Include="Repos\Base\ILocalStorageFileRepo.cs" />
     <Compile Include="Repos\Base\ISimpleEntityRepo.cs" />
