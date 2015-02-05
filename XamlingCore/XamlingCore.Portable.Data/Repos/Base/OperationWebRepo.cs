@@ -33,6 +33,11 @@ namespace XamlingCore.Portable.Data.Repos.Base
             return true;
         }
 
+        public virtual bool OnEntityRetreived<TOverride>(OperationResult<TOverride> entity)
+        {
+            return true;
+        }
+
         public virtual bool OnEntityListRetreived(OperationResult<List<TEntity>> entity)
         {
             return true;
@@ -119,6 +124,11 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         #region GET
 
+        public async Task<OperationResult<TOverride>> Get<TOverride>(string extra = null) where TOverride : class, new()
+        {
+            return await _sendOverride<TOverride>(null, extra, "GET");
+        }
+
         public async Task<OperationResult<TEntity>> Get(string extra = null)
         {
             return await _send(null, extra, "GET");
@@ -202,16 +212,16 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         #region SendGet
 
-        private async Task<OperationResult<TEntity>> _send(string serialisedData = null, string extra = null, string method = "POST")
+        private async Task<OperationResult<TOverride>> _sendOverride<TOverride>(string serialisedData = null, string extra = null, string method = "POST") where TOverride : class, new()
         {
             var result = await SendRaw(serialisedData, extra, method);
 
             if (result.Result == null)
             {
-                return new OperationResult<TEntity>(null, OperationResults.NoData);
+                return new OperationResult<TOverride>(null, OperationResults.NoData);
             }
 
-            var e = Deserialise<TEntity>(result.Result);
+            var e = Deserialise<TOverride>(result.Result);
 
             if (OnEntityRetreived(e))
             {
@@ -219,6 +229,11 @@ namespace XamlingCore.Portable.Data.Repos.Base
             }
 
             return null;
+        }
+
+        private Task<OperationResult<TEntity>> _send(string serialisedData = null, string extra = null, string method = "POST")
+        {
+            return _sendOverride<TEntity>(serialisedData, extra, method);
         }
 
         private async Task<OperationResult<List<TEntity>>> _sendList(string serialisedData = null, string extra = null, string method = "POST")
