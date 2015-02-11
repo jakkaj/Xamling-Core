@@ -260,7 +260,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
             var result = await _downloader.Download(_service + extra, method, serialisedData);
 
             if (!OnResultRetrieved(result))
-            {
+            {   
                 return null;
             }
 
