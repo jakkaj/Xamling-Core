@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace XamlingCore.Portable.Contract.Repos.Base
 {
-    public interface ILocalStorageFileRepo
+    public interface IStorageFileRepo
     {
         Task<bool> Delete(string fileName);
 
@@ -17,5 +17,7 @@ namespace XamlingCore.Portable.Contract.Repos.Base
             where T : class, new();
 
         Task DeleteAll(string folderName, bool recurse);
+
+        bool DisableMultitenant { get; set; }
     }
 }

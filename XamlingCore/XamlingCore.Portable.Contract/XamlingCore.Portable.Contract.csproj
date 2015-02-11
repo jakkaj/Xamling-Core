@@ -66,7 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repos\Base\IOperationWebRepo.cs" />
     <Compile Include="Repos\Base\IWebRepo.cs" />
-    <Compile Include="Repos\Base\ILocalStorageFileRepo.cs" />
+    <Compile Include="Repos\Base\IStorageFileRepo.cs" />
     <Compile Include="Repos\Base\ISimpleEntityRepo.cs" />
     <Compile Include="Repos\ISettingsRepo.cs" />
     <Compile Include="Serialise\IEntitySerialiser.cs" />

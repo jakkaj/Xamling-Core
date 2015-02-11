@@ -8,7 +8,7 @@ using XamlingCore.Portable.Contract.Serialise;
 
 namespace XamlingCore.Portable.Data.Repos.Base
 {
-    public class LocalStorageFileRepo : ILocalStorageFileRepo
+    public class LocalStorageFileRepo : IStorageFileRepo
     {
         private readonly ILocalStorage _applicationDataHelper;
         private readonly IEntitySerialiser _entitySerialiser;
@@ -32,6 +32,14 @@ namespace XamlingCore.Portable.Data.Repos.Base
             {
                 await _applicationDataHelper.DeleteFile(item);
             }
+        }
+
+        //This repo version is designed to work in a non multi-tenated scenario 
+        //(i.e. on a mobile device client with one user)
+        public bool DisableMultitenant
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
         }
 
         public async Task<bool> Delete(string fileName)

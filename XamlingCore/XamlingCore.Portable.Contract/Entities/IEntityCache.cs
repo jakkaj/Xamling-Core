@@ -22,5 +22,7 @@ namespace XamlingCore.Portable.Contract.Entities
             where T : class, new();
 
         Task<TimeSpan?> GetAge<T>(string key) where T : class, new();
+
+        bool DisableMultitenant { get; set; }
     }
 }

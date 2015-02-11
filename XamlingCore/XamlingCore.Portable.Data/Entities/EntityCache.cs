@@ -13,14 +13,14 @@ namespace XamlingCore.Portable.Data.Entities
 {
     public class EntityCache : IEntityCache
     {
-        private readonly ILocalStorageFileRepo _localStorageFileRepo;
+        private readonly IStorageFileRepo _storageFileRepo;
 
         private Dictionary<Type, Dictionary<string, object>> _memoryCache =
             new Dictionary<Type, Dictionary<string, object>>();
 
-        public EntityCache(ILocalStorageFileRepo localStorageFileRepo)
+        public EntityCache(IStorageFileRepo storageFileRepo)
         {
-            _localStorageFileRepo = localStorageFileRepo;
+            _storageFileRepo = storageFileRepo;
         }
 
         public void DisableMemoryCache()
@@ -207,7 +207,7 @@ namespace XamlingCore.Portable.Data.Entities
 
             using (var locked = await locker.LockAsync())
             {
-                var f = await _localStorageFileRepo.GetAll<XCacheItem<T>>(path, false);
+                var f = await _storageFileRepo.GetAll<XCacheItem<T>>(path, false);
                 if (f == null)
                 {
                     return null;
@@ -230,7 +230,7 @@ namespace XamlingCore.Portable.Data.Entities
 
                 if (f == null)
                 {
-                    f = await _localStorageFileRepo.Get<XCacheItem<T>>(fullName);
+                    f = await _storageFileRepo.Get<XCacheItem<T>>(fullName);
 
                     if (f != null && f.Item != null)
                     {
@@ -268,7 +268,7 @@ namespace XamlingCore.Portable.Data.Entities
 
                 if (f == null)
                 {
-                    f = await _localStorageFileRepo.Get<XCacheItem<T>>(fullName);
+                    f = await _storageFileRepo.Get<XCacheItem<T>>(fullName);
 
                     if (f != null && f.Item != null)
                     {
@@ -297,7 +297,7 @@ namespace XamlingCore.Portable.Data.Entities
             {
                 var fullName = _getFullKey<T>(key);
                 var cacheEntity = _setMemory(key, item, DateTime.UtcNow);
-                return await _localStorageFileRepo.Set(cacheEntity, fullName);
+                return await _storageFileRepo.Set(cacheEntity, fullName);
             }
         }
 
@@ -310,7 +310,7 @@ namespace XamlingCore.Portable.Data.Entities
 
             using (var locked = await locker.LockAsync())
             {
-                var f = await _localStorageFileRepo.GetAll<XCacheItem<T>>(path, true);
+                var f = await _storageFileRepo.GetAll<XCacheItem<T>>(path, true);
                 if (f == null)
                 {
                     return;
@@ -327,7 +327,7 @@ namespace XamlingCore.Portable.Data.Entities
         {
             var fullName = _getFullKey<T>(key);
             _deleteMemory<T>(key);
-            return await _localStorageFileRepo.Delete(fullName);
+            return await _storageFileRepo.Delete(fullName);
         }
 
         public async Task Clear()
@@ -335,7 +335,7 @@ namespace XamlingCore.Portable.Data.Entities
             _memoryCache.Clear();
             //throw new NotImplementedException("Not implemented becasue of problems with https://bugzilla.xamarin.com/show_bug.cgi?id=11771");
 
-            await _localStorageFileRepo.DeleteAll("cache", true);
+            await _storageFileRepo.DeleteAll("cache", true);
         }
 
         void _updateItem<T>(T cacheItem, XCacheItem<T> cacheWrapper)
@@ -393,6 +393,12 @@ namespace XamlingCore.Portable.Data.Entities
             tName = tName.Replace("`", "-g-");
 
             return tName;
+        }
+
+        public bool DisableMultitenant
+        {
+            get { return _storageFileRepo.DisableMultitenant; }
+            set { _storageFileRepo.DisableMultitenant = value; }
         }
     }
 }

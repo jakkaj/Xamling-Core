@@ -28,7 +28,7 @@ namespace XamlingCore.Portable.Glue
         {
             builder.Register(_ => new LocalisationService(XLocale.CultureInfo, XLocale.ResourceManager)).As<ILocalisationService>().SingleInstance();
             
-            builder.RegisterType<LocalStorageFileRepo>().As<ILocalStorageFileRepo>().SingleInstance();
+            builder.RegisterType<LocalStorageFileRepo>().As<IStorageFileRepo>().SingleInstance();
 
             builder.RegisterGeneric(typeof (EntityManager<>)).As(typeof (IEntityManager<>)).SingleInstance();
             builder.RegisterGeneric(typeof(EntityBucket<>)).As(typeof(IEntityBucket<>)).SingleInstance();

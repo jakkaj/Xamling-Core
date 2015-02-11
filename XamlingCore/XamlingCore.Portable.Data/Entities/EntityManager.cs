@@ -316,6 +316,12 @@ namespace XamlingCore.Portable.Data.Entities
                 await i.Clear();
             }
         }
+
+        public bool DisableMultitenant
+        {
+            get { return _entityCache.DisableMultitenant; }
+            set { _entityCache.DisableMultitenant = value; }
+        }
     }
 
 
