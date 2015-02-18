@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace XamlingCore.Portable.Model.Response
 {
@@ -44,7 +45,7 @@ namespace XamlingCore.Portable.Model.Response
             _setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
         }
 
-        public OperationResult<TOther> Copy<TOther>(TOther obj,
+        public OperationResult<TOther> Copy<TOther>(TOther obj = default(TOther),
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0
@@ -52,7 +53,21 @@ namespace XamlingCore.Portable.Model.Response
         {
             var o = new OperationResult<TOther>(obj, Message, Result);
 
-            o.CallerInfoOriginal = CallerInfo;
+            if (o.CallerInfoHistory == null)
+            {
+                o.CallerInfoHistory = new List<OperationCallerInfo>();
+            }
+
+            o.CallerInfoHistory.Add(CallerInfo);
+
+            if (CallerInfoHistory != null)
+            {
+                foreach (var item in CallerInfoHistory)
+                {
+                    o.CallerInfoHistory.Add(item);
+                }
+            }
+
             o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
             return o;
         }
@@ -78,8 +93,8 @@ namespace XamlingCore.Portable.Model.Response
         [JsonProperty(PropertyName = "d")]
         public OperationCallerInfo CallerInfo { get; set; }
 
-        [JsonProperty(PropertyName = "d_orig")]
-        public OperationCallerInfo CallerInfoOriginal { get; set; }
+        [JsonProperty(PropertyName = "d_history")]
+        public List<OperationCallerInfo> CallerInfoHistory { get; set; }
 
         public static OperationResult<T> GetSuccess(T obj,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
