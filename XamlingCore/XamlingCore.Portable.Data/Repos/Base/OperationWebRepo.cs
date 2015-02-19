@@ -10,7 +10,7 @@ using XamlingCore.Portable.Model.Response;
 
 namespace XamlingCore.Portable.Data.Repos.Base
 {
-    public abstract class OperationWebRepo<TEntity> : IOperationWebRepo<TEntity> where TEntity : class, new()
+    public abstract class OperationWebRepo<TEntity> : IOperationWebRepo<TEntity>
     {
         private readonly IHttpTransferrer _downloader;
         private readonly IEntitySerialiser _entitySerialiser;
@@ -180,7 +180,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
         #region Serialisation
 
         protected OperationResult<T> Deserialise<T>(string entity)
-            where T : class
+            
         {
             try
             {
@@ -212,7 +212,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         #region SendGet
 
-        private async Task<OperationResult<TOverride>> _sendOverride<TOverride>(string serialisedData = null, string extra = null, string method = "POST") where TOverride : class, new()
+        private async Task<OperationResult<TOverride>> _sendOverride<TOverride>(string serialisedData = null, string extra = null, string method = "POST") 
         {
             var result = await SendRaw(serialisedData, extra, method);
 

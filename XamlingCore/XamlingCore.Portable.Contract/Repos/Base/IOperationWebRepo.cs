@@ -6,7 +6,7 @@ using XamlingCore.Portable.Model.Response;
 
 namespace XamlingCore.Portable.Contract.Repos.Base
 {
-    public interface IOperationWebRepo<TEntity> where TEntity : class, new()
+    public interface IOperationWebRepo<TEntity>
     {
         Task<OperationResult<TEntity>> Post<TRequest>(TRequest entity, string extra = null);
         Task<OperationResult<TEntity>> Post(string serialisedData, string extra = null);
