@@ -7,6 +7,7 @@ using XamlingCore.Portable.Contract.Repos.Base;
 using XamlingCore.Portable.Contract.Serialise;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Data.Entities;
+using XamlingCore.Portable.Data.Repos;
 using XamlingCore.Portable.Data.Repos.Base;
 using XamlingCore.Portable.Data.Serialise;
 using XamlingCore.Portable.Glue.Locale;
@@ -32,6 +33,8 @@ namespace XamlingCore.Portable.Glue
 
             builder.RegisterGeneric(typeof (EntityManager<>)).As(typeof (IEntityManager<>)).SingleInstance();
             builder.RegisterGeneric(typeof(EntityBucket<>)).As(typeof(IEntityBucket<>)).SingleInstance();
+
+            builder.RegisterGeneric(typeof(XWebRepo<>)).As(typeof(IXWebRepo<>)).InstancePerDependency();
 
             //Core services
             builder.RegisterType<OrientationService>().As<IOrientationService>().SingleInstance();

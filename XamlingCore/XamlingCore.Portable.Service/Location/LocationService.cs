@@ -16,7 +16,7 @@ namespace XamlingCore.Portable.Service.Location
 
         public event EventHandler LocationUpdated;
 
-        AsyncLock _lock = new AsyncLock();
+        XAsyncLock _lock = new XAsyncLock();
 
         public LocationService(ILocationTrackingSensor locationSensor, IGeneralSettingsService generalSettingsService)
         {

@@ -25,8 +25,8 @@ namespace XamlingCore.Portable.Workflow.Flow
 
         readonly List<XFlowState> _state = new List<XFlowState>();
 
-        private AsyncLock _stateLock = new AsyncLock();
-        private AsyncLock _saveLock = new AsyncLock();
+        private XAsyncLock _stateLock = new XAsyncLock();
+        private XAsyncLock _saveLock = new XAsyncLock();
 
         public event EventHandler FlowsUpdated;
 

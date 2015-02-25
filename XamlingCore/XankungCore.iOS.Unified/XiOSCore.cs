@@ -44,7 +44,7 @@ namespace XamlingCore.iOS.Unified
 
         public void Init()
         {
-            InitRoot();
+            InitRoot(); 
 
             XCorePlatform.Platform = XCorePlatform.XCorePlatforms.iOS;
 

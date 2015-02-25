@@ -19,7 +19,7 @@ namespace XamlingCore.Portable.Service.Settings
     {
         private readonly IEntityCache _entityCache;
 
-        private readonly AsyncLock _lock = new AsyncLock();
+        private readonly XAsyncLock _lock = new XAsyncLock();
 
         private const string SETTINGS_KEY = "GeneralSettings";
 

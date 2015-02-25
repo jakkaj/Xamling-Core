@@ -15,7 +15,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
         private readonly ILocalStorage _applicationDataHelper;
         private readonly IStorageFileRepo _localStorageFileRepo;
 
-        AsyncLock _lock = new AsyncLock();
+        XAsyncLock _lock = new XAsyncLock();
 
         private string _name;
 

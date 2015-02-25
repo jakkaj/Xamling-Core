@@ -23,8 +23,8 @@ namespace XamlingCore.Portable.Data.Entities
 
         private readonly List<T> _memoryCache = new List<T>();
 
-        private readonly AsyncLock _readLock = new AsyncLock();
-        private readonly AsyncLock _saveLock = new AsyncLock();
+        private readonly XAsyncLock _readLock = new XAsyncLock();
+        private readonly XAsyncLock _saveLock = new XAsyncLock();
 
         public event EventHandler<BucketUpdatedEventArgs> BucketsUpdated;
 

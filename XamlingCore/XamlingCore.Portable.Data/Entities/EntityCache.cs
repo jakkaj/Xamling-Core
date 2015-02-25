@@ -155,7 +155,7 @@ namespace XamlingCore.Portable.Data.Entities
         public async Task<T> GetEntity<T>(string key, Func<Task<T>> sourceTask, TimeSpan? maxAge = null,
             bool allowExpired = true, bool allowZeroList = true) where T : class, new()
         {
-            var locker = NamedLock.Get(key + "2");//this lock is to cover the gets
+            var locker = XNamedLock.Get(key + "2");//this lock is to cover the gets
 
             var e = await GetEntity<T>(key, maxAge);
 
@@ -203,7 +203,7 @@ namespace XamlingCore.Portable.Data.Entities
             where T : class, new()
         {
             var path = _getDirPath<T>();
-            var locker = NamedLock.Get(path + "getall");
+            var locker = XNamedLock.Get(path + "getall");
 
             using (var locked = await locker.LockAsync())
             {
@@ -221,7 +221,7 @@ namespace XamlingCore.Portable.Data.Entities
 
         public async Task<TimeSpan?> GetAge<T>(string key) where T : class, new()
         {
-            var locker = NamedLock.Get(key + "3");
+            var locker = XNamedLock.Get(key + "3");
             using (var locked = await locker.LockAsync())
             {
                 var fullName = _getFullKey<T>(key);
@@ -254,7 +254,7 @@ namespace XamlingCore.Portable.Data.Entities
 
         public async Task<T> GetEntity<T>(string key, TimeSpan? maxAge = null) where T : class, new()
         {
-            var locker = NamedLock.Get(key + "3");
+            var locker = XNamedLock.Get(key + "3");
             using (var locked = await locker.LockAsync())
             {
                 if (maxAge == null)
@@ -292,7 +292,7 @@ namespace XamlingCore.Portable.Data.Entities
 
         public async Task<bool> SetEntity<T>(string key, T item) where T : class, new()
         {
-            var locker = NamedLock.Get(key + "setentity");
+            var locker = XNamedLock.Get(key + "setentity");
             using (var locked = await locker.LockAsync())
             {
                 var fullName = _getFullKey<T>(key);
@@ -306,7 +306,7 @@ namespace XamlingCore.Portable.Data.Entities
         {
             var path = _getDirPath<T>();
 
-            var locker = NamedLock.Get(path + "getall");
+            var locker = XNamedLock.Get(path + "getall");
 
             using (var locked = await locker.LockAsync())
             {

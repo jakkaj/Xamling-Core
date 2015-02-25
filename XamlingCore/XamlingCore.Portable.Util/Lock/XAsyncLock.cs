@@ -9,12 +9,12 @@ namespace XamlingCore.Portable.Util.Lock
     //Thanks to Scott Hanselman and Stephen Toubs
     //http://www.hanselman.com/blog/ComparingTwoTechniquesInNETAsynchronousCoordinationPrimitives.aspx
 
-    public sealed class AsyncLock
+    public sealed class XAsyncLock
     {
         private readonly SemaphoreSlim m_semaphore = new SemaphoreSlim(1, 1);
         private readonly Task<IDisposable> m_releaser;
 
-        public AsyncLock()
+        public XAsyncLock()
         {
             m_releaser = Task.FromResult((IDisposable)new Releaser(this));
         }
@@ -31,21 +31,21 @@ namespace XamlingCore.Portable.Util.Lock
 
         private sealed class Releaser : IDisposable
         {
-            private readonly AsyncLock m_toRelease;
-            internal Releaser(AsyncLock toRelease) { m_toRelease = toRelease; }
+            private readonly XAsyncLock m_toRelease;
+            internal Releaser(XAsyncLock toRelease) { m_toRelease = toRelease; }
             public void Dispose() { m_toRelease.m_semaphore.Release(); }
         }
     }
 
-    public static class NamedLock
+    public static class XNamedLock
     {
-        private static readonly Dictionary<string, AsyncLock> Locks = new Dictionary<string, AsyncLock>();
+        private static readonly Dictionary<string, XAsyncLock> Locks = new Dictionary<string, XAsyncLock>();
 
-        private static readonly AsyncLock Locker = new AsyncLock();
+        private static readonly XAsyncLock Locker = new XAsyncLock();
 
         static SemaphoreSlim msr = new SemaphoreSlim(1);
 
-        public static AsyncLock Get(string name)
+        public static XAsyncLock Get(string name)
         {
             if (Locks.ContainsKey(name))
             {
@@ -60,7 +60,7 @@ namespace XamlingCore.Portable.Util.Lock
                 return Locks[name];
             }
 
-            var newLock = new AsyncLock();
+            var newLock = new XAsyncLock();
             Locks.Add(name, newLock);
 
             msr.Release();

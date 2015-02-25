@@ -16,7 +16,7 @@ namespace XamlingCore.Portable.Data.Entities
 
         private Dictionary<string, List<Guid>> _buckets = null;
 
-        AsyncLock _lock = new AsyncLock();
+        XAsyncLock _lock = new XAsyncLock();
 
         private const string BucketKey = "Buckets";
 

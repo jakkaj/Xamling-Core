@@ -12,7 +12,7 @@ namespace XamlingCore.Windows.Implementations
     {
         public async Task<bool> IsZero(string fileName)
         {
-            var _lock = NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -39,7 +39,7 @@ namespace XamlingCore.Windows.Implementations
 
         public async Task<bool> Copy(string source, string newName, bool replace = true)
         {
-            var _lock = NamedLock.Get(newName);
+            var _lock = XNamedLock.Get(newName);
             using (var releaser = await _lock.LockAsync())
             {
 
@@ -71,7 +71,7 @@ namespace XamlingCore.Windows.Implementations
 
         public async Task<bool> DeleteFile(string fileName)
         {
-            var _lock = NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -115,7 +115,7 @@ namespace XamlingCore.Windows.Implementations
 
         public async Task<byte[]> Load(string fileName)
         {
-            var _lock = NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -134,7 +134,7 @@ namespace XamlingCore.Windows.Implementations
 
         public async Task<System.IO.Stream> LoadStream(string fileName)
         {
-            var _lock = NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -154,7 +154,7 @@ namespace XamlingCore.Windows.Implementations
 
         public async Task<string> LoadString(string fileName)
         {
-            var _lock = NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -173,7 +173,7 @@ namespace XamlingCore.Windows.Implementations
 
         public async Task Save(string fileName, byte[] data)
         {
-            var _lock = NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -187,7 +187,7 @@ namespace XamlingCore.Windows.Implementations
 
         public async Task SaveStream(string fileName, System.IO.Stream stream)
         {
-            var _lock = NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {
@@ -204,7 +204,7 @@ namespace XamlingCore.Windows.Implementations
 
         public async Task<bool> SaveString(string fileName, string data)
         {
-            var _lock = NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
 
             using (var releaser = await _lock.LockAsync())
             {

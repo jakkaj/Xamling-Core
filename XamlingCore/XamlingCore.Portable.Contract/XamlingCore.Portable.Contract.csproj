@@ -53,6 +53,7 @@
     <Compile Include="Downloaders\IHttpTransferrer.cs" />
     <Compile Include="Downloaders\IHttpTransferResult.cs" />
     <Compile Include="Downloaders\ISimpleHttpTranferrer.cs" />
+    <Compile Include="Entities\IHttpEntity.cs" />
     <Compile Include="EventArgs\BucketUpdatedEventArgs.cs" />
     <Compile Include="Glue\IGlue.cs" />
     <Compile Include="Helpers\IHashHelper.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Navigation\IXNavigation.cs" />
     <Compile Include="Network\IDeviceNetworkStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repos\Base\IXWebRepo.cs" />
     <Compile Include="Repos\Base\IOperationWebRepo.cs" />
     <Compile Include="Repos\Base\IWebRepo.cs" />
     <Compile Include="Repos\Base\IStorageFileRepo.cs" />

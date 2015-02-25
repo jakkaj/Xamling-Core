@@ -14,7 +14,7 @@ namespace XamlingCore.Windows8.Implementations
     {
         public async Task<bool> IsZero(string fileName)
         {
-            var _lock = NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
             using (var releaser = await _lock.LockAsync())
             {
                 var file = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(fileName);
@@ -84,7 +84,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public async Task<bool> EnsureFolderExists(string folderPath)
         {
-            var _lock =  NamedLock.Get(folderPath);
+            var _lock = XNamedLock.Get(folderPath);
             using (var l = await _lock.LockAsync())
             {
                 var path = folderPath.Split('\\').ToList();
@@ -167,7 +167,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public async Task<bool> Copy(string source, string destinationFolder, string newName, bool replace = true)
         {
-            var _lock =  NamedLock.Get(destinationFolder + "\\" + newName);
+            var _lock = XNamedLock.Get(destinationFolder + "\\" + newName);
             using (var releaser = await _lock.LockAsync())
             {
                 if (!await FileExists(source)) return false;
@@ -188,7 +188,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public async Task<string> LoadString(string fileName)
         {
-            var _lock =  NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
             using (var releaser = await _lock.LockAsync())
             {
                 if (!await FileExists(fileName)) return null;
@@ -206,7 +206,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public async Task<byte[]> Load(string fileName)
         {
-            var _lock =  NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
             using (var releaser = await _lock.LockAsync())
             {
                 Debug.WriteLine("Reading file: {0}", fileName);
@@ -225,7 +225,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public async Task<Stream> LoadStream(string fileName)
         {
-            var _lock =  NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
             using (var releaser = await _lock.LockAsync())
             {
                 Debug.WriteLine("Reading file: {0}", fileName);
@@ -239,7 +239,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public async Task<bool> SaveString(string fileName, string data)
         {
-            var _lock =  NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
             using (var releaser = await _lock.LockAsync())
             {
                 try
@@ -265,7 +265,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public async Task Save(string fileName, byte[] data)
         {
-            var _lock =  NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
             using (var releaser = await _lock.LockAsync())
             {
                 Debug.WriteLine("Writing file: {0}", fileName);
@@ -288,7 +288,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public async Task SaveStream(string fileName, Stream stream)
         {
-            var _lock =  NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
             using (var releaser = await _lock.LockAsync())
             {
                 Debug.WriteLine("Writing file: {0}", fileName);
@@ -314,7 +314,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public async Task<bool> DeleteFile(string fileName)
         {
-            var _lock =  NamedLock.Get(fileName);
+            var _lock = XNamedLock.Get(fileName);
             using (var releaser = await _lock.LockAsync())
             {
                 try
