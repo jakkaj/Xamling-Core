@@ -70,6 +70,20 @@ namespace XamlingCore.iOS.Unified
 
             _window.MakeKeyAndVisible();
         }
+
+        public void SetRootView<TViewModel>() where TViewModel : XViewModel
+        {
+            _frameManager = RootFrame.Container.Resolve<IFrameManager>();
+            var newRoot = RootFrame.CreateContentModel<TViewModel>();
+            var initalViewController = _frameManager.Init(RootFrame, newRoot);
+            _rootPage = initalViewController;
+            var childView = initalViewController.CreateViewController();
+
+            var rv = RootFrame.Container.Resolve<RootViewController>();
+
+            rv.SetChild(childView, _window);
+        }
+
      
         public override void ShowNativeView(string viewName)
         {

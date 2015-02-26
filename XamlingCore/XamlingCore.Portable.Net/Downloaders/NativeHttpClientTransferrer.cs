@@ -25,7 +25,8 @@ namespace XamlingCore.Portable.Net.Downloaders
 
             if (downloadConfig == null)
             {
-                throw new NotImplementedException(string.Format("No download config for URL: {0}", url));
+                Debug.WriteLine("No download config for URL: {0}", url);
+                return null;
             }
 
             if (!downloadConfig.IsValid)
@@ -52,8 +53,8 @@ namespace XamlingCore.Portable.Net.Downloaders
 
             if (downloadConfig == null)
             {
-                
-                throw new NotImplementedException(string.Format("No download config for URL: {0}", url));
+                Debug.WriteLine("No download config for URL: {0}", url);
+                return null;
             }
 
             if (!downloadConfig.IsValid)

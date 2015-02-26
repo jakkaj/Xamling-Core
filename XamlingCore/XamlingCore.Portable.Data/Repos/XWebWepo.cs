@@ -1,38 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Downloaders;
+using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Contract.Repos.Base;
 using XamlingCore.Portable.Contract.Serialise;
+using XamlingCore.Portable.Model.Response;
 
-namespace XamlingCore.Portable.Data.Repos.Base
+namespace XamlingCore.Portable.Data.Repos
 {
-    public abstract class WebRepo<TEntity> : IWebRepo<TEntity> where TEntity : class, new()
+    public class XWebRepo<TEntity> : IXWebRepo<TEntity>
     {
         private readonly IHttpTransferrer _downloader;
         private readonly IEntitySerialiser _entitySerialiser;
-        private readonly string _service;
+        private string _service;
 
-        protected WebRepo(IHttpTransferrer downloader, IEntitySerialiser entitySerialiser, string service)
+        public XWebRepo(IHttpTransferrer downloader, IEntitySerialiser entitySerialiser)
         {
             _downloader = downloader;
             _entitySerialiser = entitySerialiser;
-            _service = service;
         }
 
+        public void SetEndPoint(string endPoint)
+        {
+            _service = endPoint;
+        }
+       
         public virtual bool OnResultRetrieved(IHttpTransferResult result)
         {
             return true;
         }
 
-        public virtual bool OnEntityRetreived(TEntity entity)
+        public virtual bool OnEntityRetreived(OperationResult<TEntity> entity)
         {
             return true;
         }
 
-        public virtual bool OnEntityListRetreived(List<TEntity> entity)
+        public virtual bool OnEntityRetreived<TOverride>(OperationResult<TOverride> entity)
+        {
+            return true;
+        }
+
+        public virtual bool OnEntityListRetreived(OperationResult<List<TEntity>> entity)
         {
             return true;
         }
@@ -40,7 +50,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
         public async Task<IHttpTransferResult> UploadRaw(byte[] data, string extra, string method)
         {
             var result = await _downloader.Upload(_service + extra, method, data);
-            
+
             if (!OnResultRetrieved(result))
             {
                 return null;
@@ -49,13 +59,13 @@ namespace XamlingCore.Portable.Data.Repos.Base
             return result;
         }
 
-        public async Task<TEntity> Upload(byte[] data, string extra, string method)
+        public async Task<OperationResult<TEntity>> Upload(byte[] data, string extra, string method)
         {
             var result = await _downloader.Upload(_service + extra, method, data);
 
-            if (result == null || !result.IsSuccessCode || result.Result == null)
+            if (result.Result == null)
             {
-                return null;
+                return new OperationResult<TEntity>(null, OperationResults.NoData);
             }
 
             var e = Deserialise<TEntity>(result.Result);
@@ -70,23 +80,23 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         #region POST
 
-        public async Task<TEntity> Post<TRequest>(TRequest entity, string extra = null)
+        public async Task<OperationResult<TEntity>> Post<TRequest>(TRequest entity, string extra = null)
         {
             var serialisedData = Serialise(entity);
             return await Post(serialisedData, extra);
         }
 
-        public async Task<TEntity> Post(string serialisedData, string extra = null)
+        public async Task<OperationResult<TEntity>> Post(string serialisedData, string extra = null)
         {
             return await _send(serialisedData, extra, "POST");
         }
 
-        public async Task<List<TEntity>> PostList(string serialisedData, string extra = null)
+        public async Task<OperationResult<List<TEntity>>> PostList(string serialisedData, string extra = null)
         {
             return await _sendList(serialisedData, extra, "POST");
         }
 
-        public async Task<List<TEntity>> PostList<TRequest>(TRequest requestEntity, string extra = null, string verb = "POST")
+        public async Task<OperationResult<List<TEntity>>> PostList<TRequest>(TRequest requestEntity, string extra = null, string verb = "POST")
         {
             var serialisedData = Serialise(requestEntity);
 
@@ -107,28 +117,30 @@ namespace XamlingCore.Portable.Data.Repos.Base
         #endregion
 
         #region DELETE
-
-        public async Task<bool> Delete(Guid id, string extra = null)
+        public async Task<OperationResult<TEntity>> Delete(string extra)
         {
-            var result = await SendRaw(null, "/" + id + extra, "DELETE");
-            return result != null && result.IsSuccessCode;
+            return await _send(null, extra, "DELETE");
         }
-
         #endregion
 
         #region GET
 
-        public async Task<TEntity> Get(string extra = null)
+        public async Task<OperationResult<TOverride>> Get<TOverride>(string extra = null)
+        {
+            return await _sendOverride<TOverride>(null, extra, "GET");
+        }
+
+        public async Task<OperationResult<TEntity>> Get(string extra = null)
         {
             return await _send(null, extra, "GET");
         }
 
-        public async Task<TEntity> Get(Guid id, string extra = null)
+        public async Task<OperationResult<TEntity>> Get(Guid id, string extra = null)
         {
             return await _send(null, "/" + id + extra, "GET");
         }
 
-        public async Task<List<TEntity>> GetList(string extra = null)
+        public async Task<OperationResult<List<TEntity>>> GetList(string extra = null)
         {
             return await _sendList(null, extra, "GET");
         }
@@ -142,13 +154,13 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         #region PUT
 
-        public async Task<TEntity> Put<TRequest>(TRequest entity, string extra = null)
+        public async Task<OperationResult<TEntity>> Put<TRequest>(TRequest entity, string extra = null)
         {
             var serialisedData = Serialise(entity);
             return await Put(serialisedData, extra);
         }
 
-        public async Task<TEntity> Put(string serialisedData, string extra = null)
+        public async Task<OperationResult<TEntity>> Put(string serialisedData, string extra = null)
         {
             return await _send(serialisedData, extra, "PUT");
         }
@@ -168,16 +180,16 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         #region Serialisation
 
-        protected T Deserialise<T>(string entity)
-            where T : class
+        protected OperationResult<T> Deserialise<T>(string entity)
+
         {
             try
             {
-                if (OverriseSerialiser != null)
+                if (OverrideSerialiser != null)
                 {
-                    return OverriseSerialiser.Deserialise<T>(entity);
+                    return OverrideSerialiser.Deserialise<OperationResult<T>>(entity);
                 }
-                var e = _entitySerialiser.Deserialise<T>(entity);
+                var e = _entitySerialiser.Deserialise<OperationResult<T>>(entity);
                 return e;
             }
             catch (Exception ex)
@@ -190,9 +202,9 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         protected string Serialise<T>(T entity)
         {
-            if (OverriseSerialiser != null)
+            if (OverrideSerialiser != null)
             {
-                return OverriseSerialiser.Serialise(entity);
+                return OverrideSerialiser.Serialise(entity);
             }
             return _entitySerialiser.Serialise(entity);
         }
@@ -201,16 +213,16 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         #region SendGet
 
-        private async Task<TEntity> _send(string serialisedData = null, string extra = null, string method = "POST")
+        private async Task<OperationResult<TOverride>> _sendOverride<TOverride>(string serialisedData = null, string extra = null, string method = "POST")
         {
             var result = await SendRaw(serialisedData, extra, method);
 
-            if (result == null || !result.IsSuccessCode || result.Result == null)
+            if (result.Result == null)
             {
-                return null;
+                return new OperationResult<TOverride>(null, OperationResults.NoData);
             }
 
-            var e = Deserialise<TEntity>(result.Result);
+            var e = Deserialise<TOverride>(result.Result);
 
             if (OnEntityRetreived(e))
             {
@@ -220,15 +232,20 @@ namespace XamlingCore.Portable.Data.Repos.Base
             return null;
         }
 
-        private async Task<List<TEntity>> _sendList(string serialisedData = null, string extra = null, string method = "POST")
+        private Task<OperationResult<TEntity>> _send(string serialisedData = null, string extra = null, string method = "POST")
+        {
+            return _sendOverride<TEntity>(serialisedData, extra, method);
+        }
+
+        private async Task<OperationResult<List<TEntity>>> _sendList(string serialisedData = null, string extra = null, string method = "POST")
         {
             var result = await SendRaw(serialisedData, extra, method);
 
-            if (result == null || !result.IsSuccessCode || result.Result == null)
+            if (result.Result == null)
             {
-                return null;
+                return new OperationResult<List<TEntity>>(null, OperationResults.NoData);
             }
-           
+
             var e = Deserialise<List<TEntity>>(result.Result);
 
             if (OnEntityListRetreived(e))
@@ -253,7 +270,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         #endregion
 
-        protected IEntitySerialiser OverriseSerialiser { get; set; }
+        protected IEntitySerialiser OverrideSerialiser { get; set; }
 
     }
 }

@@ -20,6 +20,12 @@ namespace XamlingCore.iOS.Unified.Root
 
         public void SetChild(UIViewController controller, UIWindow window)
         {
+            if (_controller != null)
+            {
+                _controller.View.RemoveFromSuperview();
+                _controller.RemoveFromParentViewController();
+            }
+
             _controller = controller;
             _window = window;
 
