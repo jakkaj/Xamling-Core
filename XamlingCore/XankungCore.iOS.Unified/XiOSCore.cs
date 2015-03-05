@@ -8,6 +8,7 @@ using XamlingCore.Portable.Contract.Glue;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.XamarinThings.Contract;
 using XamlingCore.XamarinThings.Core;
+using XamlingCore.XamarinThings.Frame;
 
 namespace XamlingCore.iOS.Unified
 {
@@ -75,6 +76,7 @@ namespace XamlingCore.iOS.Unified
         {
             _frameManager = RootFrame.Container.Resolve<IFrameManager>();
             var newRoot = RootFrame.CreateContentModel<TViewModel>();
+            XFrameManager.AlertHandler = null;
             var initalViewController = _frameManager.Init(RootFrame, newRoot);
             _rootPage = initalViewController;
             var childView = initalViewController.CreateViewController();

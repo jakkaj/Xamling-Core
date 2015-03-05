@@ -16,6 +16,8 @@ namespace XamlingCore.XamarinThings.Core
         protected IContainer Container;
         protected TRootFrame RootFrame;
 
+       
+
         protected async void InitRoot()
         {
             var glue = new TGlue();

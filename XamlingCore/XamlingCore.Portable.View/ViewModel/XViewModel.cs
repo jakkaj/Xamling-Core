@@ -136,7 +136,7 @@ namespace XamlingCore.Portable.View.ViewModel
             IsDisposed = true;
         }
 
-        protected async Task<bool> DisplayAlert(string title, string message, string accept, string cancel)
+        public async Task<bool> DisplayAlert(string title, string message, string accept, string cancel)
         {
             if (NativeAlert == null)
             {

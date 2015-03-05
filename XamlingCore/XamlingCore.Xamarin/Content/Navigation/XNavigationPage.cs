@@ -13,6 +13,7 @@ namespace XamlingCore.XamarinThings.Content.Navigation
         public XNavigationPageView(IOrientationSensor orientationSensor)
         {
             _orientationSensor = orientationSensor;
+            
         }
 
         protected override void OnSizeAllocated(double width, double height)

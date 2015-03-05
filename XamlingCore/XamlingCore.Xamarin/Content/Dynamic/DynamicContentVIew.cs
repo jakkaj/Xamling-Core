@@ -20,17 +20,25 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
             IsVisible = false;
             SetBindingParent(bindingParent);
         }
-        public void SetBindingParent(BindableObject v)
+        public async void SetBindingParent(BindableObject v)
         {
             if (v == null)
             {
                 return;
             }
 
-            BindingContext = v.BindingContext;
+            while(v.BindingContext == null)
+            {
+                await Task.Yield();
+            }
 
+            if(BindingContext == null)
+            {
+                BindingContext = v.BindingContext;
+            }            
+            
             v.BindingContextChanged += v_BindingContextChanged;
-        }
+        }      
 
         public DynamicContentView()
         {
@@ -77,7 +85,7 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 
 
         public static readonly BindableProperty DataContextProperty =
-            BindableProperty.Create<DynamicContentView, object>(p => p.DataContext, null, BindingMode.TwoWay, null, _onDataContextChanged);
+            BindableProperty.Create<DynamicContentView, object>(p => p.DataContext, null, BindingMode.OneWay, null, _onDataContextChanged);
 
 
         private async static void _onDataContextChanged(BindableObject obj, object oldValue, object newValue)
