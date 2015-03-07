@@ -23,7 +23,7 @@ namespace XamlingCore.Portable.Data.Entities
 
         private readonly List<T> _memoryCache = new List<T>();
 
-        private readonly XAsyncLock _readLock = new XAsyncLock();
+        //private readonly XAsyncLock _readLock = new XAsyncLock();
         private readonly XAsyncLock _saveLock = new XAsyncLock();
 
         public event EventHandler<BucketUpdatedEventArgs> BucketsUpdated;
@@ -115,12 +115,9 @@ namespace XamlingCore.Portable.Data.Entities
 
         public async Task PurgeMemory()
         {
-            using (var l1 = await _readLock.LockAsync())
+            using (var l2 = await _saveLock.LockAsync())
             {
-                using (var l2 = await _saveLock.LockAsync())
-                {
-                    _memoryCache.Clear();
-                }
+                _memoryCache.Clear();
             }
         }
 
@@ -172,26 +169,26 @@ namespace XamlingCore.Portable.Data.Entities
 
         private async Task<T> _get(Guid id, Func<Task<T>> sourceTask, TimeSpan? maxAge)
         {
-            using (var lRead = await _readLock.LockAsync())
-            {
-                var memory = _memoryCache.FirstOrDefault(_ => _.Id == id);
+            var memory = _memoryCache.FirstOrDefault(_ => _.Id == id);
 
-                if (memory != null)
+            if (memory != null)
+            {
+                if (maxAge != null)
                 {
-                    if (maxAge != null)
-                    {
-                        var age = await _entityCache.GetAge<T>(_getKey(id));
-                        if (age < maxAge)
-                        {
-                            return memory;
-                        }
-                    }
-                    else
+                    var age = await _entityCache.GetAge<T>(_getKey(id));
+                    if (age < maxAge)
                     {
                         return memory;
                     }
                 }
+                else
+                {
+                    return memory;
+                }
+            }
 
+            using (var lRead = await XNamedLock.Get("entm_" + id).LockAsync())
+            {
                 T cache = null;
 
                 if (sourceTask != null)
@@ -279,7 +276,7 @@ namespace XamlingCore.Portable.Data.Entities
                 return;
             }
 
-            using (var lRead = await _readLock.LockAsync())
+            using (var lRead = await XNamedLock.Get("entm_" + entity.Id).LockAsync())
             {
                 using (var lSave = await _saveLock.LockAsync())
                 {
@@ -300,12 +297,9 @@ namespace XamlingCore.Portable.Data.Entities
 
         public async Task Clear()
         {
-            using (var lRead = await _readLock.LockAsync())
+            using (var lSave = await _saveLock.LockAsync())
             {
-                using (var lSave = await _saveLock.LockAsync())
-                {
-                    _memoryCache.Clear();
-                }
+                _memoryCache.Clear();
             }
         }
 

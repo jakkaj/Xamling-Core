@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Contract.EventArgs;
@@ -31,87 +32,72 @@ namespace XamlingCore.Portable.Data.Entities
         {
             await _init();
 
-            using (var l = await _lock.LockAsync())
-            {
-                var b = _getBucket(bucket);
-                return b;
-            }
+            var b = await _getBucket(bucket);
+            return b;
         }
 
         public async Task<bool> IsInBucket(string bucket, Guid guid)
         {
             await _init();
-
-            using (var l = await _lock.LockAsync())
-            {
-                var b = _getBucket(bucket);
-                return b.Contains(guid);
-            }
+            var b = await _getBucket(bucket);
+            return b.Contains(guid);
         }
 
         public async Task MoveToBucket(string bucket, Guid guid)
         {
             await _init();
 
-            using (var l = await _lock.LockAsync())
+            var doSave = false;
+
+            foreach (var existingBucket in _buckets)
             {
-                var doSave = false;
-
-                foreach (var existingBucket in _buckets)
+                if (existingBucket.Value.Contains(guid))
                 {
-                    if (existingBucket.Value.Contains(guid))
-                    {
-                        existingBucket.Value.Remove(guid);
-                        doSave = true;
-                    }    
-                }
-
-                var b = _getBucket(bucket);
-
-                if (!b.Contains(guid))
-                {
-                    b.Add(guid);
+                    existingBucket.Value.Remove(guid);
                     doSave = true;
                 }
-
-                if (doSave)
-                {
-                    await _save();
-                    _notifyUpdated(bucket, BucketUpdatedTypes.Add);    
-                }
             }
+
+            var b = await _getBucket(bucket);
+
+            if (!b.Contains(guid))
+            {
+                b.Add(guid);
+                doSave = true;
+            }
+
+            if (doSave)
+            {
+                await _save();
+                _notifyUpdated(bucket, BucketUpdatedTypes.Add);
+            }
+
         }
 
         public async Task AddToBucket(string bucket, Guid guid)
         {
             await _init();
 
-            using (var l = await _lock.LockAsync())
-            {
-                var b = _getBucket(bucket);
+            var b = await _getBucket(bucket);
 
-                if (!b.Contains(guid))
-                {
-                    b.Add(guid);
-                    await _save();
-                    _notifyUpdated(bucket, BucketUpdatedTypes.Add);
-                }
+            if (!b.Contains(guid))
+            {
+                b.Add(guid);
+                await _save();
+                _notifyUpdated(bucket, BucketUpdatedTypes.Add);
             }
+
         }
 
         public async Task RemoveFromBucket(string bucket, Guid guid)
         {
             await _init();
-
-            using (var l = await _lock.LockAsync())
+            var b = await _getBucket(bucket);
+            if (b.Contains(guid))
             {
-                var b = _getBucket(bucket);
-                if (b.Contains(guid))
-                {
-                    b.Remove(guid);
-                    await _save();
-                    _notifyUpdated(bucket, BucketUpdatedTypes.Remove);
-                }
+                b.Remove(guid);
+                await _save();
+                _notifyUpdated(bucket, BucketUpdatedTypes.Remove);
             }
         }
 
@@ -145,7 +131,7 @@ namespace XamlingCore.Portable.Data.Entities
         void _notifyUpdated(string bucket, BucketUpdatedTypes updateType)
         {
             new BucketUpdatedMessage<T>(bucket, updateType).Send();
-            
+
             if (BucketsUpdated != null)
             {
                 BucketsUpdated(this, new BucketUpdatedEventArgs(bucket));
@@ -157,11 +143,18 @@ namespace XamlingCore.Portable.Data.Entities
             new BucketUpdatedMessage<T>(BucketUpdatedTypes.Clear).Send();
         }
 
-        List<Guid> _getBucket(string bucket)
+        async Task<List<Guid>> _getBucket(string bucket)
         {
             if (!_buckets.ContainsKey(bucket))
             {
-                _buckets.Add(bucket, new List<Guid>());
+                //double check inside lock
+                using (var l = await _lock.LockAsync())
+                {
+                    if (!_buckets.ContainsKey(bucket))
+                    {
+                        _buckets.Add(bucket, new List<Guid>());
+                    }
+                }
             }
 
             return _buckets[bucket];
@@ -179,10 +172,17 @@ namespace XamlingCore.Portable.Data.Entities
                 return;
             }
 
-            using (var l = await _lock.LockAsync())
+            var key = _getThisBucketKey();
+            
+            using (var l = await XNamedLock.Get("bucket_" + key).LockAsync())
             {
-                var bucketKey = _getThisBucketKey();
-                _buckets = await _cache.GetEntity<Dictionary<string, List<Guid>>>(bucketKey);
+                if (_buckets != null)
+                {
+                    return;
+                }
+
+                _buckets = await _cache.GetEntity<Dictionary<string, List<Guid>>>(key);
+               
                 if (_buckets == null)
                 {
                     _buckets = new Dictionary<string, List<Guid>>();

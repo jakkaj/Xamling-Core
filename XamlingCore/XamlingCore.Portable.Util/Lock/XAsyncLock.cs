@@ -43,7 +43,7 @@ namespace XamlingCore.Portable.Util.Lock
 
         private static readonly XAsyncLock Locker = new XAsyncLock();
 
-        static SemaphoreSlim msr = new SemaphoreSlim(1);
+
 
         public static XAsyncLock Get(string name)
         {
@@ -52,27 +52,23 @@ namespace XamlingCore.Portable.Util.Lock
                 return Locks[name];
             }
 
-            msr.Wait();
-
-
-            if (Locks.ContainsKey(name))
+            lock (name)
             {
-                return Locks[name];
+                if (Locks.ContainsKey(name))
+                {
+                    return Locks[name];
+                }
+
+                var newLock = new XAsyncLock();
+                Locks.Add(name, newLock);
+
+                return newLock;
             }
-
-            var newLock = new XAsyncLock();
-            Locks.Add(name, newLock);
-
-            msr.Release();
-
-            return newLock;
         }
 
         public static async Task Clear()
         {
-            msr.Wait();
             Locks.Clear();
-            msr.Release();
         }
     }
 }

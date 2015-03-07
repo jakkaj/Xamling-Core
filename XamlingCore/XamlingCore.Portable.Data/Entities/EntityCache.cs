@@ -254,20 +254,21 @@ namespace XamlingCore.Portable.Data.Entities
 
         public async Task<T> GetEntity<T>(string key, TimeSpan? maxAge = null) where T : class, new()
         {
-            var locker = XNamedLock.Get(key + "3");
-            using (var locked = await locker.LockAsync())
+            if (maxAge == null)
             {
-                if (maxAge == null)
+                maxAge = TimeSpan.FromDays(30000);
+            }
+
+            var fullName = _getFullKey<T>(key);
+
+            var f = _getMemory<T>(key);
+
+            if (f == null)
+            {
+                var locker = XNamedLock.Get(key + "3");
+                using (var locked = await locker.LockAsync())
                 {
-                    maxAge = TimeSpan.FromDays(30000);
-                }
 
-                var fullName = _getFullKey<T>(key);
-
-                var f = _getMemory<T>(key);
-
-                if (f == null)
-                {
                     f = await _storageFileRepo.Get<XCacheItem<T>>(fullName);
 
                     if (f != null && f.Item != null)
@@ -275,19 +276,19 @@ namespace XamlingCore.Portable.Data.Entities
                         _updateItem(f.Item, f);
                         _setMemory(key, f.Item, f.DateStamp);
                     }
+
+                    if (f == null)
+                    {
+                        return null;
+                    }
                 }
-
-                if (f == null)
-                {
-                    return null;
-                }
-
-                _updateItemCacheSource(f.Item, true);
-
-                var ts = DateTime.UtcNow.Subtract(f.DateStamp);
-
-                return ts > maxAge ? null : f.Item;
             }
+
+            _updateItemCacheSource(f.Item, true);
+
+            var ts = DateTime.UtcNow.Subtract(f.DateStamp);
+
+            return ts > maxAge ? null : f.Item;
         }
 
         public async Task<bool> SetEntity<T>(string key, T item) where T : class, new()
