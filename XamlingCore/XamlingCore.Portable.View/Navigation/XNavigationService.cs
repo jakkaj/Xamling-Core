@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using XamlingCore.Portable.Contract.Navigation;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Model.Navigation;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.Portable.View.ViewModel.Base;
@@ -153,6 +154,8 @@ namespace XamlingCore.Portable.View.Navigation
                 IsReverseNavigation = true;
                 CurrentContentObject = null;
             }
+
+            new NavigationMessage(CurrentContentObject, IsReverseNavigation).Send();
 
             if (Navigated != null)
             {
