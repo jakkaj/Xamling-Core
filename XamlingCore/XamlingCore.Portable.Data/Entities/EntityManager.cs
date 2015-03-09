@@ -144,8 +144,8 @@ namespace XamlingCore.Portable.Data.Entities
             }
 
             var returnList = new List<T>();
-
-            foreach (var id in ids)
+            var idCopy = ids.ToList();//copy it in case it's altered by something else during this iteration
+            foreach (var id in idCopy)
             {
                 var e = await _get(id, sourceTask, maxAge);
                 if (e != null)

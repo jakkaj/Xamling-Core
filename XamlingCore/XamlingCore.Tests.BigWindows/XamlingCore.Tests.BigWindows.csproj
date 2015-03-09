@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\TestBase.cs" />
+    <Compile Include="Entity\EntityBucketTests.cs" />
     <Compile Include="Entity\EntityInstanceTests.cs" />
     <Compile Include="Glue\ProjectGlue.cs" />
     <Compile Include="Impl\DeviceNetworkStatus.cs" />

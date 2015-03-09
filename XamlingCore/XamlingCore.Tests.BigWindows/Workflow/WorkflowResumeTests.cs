@@ -14,7 +14,7 @@ namespace XamlingCore.Tests.BigWindows.Workflow
     [TestClass]
     public class WorkflowResumeTests : TestBase
     {
-        [TestMethod]
+        //[TestMethod]
         public async Task SetupFlow()
         {
             var hub = Resolve<XWorkflowHub>();

@@ -285,7 +285,7 @@ namespace XamlingCore.Portable.Workflow.Flow
                     //await Task.WhenAll(currentTasks);
                 }
 
-                Task.Yield();
+               await Task.Yield();
 
                 _cancelWaitToken = new CancellationTokenSource();
 
