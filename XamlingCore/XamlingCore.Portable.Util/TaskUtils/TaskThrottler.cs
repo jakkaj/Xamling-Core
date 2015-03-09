@@ -121,8 +121,7 @@ namespace XamlingCore.Portable.Util.TaskUtils
         }
 
         private static readonly Dictionary<string, TaskThrottler> Throttles = new Dictionary<string, TaskThrottler>();
-
-        static SemaphoreSlim msr = new SemaphoreSlim(1);
+        
 
         public static TaskThrottler GetNetwork(int concurrentItems = 10)
         {
@@ -136,19 +135,21 @@ namespace XamlingCore.Portable.Util.TaskUtils
                 return Throttles[name];
             }
 
-            msr.Wait();
-
-            if (Throttles.ContainsKey(name))
+            lock ("throttle" + name)
             {
-                return Throttles[name];
+                if (Throttles.ContainsKey(name))
+                {
+                    return Throttles[name];
+                }
+
+                var newThrottle = new TaskThrottler(name, concurrentItems ?? 10);
+
+                Throttles.Add(name, newThrottle);
+
+                Debug.WriteLine("Added name");
+
+                return newThrottle;
             }
-
-            var newThrottle = new TaskThrottler(name, concurrentItems ?? 10);
-            Throttles.Add(name, newThrottle);
-            Debug.WriteLine("Added name");
-            msr.Release();
-
-            return newThrottle;
         }
 
         private sealed class Releaser : IDisposable
