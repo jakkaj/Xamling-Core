@@ -1,10 +1,22 @@
-﻿using UIKit;
+﻿using Foundation;
+using UIKit;
 using XamlingCore.iOS.Implementations;
 
 namespace XamlingCore.iOS.Unified.Implementations
 {
     public class EnvironmentService : IEnvironmentService
     {
+        public string GetAppVersion()
+        {
+            var build = NSBundle.MainBundle.InfoDictionary["CFBundleVersion"].ToString();
+            var version = NSBundle.MainBundle.InfoDictionary["CFBundleShortVersionString"].ToString();
+
+
+            var versionString = string.Format("{0} ({1})", version, build);
+
+            return versionString;
+        }
+
         public string GetOSVersion()
         {
             return UIDevice.CurrentDevice.SystemName + " " + UIDevice.CurrentDevice.SystemVersion;

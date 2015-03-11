@@ -6,5 +6,6 @@
         int GetScreenWidth();
         int GetScreenHeight();
         float GetScreenScale();
+        string GetAppVersion();
     }        
 }
