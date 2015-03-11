@@ -14,6 +14,11 @@ namespace XamlingCore.iOS.Unified.Implementations
 {
     public class LocalStorage : ILocalStorage
     {
+        public char Separator()
+        {
+            return Path.DirectorySeparatorChar;
+        }
+
         public string GetFullPath(string fileName)
         {
             return _getPath(fileName);

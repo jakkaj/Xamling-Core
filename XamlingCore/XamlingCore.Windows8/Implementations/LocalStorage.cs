@@ -31,6 +31,11 @@ namespace XamlingCore.Windows8.Implementations
             throw new NotImplementedException();
         }
 
+        public char Separator()
+        {
+            return '\\';
+        }
+
         public async Task<List<string>> GetAllFilesInFolder(string folderPath, bool recurse)
         {
 

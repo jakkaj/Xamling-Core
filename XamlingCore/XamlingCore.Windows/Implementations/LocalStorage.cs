@@ -37,6 +37,11 @@ namespace XamlingCore.Windows.Implementations
             throw new NotImplementedException();
         }
 
+        public char Separator()
+        {
+            return Path.DirectorySeparatorChar;
+        }
+
         public async Task<bool> Copy(string source, string newName, bool replace = true)
         {
             var _lock = XNamedLock.Get(newName);

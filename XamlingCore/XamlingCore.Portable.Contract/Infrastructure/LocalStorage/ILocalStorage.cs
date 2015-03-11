@@ -22,5 +22,6 @@ namespace XamlingCore.Portable.Contract.Infrastructure.LocalStorage
         Task<List<string>> GetAllFilesInFolder(string folderPath, bool recurse);
         Task<bool> IsZero(string fileName);
         string GetFullPath(string fileName);
+        char Separator();
     }
 }
