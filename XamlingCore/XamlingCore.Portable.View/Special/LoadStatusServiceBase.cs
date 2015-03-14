@@ -56,38 +56,33 @@ namespace XamlingCore.Portable.View.Special
 
         public abstract void ShowIndicator(string text);
         public abstract void HideIndicator();
-        
-        private ManualResetEvent mre;
 
-        void _updateStack(LoaderStackItem justFinishedItem)
+
+
+        private void _updateStack(LoaderStackItem justFinishedItem)
         {
-            if (mre != null)
+            lock ("loadstatus")
             {
-                mre.WaitOne(1000);
-            }
+                if (_loaderStack.Contains(justFinishedItem))
+                {
+                    _loaderStack.Remove(justFinishedItem);
+                }
 
-            mre = new ManualResetEvent(true);
+                if (_loaderStack.Count == 0)
+                {
+                    _dispatch(HideIndicator);
 
-            if (_loaderStack.Contains(justFinishedItem))
-            {
-                _loaderStack.Remove(justFinishedItem);
-            }
-
-            if (_loaderStack.Count == 0)
-            {
-                _dispatch(HideIndicator);
-
-                return;
-            }
-
-            _dispatch(() =>
-            {
-                //find the most recent item with text, and show it.
+                    return;
+                }
                 var tItem = _loaderStack.FirstOrDefault(_ => _.Text != null);
-                ShowIndicator(tItem != null ? tItem.Text : null);
-            });
 
-            mre.Reset();
+                _dispatch(() =>
+                {
+                    //find the most recent item with text, and show it.
+
+                    ShowIndicator(tItem != null ? tItem.Text : null);
+                });
+            }
         }
 
         private class LoaderStackItem

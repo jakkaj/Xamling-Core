@@ -279,7 +279,7 @@ namespace XamlingCore.Tests.BigWindows.Workflow
                 .Complete();
             var ids = new List<Guid>();
             
-            for (var i = 0; i < 20; i++)
+            for (var i = 0; i < 3; i++)
             {
                 Debug.WriteLine("Testing: {0}", i);
                 var g = Guid.NewGuid();
@@ -312,7 +312,7 @@ namespace XamlingCore.Tests.BigWindows.Workflow
 
             Assert.IsTrue((await flow.GetInProgressItems()).Count == 0);
             Assert.IsTrue((await flow.GetFailedItems()).Count == 0);
-            Assert.IsTrue((await flow.GetAllItems()).Count == 20);
+            Assert.IsTrue((await flow.GetAllItems()).Count == 3);
 
             foreach (var item in ids)
             {

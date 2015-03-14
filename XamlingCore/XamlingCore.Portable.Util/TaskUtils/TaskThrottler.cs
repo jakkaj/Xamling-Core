@@ -128,28 +128,42 @@ namespace XamlingCore.Portable.Util.TaskUtils
             return Get("DefaultNetworkThrottler", concurrentItems);
         }
 
+        private static ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
+
         public static TaskThrottler Get(string name, int? concurrentItems = null)
         {
-            if (Throttles.ContainsKey(name))
-            {
-                return Throttles[name];
-            }
+            _lock.EnterUpgradeableReadLock();
 
-            lock ("throttle" + name)
+            try
             {
                 if (Throttles.ContainsKey(name))
                 {
                     return Throttles[name];
                 }
 
-                var newThrottle = new TaskThrottler(name, concurrentItems ?? 10);
+                _lock.EnterWriteLock();
 
-                Throttles.Add(name, newThrottle);
+                try
+                {
+                    var newThrottle = new TaskThrottler(name, concurrentItems ?? 10);
 
-                Debug.WriteLine("Added name");
+                    Throttles.Add(name, newThrottle);
 
-                return newThrottle;
+                    Debug.WriteLine("Added name");
+
+                    return newThrottle;
+                }
+                finally
+                {
+                    _lock.ExitWriteLock();
+                }
+
             }
+            finally
+            {
+                _lock.ExitUpgradeableReadLock();
+            }
+          
         }
 
         private sealed class Releaser : IDisposable

@@ -41,28 +41,39 @@ namespace XamlingCore.Portable.Util.Lock
     {
         private static readonly Dictionary<string, XAsyncLock> Locks = new Dictionary<string, XAsyncLock>();
 
-        private static readonly XAsyncLock Locker = new XAsyncLock();
-
+        private static ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
 
 
         public static XAsyncLock Get(string name)
         {
-            if (Locks.ContainsKey(name))
-            {
-                return Locks[name];
-            }
+            _lock.EnterUpgradeableReadLock();
 
-            lock (name)
+            try
             {
                 if (Locks.ContainsKey(name))
                 {
                     return Locks[name];
                 }
 
-                var newLock = new XAsyncLock();
-                Locks.Add(name, newLock);
+                _lock.EnterWriteLock();
 
-                return newLock;
+                try
+                {
+                    var newLock = new XAsyncLock();
+                    Locks.Add(name, newLock);
+
+                    return newLock;
+
+                }
+                finally
+                {
+                    _lock.ExitWriteLock();
+                }
+
+            }
+            finally
+            {
+                _lock.ExitUpgradeableReadLock();
             }
         }
 

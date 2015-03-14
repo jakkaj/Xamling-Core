@@ -61,7 +61,7 @@ namespace XamlingCore.Tests.BigWindows.Tasks
         {
             var throttler = TaskThrottler.Get("Test", 2);
             List<Task> tasks = new List<Task>();
-            for (var i = 0; i < 5000; i++)
+            for (var i = 0; i < 50; i++)
             {
                  tasks.Add(throttler.Throttle(_doSomeWork));
                
