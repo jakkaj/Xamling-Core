@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("XamlingCore.Samples.Droid.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("XamlingCore.Droid.Resource", IsApplication=false)]
 
-namespace XamlingCore.Samples.Droid
+namespace XamlingCore.Droid
 {
 	
 	
@@ -22,12 +22,6 @@ namespace XamlingCore.Samples.Droid
 		static Resource()
 		{
 			global::Android.Runtime.ResourceIdManager.UpdateIdValues();
-		}
-		
-		public static void UpdateIdValues()
-		{
-			global::XamlingCore.Droid.Resource.String.ApplicationName = global::XamlingCore.Samples.Droid.Resource.String.ApplicationName;
-			global::XamlingCore.Droid.Resource.String.Hello = global::XamlingCore.Samples.Droid.Resource.String.Hello;
 		}
 		
 		public partial class Attribute
@@ -43,30 +37,14 @@ namespace XamlingCore.Samples.Droid
 			}
 		}
 		
-		public partial class Drawable
-		{
-			
-			// aapt resource value: 0x7f020000
-			public const int Icon = 2130837504;
-			
-			static Drawable()
-			{
-				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
-			}
-			
-			private Drawable()
-			{
-			}
-		}
-		
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f030001
-			public const int ApplicationName = 2130903041;
+			// aapt resource value: 0x7f020001
+			public static int ApplicationName = 2130837505;
 			
-			// aapt resource value: 0x7f030000
-			public const int Hello = 2130903040;
+			// aapt resource value: 0x7f020000
+			public static int Hello = 2130837504;
 			
 			static String()
 			{
