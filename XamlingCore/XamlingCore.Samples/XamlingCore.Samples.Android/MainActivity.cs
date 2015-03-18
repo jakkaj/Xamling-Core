@@ -22,7 +22,7 @@ namespace XamlingCore.Samples.Droid
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-
+            
             Xamarin.Forms.Forms.Init(this, bundle);
 
             xCore = new XDriodCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue>();

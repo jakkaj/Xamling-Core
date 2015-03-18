@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace XamlingCore.Portable.Model.Response
 {
+
     public class OperationResult<T>
     {
         public OperationResult()
