@@ -59,7 +59,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
         {
             var result = await _downloader.Upload(_service + extra, method, data);
 
-            if (result.Result == null)
+            if (result == null || result.Result == null)
             {
                 return new OperationResult<TEntity>(null, OperationResults.NoData);
             }
@@ -216,7 +216,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
         {
             var result = await SendRaw(serialisedData, extra, method);
 
-            if (result.Result == null)
+            if (result == null || result.Result == null)
             {
                 return new OperationResult<TOverride>(null, OperationResults.NoData);
             }
