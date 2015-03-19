@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace XamlingCore.Portable.Model.Response
@@ -29,7 +30,7 @@ namespace XamlingCore.Portable.Model.Response
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0
             )
         {
-            Result = isSuccess ? OperationResults.Success : OperationResults.OperationFailed;
+            Result = isSuccess ? OperationResults.Success : OperationResults.Failed;
             Object = obj;
             Message = message;
             _setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
@@ -152,6 +153,22 @@ namespace XamlingCore.Portable.Model.Response
             return o;
         }
 
+        public static OperationResult<T> GetException(string message = null, Exception ex = null,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
+            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0
+            )
+        {
+            var messageFormatted = string.Format("Message: {0}, Exception: {1}", message, ex);
+
+            var o = new OperationResult<T>(default(T), messageFormatted,
+                OperationResults.Exception);
+
+            o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
+
+            return o;
+        }
+
         public static OperationResult<T> GetOperationFailed(string message = null,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
@@ -159,7 +176,7 @@ namespace XamlingCore.Portable.Model.Response
             )
         {
             var o = new OperationResult<T>(default(T), message ?? "Something went wrong and I could not complete that",
-                OperationResults.OperationFailed);
+                OperationResults.Failed);
 
             o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
 
@@ -172,7 +189,7 @@ namespace XamlingCore.Portable.Model.Response
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
             var o = new OperationResult<T>(default(T), string.Format("Database problem {0}", message),
-                OperationResults.OperationFailed);
+                OperationResults.Failed);
 
             o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
 
@@ -219,10 +236,11 @@ namespace XamlingCore.Portable.Model.Response
     public enum OperationResults
     {
         Success,
+        Failed,
         NotFound,
         NotAuthorised,
         BadRequest,
-        OperationFailed,
+        Exception,
         NoData
     }
 }
