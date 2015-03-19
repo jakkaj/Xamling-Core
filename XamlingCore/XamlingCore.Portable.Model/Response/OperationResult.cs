@@ -88,6 +88,9 @@ namespace XamlingCore.Portable.Model.Response
             }
         }
 
+        [JsonProperty(PropertyName = "status")]
+        public int StatusCode { get; set; }
+
         [JsonProperty(PropertyName = "code")]
         public OperationResults Result { get; private set; }
 

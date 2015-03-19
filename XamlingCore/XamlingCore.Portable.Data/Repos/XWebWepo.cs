@@ -63,12 +63,19 @@ namespace XamlingCore.Portable.Data.Repos
         {
             var result = await _downloader.Upload(_service + extra, method, data);
 
-            if (result.Result == null)
+            if (result == null || result.Result == null)
             {
-                return new OperationResult<TEntity>(null, OperationResults.NoData);
+                var o = new OperationResult<TEntity>(null, OperationResults.NoData);
+
+                if (result != null)
+                {
+                    o.StatusCode = (int)result.HttpStatusCode;
+                }
+                return o;
             }
 
             var e = Deserialise<TEntity>(result.Result);
+            e.StatusCode = (int) result.HttpStatusCode;
 
             if (OnEntityRetreived(e))
             {
@@ -217,13 +224,18 @@ namespace XamlingCore.Portable.Data.Repos
         {
             var result = await SendRaw(serialisedData, extra, method);
 
-            if (result.Result == null)
+            if (result == null || result.Result == null)
             {
-                return new OperationResult<TOverride>(null, OperationResults.NoData);
+                var o = new OperationResult<TOverride>(null, OperationResults.NoData);
+                if (result != null)
+                {
+                    o.StatusCode = (int) result.HttpStatusCode;
+                }
+                return o;
             }
 
             var e = Deserialise<TOverride>(result.Result);
-
+            e.StatusCode = (int)result.HttpStatusCode;
             if (OnEntityRetreived(e))
             {
                 return e;
@@ -241,9 +253,16 @@ namespace XamlingCore.Portable.Data.Repos
         {
             var result = await SendRaw(serialisedData, extra, method);
 
-            if (result.Result == null)
+            if (result == null || result.Result == null)
             {
-                return new OperationResult<List<TEntity>>(null, OperationResults.NoData);
+                var o = new OperationResult<List<TEntity>>(null, OperationResults.NoData);
+
+                if (result != null)
+                {
+                    o.StatusCode = (int) result.HttpStatusCode;
+                }
+
+                return o;
             }
 
             var e = Deserialise<List<TEntity>>(result.Result);
