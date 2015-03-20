@@ -195,6 +195,12 @@ namespace XamlingCore.Portable.Data.Repos.Base
                     return OverrideSerialiser.Deserialise<OperationResult<T>>(entity);
                 }
                 var e = _entitySerialiser.Deserialise<OperationResult<T>>(entity);
+
+                if (e == null)
+                {
+                    return OperationResult<T>.GetFailed(entity);
+                }
+
                 return e;
             }
             catch (Exception ex)
@@ -202,7 +208,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
                 Debug.WriteLine("Des problem: " + ex.Message);
             }
 
-            return null;
+            return OperationResult<T>.GetFailed(entity);
         }
 
         protected string Serialise<T>(T entity)
