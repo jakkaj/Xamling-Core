@@ -169,7 +169,7 @@ namespace XamlingCore.Portable.Model.Response
             return o;
         }
 
-        public static OperationResult<T> GetOperationFailed(string message = null,
+        public static OperationResult<T> GetFailed(string message = null,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0
