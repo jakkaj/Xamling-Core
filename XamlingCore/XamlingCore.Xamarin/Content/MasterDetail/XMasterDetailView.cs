@@ -42,7 +42,10 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
 
         void _onCollapse(object obj)
         {
-            IsPresented = false;
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                IsPresented = false;
+            });
         }
 
         void _viewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
