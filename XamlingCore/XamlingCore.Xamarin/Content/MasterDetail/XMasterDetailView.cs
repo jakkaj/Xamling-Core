@@ -1,6 +1,8 @@
 ﻿using System;
 using Xamarin.Forms;
 using XamlingCore.Portable.Contract.Device;
+using XamlingCore.Portable.Messages.XamlingMessenger;
+using XamlingCore.XamarinThings.Messages;
 
 namespace XamlingCore.XamarinThings.Content.MasterDetail
 {
@@ -12,15 +14,16 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
         public XMasterDetailView(IOrientationSensor orientationSensor)
         {
             _orientationSensor = orientationSensor;
+
+            this.Register<CollapseMasterDetailMessage>(_onCollapse);
         }
-
-        
-
         protected override void OnSizeAllocated(double width, double height)
         {
             _orientationSensor.OnRotated();
             base.OnSizeAllocated(width, height);
         }
+
+        
 
         protected override void OnBindingContextChanged()
         {
@@ -35,6 +38,11 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
 
             _setContent();
             base.OnBindingContextChanged();
+        }
+
+        void _onCollapse(object obj)
+        {
+            IsPresented = false;
         }
 
         void _viewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

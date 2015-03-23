@@ -66,6 +66,7 @@
     <Compile Include="Frame\XRootFrame.cs" />
     <Compile Include="Frame\XFrameManager.cs" />
     <Compile Include="Glue\XamarinGlue.cs" />
+    <Compile Include="Messages\CollapseMasterDetailMessage.cs" />
     <Compile Include="Navigators\XNavigationMasterDetailNavigator.cs" />
     <Compile Include="Navigators\XNavigationPageNavigator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
