@@ -70,7 +70,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
             }
 
             var e = Deserialise<TEntity>(result.Result);
-            e.StatusCode = (int) result.HttpStatusCode;
+            e.StatusCode = (int)result.HttpStatusCode;
 
             if (OnEntityRetreived(e))
             {
@@ -186,7 +186,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
         #region Serialisation
 
         protected OperationResult<T> Deserialise<T>(string entity)
-            
+
         {
             try
             {
@@ -199,6 +199,11 @@ namespace XamlingCore.Portable.Data.Repos.Base
                 if (e == null)
                 {
                     return OperationResult<T>.GetFailed(entity);
+                }
+
+                if (e.Message == null && e.Object == null && !e.IsSuccess)
+                {
+                    e.Message = entity;
                 }
 
                 return e;
@@ -224,7 +229,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         #region SendGet
 
-        private async Task<OperationResult<TOverride>> _sendOverride<TOverride>(string serialisedData = null, string extra = null, string method = "POST") 
+        private async Task<OperationResult<TOverride>> _sendOverride<TOverride>(string serialisedData = null, string extra = null, string method = "POST")
         {
             var result = await SendRaw(serialisedData, extra, method);
 
@@ -241,7 +246,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
             }
 
             var e = Deserialise<TOverride>(result.Result);
-            e.StatusCode = (int) result.HttpStatusCode;
+            e.StatusCode = (int)result.HttpStatusCode;
 
             if (OnEntityRetreived(e))
             {
@@ -273,7 +278,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
             }
 
             var e = Deserialise<List<TEntity>>(result.Result);
-            e.StatusCode = (int) result.HttpStatusCode;
+            e.StatusCode = (int)result.HttpStatusCode;
 
             if (OnEntityListRetreived(e))
             {
@@ -288,7 +293,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
             var result = await _downloader.Download(_service + extra, method, serialisedData);
 
             if (!OnResultRetrieved(result))
-            {   
+            {
                 return null;
             }
 

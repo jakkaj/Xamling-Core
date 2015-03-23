@@ -78,7 +78,7 @@ namespace XamlingCore.Portable.Model.Response
         public T Object { get; set; }
 
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; private set; }
+        public string Message { get; set; }
 
         [JsonProperty(PropertyName = "success")]
         public bool IsSuccess
@@ -93,7 +93,7 @@ namespace XamlingCore.Portable.Model.Response
         public int StatusCode { get; set; }
 
         [JsonProperty(PropertyName = "code")]
-        public OperationResults Result { get; private set; }
+        public OperationResults Result { get; set; }
 
         [JsonProperty(PropertyName = "d")]
         public OperationCallerInfo CallerInfo { get; set; }

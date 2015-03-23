@@ -203,6 +203,11 @@ namespace XamlingCore.Portable.Data.Repos
                     return OperationResult<T>.GetFailed(entity);
                 }
 
+                if (e.Message == null && e.Object == null && !e.IsSuccess)
+                {
+                    e.Message = entity;
+                }
+
                 return e;
             }
             catch (Exception ex)
