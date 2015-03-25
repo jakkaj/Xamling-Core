@@ -1,4 +1,6 @@
 using Autofac;
+using XamlingCore.Droid.Implementations;
+using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 
 namespace XamlingCore.Droid.Glue.Modules
 {
@@ -6,7 +8,7 @@ namespace XamlingCore.Droid.Glue.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            //builder.RegisterType<LocalStorage>().As<ILocalStorage>().SingleInstance();
+            builder.RegisterType<LocalStorage>().As<ILocalStorage>().SingleInstance();
             //builder.RegisterType<LoadStatusService>().As<ILoadStatusService>().SingleInstance();
             //builder.RegisterType<EnvironmentService>().As<IEnvironmentService>().SingleInstance();
             //builder.Register(_ => new iOSDispatcher(new NSObject())).As<IDispatcher>().SingleInstance();

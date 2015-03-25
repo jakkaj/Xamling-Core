@@ -48,6 +48,8 @@ namespace XamlingCore.Tests.Droid
 			global::Xamarin.Android.NUnitLite.Resource.Layout.results = global::XamlingCore.Tests.Droid.Resource.Layout.results;
 			global::Xamarin.Android.NUnitLite.Resource.Layout.test_result = global::XamlingCore.Tests.Droid.Resource.Layout.test_result;
 			global::Xamarin.Android.NUnitLite.Resource.Layout.test_suite = global::XamlingCore.Tests.Droid.Resource.Layout.test_suite;
+			global::XamlingCore.Droid.Resource.String.ApplicationName = global::XamlingCore.Tests.Droid.Resource.String.ApplicationName;
+			global::XamlingCore.Droid.Resource.String.Hello = global::XamlingCore.Tests.Droid.Resource.String.Hello;
 		}
 		
 		public partial class Attribute
