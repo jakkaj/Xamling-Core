@@ -74,6 +74,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\EntityTests\EntityBucketTests.cs" />
     <Compile Include="Tests\EntityTests\EntityInstanceTests.cs" />
+    <Compile Include="Tests\LocationTests\LocationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

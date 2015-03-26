@@ -7,6 +7,7 @@ using NUnit.Framework;
 using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Model.Contract;
 using XamlingCore.Tests.Droid.Base;
+using XamlingCore.Droid.Implementations;
 
 namespace XamlingCore.Tests.Droid.Tests.EntityTests
 {
@@ -16,6 +17,18 @@ namespace XamlingCore.Tests.Droid.Tests.EntityTests
         [Test]
         public void TestInstanceCorrect()
         {
+            //var s = new LocationTrackingSensor();
+            //s.StartTracking();
+
+            //Task<Portable.Model.Location.XLocation> l = s.GetQuickLocation();
+            //l.Wait();
+
+            //Assert.IsNotNull(l.Result);
+
+
+
+
+
             var entityManager = Container.Resolve<IEntityManager<TestEntity>>();
             var entityManager2 = Container.Resolve<IEntityManager<TestEntity>>();
 
