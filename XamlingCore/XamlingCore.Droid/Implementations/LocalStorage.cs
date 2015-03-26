@@ -235,8 +235,7 @@ namespace XamlingCore.Droid.Implementations
 
         private string _getPath(string fileName)
         {
-            var test = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), fileName);
-            return test;
+            return Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), fileName);            
         }
     }    
 }
