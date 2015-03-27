@@ -1,5 +1,6 @@
 using Autofac;
 using XamlingCore.Droid.Implementations;
+using XamlingCore.Droid.Implementations.Helpers;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Contract.Network;
 using XamlingCore.Portable.Contract.Services;
@@ -22,7 +23,7 @@ namespace XamlingCore.Droid.Glue.Modules
 
             //builder.RegisterType<iOSViewResolver>().AsImplementedInterfaces().SingleInstance();
 
-            //builder.RegisterType<HashHelper>().AsImplementedInterfaces();
+            builder.RegisterType<HashHelper>().AsImplementedInterfaces();
 
             //builder.RegisterType<MotionSensor>().AsImplementedInterfaces().SingleInstance();
             //builder.RegisterType<OrientationSensor>().AsImplementedInterfaces().SingleInstance();

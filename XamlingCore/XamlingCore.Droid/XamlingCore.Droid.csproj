@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="Glue\DroidGlue.cs" />
     <Compile Include="Glue\Modules\DefaultDroidModule.cs" />
+    <Compile Include="Glue\Modules\HashHelper.cs" />
     <Compile Include="Implementations\DeviceNetworkStatus.cs" />
     <Compile Include="Implementations\Helpers\NetworkChangesReceiver.cs" />
     <Compile Include="Implementations\LoadStatusService.cs" />
