@@ -4,6 +4,7 @@ using Android.OS;
 using Xamarin.Android.NUnitLite;
 using XamlingCore.Droid.Implementations;
 using System.Threading.Tasks;
+using System;
 
 namespace XamlingCore.Tests.Droid
 {
@@ -25,10 +26,18 @@ namespace XamlingCore.Tests.Droid
 
         private async void InnerTest()
         {
-            //await Task.Delay(5000);
+            await Task.Delay(1000);
+
             //DeviceNetworkStatus d = new DeviceNetworkStatus();
             //var z = d.NetworkCheck();
             //var i = d.QuickNetworkCheck();
+
+            //EnvironmentService e = new EnvironmentService();
+            //Console.WriteLine("Android version: " + e.GetOSVersion());
+            //Console.WriteLine("Android width: " + e.GetScreenWidth());
+            //Console.WriteLine("Android height: " + e.GetScreenHeight());
+            //Console.WriteLine("Android scale: " + e.GetScreenScale());
+            //Console.WriteLine("Android app v: " + e.GetAppVersion());
         }
     }
 }

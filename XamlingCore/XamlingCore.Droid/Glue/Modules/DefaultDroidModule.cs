@@ -16,7 +16,7 @@ namespace XamlingCore.Droid.Glue.Modules
 
             builder.RegisterType<LocalStorage>().As<ILocalStorage>().SingleInstance();
             builder.RegisterType<LoadStatusService>().As<ILoadStatusService>().SingleInstance();
-            //builder.RegisterType<EnvironmentService>().As<IEnvironmentService>().SingleInstance();
+            builder.RegisterType<EnvironmentService>().As<IEnvironmentService>().SingleInstance();
             //builder.Register(_ => new iOSDispatcher(new NSObject())).As<IDispatcher>().SingleInstance();
             builder.RegisterType<LocationTrackingSensor>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<DeviceNetworkStatus>().As<IDeviceNetworkStatus>().SingleInstance();
