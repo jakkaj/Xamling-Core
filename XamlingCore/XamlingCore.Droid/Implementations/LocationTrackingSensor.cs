@@ -78,7 +78,7 @@ namespace XamlingCore.Droid.Implementations
         {
             if (_locationManager == null)
             {
-                _locationManager = (LocationManager)Application.Context.GetSystemService("location");
+                _locationManager = (LocationManager)Application.Context.GetSystemService(Android.App.Activity.LocationService);
             }
 
             if (String.IsNullOrWhiteSpace(_locationProvider))

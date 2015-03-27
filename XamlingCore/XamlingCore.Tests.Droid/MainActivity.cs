@@ -2,6 +2,8 @@
 using Android.App;
 using Android.OS;
 using Xamarin.Android.NUnitLite;
+using XamlingCore.Droid.Implementations;
+using System.Threading.Tasks;
 
 namespace XamlingCore.Tests.Droid
 {
@@ -17,6 +19,15 @@ namespace XamlingCore.Tests.Droid
 
             // Once you called base.OnCreate(), you cannot add more assemblies.
             base.OnCreate(bundle);
+
+            //InnerTest();
+        }
+
+        private async void InnerTest()
+        {
+            //await Task.Delay(5000);
+            //DeviceNetworkStatus d = new DeviceNetworkStatus();
+            //var i = d.NetworkCheck();
         }
     }
 }

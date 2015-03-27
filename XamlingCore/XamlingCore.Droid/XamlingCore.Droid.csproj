@@ -77,6 +77,8 @@
   <ItemGroup>
     <Compile Include="Glue\DroidGlue.cs" />
     <Compile Include="Glue\Modules\DefaultDroidModule.cs" />
+    <Compile Include="Implementations\DeviceNetworkStatus.cs" />
+    <Compile Include="Implementations\Helpers\NetworkChangesReceiver.cs" />
     <Compile Include="Implementations\LoadStatusService.cs" />
     <Compile Include="Implementations\LocalStorage.cs" />
     <Compile Include="Implementations\LocationTrackingSensor.cs" />
