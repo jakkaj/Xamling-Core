@@ -27,7 +27,8 @@ namespace XamlingCore.Tests.Droid
         {
             //await Task.Delay(5000);
             //DeviceNetworkStatus d = new DeviceNetworkStatus();
-            //var i = d.NetworkCheck();
+            //var z = d.NetworkCheck();
+            //var i = d.QuickNetworkCheck();
         }
     }
 }

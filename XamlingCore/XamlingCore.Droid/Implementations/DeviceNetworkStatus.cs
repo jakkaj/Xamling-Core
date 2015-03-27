@@ -60,20 +60,14 @@ namespace XamlingCore.Droid.Implementations
                     }
                 }
 
-                /* Included this because active is always null in tests */
+                /* Included these because active is always null in tests */
                 var mobileState = _connectivity.GetNetworkInfo(ConnectivityType.Mobile).GetState();
-                if (mobileState != null)
-                {
-                    if (mobileState.ToString() == "CONNECTED")
-                        return XNetworkType.Cellular;
-                }
+                if (mobileState == NetworkInfo.State.Connected)
+                    return XNetworkType.Cellular;                
 
                 var wifiState = _connectivity.GetNetworkInfo(ConnectivityType.Wifi).GetState();
-                if (wifiState != null)
-                {
-                    if (wifiState.ToString() == "CONNECTED")
-                        return XNetworkType.WiFi;
-                }
+                if (wifiState == NetworkInfo.State.Connected)
+                    return XNetworkType.WiFi;                
 
                 return XNetworkType.None;
             }
@@ -83,8 +77,8 @@ namespace XamlingCore.Droid.Implementations
 
         public bool QuickNetworkCheck()
         {
-            var activeConnection = _connectivity.ActiveNetworkInfo;
-            return ((activeConnection != null) && activeConnection.IsConnected);            
+            var n = NetworkCheck();
+            return (n == XNetworkType.Cellular || n == XNetworkType.WiFi);
         }
 
         //Required?
