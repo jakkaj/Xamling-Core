@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Android.App;
 using Android.OS;
+using Android.Content.PM; /* Stops app reload during orientation change */
 using Xamarin.Android.NUnitLite;
 using XamlingCore.Droid.Implementations;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using System;
 
 namespace XamlingCore.Tests.Droid
 {
-    [Activity(Label = "XamlingCore.Tests.Droid", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "XamlingCore.Tests.Droid", MainLauncher = true, Icon = "@drawable/icon", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize)]
     public class MainActivity : TestSuiteActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -27,6 +28,13 @@ namespace XamlingCore.Tests.Droid
         private async void InnerTest()
         {
             await Task.Delay(1000);
+
+            //MotionSensor m = new MotionSensor();
+            //m.Start();
+
+
+            //OrientationSensor o = new OrientationSensor();
+            //o._orientationUpdated();
 
             //DeviceNetworkStatus d = new DeviceNetworkStatus();
             //var z = d.NetworkCheck();

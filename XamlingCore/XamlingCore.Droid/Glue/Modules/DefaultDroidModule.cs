@@ -25,11 +25,11 @@ namespace XamlingCore.Droid.Glue.Modules
 
             builder.RegisterType<HashHelper>().AsImplementedInterfaces();
 
-            //builder.RegisterType<MotionSensor>().AsImplementedInterfaces().SingleInstance();
-            //builder.RegisterType<OrientationSensor>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<MotionSensor>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<OrientationSensor>().AsImplementedInterfaces().SingleInstance();
 
             //builder.RegisterType<iOSNativeHttpClientTransferrer>().As<IHttpTransferrer>().SingleInstance();
-            //builder.RegisterType<iOSSimpleNativeHttpHttpTransfer>().As<ISimpleHttpTranferrer>().SingleInstance();
+            //builder.RegisterType<iOSSimpleNativeHttpHttpTransfer>().As<ISimpleHttpTranferrer>().SingleInstance(); -- last
 
             //builder.RegisterType<DeviceUtilityService>().As<IDeviceUtilityService>().SingleInstance();
 
