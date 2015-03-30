@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\TestBase.cs" />
+    <Compile Include="Config\TestTransferConfigService.cs" />
     <Compile Include="Glue\ProjectGlue.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Tests\EntityTests\EntityInstanceTests.cs" />
     <Compile Include="Tests\Helpers\HashHelperTests.cs" />
     <Compile Include="Tests\LocationTests\LocationTests.cs" />
+    <Compile Include="Tests\OtherTests\OtherTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -126,9 +128,33 @@
       <Project>{e908cd00-22c8-4f7b-ba99-8ddf32c5f656}</Project>
       <Name>XamlingCore.Portable.Glue</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
+      <Project>{568d9a09-151c-49b3-bee5-71529fc6869d}</Project>
+      <Name>XamlingCore.Portable.Messages</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
       <Project>{e2682110-bb54-48d8-9e8c-20bc29488bbe}</Project>
       <Name>XamlingCore.Portable.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Net\XamlingCore.Portable.Net.csproj">
+      <Project>{da91f91f-3a71-4c7d-9fd5-4f0dc6e3dc86}</Project>
+      <Name>XamlingCore.Portable.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Service\XamlingCore.Portable.Service.csproj">
+      <Project>{449dc319-446e-4d47-923a-3c9efdf02b88}</Project>
+      <Name>XamlingCore.Portable.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Util\XamlingCore.Portable.Util.csproj">
+      <Project>{bf649817-277f-44c1-af23-c90d6daf5901}</Project>
+      <Name>XamlingCore.Portable.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
+      <Project>{b3d7c301-2df7-4c16-9f49-7dda8689556e}</Project>
+      <Name>XamlingCore.Portable.View</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Workflow\XamlingCore.Portable.Workflow.csproj">
+      <Project>{9d082abd-f398-4a28-be80-9af2ba5b1be9}</Project>
+      <Name>XamlingCore.Portable.Workflow</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

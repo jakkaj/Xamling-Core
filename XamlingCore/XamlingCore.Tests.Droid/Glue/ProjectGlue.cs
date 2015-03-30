@@ -11,6 +11,9 @@ using Android.Views;
 using Android.Widget;
 
 using XamlingCore.Droid.Glue;
+using XamlingCore.Tests.Droid.Config;
+using Autofac;
+using XamlingCore.Portable.Contract.Downloaders;
 
 namespace XamlingCore.Tests.Droid.Glue
 {
@@ -21,11 +24,10 @@ namespace XamlingCore.Tests.Droid.Glue
         {
             base.Init();
 
-
-
-
+            Builder.RegisterType<TestTransferConfigService>().As<IHttpTransferConfigService>().SingleInstance();
 
             Container = Builder.Build();
+
 
         }
     }
