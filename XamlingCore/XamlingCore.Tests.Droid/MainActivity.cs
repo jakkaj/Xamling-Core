@@ -6,6 +6,7 @@ using Xamarin.Android.NUnitLite;
 using XamlingCore.Droid.Implementations;
 using System.Threading.Tasks;
 using System;
+using XamlingCore.Droid.Services;
 
 namespace XamlingCore.Tests.Droid
 {
@@ -28,6 +29,10 @@ namespace XamlingCore.Tests.Droid
         private async void InnerTest()
         {
             await Task.Delay(1000);
+
+            //DeviceUtilityService d = new DeviceUtilityService();
+            //d.ShowInExternalBrowser("http://www.xamling.net");
+
 
             //MotionSensor m = new MotionSensor();
             //m.Start();
