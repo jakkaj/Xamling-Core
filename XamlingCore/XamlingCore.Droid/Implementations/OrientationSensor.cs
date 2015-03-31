@@ -1,16 +1,24 @@
 ﻿using Android.App;
 using Android.Content.Res;
 using Android.Content.PM;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
 using System;
 
 using XamlingCore.Portable.Contract.Device;
 using XamlingCore.Portable.Model.Orientation;
-
+using XamlingCore.Droid.Implementations.Helpers;
 
 namespace XamlingCore.Droid.Implementations
 {
-    public class OrientationSensor : IOrientationSensor
+    //[Activity(Label = "OrientationSensor", ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
+    public class OrientationSensor : IOrientationSensor //Activity
     {
+
+
         public event EventHandler OrientationChanged;
 
         public XPageOrientation Orientation { get; private set; }
@@ -19,8 +27,22 @@ namespace XamlingCore.Droid.Implementations
 
         public OrientationSensor()
         {
-            _orientationUpdated();
+            //OnCreate(null);
+
+            //var orientationIntent = new Intent(Application.Context, typeof(OrientationActivity));
+
+            //var t = (OrientationActivity)orientationIntent.;
+
+
+            //_orientationUpdated();
+            //WindowManager windowManager = (WindowManager)getSystemService(WINDOW_SERVICE);
+            // object windowsService = Application.Context.GetSystemService(Android.App.Activity.WindowService);
         }
+
+        //protected override void OnCreate(Bundle bundle)
+        //{
+
+        //}
 
         public void OnRotated()
         {
@@ -38,6 +60,12 @@ namespace XamlingCore.Droid.Implementations
 
         //}
 
+        //public override void OnConfigurationChanged(Configuration newConfig)
+        //{
+        //    Console.WriteLine("Orientation changed");
+        //    base.OnConfigurationChanged(newConfig);            
+        //}
+
         public bool _orientationUpdated()
         {
             //var e = Android.Content.Res.Orientation.Portrait;
@@ -47,7 +75,23 @@ namespace XamlingCore.Droid.Implementations
 
             //Android.Content.Res.Configuration.
 
-            //object windowsService = Application.Context.GetSystemService(Android.App.Activity.WindowService);
+            //-----------
+            IWindowManager windowManager = Application.Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>();
+            var d = windowManager.DefaultDisplay;
+            
+
+            var h = d.Height;
+            var w = d.Width;
+            var r = d.Rotation;
+            var o = d.Orientation;
+
+            Console.WriteLine("{0}x{1} @ {2}deg giving orientation of {3}", w, h, r, o);
+            //-------------
+
+
+
+            //Activity.GetResources().getConfiguration().orientation
+
 
             //createDisplayContext(Display)
 

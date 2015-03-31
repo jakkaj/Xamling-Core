@@ -89,6 +89,7 @@
     <Compile Include="Implementations\DroidNativeHttpClientTransferrer.cs" />
     <Compile Include="Implementations\EnvironmentService.cs" />
     <Compile Include="Implementations\Helpers\NetworkChangesReceiver.cs" />
+    <Compile Include="Implementations\DroidDispatcher.cs" />
     <Compile Include="Implementations\LoadStatusService.cs" />
     <Compile Include="Implementations\LocalStorage.cs" />
     <Compile Include="Implementations\LocationTrackingSensor.cs" />

@@ -90,8 +90,10 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\CacheTests\EntityCacheTEsts.cs" />
     <Compile Include="Tests\EntityTests\EntityBucketTests.cs" />
     <Compile Include="Tests\EntityTests\EntityInstanceTests.cs" />
+    <Compile Include="Tests\FileTests\BasicFileWriting.cs" />
     <Compile Include="Tests\Helpers\HashHelperTests.cs" />
     <Compile Include="Tests\LocationTests\LocationTests.cs" />
     <Compile Include="Tests\OtherTests\OtherTests.cs" />
@@ -157,6 +159,7 @@
       <Name>XamlingCore.Portable.Workflow</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

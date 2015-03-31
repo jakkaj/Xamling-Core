@@ -7,6 +7,8 @@ using XamlingCore.Droid.Implementations;
 using System.Threading.Tasks;
 using System;
 using XamlingCore.Droid.Services;
+using Xamarin.Forms;
+
 
 namespace XamlingCore.Tests.Droid
 {
@@ -29,6 +31,10 @@ namespace XamlingCore.Tests.Droid
         private async void InnerTest()
         {
             await Task.Delay(1000);
+
+            //DroidDispatcher dd = new DroidDispatcher();
+            //dd.Invoke(new Action(() => Console.WriteLine("A test 1234")));
+
 
             //DeviceUtilityService d = new DeviceUtilityService();
             //d.ShowInExternalBrowser("http://www.xamling.net");

@@ -1,3 +1,4 @@
+using Android.App;
 using Autofac;
 using XamlingCore.Droid.Implementations;
 using XamlingCore.Droid.Implementations.Helpers;
@@ -18,56 +19,28 @@ namespace XamlingCore.Droid.Glue.Modules
         {
             //builder.RegisterType<RootViewController>().AsSelf().SingleInstance();
 
-
             builder.RegisterType<LocalStorage>().As<ILocalStorage>().SingleInstance();
             builder.RegisterType<LoadStatusService>().As<ILoadStatusService>().SingleInstance();
             builder.RegisterType<EnvironmentService>().As<IEnvironmentService>().SingleInstance();
-            //builder.Register(_ => new iOSDispatcher(new NSObject())).As<IDispatcher>().SingleInstance();
-            builder.RegisterType<LocationTrackingSensor>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<DeviceNetworkStatus>().As<IDeviceNetworkStatus>().SingleInstance();
 
             
+            builder.Register(_ => new DroidDispatcher()).As<IDispatcher>().SingleInstance(); //Needs testing -- Can also try like //builder.Register(_ => new DroidDispatcher(Android.App.Application.Context)).As<IDispatcher>().SingleInstance();
+
+            builder.RegisterType<LocationTrackingSensor>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<DeviceNetworkStatus>().As<IDeviceNetworkStatus>().SingleInstance();            
 
             builder.RegisterType<HashHelper>().AsImplementedInterfaces();
 
             builder.RegisterType<MotionSensor>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<OrientationSensor>().AsImplementedInterfaces().SingleInstance(); /* Needs work */
-
-
             
             builder.RegisterType<DroidNativeHttpClientTransferrer>().As<IHttpTransferrer>().SingleInstance();
-
 
             //builder.RegisterType<iOSSimpleNativeHttpHttpTransfer>().As<ISimpleHttpTranferrer>().SingleInstance(); /* Probably not required, do last */
 
             builder.RegisterType<DeviceUtilityService>().As<IDeviceUtilityService>().SingleInstance();
 
-
-
-
-
             //builder.RegisterType<iOSViewResolver>().AsImplementedInterfaces().SingleInstance(); /* Not required */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             base.Load(builder);
         }
