@@ -16,7 +16,7 @@ using XamlingCore.XamarinThings.Frame;
 namespace XamlingCore.Samples.Droid
 {
     [Activity(Label = "XamlingCore.Samples", MainLauncher = true)]
-    public class MainActivity : AndroidActivity
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
     {
         
         protected override void OnCreate(Bundle bundle)
