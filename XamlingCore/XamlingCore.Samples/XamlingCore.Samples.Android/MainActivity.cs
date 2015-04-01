@@ -18,18 +18,16 @@ namespace XamlingCore.Samples.Droid
     [Activity(Label = "XamlingCore.Samples", MainLauncher = true)]
     public class MainActivity : AndroidActivity
     {
-        private XDriodCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue> xCore;
+        
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             
             Xamarin.Forms.Forms.Init(this, bundle);
 
-            xCore = new XDriodCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue>();
-
-            var app = xCore.Init();
-
-            LoadApplication(app);
+            var xapp = new App();
+            xapp.Init<RootMasterDetailViewModel, ProjectGlue>();
+            LoadApplication(xapp);
         }
     }
 }

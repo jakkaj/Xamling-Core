@@ -16,6 +16,8 @@ namespace XamlingCore.XamarinThings.Frame
 
         public static FormsAlertHandler AlertHandler;
 
+        
+
         public XFrameManager(ILifetimeScope scope, IViewResolver viewResolver)
         {
             _scope = scope;
@@ -61,6 +63,6 @@ namespace XamlingCore.XamarinThings.Frame
 
         public IFrameNavigator FrameNavigator { get; set; }
 
-        public XViewModel RootViewModel { get; set; }
+        public XViewModel RootViewModel { get; private set; }
     }
 }

@@ -61,6 +61,7 @@
     <Compile Include="Controls\XEntryCell.cs" />
     <Compile Include="Controls\XSwitchCell.cs" />
     <Compile Include="Controls\XTextCell.cs" />
+    <Compile Include="Core\XApp.cs" />
     <Compile Include="Core\XCore.cs" />
     <Compile Include="Core\XCorePlatform.cs" />
     <Compile Include="Frame\XRootFrame.cs" />
