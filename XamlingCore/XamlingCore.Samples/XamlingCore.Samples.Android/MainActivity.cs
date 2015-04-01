@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Android.App;
 using Android.Content;
 using Android.Runtime;
@@ -9,6 +10,7 @@ using Android.OS;
 
 using Xamarin.Forms.Platform.Android;
 using XamlingCore.Droid;
+using XamlingCore.Samples.Droid.Annotations;
 using XamlingCore.Samples.Views.Root.MasterDetailRoot;
 using XamlingCore.Samples.Droid.Glue;
 using XamlingCore.XamarinThings.Frame;
