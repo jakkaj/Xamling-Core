@@ -20,7 +20,7 @@ namespace XamlingCore.Samples.WinPhone
             InitializeComponent();
 
             Forms.Init();
-            Content = XamlingCore.Samples.App.GetMainPage().ConvertPageToUIElement(this);
+            //Content = XamlingCore.Samples.App.GetMainPage().ConvertPageToUIElement(this);
         }
     }
 }
