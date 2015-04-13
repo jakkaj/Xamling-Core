@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Android.App;
 using Android.Content;
 using Android.Runtime;
@@ -9,6 +10,7 @@ using Android.OS;
 
 using Xamarin.Forms.Platform.Android;
 using XamlingCore.Droid;
+using XamlingCore.Samples.Droid.Annotations;
 using XamlingCore.Samples.Views.Root.MasterDetailRoot;
 using XamlingCore.Samples.Droid.Glue;
 using XamlingCore.XamarinThings.Frame;
@@ -16,20 +18,18 @@ using XamlingCore.XamarinThings.Frame;
 namespace XamlingCore.Samples.Droid
 {
     [Activity(Label = "XamlingCore.Samples", MainLauncher = true)]
-    public class MainActivity : AndroidActivity
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
     {
-        private XDriodCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue> xCore;
+        
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             
             Xamarin.Forms.Forms.Init(this, bundle);
 
-            xCore = new XDriodCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue>();
-
-            var app = xCore.Init();
-
-            LoadApplication(app);
+            var xapp = new App();
+            xapp.Init<RootMasterDetailViewModel, ProjectGlue>();
+            LoadApplication(xapp);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace XamlingCore.iOS.Implementations
+﻿namespace XamlingCore.Portable.Contract.Services
 {
     public interface IEnvironmentService
     {

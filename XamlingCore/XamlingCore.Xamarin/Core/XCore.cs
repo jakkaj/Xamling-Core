@@ -6,19 +6,22 @@ using XamlingCore.Portable.Data.Glue;
 using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.ViewModel;
+using XamlingCore.XamarinThings.Contract;
+using XamlingCore.XamarinThings.Frame;
 
 namespace XamlingCore.XamarinThings.Core
 {
-    public abstract class XCore<TRootFrame, TGlue>
-        where TRootFrame : XFrame
+    public class XCore<TRootViewModel, TGlue>
+        
+        where TRootViewModel : XViewModel
         where TGlue : class, IGlue, new()
     {
         protected IContainer Container;
-        protected TRootFrame RootFrame;
+        protected XRootFrame RootFrame;
 
-       
-
-        protected async void InitRoot()
+        private IFrameManager _frameManager;
+        
+        public Page InitRoot()
         {
             var glue = new TGlue();
             glue.Init();
@@ -27,26 +30,28 @@ namespace XamlingCore.XamarinThings.Core
 
             ContainerHost.Container = Container; //sometimes we need to resolve around the place outside of strucutre. 
 
-            RootFrame = XFrame.CreateRootFrame<TRootFrame>(glue.Container.BeginLifetimeScope());
+            RootFrame = XFrame.CreateRootFrame<XRootFrame>(glue.Container.BeginLifetimeScope());
 
-            XMessenger.Default.Register<ShowNativeViewMessage>(this, _onShowNativeView);
+            var rootPage = GetRootPage<TRootViewModel>();
+            //_root = RootFrame.CreateContentModel<TRootViewModel>();
+            //_frameManager = RootFrame.Container.Resolve<IFrameManager>();
 
-            
+            //var initalViewController = _frameManager.Init(RootFrame, RootViewModel);
+
+            //_rootPage = initalViewController;
+
+            return rootPage;
         }
 
-
-        void _onShowNativeView(object m)
+        public Page GetRootPage<TViewModel>() where TViewModel : XViewModel
         {
-            var message = m as ShowNativeViewMessage;
+            _frameManager = RootFrame.Container.Resolve<IFrameManager>();
+            var newRoot = RootFrame.CreateContentModel<TViewModel>();
 
-            if (message == null)
-            {
-                return;
-            }
-
-            ShowNativeView(message.ViewName);
+            XFrameManager.AlertHandler = null;
+            var initalViewController = _frameManager.Init(RootFrame, newRoot);
+            var p = initalViewController;
+            return p;
         }
-
-        public abstract void ShowNativeView(string viewName);
     }
 }

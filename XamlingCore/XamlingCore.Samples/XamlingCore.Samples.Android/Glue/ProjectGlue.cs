@@ -15,5 +15,10 @@ namespace XamlingCore.Samples.Droid.Glue
 {
     public class ProjectGlue : DroidGlue
     {
+        public override void Init()
+        {
+            base.Init();
+            Container = Builder.Build();
+        }
     }
 }

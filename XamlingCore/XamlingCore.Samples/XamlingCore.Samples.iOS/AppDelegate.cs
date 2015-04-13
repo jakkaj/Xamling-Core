@@ -24,11 +24,11 @@ namespace XamlingCore.Samples.iOS
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : UIApplicationDelegate
+    public partial class AppDelegate : FormsApplicationDelegate
     {
         // class-level declarations
         UIWindow window;
-        private XiOSCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue> xCore;
+        
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
@@ -44,15 +44,18 @@ namespace XamlingCore.Samples.iOS
 
             _configurePretties();
 
+            var xapp = new App();
+            xapp.Init<RootMasterDetailViewModel, ProjectGlue>();
+            LoadApplication(xapp);
             //boot using standard navigation page 
             //var x = new XiOSCore<XRootFrame, XNavigationPageTypedViewModel<MainNavigationHomeViewModel>, ProjectGlue>();
             //x.Init();
-            var c = XLocale.CultureInfo;
-            //boot using master detail setup
-            xCore = new XiOSCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue>();
-            xCore.Init();
+            //var c = XLocale.CultureInfo;
+            ////boot using master detail setup
+            //xCore = new XiOSCore<XRootFrame, RootMasterDetailViewModel, ProjectGlue>();
+            //xCore.Init();
 
-            return true;
+            return base.FinishedLaunching(app, options);
         }
 
         void _configurePretties()

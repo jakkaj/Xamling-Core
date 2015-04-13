@@ -7,6 +7,6 @@ namespace XamlingCore.XamarinThings.Contract
     {
         Page Init(XFrame rootFrame, XViewModel rootViewModel);
         IFrameNavigator FrameNavigator { get; set; }
-        XViewModel RootViewModel { get; set; }
+        XViewModel RootViewModel { get;  }
     }
 }

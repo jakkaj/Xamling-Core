@@ -15,8 +15,8 @@ namespace XamlingCore.Portable.View.Navigation
             IsBack = isBack;
         }
 
-        public object Content { get; }
+        public object Content { get; private set; }
 
-        public bool IsBack { get; }
+        public bool IsBack { get; private set; }
     }
 }

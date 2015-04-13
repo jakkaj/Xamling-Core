@@ -226,11 +226,11 @@ namespace XamlingCore.Portable.Model.Response
             SourceLineNumber = sourceLineNumber;
         }
 
-        public string MemberName { get; }
+        public string MemberName { get; private set; }
 
-        public string SourceFilePath { get; }
+        public string SourceFilePath { get; private set; }
 
-        public int SourceLineNumber { get; }
+        public int SourceLineNumber { get; private set; }
     }
 
     public enum OperationResults

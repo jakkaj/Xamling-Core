@@ -38,9 +38,9 @@ namespace XamlingCore.Samples.Windows8
 
         void _init()
         {
-            var core = new XWindows8Core<Windows8RootFrame, HomeViewModel, ProjectGlue>();
-            core.Init();
-            core.SetRootFrame(RootWindowsFrame);
+            //var core = new XWindows8Core<Windows8RootFrame, HomeViewModel, ProjectGlue>();
+            //core.Init();
+            //core.SetRootFrame(RootWindowsFrame);
         }
     }
 }

@@ -3,7 +3,7 @@
   <metadata>
     <id>XamlingCore</id>
 	<title>Xamling Core</title>
-    <version>2.0.124</version>
+    <version>2.0.126</version>
     <authors>Jordan</authors>
     <owners>Jordan</owners>
     <licenseUrl>http://opensource.org/licenses/MS-PL</licenseUrl>
@@ -16,7 +16,7 @@
     <tags>Xamling XamlingCore MVVM Portable</tags>
     <dependencies>
        <dependency id="Autofac" version="3.5.2" />      
-       <dependency id="Microsoft.Net.Http" version="2.2.28" />
+       <dependency id="Microsoft.Net.Http" version="2.2.29" />
        <dependency id="Newtonsoft.Json" version="6.0.8" />
     </dependencies>
   </metadata>

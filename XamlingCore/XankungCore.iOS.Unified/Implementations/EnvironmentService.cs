@@ -1,6 +1,6 @@
 ﻿using Foundation;
 using UIKit;
-using XamlingCore.iOS.Implementations;
+using XamlingCore.Portable.Contract.Services;
 
 namespace XamlingCore.iOS.Unified.Implementations
 {
