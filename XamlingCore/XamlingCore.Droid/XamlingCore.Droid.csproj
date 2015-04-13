@@ -52,6 +52,10 @@
     </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="OkHttp">
       <HintPath>..\packages\modernhttpclient.2.3.0\lib\MonoAndroid\OkHttp.dll</HintPath>
     </Reference>
@@ -78,6 +82,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\XamlingCore.Platform.Shared\Auth\JsonWebTokenParser.cs">
+      <Link>Shared\Auth\JsonWebTokenParser.cs</Link>
+    </Compile>
+    <Compile Include="..\XamlingCore.Platform.Shared\Glue\XAutofacAutoRegisterExtensions.cs">
+      <Link>Shared\Glue\XAutofacAutoRegisterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\XamlingCore.Platform.Shared\Glue\XCoreAutoRegistrations.cs">
+      <Link>Shared\Glue\XCoreAutoRegistrations.cs</Link>
+    </Compile>
     <Compile Include="Glue\DroidGlue.cs" />
     <Compile Include="Glue\Modules\DefaultDroidModule.cs" />
     <Compile Include="Glue\Modules\HashHelper.cs" />

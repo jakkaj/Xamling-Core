@@ -7,8 +7,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-using Foundation;
-using UIKit;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

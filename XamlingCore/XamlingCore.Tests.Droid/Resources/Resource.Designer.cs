@@ -50,6 +50,7 @@ namespace XamlingCore.Tests.Droid
 			global::Xamarin.Android.NUnitLite.Resource.Layout.test_suite = global::XamlingCore.Tests.Droid.Resource.Layout.test_suite;
 			global::XamlingCore.Droid.Resource.String.ApplicationName = global::XamlingCore.Tests.Droid.Resource.String.ApplicationName;
 			global::XamlingCore.Droid.Resource.String.Hello = global::XamlingCore.Tests.Droid.Resource.String.Hello;
+			global::XamlingCore.Droid.Resource.String.library_name = global::XamlingCore.Tests.Droid.Resource.String.library_name;
 		}
 		
 		public partial class Attribute
@@ -181,6 +182,9 @@ namespace XamlingCore.Tests.Droid
 			
 			// aapt resource value: 0x7f040000
 			public const int Hello = 2130968576;
+			
+			// aapt resource value: 0x7f040002
+			public const int library_name = 2130968578;
 			
 			static String()
 			{

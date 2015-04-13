@@ -2,6 +2,7 @@ using Android.App;
 using Autofac;
 using XamlingCore.Droid.Implementations;
 using XamlingCore.Droid.Implementations.Helpers;
+using XamlingCore.Droid.Navigation;
 using XamlingCore.Droid.Services;
 using XamlingCore.Portable.Contract.Device.Service;
 using XamlingCore.Portable.Contract.Downloaders;
@@ -40,7 +41,7 @@ namespace XamlingCore.Droid.Glue.Modules
 
             builder.RegisterType<DeviceUtilityService>().As<IDeviceUtilityService>().SingleInstance();
 
-            //builder.RegisterType<iOSViewResolver>().AsImplementedInterfaces().SingleInstance(); /* Not required */
+            builder.RegisterType<DroidViewResolver>().AsImplementedInterfaces().SingleInstance(); /* Not required */
 
             base.Load(builder);
         }

@@ -46,6 +46,9 @@ namespace XamlingCore.Droid
 			// aapt resource value: 0x7f020000
 			public static int Hello = 2130837504;
 			
+			// aapt resource value: 0x7f020002
+			public static int library_name = 2130837506;
+			
 			static String()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

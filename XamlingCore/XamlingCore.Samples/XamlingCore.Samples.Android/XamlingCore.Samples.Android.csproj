@@ -104,6 +104,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
+    <BundleResource Include="Resources\Drawable\Default-568h%402x.png" />
+    <BundleResource Include="Resources\Drawable\Default.png" />
+    <BundleResource Include="Resources\Drawable\Default%402x.png" />
+    <BundleResource Include="Resources\Drawable\favs.png" />
+    <BundleResource Include="Resources\Drawable\favs%402x.png" />
+    <BundleResource Include="Resources\Drawable\favs%403x.png" />
+    <BundleResource Include="Resources\Drawable\featured.png" />
+    <BundleResource Include="Resources\Drawable\featured%402x.png" />
+    <BundleResource Include="Resources\Drawable\featured%403x.png" />
+    <BundleResource Include="Resources\Drawable\nearby.png" />
+    <BundleResource Include="Resources\Drawable\nearby%402x.png" />
+    <BundleResource Include="Resources\Drawable\nearby%403x.png" />
+    <BundleResource Include="Resources\Drawable\settings.png" />
+    <BundleResource Include="Resources\Drawable\settings%402x.png" />
+    <BundleResource Include="Resources\Drawable\settings_vertical.png" />
+    <BundleResource Include="Resources\Drawable\settings_vertical%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\XamlingCore.Droid\XamlingCore.Droid.csproj">

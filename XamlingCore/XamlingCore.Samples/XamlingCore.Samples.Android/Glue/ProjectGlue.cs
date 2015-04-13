@@ -10,6 +10,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using XamlingCore.Droid.Glue;
+using XamlingCore.Platform.Shared.Glue;
+using XamlingCore.Samples.Views.MasterDetailHome.Home;
 
 namespace XamlingCore.Samples.Droid.Glue
 {
@@ -18,6 +20,10 @@ namespace XamlingCore.Samples.Droid.Glue
         public override void Init()
         {
             base.Init();
+
+            XCoreAutoRegistration.RegisterAssembly(Builder, typeof(HomeViewModel));
+            XCoreAutoRegistration.RegisterAssembly(Builder, typeof(ProjectGlue));
+
             Container = Builder.Build();
         }
     }
