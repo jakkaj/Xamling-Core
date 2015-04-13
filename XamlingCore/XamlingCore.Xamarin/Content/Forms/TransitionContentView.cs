@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.ServiceModel.Channels;
-using System.Text;
 using System.Threading.Tasks;
-using Autofac;
 using Xamarin.Forms;
-using XamlingCore.Portable.Data.Glue;
-using XamlingCore.Portable.Util.Lock;
 using XamlingCore.XamarinThings.Content.Dynamic;
-using XamlingCore.XamarinThings.Contract;
 
 namespace XamlingCore.XamarinThings.Content.Forms
 {

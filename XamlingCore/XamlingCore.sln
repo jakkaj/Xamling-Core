@@ -72,9 +72,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlingCore.Windows", "Xaml
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlingCore.Windows8", "XamlingCore.Windows8\XamlingCore.Windows8.csproj", "{00BF8A1F-E777-432E-AA20-17B074393FB1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WindowsUniversal", "WindowsUniversal", "{62B89798-8693-4C44-B04A-E073AF053254}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{62B89798-8693-4C44-B04A-E073AF053254}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamlingCore.Samples.Windows8", "XamlingCore.Samples.Windows8", "{A71E217D-6412-4A6B-8E00-76B37022F485}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows8Universal", "Windows8Universal", "{A71E217D-6412-4A6B-8E00-76B37022F485}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamlingCore.Samples.Windows8.Shared", "XamlingCore.Samples.Windows8\XamlingCore.Samples.Windows8.Shared\XamlingCore.Samples.Windows8.Shared.shproj", "{E526AF36-F368-402F-AF56-A08ED3B4A00F}"
 EndProject
