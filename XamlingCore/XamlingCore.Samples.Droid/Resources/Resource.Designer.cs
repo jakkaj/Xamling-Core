@@ -27,6 +27,8 @@ namespace XamlingCore.Samples.Droid
 		public static void UpdateIdValues()
 		{
 			global::ModernHttpClient.Resource.String.library_name = global::XamlingCore.Samples.Droid.Resource.String.library_name;
+			global::Xamarin.Forms.Platform.Resource.String.ApplicationName = global::XamlingCore.Samples.Droid.Resource.String.ApplicationName;
+			global::Xamarin.Forms.Platform.Resource.String.Hello = global::XamlingCore.Samples.Droid.Resource.String.Hello;
 			global::XamlingCore.Droid.Resource.String.ApplicationName = global::XamlingCore.Samples.Droid.Resource.String.ApplicationName;
 			global::XamlingCore.Droid.Resource.String.Hello = global::XamlingCore.Samples.Droid.Resource.String.Hello;
 			global::XamlingCore.Droid.Resource.String.library_name = global::XamlingCore.Samples.Droid.Resource.String.library_name;

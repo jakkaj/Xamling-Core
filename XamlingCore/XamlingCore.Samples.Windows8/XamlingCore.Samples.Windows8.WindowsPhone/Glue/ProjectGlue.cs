@@ -18,7 +18,7 @@ namespace XamlingCore.Samples.Windows8.Glue
 
             Builder.RegisterAssemblyTypes(typeof(MainPage).GetTypeInfo().Assembly).Where(_ => _.FullName.Contains("View")).AsSelf();
 
-            Builder.RegisterType<WorkflowExamples>();
+           // Builder.RegisterType<WorkflowExamples>();
             Container = Builder.Build();
         }
     }
