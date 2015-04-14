@@ -11,21 +11,23 @@ using XamlingCore.Samples.Windows8.View;
 using XamlingCore.Samples.Windows8.Workflow;
 using XamlingCore.Windows8.Glue;
 using XamlingCore.Windows8.Glue.Modules;
+using XamlingCore.Windows8.Shared.Glue;
 
 namespace XamlingCore.Samples.Windows8.Glue
 {
-    public class ProjectGlue : Windows8Glue
-    {
-        public override void Init()
+  
+        public class ProjectGlue : Windows8Glue
         {
-            base.Init();
+            public override void Init()
+            {
+                base.Init();
 
-            Builder.RegisterType<Windows8RootFrame>().AsSelf().SingleInstance();
+                XCoreAutoRegistration.RegisterAssembly(Builder, typeof(HomeViewModel));
+                XCoreAutoRegistration.RegisterAssembly(Builder, typeof(ProjectGlue));
 
-            Builder.RegisterAssemblyTypes(typeof(MainPage).GetTypeInfo().Assembly).Where(_ => _.FullName.Contains("View")).AsSelf();
-
-            Builder.RegisterType<WorkflowExamples>();
-            Container = Builder.Build();
+                // Builder.RegisterType<WorkflowExamples>();
+                Container = Builder.Build();
+            }
         }
-    }
+    
 }

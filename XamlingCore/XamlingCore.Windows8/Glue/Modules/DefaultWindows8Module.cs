@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 using System.Reflection;
 using Autofac;
 using XamlingCore.Portable.Contract.Device;
+using XamlingCore.Portable.Contract.Device.Service;
+using XamlingCore.Portable.Contract.Downloaders;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Contract.Network;
+using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Contract.UI;
+using XamlingCore.Portable.Net.Downloaders;
 using XamlingCore.Windows8.Implementations;
+using XamlingCore.Windows8.Implementations.Helpers;
 using XamlingCore.Windows8.Navigation;
 using XamlingCore.XamarinThings.Contract;
 using Module = Autofac.Module;
@@ -30,6 +35,27 @@ namespace XamlingCore.Windows8.Glue.Modules
            .Where(_ => _.FullName.Contains("Service"))
            .AsImplementedInterfaces()
            .SingleInstance();
+
+
+
+            builder.RegisterType<EnvironmentService>().As<IEnvironmentService>().SingleInstance();
+            builder.RegisterType<WindowsUniversalDispatcher>().As<IDispatcher>().SingleInstance();
+            builder.RegisterType<LocationTrackingSensor>().AsImplementedInterfaces().SingleInstance();
+           
+
+           
+
+            builder.RegisterType<HashHelper>().AsImplementedInterfaces();
+
+            builder.RegisterType<MotionSensor>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<OrientationSensor>().AsImplementedInterfaces().SingleInstance();
+
+            builder.RegisterType<HttpClientTransferrer>().As<IHttpTransferrer>().SingleInstance();
+           // builder.RegisterType<iOSSimpleNativeHttpHttpTransfer>().As<ISimpleHttpTranferrer>().SingleInstance();
+
+            builder.RegisterType<DeviceUtilityService>().As<IDeviceUtilityService>().SingleInstance();
+
+
 
             base.Load(builder);
         }

@@ -125,6 +125,10 @@
       <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
       <Name>XamlingCore.Portable.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Net\XamlingCore.Portable.Net.csproj">
+      <Project>{DA91F91F-3A71-4C7D-9FD5-4F0DC6E3DC86}</Project>
+      <Name>XamlingCore.Portable.Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Util\XamlingCore.Portable.Util.csproj">
       <Project>{BF649817-277F-44C1-AF23-C90D6DAF5901}</Project>
       <Name>XamlingCore.Portable.Util</Name>
@@ -143,10 +147,17 @@
     <Compile Include="Glue\Modules\DefaultWindows8Module.cs" />
     <Compile Include="Glue\Windows8Glue.cs" />
     <Compile Include="Implementations\DeviceNetworkStatus.cs" />
+    <Compile Include="Implementations\DeviceUtilityService.cs" />
+    <Compile Include="Implementations\EnvironmentService.cs" />
+    <Compile Include="Implementations\Helpers\HashHelper.cs" />
     <Compile Include="Implementations\LoadStatusService.cs" />
     <Compile Include="Implementations\LocalStorage.cs" />
+    <Compile Include="Implementations\LocationTrackingSensor.cs" />
+    <Compile Include="Implementations\MotionSensor.cs" />
     <Compile Include="Implementations\OrientationSensor.cs" />
     <Compile Include="Implementations\Windows8Dispatcher.cs" />
+    <Compile Include="Implementations\WindowsUniversalDispatcher.cs" />
+    <Compile Include="Implementations\WindowsUniversalNativeHttpClientTransferrer.cs" />
     <Compile Include="Navigation\WindowsUniversalViewResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Glue\XWindowsAutofacAutoRegisterExternsions.cs" />

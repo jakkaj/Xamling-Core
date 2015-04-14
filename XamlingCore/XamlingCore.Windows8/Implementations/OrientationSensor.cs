@@ -25,6 +25,11 @@ namespace XamlingCore.Windows8.Implementations
 
         void DisplayProperties_OrientationChanged(object sender)
         {
+            _fire();
+        }
+
+        void _fire()
+        {
             if (OrientationChanged != null)
             {
                 OrientationChanged(this, EventArgs.Empty);
@@ -65,7 +70,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public void OnRotated()
         {
-            throw new NotImplementedException();
+            //_fire();
         }
     }
 }
