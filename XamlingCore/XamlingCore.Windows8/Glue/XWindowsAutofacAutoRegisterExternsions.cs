@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using XamlingCore.Portable.Glue.Glue;
 
-namespace XamlingCore.Platform.Shared.Glue
+namespace XamlingCore.Windows8.Shared.Glue
 {
     public static class XAutofacAutoRegisterExtensions
     {

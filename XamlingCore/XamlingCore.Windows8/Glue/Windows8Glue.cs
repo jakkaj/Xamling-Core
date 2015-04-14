@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Autofac;
 using XamlingCore.Portable.Glue;
 using XamlingCore.Windows8.Glue.Modules;
+using XamlingCore.XamarinThings.Glue;
 
 namespace XamlingCore.Windows8.Glue
 {
@@ -17,7 +18,7 @@ namespace XamlingCore.Windows8.Glue
             base.Init();
             Builder.RegisterModule<DefaultXCoreModule>();
             Builder.RegisterModule<DefaultWindows8Module>();
-
+            Builder.RegisterModule<XamarinGlue>();
          
         }
     }

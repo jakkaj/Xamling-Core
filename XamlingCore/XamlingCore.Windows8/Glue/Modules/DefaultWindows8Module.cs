@@ -10,6 +10,8 @@ using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Contract.Network;
 using XamlingCore.Portable.Contract.UI;
 using XamlingCore.Windows8.Implementations;
+using XamlingCore.Windows8.Navigation;
+using XamlingCore.XamarinThings.Contract;
 using Module = Autofac.Module;
 
 namespace XamlingCore.Windows8.Glue.Modules
@@ -18,6 +20,7 @@ namespace XamlingCore.Windows8.Glue.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<WindowsUniversalViewResolver>().As<IViewResolver>();
             builder.RegisterType<LocalStorageWindows8>().As<ILocalStorage>().SingleInstance();
             builder.RegisterType<Windows8Dispatcher>().As<IDispatcher>().SingleInstance();
             builder.RegisterType<OrientationSensor>().As<IOrientationSensor>();

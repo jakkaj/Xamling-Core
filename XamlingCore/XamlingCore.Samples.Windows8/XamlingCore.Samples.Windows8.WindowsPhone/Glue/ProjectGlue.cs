@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using Autofac;
+using XamlingCore.Samples.Views.MasterDetailHome.Home;
 using XamlingCore.Windows8.Glue;
+using XamlingCore.Windows8.Shared.Glue;
 
 namespace XamlingCore.Samples.Windows8.Glue
 {
@@ -10,7 +12,8 @@ namespace XamlingCore.Samples.Windows8.Glue
         {
             base.Init();
 
-            Builder.RegisterAssemblyTypes(typeof(MainPage).GetTypeInfo().Assembly).Where(_ => _.FullName.Contains("View")).AsSelf();
+            XCoreAutoRegistration.RegisterAssembly(Builder, typeof(HomeViewModel));
+            XCoreAutoRegistration.RegisterAssembly(Builder, typeof(ProjectGlue));
 
            // Builder.RegisterType<WorkflowExamples>();
             Container = Builder.Build();
