@@ -14,12 +14,13 @@
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
-    <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
     <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
-    <JavaMaximumHeapSize />
+    <JavaMaximumHeapSize>
+    </JavaMaximumHeapSize>
     <JavaOptions />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -34,17 +35,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidLinkSkip>
+    </AndroidLinkSkip>
+    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <Debugger>Microsoft</Debugger>
+    <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
-    <AndroidLinkSkip />
-    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <BundleAssemblies>False</BundleAssemblies>
     <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
     <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
-    <JavaMaximumHeapSize />
-    <JavaOptions />
-    <MonoDroidExtraArgs />
+    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -56,10 +58,6 @@
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FormsViewGroup, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Xamarin.Forms.1.4.1.6349\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
@@ -69,21 +67,20 @@
     <Reference Include="Autofac">
       <HintPath>..\..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Xamarin.Android.Support.v4.22.0.0.0\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Forms.Core">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.1.6349\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Platform.Android, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Xamarin.Forms.1.4.1.6349\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.1.6349\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
-      <Private>True</Private>
+    </Reference>
+    <Reference Include="FormsViewGroup">
+      <HintPath>..\..\packages\Xamarin.Forms.1.4.1.6349\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\..\packages\Xamarin.Android.Support.v4.22.0.0.0\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform.Android">
+      <HintPath>..\..\packages\Xamarin.Forms.1.4.1.6349\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -100,26 +97,27 @@
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\Drawable\Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
-    <BundleResource Include="Resources\Drawable\Default-568h%402x.png" />
-    <BundleResource Include="Resources\Drawable\Default.png" />
-    <BundleResource Include="Resources\Drawable\Default%402x.png" />
-    <BundleResource Include="Resources\Drawable\favs.png" />
-    <BundleResource Include="Resources\Drawable\favs%402x.png" />
-    <BundleResource Include="Resources\Drawable\favs%403x.png" />
-    <BundleResource Include="Resources\Drawable\featured.png" />
-    <BundleResource Include="Resources\Drawable\featured%402x.png" />
-    <BundleResource Include="Resources\Drawable\featured%403x.png" />
-    <BundleResource Include="Resources\Drawable\nearby.png" />
-    <BundleResource Include="Resources\Drawable\nearby%402x.png" />
-    <BundleResource Include="Resources\Drawable\nearby%403x.png" />
-    <BundleResource Include="Resources\Drawable\settings.png" />
-    <BundleResource Include="Resources\Drawable\settings%402x.png" />
-    <BundleResource Include="Resources\Drawable\settings_vertical.png" />
-    <BundleResource Include="Resources\Drawable\settings_vertical%402x.png" />
+    <AndroidResource Include="Resources\drawable\Default-568h%402x.png" />
+    <AndroidResource Include="Resources\drawable\Default.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\default.png" />
+    <AndroidResource Include="Resources\drawable\favs.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\favs.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\favs.png" />
+    <AndroidResource Include="Resources\drawable\featured.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\featured.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\featured.png" />
+    <AndroidResource Include="Resources\drawable\nearby.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\nearby.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\nearby.png" />
+    <AndroidResource Include="Resources\drawable\settings.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\settings.png" />
+    <AndroidResource Include="Resources\drawable\settings_vertical.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\settings_vertical.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable\icon.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\XamlingCore.Droid\XamlingCore.Droid.csproj">
@@ -127,43 +125,43 @@
       <Name>XamlingCore.Droid</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
-      <Project>{ea36c7d4-c89e-4242-bd39-8e485f408086}</Project>
+      <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
       <Name>XamlingCore.Portable.Contract</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.Data\XamlingCore.Portable.Data.csproj">
-      <Project>{cee58a71-49b1-4c9f-b22a-ecd33b6e3a6b}</Project>
+      <Project>{CEE58A71-49B1-4C9F-B22A-ECD33B6E3A6B}</Project>
       <Name>XamlingCore.Portable.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.Glue\XamlingCore.Portable.Glue.csproj">
-      <Project>{e908cd00-22c8-4f7b-ba99-8ddf32c5f656}</Project>
+      <Project>{E908CD00-22C8-4F7B-BA99-8DDF32C5F656}</Project>
       <Name>XamlingCore.Portable.Glue</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
-      <Project>{568d9a09-151c-49b3-bee5-71529fc6869d}</Project>
+      <Project>{568D9A09-151C-49B3-BEE5-71529FC6869D}</Project>
       <Name>XamlingCore.Portable.Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
-      <Project>{e2682110-bb54-48d8-9e8c-20bc29488bbe}</Project>
+      <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
       <Name>XamlingCore.Portable.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.Net\XamlingCore.Portable.Net.csproj">
-      <Project>{da91f91f-3a71-4c7d-9fd5-4f0dc6e3dc86}</Project>
+      <Project>{DA91F91F-3A71-4C7D-9FD5-4F0DC6E3DC86}</Project>
       <Name>XamlingCore.Portable.Net</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.Service\XamlingCore.Portable.Service.csproj">
-      <Project>{449dc319-446e-4d47-923a-3c9efdf02b88}</Project>
+      <Project>{449DC319-446E-4D47-923A-3C9EFDF02B88}</Project>
       <Name>XamlingCore.Portable.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.Util\XamlingCore.Portable.Util.csproj">
-      <Project>{bf649817-277f-44c1-af23-c90d6daf5901}</Project>
+      <Project>{BF649817-277F-44C1-AF23-C90D6DAF5901}</Project>
       <Name>XamlingCore.Portable.Util</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
-      <Project>{b3d7c301-2df7-4c16-9f49-7dda8689556e}</Project>
+      <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
       <Name>XamlingCore.Portable.View</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.Workflow\XamlingCore.Portable.Workflow.csproj">
-      <Project>{9d082abd-f398-4a28-be80-9af2ba5b1be9}</Project>
+      <Project>{9D082ABD-F398-4A28-BE80-9AF2BA5B1BE9}</Project>
       <Name>XamlingCore.Portable.Workflow</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Xamarin\XamlingCore.XamarinThings.csproj">

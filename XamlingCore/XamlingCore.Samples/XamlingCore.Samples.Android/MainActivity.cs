@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
@@ -17,7 +18,7 @@ using XamlingCore.XamarinThings.Frame;
 
 namespace XamlingCore.Samples.Droid
 {
-    [Activity(Label = "XamlingCore.Samples", MainLauncher = true)]
+     [Activity(Label = "Xamling Core Droid Sample", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
     {
         
@@ -26,7 +27,6 @@ namespace XamlingCore.Samples.Droid
             base.OnCreate(bundle);
             
             Xamarin.Forms.Forms.Init(this, bundle);
-
             var xapp = new App();
             xapp.Init<RootMasterDetailViewModel, ProjectGlue>();
             LoadApplication(xapp);

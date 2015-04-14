@@ -1,4 +1,5 @@
 using Android.App;
+using Xamarin.Forms;
 using XamlingCore.Portable.Contract.UI;
 using XamlingCore.Portable.View.Special;
 
@@ -39,7 +40,7 @@ namespace XamlingCore.Droid.Implementations
         {
             if (_spinnerInstance == null)
             {
-                _spinnerInstance = new ProgressDialog(Application.Context);
+                _spinnerInstance = new ProgressDialog(Forms.Context);
                 _spinnerInstance.Indeterminate = true;
                 _spinnerInstance.SetProgressStyle(ProgressDialogStyle.Spinner);                
                 _spinnerInstance.SetCancelable(false);                
