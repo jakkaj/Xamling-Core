@@ -147,6 +147,10 @@
       <Project>{9D082ABD-F398-4A28-BE80-9AF2BA5B1BE9}</Project>
       <Name>XamlingCore.Portable.Workflow</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Samples\XamlingCore.Samples\XamlingCore.Samples.csproj">
+      <Project>{07465752-9c33-46cb-b0c9-f7ded7fa7ffc}</Project>
+      <Name>XamlingCore.Samples</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Windows8\XamlingCore.Windows8.csproj">
       <Project>{00BF8A1F-E777-432E-AA20-17B074393FB1}</Project>
       <Name>XamlingCore.Windows8</Name>
@@ -162,26 +166,6 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Root\Windows8RootFrame.cs" />
-    <Compile Include="View\AnotherView.model.cs">
-      <DependentUpon>AnotherView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\AnotherView.xaml.cs">
-      <DependentUpon>AnotherView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HomeView.model.cs">
-      <DependentUpon>HomeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HomeView.xaml.cs">
-      <DependentUpon>HomeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\WorkflowView.model.cs">
-      <DependentUpon>WorkflowView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\WorkflowView.xaml.cs">
-      <DependentUpon>WorkflowView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Workflow\WorkflowExamples.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -200,18 +184,6 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\AnotherView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\HomeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\WorkflowView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

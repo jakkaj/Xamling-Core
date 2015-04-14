@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using XamlingCore.Portable.View.ViewModel;
 
-namespace XamlingCore.Samples.Windows8.View
+namespace XamlingCore.NET.Web.MVC
 {
-    public class AnotherViewModel :XViewModel
+    class OperationActionResult
     {
     }
 }
