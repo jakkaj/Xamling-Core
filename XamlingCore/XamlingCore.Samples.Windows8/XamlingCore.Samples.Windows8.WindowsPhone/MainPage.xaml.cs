@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+﻿using Windows.ApplicationModel.Activation;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.WinRT;
+using XamlingCore.Samples.Views.Root.MasterDetailRoot;
+using XamlingCore.Samples.Windows8.Glue;
+using NavigationEventArgs = Windows.UI.Xaml.Navigation.NavigationEventArgs;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -20,13 +12,15 @@ namespace XamlingCore.Samples.Windows8
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : WindowsPhonePage
     {
         public MainPage()
         {
             this.InitializeComponent();
-
-            this.NavigationCacheMode = NavigationCacheMode.Required;
+            
+            var xapp = new Samples.App();
+            xapp.Init<RootMasterDetailViewModel, ProjectGlue>();
+            LoadApplication(xapp);
         }
 
         /// <summary>
