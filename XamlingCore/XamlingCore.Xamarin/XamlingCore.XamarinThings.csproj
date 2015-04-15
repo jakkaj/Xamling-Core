@@ -143,7 +143,11 @@ copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\win"
 xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\win"
 
 copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\Xamarin.iOS10"
-xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\Xamarin.iOS10"</PostBuildEvent>
+xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\Xamarin.iOS10"
+
+
+copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\portable-win81+wpa81"
+xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\portable-win81+wpa81"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Xamarin.Forms.1.4.2.6353-pre2\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.2.6353-pre2\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -81,5 +81,10 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
                 OnPropertyChanged();
             }
         }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+        }
     }
 }
