@@ -139,8 +139,6 @@ xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\wp8"
 xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\MonoAndroid"
 xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\MonoTouch"
 
-copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\win"
-xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\win"
 
 copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\Xamarin.iOS10"
 xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\Xamarin.iOS10"
