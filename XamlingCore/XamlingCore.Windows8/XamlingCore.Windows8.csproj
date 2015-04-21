@@ -200,10 +200,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\win"
-xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\win"
-
-copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\portable-win81+wpa81"
+    <PostBuildEvent>copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\portable-win81+wpa81"
 xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\portable-win81+wpa81"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
