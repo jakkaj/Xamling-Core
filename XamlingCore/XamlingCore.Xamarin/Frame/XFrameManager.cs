@@ -16,8 +16,6 @@ namespace XamlingCore.XamarinThings.Frame
 
         public static FormsAlertHandler AlertHandler;
 
-        
-
         public XFrameManager(ILifetimeScope scope, IViewResolver viewResolver)
         {
             _scope = scope;

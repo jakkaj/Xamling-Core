@@ -33,12 +33,6 @@ namespace XamlingCore.XamarinThings.Core
             RootFrame = XFrame.CreateRootFrame<XRootFrame>(glue.Container.BeginLifetimeScope());
 
             var rootPage = GetRootPage<TRootViewModel>();
-            //_root = RootFrame.CreateContentModel<TRootViewModel>();
-            //_frameManager = RootFrame.Container.Resolve<IFrameManager>();
-
-            //var initalViewController = _frameManager.Init(RootFrame, RootViewModel);
-
-            //_rootPage = initalViewController;
 
             return rootPage;
         }

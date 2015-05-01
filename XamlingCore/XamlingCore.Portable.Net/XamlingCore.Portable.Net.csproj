@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ModernHttpClient">
-      <HintPath>..\packages\modernhttpclient.2.3.0\lib\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll</HintPath>
+      <HintPath>..\packages\modernhttpclient.2.4.0\lib\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
