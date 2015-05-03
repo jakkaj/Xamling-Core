@@ -19,6 +19,7 @@ namespace XamlingCore.iOS.Unified.Controls.Pages
         public iOSNavigationPageRenderer()
         {
             _orientationService = ContainerHost.Container.Resolve<IOrientationService>();
+            
         }
 
         public override bool ShouldAutomaticallyForwardRotationMethods

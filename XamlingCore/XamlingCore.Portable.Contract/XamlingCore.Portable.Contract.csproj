@@ -54,6 +54,7 @@
     <Compile Include="Downloaders\IHttpTransferResult.cs" />
     <Compile Include="Downloaders\ISimpleHttpTranferrer.cs" />
     <Compile Include="Entities\IHttpEntity.cs" />
+    <Compile Include="Entities\IMemoryCache.cs" />
     <Compile Include="EventArgs\BucketUpdatedEventArgs.cs" />
     <Compile Include="Glue\IGlue.cs" />
     <Compile Include="Helpers\IHashHelper.cs" />

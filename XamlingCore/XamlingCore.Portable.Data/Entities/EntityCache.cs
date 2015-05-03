@@ -14,130 +14,38 @@ namespace XamlingCore.Portable.Data.Entities
     public class EntityCache : IEntityCache
     {
         private readonly IStorageFileRepo _storageFileRepo;
+        private readonly IMemoryCache _cache;
 
-        private Dictionary<Type, Dictionary<string, object>> _memoryCache =
-            new Dictionary<Type, Dictionary<string, object>>();
 
-        public EntityCache(IStorageFileRepo storageFileRepo)
+        public EntityCache(IStorageFileRepo storageFileRepo, IMemoryCache cache)
         {
             _storageFileRepo = storageFileRepo;
+            _cache = cache;
         }
 
         public void DisableMemoryCache()
         {
-            if (_memoryCache != null)
-            {
-                foreach (var item in _memoryCache)
-                {
-                    if (item.Value != null)
-                    {
-                        item.Value.Clear();
-                    }
-                }
-            }
-            _memoryCache = null;
+            _cache.Disable();
         }
 
         public void EnableMemoryCache()
         {
-            _memoryCache = new Dictionary<Type, Dictionary<string, object>>();
+            _cache.Enable();
         }
-
 
         private XCacheItem<T> _getMemory<T>(string key) where T : class, new()
         {
-            if (_memoryCache == null)
-            {
-                return null;
-            }
-
-            var t = typeof(T);
-
-            if (!_memoryCache.ContainsKey(t)) return null;
-
-            var i = _memoryCache[t];
-
-            if (i == null)
-            {
-                return null;
-            }
-
-            if (!i.ContainsKey(key))
-            {
-                return null;
-            }
-
-            var item = i[key] as XCacheItem<T>;
-
-            return item;
+            return _cache.Get<T>(key);
         }
 
         private XCacheItem<T> _setMemory<T>(string key, T item, DateTime? expireDate) where T : class, new()
         {
-            var t = typeof(T);
-
-            Dictionary<string, object> dict = null;
-
-            if (_memoryCache != null)
-            {
-                if (!_memoryCache.ContainsKey(t))
-                {
-                    _memoryCache.Add(t, new Dictionary<string, object>());
-                }
-                dict = _memoryCache[t];
-            }
-            else
-            {
-                dict = new Dictionary<string, object>();
-            }
-
-            XCacheItem<T> cacheItem = null;
-
-            if (dict.ContainsKey(key))
-            {
-                cacheItem = dict[key] as XCacheItem<T>;
-            }
-
-            if (cacheItem == null)
-            {
-                cacheItem = new XCacheItem<T>();
-                dict[key] = cacheItem;
-            }
-
-            if (expireDate != null)
-            {
-                cacheItem.DateStamp = expireDate.Value;
-            }
-            else
-            {
-                cacheItem.DateStamp = DateTime.UtcNow;
-            }
-
-            cacheItem.Item = item;
-            cacheItem.Key = key;
-
-            _updateItem(item, cacheItem);
-
-            return cacheItem;
+            return _cache.Set(key, item, expireDate);
         }
 
         public void _deleteMemory<T>(string key) where T : class, new()
         {
-            var t = typeof(T);
-
-            if (!_memoryCache.ContainsKey(t)) return;
-
-            var i = _memoryCache[t];
-
-            if (i == null)
-            {
-                return;
-            }
-
-            if (i.ContainsKey(key))
-            {
-                i.Remove(key);
-            }
+            _cache.Delete<T>(key);
         }
 
         private bool _emptyListFails<T>(T obj, bool allowZeroList) where T : class
@@ -235,7 +143,8 @@ namespace XamlingCore.Portable.Data.Entities
                     if (f != null && f.Item != null)
                     {
                         _updateItem(f.Item, f);
-                        _setMemory(key, f.Item, f.DateStamp);
+                        var cacheSet = _setMemory(key, f.Item, f.DateStamp);
+                        _updateItem(cacheSet.Item, cacheSet);
                     }
                 }
 
@@ -274,7 +183,8 @@ namespace XamlingCore.Portable.Data.Entities
                     if (f != null && f.Item != null)
                     {
                         _updateItem(f.Item, f);
-                        _setMemory(key, f.Item, f.DateStamp);
+                        var cacheEntity = _setMemory(key, f.Item, f.DateStamp);
+                        _updateItem(cacheEntity.Item, cacheEntity);
                     }
 
                     if (f == null)
@@ -298,6 +208,7 @@ namespace XamlingCore.Portable.Data.Entities
             {
                 var fullName = _getFullKey<T>(key);
                 var cacheEntity = _setMemory(key, item, DateTime.UtcNow);
+                _updateItem(cacheEntity.Item, cacheEntity);
                 return await _storageFileRepo.Set(cacheEntity, fullName);
             }
         }
@@ -333,9 +244,7 @@ namespace XamlingCore.Portable.Data.Entities
 
         public async Task Clear()
         {
-            _memoryCache.Clear();
-            //throw new NotImplementedException("Not implemented becasue of problems with https://bugzilla.xamarin.com/show_bug.cgi?id=11771");
-
+            _cache.Clear();
             await _storageFileRepo.DeleteAll("cache", true);
         }
 
