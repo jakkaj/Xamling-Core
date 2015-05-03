@@ -203,6 +203,11 @@ namespace XamlingCore.Portable.Data.Entities
 
         public async Task<bool> SetEntity<T>(string key, T item) where T : class, new()
         {
+            return await SetEntity(key, item, null);
+        }
+
+        public async Task<bool> SetEntity<T>(string key, T item, TimeSpan? maxAge) where T : class, new()
+        {
             var locker = XNamedLock.Get(key + "setentity");
             using (var locked = await locker.LockAsync())
             {
