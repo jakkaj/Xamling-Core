@@ -83,6 +83,28 @@ namespace XamlingCore.Portable.Data.Entities
             return await _bucket.IsInBucket(bucket, entity.Id);
         }
 
+        public async Task AddSingleToBucket(string bucket, T entity)
+        {
+            if (entity == null)
+            {
+                return;
+            }
+
+            await _bucket.AddSingleToBucket(bucket, entity.Id);
+        }
+
+        public async Task<T> GetSingleFromBucket(string bucket)
+        {
+            var g = await _bucket.GetSingleFromBucket(bucket);
+            
+            if (g == Guid.Empty)
+            {
+                return null;
+            }
+
+            return await Get(g);
+        } 
+
         public async Task AddToBucket(string bucket, T entity)
         {
             if (entity == null)

@@ -67,6 +67,12 @@ namespace XamlingCore.Portable.Data.Extensions
             return entity;
         }
 
+        public static async Task<T> AddSingleToBucket<T>(this T entity, string bucket) where T : class, IEntity, new()
+        {
+            var manager = _getManagerFor(entity);
+            await manager.AddSingleToBucket(bucket, entity);
+            return entity;
+        }
 
         public static async Task<T> AddToBucket<T>(this T entity, string bucket) where T : class, IEntity, new()
         {

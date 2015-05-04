@@ -22,6 +22,8 @@ namespace XamlingCore.Portable.Contract.Entities
         Task Delete(T entity);
         Task MoveToBucket(string bucket, T entity);
         event EventHandler<BucketUpdatedEventArgs> BucketsUpdated;
+        Task AddSingleToBucket(string bucket, T entity);
+        Task<T> GetSingleFromBucket(string bucket);
     }
 
     public interface IEntityManager
