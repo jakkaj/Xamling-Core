@@ -67,6 +67,12 @@ namespace XamlingCore.Portable.Data.Extensions
             return entity;
         }
 
+        public static async Task<T> AddSingleToBucket<T>(this T entity, string bucket) where T : class, IEntity, new()
+        {
+            var manager = _getManagerFor(entity);
+            await manager.AddSingleToBucket(bucket, entity);
+            return entity;
+        }
 
         public static async Task<T> AddToBucket<T>(this T entity, string bucket) where T : class, IEntity, new()
         {
@@ -85,7 +91,13 @@ namespace XamlingCore.Portable.Data.Extensions
         public static async Task<T> Set<T>(this T entity) where T : class, IEntity, new()
         {
             var manager = _getManagerFor(entity);
-            return await manager.Set(entity);            
+            return await manager.Set(entity, null);            
+        }
+
+        public static async Task<T> Set<T>(this T entity, TimeSpan maxAge) where T : class, IEntity, new()
+        {
+            var manager = _getManagerFor(entity);
+            return await manager.Set(entity, maxAge);
         }
 
         public static async Task<T> Delete<T>(this T entity) where T : class, IEntity, new()

@@ -6,14 +6,16 @@ namespace XamlingCore.Portable.Contract.Entities
 {
     public interface IEntityCache
     {
-        Task<T> GetEntity<T>(string key, Func<Task<T>> sourceTask, TimeSpan? maxAge = null, bool allowExpired = true, bool allowZeroList = true) where T : class, new();
-        Task<T> GetEntity<T>(string key, TimeSpan? maxAge = null) where T : class, new();
+        Task<T> GetEntity<T>(string key, Func<Task<T>> sourceTask, TimeSpan? maxAge = null,
+            bool allowExpired = true, bool allowZeroList = true) where T : class, new();
+        Task<T> GetEntity<T>(string key) where T : class, new();
         Task<bool> SetEntity<T>(string key, T item) where T : class, new();
+        Task<bool> SetEntity<T>(string key, T item, TimeSpan? maxAge) where T : class, new();
         Task Clear();
         Task<bool> Delete<T>(string key) where T : class, new();
 
-        void DisableMemoryCache();
-        void EnableMemoryCache();
+        Task DisableMemoryCache();
+        Task EnableMemoryCache();
 
         Task<List<T>> GetAll<T>()
             where T : class, new();
@@ -24,5 +26,8 @@ namespace XamlingCore.Portable.Contract.Entities
         Task<TimeSpan?> GetAge<T>(string key) where T : class, new();
 
         bool DisableMultitenant { get; set; }
+
+        Task<bool> ValidateAge<T>(string key)
+            where T : class, new();
     }
 }

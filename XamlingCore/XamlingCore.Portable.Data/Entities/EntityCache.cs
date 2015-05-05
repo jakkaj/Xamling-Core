@@ -14,130 +14,38 @@ namespace XamlingCore.Portable.Data.Entities
     public class EntityCache : IEntityCache
     {
         private readonly IStorageFileRepo _storageFileRepo;
+        private readonly IMemoryCache _cache;
 
-        private Dictionary<Type, Dictionary<string, object>> _memoryCache =
-            new Dictionary<Type, Dictionary<string, object>>();
 
-        public EntityCache(IStorageFileRepo storageFileRepo)
+        public EntityCache(IStorageFileRepo storageFileRepo, IMemoryCache cache)
         {
             _storageFileRepo = storageFileRepo;
+            _cache = cache;
         }
 
-        public void DisableMemoryCache()
+        public async Task DisableMemoryCache()
         {
-            if (_memoryCache != null)
-            {
-                foreach (var item in _memoryCache)
-                {
-                    if (item.Value != null)
-                    {
-                        item.Value.Clear();
-                    }
-                }
-            }
-            _memoryCache = null;
+            await _cache.Disable();
         }
 
-        public void EnableMemoryCache()
+        public async Task EnableMemoryCache()
         {
-            _memoryCache = new Dictionary<Type, Dictionary<string, object>>();
+            await _cache.Enable();
         }
 
-
-        private XCacheItem<T> _getMemory<T>(string key) where T : class, new()
+        private async Task<XCacheItem<T>> _getMemory<T>(string key) where T : class, new()
         {
-            if (_memoryCache == null)
-            {
-                return null;
-            }
-
-            var t = typeof(T);
-
-            if (!_memoryCache.ContainsKey(t)) return null;
-
-            var i = _memoryCache[t];
-
-            if (i == null)
-            {
-                return null;
-            }
-
-            if (!i.ContainsKey(key))
-            {
-                return null;
-            }
-
-            var item = i[key] as XCacheItem<T>;
-
-            return item;
+            return await _cache.Get<T>(key);
         }
 
-        private XCacheItem<T> _setMemory<T>(string key, T item, DateTime? expireDate) where T : class, new()
+        private async Task<XCacheItem<T>> _setMemory<T>(string key, T item, TimeSpan? maxAge) where T : class, new()
         {
-            var t = typeof(T);
-
-            Dictionary<string, object> dict = null;
-
-            if (_memoryCache != null)
-            {
-                if (!_memoryCache.ContainsKey(t))
-                {
-                    _memoryCache.Add(t, new Dictionary<string, object>());
-                }
-                dict = _memoryCache[t];
-            }
-            else
-            {
-                dict = new Dictionary<string, object>();
-            }
-
-            XCacheItem<T> cacheItem = null;
-
-            if (dict.ContainsKey(key))
-            {
-                cacheItem = dict[key] as XCacheItem<T>;
-            }
-
-            if (cacheItem == null)
-            {
-                cacheItem = new XCacheItem<T>();
-                dict[key] = cacheItem;
-            }
-
-            if (expireDate != null)
-            {
-                cacheItem.DateStamp = expireDate.Value;
-            }
-            else
-            {
-                cacheItem.DateStamp = DateTime.UtcNow;
-            }
-
-            cacheItem.Item = item;
-            cacheItem.Key = key;
-
-            _updateItem(item, cacheItem);
-
-            return cacheItem;
+            return await _cache.Set(key, item, maxAge);
         }
 
         public void _deleteMemory<T>(string key) where T : class, new()
         {
-            var t = typeof(T);
-
-            if (!_memoryCache.ContainsKey(t)) return;
-
-            var i = _memoryCache[t];
-
-            if (i == null)
-            {
-                return;
-            }
-
-            if (i.ContainsKey(key))
-            {
-                i.Remove(key);
-            }
+            _cache.Delete<T>(key);
         }
 
         private bool _emptyListFails<T>(T obj, bool allowZeroList) where T : class
@@ -157,7 +65,7 @@ namespace XamlingCore.Portable.Data.Entities
         {
             var locker = XNamedLock.Get(key + "2");//this lock is to cover the gets
 
-            var e = await GetEntity<T>(key, maxAge);
+            var e = await GetEntity<T>(key);
 
             if (e != null)
             {
@@ -172,7 +80,7 @@ namespace XamlingCore.Portable.Data.Entities
             using (var l = await locker.LockAsync())
             {
                 //this checks to see if this entity was updated on another lock thread
-                e = await GetEntity<T>(key, maxAge);
+                e = await GetEntity<T>(key);
 
                 if (e != null)
                 {
@@ -187,13 +95,13 @@ namespace XamlingCore.Portable.Data.Entities
                 if (result != null)
                 {
                     _updateItemCacheSource(result, false);
-                    await SetEntity<T>(key, result);
+                    await SetEntity<T>(key, result, maxAge);
                 }
             }
 
             if (result == null && allowExpired)
             {
-                return await GetEntity<T>(key, TimeSpan.MaxValue);
+                return await GetEntity<T>(key);
             }
 
             return result;
@@ -219,14 +127,15 @@ namespace XamlingCore.Portable.Data.Entities
             }
         }
 
-        public async Task<TimeSpan?> GetAge<T>(string key) where T : class, new()
+        public async Task<bool> ValidateAge<T>(string key)
+            where T : class, new()
         {
             var locker = XNamedLock.Get(key + "3");
             using (var locked = await locker.LockAsync())
             {
                 var fullName = _getFullKey<T>(key);
 
-                var f = _getMemory<T>(key);
+                var f = await _getMemory<T>(key);
 
                 if (f == null)
                 {
@@ -235,7 +144,47 @@ namespace XamlingCore.Portable.Data.Entities
                     if (f != null && f.Item != null)
                     {
                         _updateItem(f.Item, f);
-                        _setMemory(key, f.Item, f.DateStamp);
+                        var cacheSet = await _setMemory(key, f.Item, null);
+                        _updateItem(cacheSet.Item, cacheSet);
+                    }
+                }
+
+                if (f == null)
+                {
+                    return false;
+                }
+
+                _updateItemCacheSource(f.Item, true);
+                
+                if (f.MaxAge == null)
+                {
+                    return true;
+                }
+
+                var ts = DateTime.UtcNow.Subtract(f.DateStamp);
+
+                return ts < f.MaxAge;
+            }
+        }
+
+        public async Task<TimeSpan?> GetAge<T>(string key) where T : class, new()
+        {
+            var locker = XNamedLock.Get(key + "3");
+            using (var locked = await locker.LockAsync())
+            {
+                var fullName = _getFullKey<T>(key);
+
+                var f = await _getMemory<T>(key);
+
+                if (f == null)
+                {
+                    f = await _storageFileRepo.Get<XCacheItem<T>>(fullName);
+
+                    if (f != null && f.Item != null)
+                    {
+                        _updateItem(f.Item, f);
+                        var cacheSet = await _setMemory(key, f.Item, null);
+                        _updateItem(cacheSet.Item, cacheSet);
                     }
                 }
 
@@ -252,16 +201,11 @@ namespace XamlingCore.Portable.Data.Entities
             }
         }
 
-        public async Task<T> GetEntity<T>(string key, TimeSpan? maxAge = null) where T : class, new()
+        public async Task<T> GetEntity<T>(string key) where T : class, new()
         {
-            if (maxAge == null)
-            {
-                maxAge = TimeSpan.FromDays(30000);
-            }
-
             var fullName = _getFullKey<T>(key);
 
-            var f = _getMemory<T>(key);
+            var f = await _getMemory<T>(key);
 
             if (f == null)
             {
@@ -274,7 +218,9 @@ namespace XamlingCore.Portable.Data.Entities
                     if (f != null && f.Item != null)
                     {
                         _updateItem(f.Item, f);
-                        _setMemory(key, f.Item, f.DateStamp);
+                        var cacheEntity = await _setMemory(key, f.Item, 
+                            f.MaxAge!=null ? DateTime.UtcNow.Subtract(f.DateStamp.Add(f.MaxAge.Value)) : TimeSpan.MaxValue);
+                        _updateItem(cacheEntity.Item, cacheEntity);
                     }
 
                     if (f == null)
@@ -286,18 +232,29 @@ namespace XamlingCore.Portable.Data.Entities
 
             _updateItemCacheSource(f.Item, true);
 
+            if (f.MaxAge == null)
+            {
+                return f.Item;
+            }
+
             var ts = DateTime.UtcNow.Subtract(f.DateStamp);
 
-            return ts > maxAge ? null : f.Item;
+            return ts > f.MaxAge ? null : f.Item;
         }
 
         public async Task<bool> SetEntity<T>(string key, T item) where T : class, new()
+        {
+            return await SetEntity(key, item, null);
+        }
+
+        public async Task<bool> SetEntity<T>(string key, T item, TimeSpan? maxAge) where T : class, new()
         {
             var locker = XNamedLock.Get(key + "setentity");
             using (var locked = await locker.LockAsync())
             {
                 var fullName = _getFullKey<T>(key);
-                var cacheEntity = _setMemory(key, item, DateTime.UtcNow);
+                var cacheEntity = await _setMemory(key, item, maxAge);
+                _updateItem(cacheEntity.Item, cacheEntity);
                 return await _storageFileRepo.Set(cacheEntity, fullName);
             }
         }
@@ -333,9 +290,7 @@ namespace XamlingCore.Portable.Data.Entities
 
         public async Task Clear()
         {
-            _memoryCache.Clear();
-            //throw new NotImplementedException("Not implemented becasue of problems with https://bugzilla.xamarin.com/show_bug.cgi?id=11771");
-
+            _cache.Clear();
             await _storageFileRepo.DeleteAll("cache", true);
         }
 
@@ -388,6 +343,13 @@ namespace XamlingCore.Portable.Data.Entities
                 foreach (var a in args)
                 {
                     tName += "_" + a.Name;
+                    if (a.GenericTypeArguments != null)
+                    {
+                        foreach (var subA in a.GenericTypeArguments)
+                        {
+                            tName += "_" + subA.Name;
+                        }
+                    }
                 }
             }
 

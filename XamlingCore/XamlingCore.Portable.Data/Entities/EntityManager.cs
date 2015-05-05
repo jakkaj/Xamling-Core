@@ -47,7 +47,7 @@ namespace XamlingCore.Portable.Data.Entities
             }
         }
 
-        public async Task<List<T>> AllInBucket(string bucket, TimeSpan? maxAge = null)
+        public async Task<List<T>> AllInBucket(string bucket)
         {
             var i = await _bucket.AllInBucket(bucket);
 
@@ -56,7 +56,7 @@ namespace XamlingCore.Portable.Data.Entities
                 return null;
             }
 
-            var list = await Get(i, maxAge);
+            var list = await Get(i);
 
             await _reconcileBucket(bucket, i, list);
 
@@ -82,6 +82,28 @@ namespace XamlingCore.Portable.Data.Entities
 
             return await _bucket.IsInBucket(bucket, entity.Id);
         }
+
+        public async Task AddSingleToBucket(string bucket, T entity)
+        {
+            if (entity == null)
+            {
+                return;
+            }
+
+            await _bucket.AddSingleToBucket(bucket, entity.Id);
+        }
+
+        public async Task<T> GetSingleFromBucket(string bucket)
+        {
+            var g = await _bucket.GetSingleFromBucket(bucket);
+            
+            if (g == Guid.Empty)
+            {
+                return null;
+            }
+
+            return await Get(g);
+        } 
 
         public async Task AddToBucket(string bucket, T entity)
         {
@@ -157,14 +179,14 @@ namespace XamlingCore.Portable.Data.Entities
             return returnList;
         }
 
-        public async Task<List<T>> Get(List<Guid> ids, TimeSpan? maxAge = null)
+        public async Task<List<T>> Get(List<Guid> ids)
         {
-            return await Get(ids, null, maxAge);
+            return await Get(ids, null, null);
         }
 
-        public async Task<T> Get(Guid id, TimeSpan? maxAge = null)
+        public async Task<T> Get(Guid id)
         {
-            return await _get(id, null, maxAge);
+            return await _get(id, null, null);
         }
 
         private async Task<T> _get(Guid id, Func<Task<T>> sourceTask, TimeSpan? maxAge)
@@ -173,15 +195,7 @@ namespace XamlingCore.Portable.Data.Entities
 
             if (memory != null)
             {
-                if (maxAge != null)
-                {
-                    var age = await _entityCache.GetAge<T>(_getKey(id));
-                    if (age < maxAge)
-                    {
-                        return memory;
-                    }
-                }
-                else
+                if(await _entityCache.ValidateAge<T>(_getKey(id)))
                 {
                     return memory;
                 }
@@ -193,11 +207,11 @@ namespace XamlingCore.Portable.Data.Entities
 
                 if (sourceTask != null)
                 {
-                    cache = await _entityCache.GetEntity<T>(_getKey(id), sourceTask, maxAge);
+                    cache = await _entityCache.GetEntity<T>(_getKey(id), sourceTask);
                 }
                 else
                 {
-                    cache = await _entityCache.GetEntity<T>(_getKey(id), maxAge);
+                    cache = await _entityCache.GetEntity<T>(_getKey(id));
                 }
 
                 if (cache == null)
@@ -205,14 +219,14 @@ namespace XamlingCore.Portable.Data.Entities
                     return null;
                 }
 
-                var cResult = await Set(cache);
+                var cResult = await Set(cache, maxAge);
 
                 return cResult;
             }
 
         }
 
-        public async Task<List<T>> Set(List<T> entities)
+        public async Task<List<T>> Set(List<T> entities, TimeSpan? maxAge)
         {
             if (entities == null)
             {
@@ -223,19 +237,19 @@ namespace XamlingCore.Portable.Data.Entities
 
             foreach (var item in entities)
             {
-                var savedItem = await Set(item);
+                var savedItem = await Set(item, maxAge);
                 returnList.Add(savedItem);
             }
 
             return returnList;
         }
 
-        public async Task<T> Set(T entity)
+        public async Task<T> Set(T entity, TimeSpan? maxAge)
         {
-            return await _set(entity);
+            return await _set(entity, maxAge);
         }
 
-        private async Task<T> _set(T entity)
+        private async Task<T> _set(T entity, TimeSpan? maxAge)
         {
             if (entity == null)
             {
@@ -259,7 +273,7 @@ namespace XamlingCore.Portable.Data.Entities
                     entity.CopyProperties(memory);
                 }
 
-                await _entityCache.SetEntity(_getKey(entity.Id), memory);
+                await _entityCache.SetEntity(_getKey(entity.Id), memory, maxAge);
 
                 new EntityUpdatedMessage<T>(entity).Send();
 

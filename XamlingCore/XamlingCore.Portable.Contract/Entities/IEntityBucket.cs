@@ -16,5 +16,15 @@ namespace XamlingCore.Portable.Contract.Entities
         Task ClearBucket(string bucket);
         Task MoveToBucket(string bucket, Guid guid);
         event EventHandler<BucketUpdatedEventArgs> BucketsUpdated;
+
+        /// <summary>
+        /// Adds an entity to a bucket, removing everything else
+        /// </summary>
+        /// <param name="bucket"></param>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        Task AddSingleToBucket(string bucket, Guid guid);
+
+        Task<Guid> GetSingleFromBucket(string bucket);
     }
 }

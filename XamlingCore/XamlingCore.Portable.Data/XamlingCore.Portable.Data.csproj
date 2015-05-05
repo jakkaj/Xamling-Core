@@ -59,6 +59,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\MemoryCache.cs" />
     <Compile Include="Extensions\EntityDataExtensions.cs" />
     <Compile Include="Entities\EntityBucket.cs" />
     <Compile Include="Entities\EntityCache.cs" />

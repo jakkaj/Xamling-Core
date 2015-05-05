@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Contract.EventArgs;
@@ -26,6 +27,36 @@ namespace XamlingCore.Portable.Data.Entities
         {
             _cache = cache;
         }
+
+        /// <summary>
+        /// Adds an entity to a bucket, removing everything else
+        /// </summary>
+        /// <param name="bucket"></param>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        public async Task AddSingleToBucket(string bucket, Guid guid)
+        {
+            await _init();
+
+            var b = _getBucket(bucket);
+
+            b.Clear();
+            b.Add(guid);
+            
+            await _save();
+            _notifyUpdated(bucket, BucketUpdatedTypes.Add);
+        }
+
+        public async Task<Guid> GetSingleFromBucket(string bucket)
+        {
+            await _init();
+
+            var all = await AllInBucket(bucket);
+
+            var g = all.FirstOrDefault();
+
+            return g;
+        } 
 
         public async Task<List<Guid>> AllInBucket(string bucket)
         {
