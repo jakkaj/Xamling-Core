@@ -60,12 +60,12 @@ namespace XamlingCore.Portable.Data.Entities
             return objt.Count == 0;
         }
 
-        public async Task<T> GetEntity<T>(string key, Func<Task<T>> sourceTask, TimeSpan? maxAge = null,
+        public async Task<T> GetEntity<T>(string key, Func<Task<T>> sourceTask, 
             bool allowExpired = true, bool allowZeroList = true) where T : class, new()
         {
             var locker = XNamedLock.Get(key + "2");//this lock is to cover the gets
 
-            var e = await GetEntity<T>(key, maxAge);
+            var e = await GetEntity<T>(key);
 
             if (e != null)
             {
@@ -80,7 +80,7 @@ namespace XamlingCore.Portable.Data.Entities
             using (var l = await locker.LockAsync())
             {
                 //this checks to see if this entity was updated on another lock thread
-                e = await GetEntity<T>(key, maxAge);
+                e = await GetEntity<T>(key);
 
                 if (e != null)
                 {
@@ -101,7 +101,7 @@ namespace XamlingCore.Portable.Data.Entities
 
             if (result == null && allowExpired)
             {
-                return await GetEntity<T>(key, TimeSpan.MaxValue);
+                return await GetEntity<T>(key);
             }
 
             return result;
@@ -124,6 +124,46 @@ namespace XamlingCore.Portable.Data.Entities
                 var result = new List<T>();
                 result.AddRange(f.Select(_ => _.Item));
                 return result;
+            }
+        }
+
+        public async Task<bool> ValidateAge<T>(string key)
+            where T : class, new()
+        {
+            var locker = XNamedLock.Get(key + "3");
+            using (var locked = await locker.LockAsync())
+            {
+                var fullName = _getFullKey<T>(key);
+
+                var f = await _getMemory<T>(key);
+
+                if (f == null)
+                {
+                    f = await _storageFileRepo.Get<XCacheItem<T>>(fullName);
+
+                    if (f != null && f.Item != null)
+                    {
+                        _updateItem(f.Item, f);
+                        var cacheSet = await _setMemory(key, f.Item, null);
+                        _updateItem(cacheSet.Item, cacheSet);
+                    }
+                }
+
+                if (f == null)
+                {
+                    return false;
+                }
+
+                _updateItemCacheSource(f.Item, true);
+                
+                if (f.MaxAge == null)
+                {
+                    return true;
+                }
+
+                var ts = DateTime.UtcNow.Subtract(f.DateStamp);
+
+                return ts < f.MaxAge;
             }
         }
 
@@ -161,13 +201,8 @@ namespace XamlingCore.Portable.Data.Entities
             }
         }
 
-        public async Task<T> GetEntity<T>(string key, TimeSpan? maxAge = null) where T : class, new()
+        public async Task<T> GetEntity<T>(string key) where T : class, new()
         {
-            if (maxAge == null)
-            {
-                maxAge = TimeSpan.FromDays(30000);
-            }
-
             var fullName = _getFullKey<T>(key);
 
             var f = await _getMemory<T>(key);
@@ -197,9 +232,14 @@ namespace XamlingCore.Portable.Data.Entities
 
             _updateItemCacheSource(f.Item, true);
 
+            if (f.MaxAge == null)
+            {
+                return f.Item;
+            }
+
             var ts = DateTime.UtcNow.Subtract(f.DateStamp);
 
-            return ts > maxAge ? null : f.Item;
+            return ts > f.MaxAge ? null : f.Item;
         }
 
         public async Task<bool> SetEntity<T>(string key, T item) where T : class, new()

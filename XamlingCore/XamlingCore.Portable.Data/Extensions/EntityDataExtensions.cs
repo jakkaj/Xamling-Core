@@ -91,7 +91,13 @@ namespace XamlingCore.Portable.Data.Extensions
         public static async Task<T> Set<T>(this T entity) where T : class, IEntity, new()
         {
             var manager = _getManagerFor(entity);
-            return await manager.Set(entity);            
+            return await manager.Set(entity, null);            
+        }
+
+        public static async Task<T> Set<T>(this T entity, TimeSpan maxAge) where T : class, IEntity, new()
+        {
+            var manager = _getManagerFor(entity);
+            return await manager.Set(entity, maxAge);
         }
 
         public static async Task<T> Delete<T>(this T entity) where T : class, IEntity, new()
