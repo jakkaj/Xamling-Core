@@ -60,7 +60,7 @@ namespace XamlingCore.Portable.Data.Entities
             return objt.Count == 0;
         }
 
-        public async Task<T> GetEntity<T>(string key, Func<Task<T>> sourceTask, 
+        public async Task<T> GetEntity<T>(string key, Func<Task<T>> sourceTask, TimeSpan? maxAge = null,
             bool allowExpired = true, bool allowZeroList = true) where T : class, new()
         {
             var locker = XNamedLock.Get(key + "2");//this lock is to cover the gets
@@ -95,7 +95,7 @@ namespace XamlingCore.Portable.Data.Entities
                 if (result != null)
                 {
                     _updateItemCacheSource(result, false);
-                    await SetEntity<T>(key, result);
+                    await SetEntity<T>(key, result, maxAge);
                 }
             }
 
@@ -343,6 +343,13 @@ namespace XamlingCore.Portable.Data.Entities
                 foreach (var a in args)
                 {
                     tName += "_" + a.Name;
+                    if (a.GenericTypeArguments != null)
+                    {
+                        foreach (var subA in a.GenericTypeArguments)
+                        {
+                            tName += "_" + subA.Name;
+                        }
+                    }
                 }
             }
 
