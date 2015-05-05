@@ -13,12 +13,12 @@ namespace XamlingCore.Portable.Data.Entities
         private Dictionary<Type, Dictionary<string, object>> _memoryCache =
             new Dictionary<Type, Dictionary<string, object>>();
 
-        public void Clear()
+        public async Task Clear()
         {
             _memoryCache.Clear();
         }
 
-        public void Disable()
+        public async Task Disable()
         {
             if (_memoryCache != null)
             {
@@ -33,12 +33,12 @@ namespace XamlingCore.Portable.Data.Entities
             _memoryCache = null;
         }
 
-        public void Enable()
+        public async Task Enable()
         {
             _memoryCache = new Dictionary<Type, Dictionary<string, object>>();
         }
 
-        public XCacheItem<T> Get<T>(string key) where T : class, new()
+        public async Task<XCacheItem<T>> Get<T>(string key) where T : class, new()
         {
             if (_memoryCache == null)
             {
@@ -66,7 +66,7 @@ namespace XamlingCore.Portable.Data.Entities
             return item;
         }
 
-        public XCacheItem<T> Set<T>(string key, T item, DateTime? expireDate) where T : class, new()
+        public async Task<XCacheItem<T>> Set<T>(string key, T item, TimeSpan? maxAge) where T : class, new()
         {
             var t = typeof(T);
 
@@ -98,14 +98,8 @@ namespace XamlingCore.Portable.Data.Entities
                 dict[key] = cacheItem;
             }
 
-            if (expireDate != null)
-            {
-                cacheItem.DateStamp = expireDate.Value;
-            }
-            else
-            {
-                cacheItem.DateStamp = DateTime.UtcNow;
-            }
+            cacheItem.DateStamp = DateTime.UtcNow;
+            cacheItem.MaxAge = maxAge;
 
             cacheItem.Item = item;
             cacheItem.Key = key;
@@ -113,23 +107,25 @@ namespace XamlingCore.Portable.Data.Entities
             return cacheItem;
         }
 
-        public void Delete<T>(string key) where T : class, new()
+        public async Task<bool> Delete<T>(string key) where T : class, new()
         {
             var t = typeof(T);
 
-            if (!_memoryCache.ContainsKey(t)) return;
+            if (!_memoryCache.ContainsKey(t)) return false;
 
             var i = _memoryCache[t];
 
             if (i == null)
             {
-                return;
+                return false;
             }
 
             if (i.ContainsKey(key))
             {
                 i.Remove(key);
             }
+
+            return true;
         }
 
 

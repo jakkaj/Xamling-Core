@@ -23,24 +23,24 @@ namespace XamlingCore.Portable.Data.Entities
             _cache = cache;
         }
 
-        public void DisableMemoryCache()
+        public async Task DisableMemoryCache()
         {
-            _cache.Disable();
+            await _cache.Disable();
         }
 
-        public void EnableMemoryCache()
+        public async Task EnableMemoryCache()
         {
-            _cache.Enable();
+            await _cache.Enable();
         }
 
-        private XCacheItem<T> _getMemory<T>(string key) where T : class, new()
+        private async Task<XCacheItem<T>> _getMemory<T>(string key) where T : class, new()
         {
-            return _cache.Get<T>(key);
+            return await _cache.Get<T>(key);
         }
 
-        private XCacheItem<T> _setMemory<T>(string key, T item, DateTime? expireDate) where T : class, new()
+        private async Task<XCacheItem<T>> _setMemory<T>(string key, T item, TimeSpan? maxAge) where T : class, new()
         {
-            return _cache.Set(key, item, expireDate);
+            return await _cache.Set(key, item, maxAge);
         }
 
         public void _deleteMemory<T>(string key) where T : class, new()
@@ -134,7 +134,7 @@ namespace XamlingCore.Portable.Data.Entities
             {
                 var fullName = _getFullKey<T>(key);
 
-                var f = _getMemory<T>(key);
+                var f = await _getMemory<T>(key);
 
                 if (f == null)
                 {
@@ -143,7 +143,7 @@ namespace XamlingCore.Portable.Data.Entities
                     if (f != null && f.Item != null)
                     {
                         _updateItem(f.Item, f);
-                        var cacheSet = _setMemory(key, f.Item, f.DateStamp);
+                        var cacheSet = await _setMemory(key, f.Item, null);
                         _updateItem(cacheSet.Item, cacheSet);
                     }
                 }
@@ -170,7 +170,7 @@ namespace XamlingCore.Portable.Data.Entities
 
             var fullName = _getFullKey<T>(key);
 
-            var f = _getMemory<T>(key);
+            var f = await _getMemory<T>(key);
 
             if (f == null)
             {
@@ -183,7 +183,8 @@ namespace XamlingCore.Portable.Data.Entities
                     if (f != null && f.Item != null)
                     {
                         _updateItem(f.Item, f);
-                        var cacheEntity = _setMemory(key, f.Item, f.DateStamp);
+                        var cacheEntity = await _setMemory(key, f.Item, 
+                            f.MaxAge!=null ? DateTime.UtcNow.Subtract(f.DateStamp.Add(f.MaxAge.Value)) : TimeSpan.MaxValue);
                         _updateItem(cacheEntity.Item, cacheEntity);
                     }
 
@@ -212,7 +213,7 @@ namespace XamlingCore.Portable.Data.Entities
             using (var locked = await locker.LockAsync())
             {
                 var fullName = _getFullKey<T>(key);
-                var cacheEntity = _setMemory(key, item, DateTime.UtcNow);
+                var cacheEntity = await _setMemory(key, item, maxAge);
                 _updateItem(cacheEntity.Item, cacheEntity);
                 return await _storageFileRepo.Set(cacheEntity, fullName);
             }

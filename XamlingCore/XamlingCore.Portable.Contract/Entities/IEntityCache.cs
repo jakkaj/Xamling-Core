@@ -13,8 +13,8 @@ namespace XamlingCore.Portable.Contract.Entities
         Task Clear();
         Task<bool> Delete<T>(string key) where T : class, new();
 
-        void DisableMemoryCache();
-        void EnableMemoryCache();
+        Task DisableMemoryCache();
+        Task EnableMemoryCache();
 
         Task<List<T>> GetAll<T>()
             where T : class, new();
