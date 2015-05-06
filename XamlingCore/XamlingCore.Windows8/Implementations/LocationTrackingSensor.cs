@@ -3,13 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Devices.Geolocation;
 using XamlingCore.Portable.Contract.Device.Location;
 using XamlingCore.Portable.Model.Location;
+using XamlingCore.Portable.Util.GeoSpatial;
 
 namespace XamlingCore.Windows8.Implementations
 {
     public class LocationTrackingSensor : ILocationTrackingSensor
     {
+        private Geolocator _locator;
+
+        public LocationTrackingSensor()
+        {
+            _locator.DesiredAccuracyInMeters = 15;
+            _locator.DesiredAccuracy = PositionAccuracy.High;
+        }
+
         public void StartTracking()
         {
             throw new NotImplementedException();
@@ -20,17 +30,42 @@ namespace XamlingCore.Windows8.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<XLocation> GetQuickLocation()
+        public async Task<XLocation> GetQuickLocation()
         {
-            throw new NotImplementedException();
+            var loc = await _locator.GetGeopositionAsync(TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(10));
+            
+            if (loc == null)
+            {
+                return null;
+            }
+
+            var xloc = new XLocation
+            {
+                Accuracy = loc.Coordinate.Accuracy,
+                Altitude = loc.Coordinate.Altitude,
+                AltitudeAccuracy = loc.Coordinate.AltitudeAccuracy,
+                Heading = loc.Coordinate.Heading,
+                IsEnabled = true,
+                IsResolved = true,
+                Latitude = loc.Coordinate.Latitude,
+                Longitude = loc.Coordinate.Longitude,
+                Speed = loc.Coordinate.Speed,
+
+            };
+
+            CurrentLocation = xloc;
+
+            return xloc;
         }
 
         public bool IsTracking { get; set; }
         public XLocation CurrentLocation { get; private set; }
         public event EventHandler LocationUpdated;
+
         public double Distance(double lat, double lng, XLocation b)
         {
-            throw new NotImplementedException();
+            var xloca = new XLocation {Latitude = lat, Longitude = lng};
+            return DistanceHelper.DistanceBetween(xloca, b, DistanceType.Kilometers);
         }
 
         public bool IsLocationEnabledInDeviceSettings()

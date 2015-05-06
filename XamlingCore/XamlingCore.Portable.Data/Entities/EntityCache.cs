@@ -127,6 +127,19 @@ namespace XamlingCore.Portable.Data.Entities
             }
         }
 
+        bool _validateAge<T>(XCacheItem<T> cacheItem)
+            where T : class, new()
+        {
+            if (cacheItem.MaxAge == null)
+            {
+                return true;
+            }
+
+            var ts = DateTime.UtcNow.Subtract(cacheItem.DateStamp);
+
+            return ts < cacheItem.MaxAge;
+        }
+
         public async Task<bool> ValidateAge<T>(string key)
             where T : class, new()
         {
@@ -143,6 +156,11 @@ namespace XamlingCore.Portable.Data.Entities
 
                     if (f != null && f.Item != null)
                     {
+                        if (!_validateAge(f))
+                        {
+                            return false;
+                        }
+
                         _updateItem(f.Item, f);
                         var cacheSet = await _setMemory(key, f.Item, null);
                         _updateItem(cacheSet.Item, cacheSet);
@@ -155,15 +173,8 @@ namespace XamlingCore.Portable.Data.Entities
                 }
 
                 _updateItemCacheSource(f.Item, true);
-                
-                if (f.MaxAge == null)
-                {
-                    return true;
-                }
 
-                var ts = DateTime.UtcNow.Subtract(f.DateStamp);
-
-                return ts < f.MaxAge;
+                return _validateAge(f);
             }
         }
 
@@ -218,8 +229,18 @@ namespace XamlingCore.Portable.Data.Entities
                     if (f != null && f.Item != null)
                     {
                         _updateItem(f.Item, f);
-                        var cacheEntity = await _setMemory(key, f.Item, 
-                            f.MaxAge!=null ? DateTime.UtcNow.Subtract(f.DateStamp.Add(f.MaxAge.Value)) : TimeSpan.MaxValue);
+
+                        if(!_validateAge(f))
+                        {
+                            return null;
+                        }
+
+                        TimeSpan? toLiveFromNow = f.MaxAge != null
+                            ? DateTime.UtcNow.Subtract(f.DateStamp.Add(f.MaxAge.Value))
+                            : TimeSpan.FromDays(30);
+
+                        var cacheEntity = await _setMemory(key, f.Item, toLiveFromNow);
+                            
                         _updateItem(cacheEntity.Item, cacheEntity);
                     }
 
@@ -232,14 +253,7 @@ namespace XamlingCore.Portable.Data.Entities
 
             _updateItemCacheSource(f.Item, true);
 
-            if (f.MaxAge == null)
-            {
-                return f.Item;
-            }
-
-            var ts = DateTime.UtcNow.Subtract(f.DateStamp);
-
-            return ts > f.MaxAge ? null : f.Item;
+            return _validateAge(f) ? f.Item : null;
         }
 
         public async Task<bool> SetEntity<T>(string key, T item) where T : class, new()

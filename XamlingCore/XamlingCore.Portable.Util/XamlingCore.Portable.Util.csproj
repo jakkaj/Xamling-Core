@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\UriExtensions.cs" />
+    <Compile Include="GeoSpatial\DistanceHelper.cs" />
     <Compile Include="GeoSpatial\HeadingHelper.cs" />
     <Compile Include="Localisation\LocalisableHelper.cs" />
     <Compile Include="Lock\XAsyncLock.cs" />

@@ -17,8 +17,8 @@ namespace XamlingCore.Portable.Contract.Entities
         Task PurgeMemory();
         Task<List<T>> Get(List<Guid> ids);
         Task<T> Get(Guid id);
-        Task<List<T>> Set(List<T> entities, TimeSpan? maxAge);
-        Task<T> Set(T entity, TimeSpan? maxAge);
+        Task<List<T>> Set(List<T> entities, TimeSpan? maxAge = null);
+        Task<T> Set(T entity, TimeSpan? maxAge = null);
         Task Delete(T entity);
         Task MoveToBucket(string bucket, T entity);
         event EventHandler<BucketUpdatedEventArgs> BucketsUpdated;
