@@ -218,6 +218,11 @@ namespace XamlingCore.Portable.Data.Entities
 
             var f = await _getMemory<T>(key);
 
+            if (f == null && DisablePersistCache)
+            {
+                return null;
+            }
+
             if (f == null)
             {
                 var locker = XNamedLock.Get(key + "3");
@@ -232,6 +237,8 @@ namespace XamlingCore.Portable.Data.Entities
 
                         if(!_validateAge(f))
                         {
+                            //delete it from storage
+                            await _storageFileRepo.Delete(fullName);
                             return null;
                         }
 
@@ -371,6 +378,8 @@ namespace XamlingCore.Portable.Data.Entities
 
             return tName;
         }
+
+        public bool DisablePersistCache { get; set; }
 
         public bool DisableMultitenant
         {
