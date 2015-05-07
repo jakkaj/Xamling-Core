@@ -17,7 +17,7 @@ namespace XamlingCore.Samples.Windows8
         public MainPage()
         {
             this.InitializeComponent();
-            
+               
             var xapp = new Samples.App();
             xapp.Init<RootMasterDetailViewModel, ProjectGlue>();
             LoadApplication(xapp);

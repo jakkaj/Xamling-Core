@@ -117,9 +117,17 @@
       <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
       <Name>XamlingCore.Portable.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Data\XamlingCore.Portable.Data.csproj">
+      <Project>{cee58a71-49b1-4c9f-b22a-ecd33b6e3a6b}</Project>
+      <Name>XamlingCore.Portable.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Glue\XamlingCore.Portable.Glue.csproj">
       <Project>{E908CD00-22C8-4F7B-BA99-8DDF32C5F656}</Project>
       <Name>XamlingCore.Portable.Glue</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
+      <Project>{568d9a09-151c-49b3-bee5-71529fc6869d}</Project>
+      <Name>XamlingCore.Portable.Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
       <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
@@ -129,6 +137,10 @@
       <Project>{DA91F91F-3A71-4C7D-9FD5-4F0DC6E3DC86}</Project>
       <Name>XamlingCore.Portable.Net</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Service\XamlingCore.Portable.Service.csproj">
+      <Project>{449dc319-446e-4d47-923a-3c9efdf02b88}</Project>
+      <Name>XamlingCore.Portable.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Util\XamlingCore.Portable.Util.csproj">
       <Project>{BF649817-277F-44C1-AF23-C90D6DAF5901}</Project>
       <Name>XamlingCore.Portable.Util</Name>
@@ -137,6 +149,10 @@
       <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
       <Name>XamlingCore.Portable.View</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Workflow\XamlingCore.Portable.Workflow.csproj">
+      <Project>{9d082abd-f398-4a28-be80-9af2ba5b1be9}</Project>
+      <Name>XamlingCore.Portable.Workflow</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Xamarin\XamlingCore.XamarinThings.csproj">
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>XamlingCore.XamarinThings</Name>
@@ -144,6 +160,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Auth\JsonWebTokenParser.cs" />
+    <Compile Include="Controls\LoaderOverlayView.xaml.cs">
+      <DependentUpon>LoaderOverlayView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Glue\Modules\DefaultWindows8Module.cs" />
     <Compile Include="Glue\Windows8Glue.cs" />
     <Compile Include="Implementations\DeviceNetworkStatus.cs" />
@@ -194,6 +213,12 @@
   <ItemGroup>
     <TargetPlatform Include="Windows, Version=8.1" />
     <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\LoaderOverlayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

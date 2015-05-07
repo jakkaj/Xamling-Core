@@ -16,6 +16,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public LocationTrackingSensor()
         {
+            _locator = new Geolocator();
             _locator.DesiredAccuracyInMeters = 15;
             _locator.DesiredAccuracy = PositionAccuracy.High;
         }
@@ -70,7 +71,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public bool IsLocationEnabledInDeviceSettings()
         {
-            throw new NotImplementedException();
+            return _locator.LocationStatus != PositionStatus.Disabled;
         }
     }
 }

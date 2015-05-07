@@ -14,6 +14,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Location
         public ICommand StartLocationCommand { get; set; }
         public ICommand StopLocationCommand { get; set; }
         public ICommand GetLocationCommand { get; set; }
+        
 
         public LocationViewModel(ILocationService locationService)
         {

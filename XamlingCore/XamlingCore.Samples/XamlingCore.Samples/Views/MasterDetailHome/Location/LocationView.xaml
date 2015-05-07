@@ -9,6 +9,7 @@
     <Button Text="Start Location" Command="{Binding StartLocationCommand}"/>
     <Button Text="Stop Location" Command="{Binding StopLocationCommand}"/>
     <Button Text="Get Location" Command="{Binding GetLocationCommand}"/>
+ 
 
     <Label Text="{Binding CurrentLocation.Latitude, StringFormat='Latitude = {0}'}"/>
     <Label Text="{Binding CurrentLocation.Longitude, StringFormat='Longitude = {0}'}"/>
