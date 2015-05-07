@@ -27,18 +27,18 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
                 return;
             }
 
-            while(v.BindingContext == null)
+            while (v.BindingContext == null)
             {
                 await Task.Yield();
             }
 
-            if(BindingContext == null)
+            if (BindingContext == null)
             {
                 BindingContext = v.BindingContext;
-            }            
-            
+            }
+
             v.BindingContextChanged += v_BindingContextChanged;
-        }      
+        }
 
         public DynamicContentView()
         {
@@ -108,21 +108,16 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 
             if (newValue == null)
             {
-                if (!await viewer.ContentSetOverride(null))
+                if (viewer._isDisposed)
                 {
-                    if (viewer._isDisposed)
-                    {
-                        return;
-                    }
-                    try
-                    {
-                        viewer.IsVisible = false;
-                        viewer.Content = null;
-                    }
-                    catch { }
-
+                    return;
                 }
-                return;
+                try
+                {
+                    viewer.IsVisible = false;
+                    viewer.Content = null;
+                }
+                catch { }
             }
 
             var vm = newValue;
@@ -137,32 +132,38 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
                 throw new InvalidOperationException("Could not find view for this view model: " + vm.GetType().FullName);
             }
 
-            if (!await viewer.ContentSetOverride(v))
+            if (viewer._isDisposed)
             {
-                if (viewer._isDisposed)
-                {
-                    return;
-                }
+                return;
+            }
 
-                try
+            try
+            {
+                if (viewer.Content != null)
                 {
-                    viewer.IsVisible = true;
-                    viewer.Content = v;
-                }
-                catch
-                {
-                    
+                    var oldTransition = viewer.Content as ITransitionView;
+                    if (oldTransition != null)
+                    {
+                        await Task.Delay(oldTransition.TransitionOut());
+                    }
                 }
                 
+                viewer.IsVisible = true;
+                viewer.Content = v;
+
+                var transition = v as ITransitionView;
+
+                if (transition != null)
+                {
+                    transition.TransitionIn();
+                }
+            }
+            catch
+            {
 
             }
         }
-
-        protected virtual async Task<bool> ContentSetOverride(View content)
-        {
-            return false;
-        }
-
+        
         public virtual void Dispose()
         {
             if (_bindingParent != null)

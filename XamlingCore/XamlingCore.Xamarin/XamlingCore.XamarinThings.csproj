@@ -40,8 +40,8 @@
     <Compile Include="Content\Dynamic\DynamicContentPage.cs" />
     <Compile Include="Content\Common\SectionViewModel.cs" />
     <Compile Include="Content\Dynamic\DynamicContentView.cs" />
+    <Compile Include="Content\Dynamic\ITransitionView.cs" />
     <Compile Include="Content\Extensions\ViewExtensions.cs" />
-    <Compile Include="Content\Forms\TransitionContentView.cs" />
     <Compile Include="Content\Forms\XButton.cs" />
     <Compile Include="Content\Forms\XLabel.cs" />
     <Compile Include="Content\Lists\XListView.cs" />
