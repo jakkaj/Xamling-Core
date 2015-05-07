@@ -3,7 +3,7 @@
   <metadata>
     <id>XamlingCore</id>
 	<title>Xamling Core</title>
-    <version>2.0.135</version>
+    <version>2.0.138</version>
     <authors>Jordan</authors>
     <owners>Jordan</owners>
     <licenseUrl>http://opensource.org/licenses/MS-PL</licenseUrl>
@@ -11,7 +11,11 @@
     <iconUrl>http://xamling.net/Media/Images/logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Xamling Core for development the Xamling way</description>
-    <releaseNotes>Contact Jordan @jakkaj info@xamling.net. </releaseNotes>
+    <releaseNotes>
+	Added ability to add single entities to buckets. Other entities are cleared out first. 
+	e.g. Can call AddSingleToBucket("userbucket"); then can get back that single user later. 
+	Contact Jordan @jakkaj info@xamling.net. 
+	</releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags>Xamling XamlingCore MVVM Portable</tags>
     <dependencies>
