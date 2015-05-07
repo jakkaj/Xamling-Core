@@ -177,6 +177,7 @@
     <Compile Include="Implementations\Windows8Dispatcher.cs" />
     <Compile Include="Implementations\WindowsUniversalDispatcher.cs" />
     <Compile Include="Implementations\WindowsUniversalNativeHttpClientTransferrer.cs" />
+    <Compile Include="Messages\SetLoaderMessage.cs" />
     <Compile Include="Navigation\WindowsUniversalViewResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Glue\XWindowsAutofacAutoRegisterExternsions.cs" />
