@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -65,11 +67,22 @@ namespace XamlingCore.Portable.Net.Service
                     isSuccess = false;
                 }
 
+                var headers = new Dictionary<string,List<string>>();
+                
+                if (result.Headers != null)
+                {
+                    foreach (var item in result.Headers)
+                    {
+                        headers.Add(item.Key, item.Value.ToList());
+                    }
+                }
+
                 return new HttpTransferResult
                 {
                     HttpStatusCode = result.StatusCode,
                     Result = resultText,
-                    IsSuccessCode = isSuccess
+                    IsSuccessCode = isSuccess,
+                    Headers = headers
                 };
             }
             catch (Exception ex)

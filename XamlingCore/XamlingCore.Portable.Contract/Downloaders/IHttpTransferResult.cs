@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace XamlingCore.Portable.Contract.Downloaders
@@ -9,5 +10,6 @@ namespace XamlingCore.Portable.Contract.Downloaders
         HttpStatusCode HttpStatusCode { get; set; }
         Exception DownloadException { get; set; }
         bool IsSuccessCode { get; }
+        Dictionary<string, List<string>> Headers { get; set; }
     }
 }

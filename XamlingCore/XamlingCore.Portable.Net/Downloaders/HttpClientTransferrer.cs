@@ -117,9 +117,6 @@ namespace XamlingCore.Portable.Net.Downloaders
 
                 using (var message = new HttpRequestMessage(method, obj.Url))
                 {
-
-
-
                     if (downloadConfig.Headers != null)
                     {
                         foreach (var item in downloadConfig.Headers)
