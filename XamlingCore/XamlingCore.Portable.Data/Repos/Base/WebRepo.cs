@@ -13,13 +13,13 @@ namespace XamlingCore.Portable.Data.Repos.Base
     {
         private readonly IHttpTransferrer _downloader;
         private readonly IEntitySerialiser _entitySerialiser;
-        private readonly string _service;
+        protected readonly string Service;
 
         protected WebRepo(IHttpTransferrer downloader, IEntitySerialiser entitySerialiser, string service)
         {
             _downloader = downloader;
             _entitySerialiser = entitySerialiser;
-            _service = service;
+            Service = service;
         }
 
         public virtual bool OnResultRetrieved(IHttpTransferResult result)
@@ -39,7 +39,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         public async Task<IHttpTransferResult> UploadRaw(byte[] data, string extra, string method)
         {
-            var result = await _downloader.Upload(_service + extra, method, data);
+            var result = await _downloader.Upload(Service + extra, method, data);
             
             if (!OnResultRetrieved(result))
             {
@@ -51,7 +51,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         public async Task<TEntity> Upload(byte[] data, string extra, string method)
         {
-            var result = await _downloader.Upload(_service + extra, method, data);
+            var result = await _downloader.Upload(Service + extra, method, data);
 
             if (result == null || !result.IsSuccessCode || result.Result == null)
             {
@@ -241,7 +241,7 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         protected async Task<IHttpTransferResult> SendRaw(string serialisedData = null, string extra = null, string method = "POST")
         {
-            var result = await _downloader.Download(_service + extra, method, serialisedData);
+            var result = await _downloader.Download(Service + extra, method, serialisedData);
 
             if (!OnResultRetrieved(result))
             {

@@ -74,13 +74,13 @@ namespace XamlingCore.Portable.Model.Response
             return o;
         }
 
-        [JsonProperty(PropertyName = "data")]
+        [JsonProperty(PropertyName = "data", NullValueHandling = NullValueHandling.Ignore)]
         public T Object { get; set; }
 
-        [JsonProperty(PropertyName = "message")]
+        [JsonProperty(PropertyName = "message", NullValueHandling = NullValueHandling.Ignore)]
         public string Message { get; set; }
 
-        [JsonProperty(PropertyName = "success")]
+        [JsonProperty(PropertyName = "success", NullValueHandling = NullValueHandling.Ignore)]
         public bool IsSuccess
         {
             get
@@ -89,16 +89,18 @@ namespace XamlingCore.Portable.Model.Response
             }
         }
 
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "ex", NullValueHandling = NullValueHandling.Ignore)]
+        public Exception Exception { get; set; }
+        [JsonProperty(PropertyName = "status", NullValueHandling = NullValueHandling.Ignore)]
         public int StatusCode { get; set; }
 
-        [JsonProperty(PropertyName = "code")]
+        [JsonProperty(PropertyName = "code", NullValueHandling = NullValueHandling.Ignore)]
         public OperationResults Result { get; set; }
 
-        [JsonProperty(PropertyName = "d")]
+        [JsonProperty(PropertyName = "d", NullValueHandling = NullValueHandling.Ignore)]
         public OperationCallerInfo CallerInfo { get; set; }
 
-        [JsonProperty(PropertyName = "d_history")]
+        [JsonProperty(PropertyName = "d_history", NullValueHandling = NullValueHandling.Ignore)]
         public List<OperationCallerInfo> CallerInfoHistory { get; set; }
 
         public static OperationResult<T> GetSuccess(T obj,
@@ -163,7 +165,9 @@ namespace XamlingCore.Portable.Model.Response
 
             var o = new OperationResult<T>(default(T), messageFormatted,
                 OperationResults.Exception);
-
+            
+            o.Exception = ex;
+            
             o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
 
             return o;
