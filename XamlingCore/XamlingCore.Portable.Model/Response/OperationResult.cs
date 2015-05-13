@@ -12,6 +12,11 @@ namespace XamlingCore.Portable.Model.Response
 
         }
 
+        public static implicit operator bool(OperationResult<T> operation)
+        {
+            return operation.IsSuccess;
+        }
+
         public OperationResult(T obj, string message = null, OperationResults result = OperationResults.Success,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",

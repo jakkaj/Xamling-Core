@@ -13,7 +13,6 @@ namespace XamlingCore.Portable.Data.Repos.Base
     {
         private readonly IHttpTransferrer _downloader;
         private readonly IEntitySerialiser _entitySerialiser;
-        protected readonly string Service;
 
         protected WebRepo(IHttpTransferrer downloader, IEntitySerialiser entitySerialiser, string service)
         {
@@ -255,5 +254,6 @@ namespace XamlingCore.Portable.Data.Repos.Base
 
         protected IEntitySerialiser OverriseSerialiser { get; set; }
 
+        public string Service { get; set; }
     }
 }

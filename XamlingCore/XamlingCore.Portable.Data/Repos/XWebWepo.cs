@@ -14,7 +14,6 @@ namespace XamlingCore.Portable.Data.Repos
     {
         private readonly IHttpTransferrer _downloader;
         private readonly IEntitySerialiser _entitySerialiser;
-        private string _service;
 
         public XWebRepo(IHttpTransferrer downloader, IEntitySerialiser entitySerialiser)
         {
@@ -24,7 +23,7 @@ namespace XamlingCore.Portable.Data.Repos
 
         public void SetEndPoint(string endPoint)
         {
-            _service = endPoint;
+            Service = endPoint;
         }
        
         public virtual bool OnResultRetrieved(IHttpTransferResult result)
@@ -49,7 +48,7 @@ namespace XamlingCore.Portable.Data.Repos
 
         public async Task<IHttpTransferResult> UploadRaw(byte[] data, string extra, string method)
         {
-            var result = await _downloader.Upload(_service + extra, method, data);
+            var result = await _downloader.Upload(Service + extra, method, data);
 
             if (!OnResultRetrieved(result))
             {
@@ -61,7 +60,7 @@ namespace XamlingCore.Portable.Data.Repos
 
         public async Task<OperationResult<TEntity>> Upload(byte[] data, string extra, string method)
         {
-            var result = await _downloader.Upload(_service + extra, method, data);
+            var result = await _downloader.Upload(Service + extra, method, data);
 
             if (result == null || result.Result == null)
             {
@@ -288,7 +287,7 @@ namespace XamlingCore.Portable.Data.Repos
 
         protected async Task<IHttpTransferResult> SendRaw(string serialisedData = null, string extra = null, string method = "POST")
         {
-            var result = await _downloader.Download(_service + extra, method, serialisedData);
+            var result = await _downloader.Download(Service + extra, method, serialisedData);
 
             if (!OnResultRetrieved(result))
             {
@@ -302,5 +301,6 @@ namespace XamlingCore.Portable.Data.Repos
 
         protected IEntitySerialiser OverrideSerialiser { get; set; }
 
+        public string Service { get; set; }
     }
 }
