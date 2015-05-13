@@ -136,7 +136,7 @@ namespace XamlingCore.Portable.View.ViewModel
             IsDisposed = true;
         }
 
-        public async Task<bool> DisplayAlert(string title, string message, string accept, string cancel)
+        public async Task<bool> DisplayAlert(string title, string message, string accept, string cancel = null)
         {
             if (NativeAlert == null)
             {
@@ -146,7 +146,7 @@ namespace XamlingCore.Portable.View.ViewModel
             var t = GetResource(title) ?? title;
             var m = GetResource(message) ?? message;
             var a = GetResource(accept) ?? accept;
-            var c = GetResource(cancel) ?? cancel;
+            var c = (!string.IsNullOrWhiteSpace(cancel)) ? GetResource(cancel) : null;
 
             return await NativeAlert(t, m, a, c);
         }

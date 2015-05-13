@@ -1168,6 +1168,7 @@ Global
 		{8ED64A93-8E7E-4392-BC9A-108C29A364F2}.Debug|All package build.ActiveCfg = Debug|Any CPU
 		{8ED64A93-8E7E-4392-BC9A-108C29A364F2}.Debug|All package build.Build.0 = Debug|Any CPU
 		{8ED64A93-8E7E-4392-BC9A-108C29A364F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ED64A93-8E7E-4392-BC9A-108C29A364F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ED64A93-8E7E-4392-BC9A-108C29A364F2}.Debug|ARM.ActiveCfg = Debug|Any CPU
 		{8ED64A93-8E7E-4392-BC9A-108C29A364F2}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{8ED64A93-8E7E-4392-BC9A-108C29A364F2}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
