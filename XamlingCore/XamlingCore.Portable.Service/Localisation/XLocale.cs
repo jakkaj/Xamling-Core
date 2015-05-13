@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace XamlingCore.Portable.Glue.Locale
+namespace XamlingCore.Portable.Service.Localisation
 {
     public static class XLocale
     {

@@ -170,6 +170,7 @@
     <Compile Include="Implementations\EnvironmentService.cs" />
     <Compile Include="Implementations\Helpers\HashHelper.cs" />
     <Compile Include="Implementations\LoadStatusService.cs" />
+    <Compile Include="Implementations\LocalisedResourceReader.cs" />
     <Compile Include="Implementations\LocalStorage.cs" />
     <Compile Include="Implementations\LocationTrackingSensor.cs" />
     <Compile Include="Implementations\MotionSensor.cs" />
@@ -180,7 +181,7 @@
     <Compile Include="Messages\SetLoaderMessage.cs" />
     <Compile Include="Navigation\WindowsUniversalViewResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Glue\XWindowsAutofacAutoRegisterExternsions.cs" />
+    <Compile Include="Implementations\XWindowsAutofacAutoRegisterExternsions.cs" />
     <Compile Include="Glue\XWindowsCoreAutoRegistrations.cs" />
     <Compile Include="View\XWindows8Page.cs" />
     <Compile Include="XWindows8Core.cs" />

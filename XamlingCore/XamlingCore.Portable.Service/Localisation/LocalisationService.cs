@@ -6,29 +6,27 @@ namespace XamlingCore.Portable.Service.Localisation
 {
     public class LocalisationService : ILocalisationService
     {
-        private readonly CultureInfo _resourceCulture;
-        private readonly ResourceManager _resourceManager;
+        private readonly ILocalisedResourceReader _resourceReader;
 
-        public LocalisationService(CultureInfo resourceCulture, ResourceManager resourceManager)
+        public LocalisationService(ILocalisedResourceReader resourceReader)
         {
-            _resourceCulture = resourceCulture;
-            _resourceManager = resourceManager;
+            _resourceReader = resourceReader;
         }
 
         public string Get(string resourceName)
         {
-            var result =  _resourceManager.GetString(resourceName, _resourceCulture);
+            var result = _resourceReader.GetResource(resourceName, XLocale.CultureInfo);
             return result ?? resourceName;
         }
 
         public CultureInfo GetCulture()
         {
-            return _resourceCulture;
+            return XLocale.CultureInfo;
         }
 
         public string GetCultureName()
         {
-            return _resourceCulture.Name;
+            return XLocale.CultureInfo.Name;
         }
     }
 }

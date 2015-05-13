@@ -61,6 +61,7 @@
     <Compile Include="Infrastructure\LocalStorage\ILocalStorage.cs" />
     <Compile Include="Infrastructure\Resource\IApplicationResource.cs" />
     <Compile Include="Localisation\ILocalisationService.cs" />
+    <Compile Include="Localisation\ILocalisedResourceReader.cs" />
     <Compile Include="Localisation\IXLocalisable.cs" />
     <Compile Include="Messenging\IMessenger.cs" />
     <Compile Include="Navigation\IXNavigation.cs" />
