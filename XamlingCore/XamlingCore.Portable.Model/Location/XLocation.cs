@@ -2,6 +2,17 @@
 {
     public class XLocation
     {
+        public XLocation()
+        {
+            
+        }
+
+        public XLocation(double lat, double lng)
+        {
+            Latitude = lat;
+            Longitude = lng;
+        }
+
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double Accuracy { get; set; }

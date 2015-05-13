@@ -199,7 +199,7 @@ namespace XamlingCore.Portable.Service.Location
         {
             if (CurrentLocation == null)
             {
-                return null;
+                CurrentLocation = await GetQuickLocation();
             }
 
             if (CurrentLocation != null)
