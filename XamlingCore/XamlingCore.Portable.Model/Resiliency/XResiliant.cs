@@ -90,6 +90,23 @@ namespace XamlingCore.Portable.Model.Resiliency
             return lastResult;
         }
 
+        public async Task<XResult<T>> Run<T>(Func<Task<T>> func)
+            where T:class 
+        {
+            var run = await Run(async () =>
+            {
+                var result = await func();
+
+                if (result == null)
+                {
+                    return XResult<T>.GetFailed();
+                }
+
+                return new XResult<T>(result);
+            });
+            return run;
+        }
+
         public async Task<XResult<bool>> RunBool(Func<Task<bool>> func)
         {
             return await Run(async () =>
