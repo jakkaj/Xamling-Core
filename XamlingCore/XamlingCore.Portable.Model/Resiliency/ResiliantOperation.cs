@@ -29,13 +29,13 @@ namespace XamlingCore.Portable.Model.Resiliency
 
             XResult<T> lastResult = null;
 
-            while (counter < Retries || Retries == -1)
+            while (counter <= Retries || Retries == -1)
             {
+                
+
                 try
                 {
                     var result = await func();
-
-                    result.Retries = counter;
 
                     if (!result)
                     {
@@ -44,14 +44,31 @@ namespace XamlingCore.Portable.Model.Resiliency
                             return result;
                         }
 
+                        lastResult = result;
+
+                        if (counter == Retries)
+                        {
+                            break;
+                        }
+                        await Task.Delay(RetryTimeout);
+                        counter++;
                         continue;
                     }
 
+                    result.Retries = counter;
                     return result;
                 }
                 catch (Exception ex)
                 {
+                    lastResult = XResult<T>.GetException();
+                    lastResult.Exception = ex;
 
+                    if (counter == Retries)
+                    {
+                        break;
+                    }
+
+                    counter ++;
                 }
             }
 
