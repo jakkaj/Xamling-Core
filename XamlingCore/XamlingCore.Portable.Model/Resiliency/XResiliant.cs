@@ -12,20 +12,26 @@ namespace XamlingCore.Portable.Model.Resiliency
         static XResiliant()
         {
             Default = new XResiliant();
+            Exception = new XResiliant(exceptionsOnly: true);
         }
 
         public static XResiliant Default { get; private set; }
+        public static XResiliant Exception { get; private set; }
 
         public XResiliant(int retries = 1, int retryTimeout = 1000,
-                OperationResults allowedResultsCodes = OperationResults.Success | OperationResults.NotAuthorised | OperationResults.NotFound)
+                OperationResults allowedResultsCodes = OperationResults.Success | OperationResults.NotAuthorised | OperationResults.NotFound,
+                bool exceptionsOnly = false)
         {
             Retries = retries;
             RetryTimeout = retryTimeout;
             AllowedResultCodes = allowedResultsCodes;
+            ExceptionsOnly = exceptionsOnly;
         }
 
         public int Retries { get; set; }
         public int RetryTimeout { get; set; }
+
+        public bool ExceptionsOnly { get; set; }
 
         public OperationResults AllowedResultCodes { get; set; }
 
@@ -38,13 +44,16 @@ namespace XamlingCore.Portable.Model.Resiliency
 
             while (counter <= Retries || Retries == -1)
             {
-
-
                 try
                 {
                     var result = await func();
 
                     result.Retries = counter;
+
+                    if (ExceptionsOnly)
+                    {
+                        return result;
+                    }
 
                     if (!result)
                     {
