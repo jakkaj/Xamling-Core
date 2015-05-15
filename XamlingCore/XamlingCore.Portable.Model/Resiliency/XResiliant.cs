@@ -7,10 +7,17 @@ using XamlingCore.Portable.Model.Response;
 
 namespace XamlingCore.Portable.Model.Resiliency
 {
-    public class ResiliantOperation<T>
+    public class XResiliant
     {
-        public ResiliantOperation(int retries = 1, int retryTimeout = 1000,
-            OperationResults allowedResultsCodes = OperationResults.Success | OperationResults.NotAuthorised | OperationResults.NotFound)
+        static XResiliant()
+        {
+            Default = new XResiliant();
+        }
+
+        public static XResiliant Default { get; private set; }
+
+        public XResiliant(int retries = 1, int retryTimeout = 1000,
+                OperationResults allowedResultsCodes = OperationResults.Success | OperationResults.NotAuthorised | OperationResults.NotFound)
         {
             Retries = retries;
             RetryTimeout = retryTimeout;
@@ -23,7 +30,7 @@ namespace XamlingCore.Portable.Model.Resiliency
         public OperationResults AllowedResultCodes { get; set; }
 
 
-        public async Task<XResult<T>> Run(Func<Task<XResult<T>>> func)
+        public async Task<XResult<T>> Run<T>(Func<Task<XResult<T>>> func)
         {
             var counter = 0;
 
@@ -31,11 +38,13 @@ namespace XamlingCore.Portable.Model.Resiliency
 
             while (counter <= Retries || Retries == -1)
             {
-                
+
 
                 try
                 {
                     var result = await func();
+
+                    result.Retries = counter;
 
                     if (!result)
                     {
@@ -54,8 +63,6 @@ namespace XamlingCore.Portable.Model.Resiliency
                         counter++;
                         continue;
                     }
-
-                    result.Retries = counter;
                     return result;
                 }
                 catch (Exception ex)
@@ -68,19 +75,34 @@ namespace XamlingCore.Portable.Model.Resiliency
                         break;
                     }
 
-                    counter ++;
+                    counter++;
                 }
             }
 
             if (lastResult == null)
             {
                 lastResult = XResult<T>.GetFailed();
-                lastResult.ResultCode = OperationResults.RetryTimeout; 
+                lastResult.ResultCode = OperationResults.RetryTimeout;
             }
 
             lastResult.Retries = counter;
 
             return lastResult;
+        }
+
+        public async Task<XResult<bool>> RunBool(Func<Task<bool>> func)
+        {
+            return await Run(async () =>
+            {
+                var result = await func();
+
+                if (!result)
+                {
+                    return XResult<bool>.GetFailed();
+                }
+
+                return new XResult<bool>(true);
+            });
         }
     }
 }

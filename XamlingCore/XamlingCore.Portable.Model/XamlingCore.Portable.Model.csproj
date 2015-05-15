@@ -55,7 +55,7 @@
     <Compile Include="Network\XNetworkType.cs" />
     <Compile Include="Orientation\XPageOrientation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resiliency\ResiliantOperation.cs" />
+    <Compile Include="Resiliency\XResiliant.cs" />
     <Compile Include="Response\OperationResults.cs" />
     <Compile Include="Response\XResult.cs" />
     <Compile Include="Settings\GeneralSettingsEntity.cs" />
