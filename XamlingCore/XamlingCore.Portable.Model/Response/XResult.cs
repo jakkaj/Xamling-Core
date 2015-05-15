@@ -5,60 +5,60 @@ using Newtonsoft.Json;
 namespace XamlingCore.Portable.Model.Response
 {
 
-    public class OperationResult<T>
+    public class XResult<T>
     {
-        public OperationResult()
+        public XResult()
         {
 
         }
 
-        public static implicit operator bool(OperationResult<T> operation)
+        public static implicit operator bool(XResult<T> operation)
         {
             return operation.IsSuccess;
         }
 
-        public OperationResult(T obj, string message = null, OperationResults result = OperationResults.Success,
+        public XResult(T obj, string message = null, OperationResults result = OperationResults.Success,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0
             )
         {
-            Result = result;
+            ResultCode = result;
             Object = obj;
             Message = message;
             _setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
         }
 
-        public OperationResult(T obj, bool isSuccess, string message = null,
+        public XResult(T obj, bool isSuccess, string message = null,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0
             )
         {
-            Result = isSuccess ? OperationResults.Success : OperationResults.Failed;
+            ResultCode = isSuccess ? OperationResults.Success : OperationResults.Failed;
             Object = obj;
             Message = message;
             _setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
         }
 
-        public OperationResult(string message, OperationResults result,
+        public XResult(string message, OperationResults result,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0
             )
         {
-            Result = result;
+            ResultCode = result;
             Message = message;
             _setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
         }
 
-        public OperationResult<TOther> Copy<TOther>(TOther obj = default(TOther),
+        public XResult<TOther> Copy<TOther>(TOther obj = default(TOther),
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0
             )
         {
-            var o = new OperationResult<TOther>(obj, Message, Result);
+            var o = new XResult<TOther>(obj, Message, ResultCode);
 
             if (o.CallerInfoHistory == null)
             {
@@ -90,9 +90,12 @@ namespace XamlingCore.Portable.Model.Response
         {
             get
             {
-                return Result == OperationResults.Success;
+                return ResultCode == OperationResults.Success;
             }
         }
+
+        [JsonProperty(PropertyName = "ret", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Retries { get; set; }
 
         [JsonProperty(PropertyName = "ex", NullValueHandling = NullValueHandling.Ignore)]
         public Exception Exception { get; set; }
@@ -100,7 +103,7 @@ namespace XamlingCore.Portable.Model.Response
         public int StatusCode { get; set; }
 
         [JsonProperty(PropertyName = "code", NullValueHandling = NullValueHandling.Ignore)]
-        public OperationResults Result { get; set; }
+        public OperationResults ResultCode { get; set; }
 
         [JsonProperty(PropertyName = "d", NullValueHandling = NullValueHandling.Ignore)]
         public OperationCallerInfo CallerInfo { get; set; }
@@ -108,23 +111,23 @@ namespace XamlingCore.Portable.Model.Response
         [JsonProperty(PropertyName = "d_history", NullValueHandling = NullValueHandling.Ignore)]
         public List<OperationCallerInfo> CallerInfoHistory { get; set; }
 
-        public static OperationResult<T> GetSuccess(T obj,
+        public static XResult<T> GetSuccess(T obj,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
-            var o = new OperationResult<T>(obj);
+            var o = new XResult<T>(obj);
             o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
             return o;
         }
 
-        public static OperationResult<T> GetNotFound(string message = null,
+        public static XResult<T> GetNotFound(string message = null,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0
             )
         {
-            var o = new OperationResult<T>(default(T), message ?? "Object not found",
+            var o = new XResult<T>(default(T), message ?? "Object not found",
                 OperationResults.NotFound);
 
             o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
@@ -132,13 +135,13 @@ namespace XamlingCore.Portable.Model.Response
             return o;
         }
 
-        public static OperationResult<T> GetNotAuthorised(string message = null,
+        public static XResult<T> GetNotAuthorised(string message = null,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0
             )
         {
-            var o = new OperationResult<T>(default(T), message ?? "Not authorised to do that",
+            var o = new XResult<T>(default(T), message ?? "Not authorised to do that",
                 OperationResults.NotAuthorised);
 
             o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
@@ -146,13 +149,13 @@ namespace XamlingCore.Portable.Model.Response
             return o;
         }
 
-        public static OperationResult<T> GetBadRequest(string message = null,
+        public static XResult<T> GetBadRequest(string message = null,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0
             )
         {
-            var o = new OperationResult<T>(default(T), message ?? "It doesn't work like that (bad request)",
+            var o = new XResult<T>(default(T), message ?? "It doesn't work like that (bad request)",
                 OperationResults.BadRequest);
 
             o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
@@ -160,7 +163,7 @@ namespace XamlingCore.Portable.Model.Response
             return o;
         }
 
-        public static OperationResult<T> GetException(string message = null, Exception ex = null,
+        public static XResult<T> GetException(string message = null, Exception ex = null,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0
@@ -168,7 +171,7 @@ namespace XamlingCore.Portable.Model.Response
         {
             var messageFormatted = string.Format("Message: {0}, Exception: {1}", message, ex);
 
-            var o = new OperationResult<T>(default(T), messageFormatted,
+            var o = new XResult<T>(default(T), messageFormatted,
                 OperationResults.Exception);
             
             o.Exception = ex;
@@ -178,13 +181,13 @@ namespace XamlingCore.Portable.Model.Response
             return o;
         }
 
-        public static OperationResult<T> GetFailed(string message = null,
+        public static XResult<T> GetFailed(string message = null,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0
             )
         {
-            var o = new OperationResult<T>(default(T), message ?? "Something went wrong and I could not complete that",
+            var o = new XResult<T>(default(T), message ?? "Something went wrong and I could not complete that",
                 OperationResults.Failed);
 
             o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
@@ -192,12 +195,12 @@ namespace XamlingCore.Portable.Model.Response
             return o;
         }
 
-        public static OperationResult<T> GetDatabaseProblem(string message = null,
+        public static XResult<T> GetDatabaseProblem(string message = null,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
-            var o = new OperationResult<T>(default(T), string.Format("Database problem {0}", message),
+            var o = new XResult<T>(default(T), string.Format("Database problem {0}", message),
                 OperationResults.Failed);
 
             o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
@@ -205,12 +208,12 @@ namespace XamlingCore.Portable.Model.Response
             return o;
         }
 
-        public static OperationResult<T> GetNoData(string message = null,
+        public static XResult<T> GetNoData(string message = null,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
-            var o = new OperationResult<T>(default(T), string.Format("No data returned - possible network issue {0}", message),
+            var o = new XResult<T>(default(T), string.Format("No data returned - possible network issue {0}", message),
                 OperationResults.NoData);
 
             o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
@@ -242,14 +245,5 @@ namespace XamlingCore.Portable.Model.Response
         public int SourceLineNumber { get; private set; }
     }
 
-    public enum OperationResults
-    {
-        Success,
-        Failed,
-        NotFound,
-        NotAuthorised,
-        BadRequest,
-        Exception,
-        NoData
-    }
+    
 }
