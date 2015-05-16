@@ -9,13 +9,14 @@ namespace XamlingCore.Portable.Model.Response
     [Flags]
     public enum OperationResults
     {
-        Success = 0,
-        Failed = 1,
-        NotFound = 2,
-        NotAuthorised = 4,
-        BadRequest = 8,
-        Exception = 16,
-        NoData = 32,
-        RetryTimeout = 64
+        NotSet=0,
+        Success = 1,
+        Failed = 2,
+        NotFound = 4,
+        NotAuthorised = 8,
+        BadRequest = 16,
+        Exception = 32,
+        NoData = 64,
+        RetryTimeout = 128
     }
 }
