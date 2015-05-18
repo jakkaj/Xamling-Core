@@ -19,6 +19,7 @@ namespace XamlingCore.Portable.Net.DownloadConfig
         public string AuthScheme { get; set; }
 
         public Dictionary<string, string> Headers { get; set; }
+        public Dictionary<string, string> Cookies { get; set; }
 
         public string Accept { get; set; }
         public List<string> AcceptEncoding { get; set; }

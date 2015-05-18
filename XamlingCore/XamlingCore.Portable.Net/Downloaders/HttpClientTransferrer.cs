@@ -79,21 +79,30 @@ namespace XamlingCore.Portable.Net.Downloaders
             // add support for Gzip decompression
 
             HttpClient httpClient;
-
+            var httpHandler = new HttpClientHandler();
+            
             if (downloadConfig.Gzip)
             {
-                var httpHandler = new HttpClientHandler();
+
                 if (httpHandler.SupportsAutomaticDecompression)
                 {
                     httpHandler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
                 }
-                httpClient = new HttpClient(httpHandler);
-            }
-            else
-            {
-                httpClient = new HttpClient();
             }
 
+            httpClient = new HttpClient(httpHandler);
+
+            if (downloadConfig.Cookies != null)
+            {
+                var uri = new Uri(obj.Url);
+                var cookies = new CookieContainer();
+                httpHandler.CookieContainer = cookies;
+                
+                foreach (var c in downloadConfig.Cookies)
+                {
+                    cookies.Add(uri, new Cookie(c.Key, c.Value));
+                }
+            }
 
             using (httpClient)
             {

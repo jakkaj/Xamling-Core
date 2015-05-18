@@ -30,5 +30,6 @@ namespace XamlingCore.Portable.Contract.Downloaders
         
         bool IsValid { get; }
         bool Gzip { get; set; }
+        Dictionary<string, string> Cookies { get; set; }
     }
 }
