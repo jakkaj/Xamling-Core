@@ -29,5 +29,7 @@ namespace XamlingCore.Portable.Net.DownloadConfig
         public bool IsValid { get; set; }
 
         public bool Gzip { get; set; }
+
+        public bool AllowRedirect { get; set; }
     }
 }

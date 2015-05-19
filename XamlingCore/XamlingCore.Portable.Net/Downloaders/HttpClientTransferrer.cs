@@ -90,6 +90,15 @@ namespace XamlingCore.Portable.Net.Downloaders
                 }
             }
 
+            if (downloadConfig.AllowRedirect && httpHandler.SupportsAllowAutoRedirect())
+            {
+                httpHandler.AllowAutoRedirect = true;
+            }
+            else
+            {
+                httpHandler.AllowAutoRedirect = false;
+            }
+
             httpClient = new HttpClient(httpHandler);
 
             if (downloadConfig.Cookies != null)
