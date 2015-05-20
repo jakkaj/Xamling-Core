@@ -81,7 +81,7 @@ namespace XamlingCore.iOS.Unified.Implementations
         {
             // add support for Gzip decompression
             var native = new NativeMessageHandler();
-
+            
             var httpClient = new HttpClient(native);
 
             using (httpClient)
