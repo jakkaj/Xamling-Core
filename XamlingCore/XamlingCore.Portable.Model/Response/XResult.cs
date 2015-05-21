@@ -9,7 +9,7 @@ namespace XamlingCore.Portable.Model.Response
     {
         public XResult()
         {
-
+            Id = Guid.NewGuid();
         }
 
         public static implicit operator bool(XResult<T> operation)
@@ -78,6 +78,10 @@ namespace XamlingCore.Portable.Model.Response
             o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
             return o;
         }
+
+        [JsonProperty(PropertyName = "id", NullValueHandling = NullValueHandling.Ignore)]
+        public Guid? Id { get; set; }
+
 
         [JsonProperty(PropertyName = "data", NullValueHandling = NullValueHandling.Ignore)]
         public T Object { get; set; }
