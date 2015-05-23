@@ -143,9 +143,27 @@ namespace XamlingCore.Portable.View.ViewModel
                 return false;
             }
 
-            var t = GetResource(title) ?? title;
-            var m = GetResource(message) ?? message;
-            var a = GetResource(accept) ?? accept;
+            var t = GetResource(title);
+            
+            if (string.IsNullOrWhiteSpace(t))
+            {
+                t = title;
+            }
+            
+            var m = GetResource(message);
+            
+            if (string.IsNullOrWhiteSpace(m))
+            {
+                m = message;
+            }
+
+            var a = GetResource(accept);
+
+            if (string.IsNullOrWhiteSpace(a))
+            {
+                a = accept;
+            } 
+
             var c = (!string.IsNullOrWhiteSpace(cancel)) ? GetResource(cancel) : null;
 
             return await NativeAlert(t, m, a, c);
