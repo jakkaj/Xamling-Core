@@ -116,6 +116,7 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
                 {
                     viewer.IsVisible = false;
                     viewer.Content = null;
+                    return;
                 }
                 catch { }
             }
