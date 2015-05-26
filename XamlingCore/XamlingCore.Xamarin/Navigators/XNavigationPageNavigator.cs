@@ -33,20 +33,20 @@ namespace XamlingCore.XamarinThings.Navigators
             _container = rootFrame.Container;
             _rootNavigationPage = page;
             _viewResolver = viewResolver;
-           
+
             _configure();
 
-            
+
         }
 
         public void _configure()
         {
             _xNavigation.Navigated += _xNavigation_Navigated;
-            
+
             _rootNavigationPage.Popped += _rootNavigationPage_Popped;
             _rootNavigationPage.PoppedToRoot += _rootNavigationPage_PoppedToRoot;
             _rootNavigationPage.Pushed += _rootNavigationPage_Pushed;
-           
+
             _xamarinNavigation = _rootNavigationPage.Navigation;
 
             if (_xNavigation.CurrentContentObject != null)
@@ -54,7 +54,7 @@ namespace XamlingCore.XamarinThings.Navigators
                 _setView(NavigationDirection.Forward);
             }
         }
-     
+
         void _rootNavigationPage_Pushed(object sender, NavigationEventArgs e)
         {
             _synchroniseNavigation(NavigationDirection.Forward);
@@ -82,7 +82,7 @@ namespace XamlingCore.XamarinThings.Navigators
         /// </summary>
         /// <param name="direction"></param>
         void _synchroniseNavigation(NavigationDirection direction)
-        {            
+        {
             var page = _rootNavigationPage.CurrentPage;
 
             if (page != null && page.BindingContext != null)
@@ -97,7 +97,7 @@ namespace XamlingCore.XamarinThings.Navigators
                     {
                         _rootFrame.NavigateTo(page.BindingContext);
                     }
-                }    
+                }
             }
         }
 
@@ -122,7 +122,7 @@ namespace XamlingCore.XamarinThings.Navigators
 
             var initalViewController = frameManager.Init(rootFrame, rootNavigationVm);
             rootFrame.NavigateTo(vm);
-            
+
             await _xamarinNavigation.PushModalAsync(initalViewController);
         }
 
@@ -142,18 +142,18 @@ namespace XamlingCore.XamarinThings.Navigators
 
             if (p == null)
             {
-                throw new Exception("View type not implemented");    
+                throw new Exception("View type not implemented");
             }
 
             await _xamarinNavigation.PushAsync(p);
 
 
-            if (currentPage != null && 
-                !_xNavigation.NavigationHistory.Contains(currentPage.BindingContext) && 
+            if (currentPage != null &&
+                !_xNavigation.NavigationHistory.Contains(currentPage.BindingContext) &&
                 _xamarinNavigation.NavigationStack.Contains(currentPage)
                 )
             {
-                _xamarinNavigation.RemovePage(currentPage);   
+                _xamarinNavigation.RemovePage(currentPage);
             }
         }
 
@@ -167,6 +167,20 @@ namespace XamlingCore.XamarinThings.Navigators
                 return;
             }
 
+            do
+            {
+                var p = _xamarinNavigation.NavigationStack.LastOrDefault();
+                var vm = p.BindingContext;
+                var notCorrectVm = _rootFrame.CurrentContentObject != vm;
+
+                if (!notCorrectVm)
+                {
+                    break;
+                }
+
+                _xamarinNavigation.RemovePage(p);
+            } while (true);
+            
             await _xamarinNavigation.PopAsync();
         }
 
