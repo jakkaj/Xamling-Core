@@ -20,7 +20,7 @@ namespace XamlingCore.XamarinThings.Core
         protected XRootFrame RootFrame;
 
         private IFrameManager _frameManager;
-        
+
         public Page InitRoot()
         {
             var glue = new TGlue();
@@ -46,6 +46,11 @@ namespace XamlingCore.XamarinThings.Core
             var initalViewController = _frameManager.Init(RootFrame, newRoot);
             var p = initalViewController;
             return p;
+        }
+
+        public IFrameManager FrameManager
+        {
+            get { return _frameManager; }
         }
     }
 }

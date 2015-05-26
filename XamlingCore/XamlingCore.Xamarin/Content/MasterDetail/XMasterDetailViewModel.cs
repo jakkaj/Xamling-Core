@@ -24,7 +24,7 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
         private Page _masterContent;
         private Page _detailContent;
 
-        protected XViewModel MasterViewModel;
+        protected XViewModel _masterViewModel;
 
         protected XViewModel CurrentDetail;
 
@@ -114,6 +114,18 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             CurrentDetail = package.ViewModel;
         }
 
+        public void ShowViewModel(XViewModel vm)
+        {
+            var vmPage = _packages.FirstOrDefault(_ => _.ViewModel == vm);
+
+            if (vmPage == null)
+            {
+                return;
+            }
+
+            ShowNavPage(vmPage);
+        }
+
         void _onNavigateToPage(XViewModel navigateViewModel)
         {
 
@@ -150,6 +162,12 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
                 _detailContent = value;
                 OnPropertyChanged();
             }
+        }
+
+        public XViewModel MasterViewModel
+        {
+            get { return _masterViewModel; }
+            private set { _masterViewModel = value; }
         }
 
         protected interface INavigationPackage

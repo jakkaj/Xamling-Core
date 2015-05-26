@@ -6,7 +6,7 @@ namespace XamlingCore.XamarinThings.Core
 {
     public abstract class XApplication : Xamarin.Forms.Application
     {
-        public virtual void Init<TRootViewModel, TGlue>()
+        public virtual XCore<TRootViewModel, TGlue> Init<TRootViewModel, TGlue>()
             where TRootViewModel : XViewModel
             where TGlue : class, IGlue, new()
         {
@@ -15,6 +15,8 @@ namespace XamlingCore.XamarinThings.Core
             var page = c.InitRoot();
 
             SetMainPage(page);
+
+            return c;
         }
 
         public void SetMainPage(Page page)
