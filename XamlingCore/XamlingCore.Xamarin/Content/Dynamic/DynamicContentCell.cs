@@ -8,7 +8,13 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 {
     public class DynamicContentCell : ViewCell
     {
-        protected override void OnBindingContextChanged()
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _doContent();
+        }
+
+        void _doContent()
         {
             var vm = BindingContext;
 
@@ -24,7 +30,6 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 
             View = v;
 
-            base.OnBindingContextChanged();
         }
     }
 
