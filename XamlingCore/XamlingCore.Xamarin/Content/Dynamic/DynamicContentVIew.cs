@@ -145,13 +145,13 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
                     var oldTransition = viewer.Content as ITransitionView;
                     if (oldTransition != null)
                     {
-                        await Task.Delay(oldTransition.TransitionOut());
+                        await oldTransition.TransitionOut();
                     }
                 }
                 
                 viewer.IsVisible = true;
                 viewer.Content = v;
-
+                await Task.Yield();
                 var transition = v as ITransitionView;
 
                 if (transition != null)
