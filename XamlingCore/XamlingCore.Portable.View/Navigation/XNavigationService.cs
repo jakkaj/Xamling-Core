@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using XamlingCore.Portable.Contract.Navigation;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Model.Navigation;
@@ -51,6 +52,12 @@ namespace XamlingCore.Portable.View.Navigation
             }
 
             ModalContentObject = content;
+
+            if (ModalContentObject == null)
+            {
+                _disposeHistory();
+            }
+
             if (Navigated != null)
             {
                 Navigated(this, new XNavigationEventArgs(NavigationDirection.Modal));
@@ -69,6 +76,12 @@ namespace XamlingCore.Portable.View.Navigation
 
         public void NavigateTo(object content, bool noHistory, bool forceBack)
         {
+            if (content == null && IsModal)
+            {
+                NavigateToModal(null);
+                return;
+            }
+
             if (content != null)
             {
 
@@ -111,10 +124,6 @@ namespace XamlingCore.Portable.View.Navigation
                 }
 
                 CanGoBack = NavigationHistory.Count > 0;
-
-
-
-
 
                 if (forceBack)
                 {
@@ -187,6 +196,31 @@ namespace XamlingCore.Portable.View.Navigation
             else if (allowNullNavigation)
             {
                 NavigateTo(null, false, true);
+            }
+        }
+
+        void _disposeHistory()
+        {
+            do
+            {
+                var item = _navigationHistory.LastOrDefault();
+                
+                var itemDisposable = item as IDisposable;
+
+                if (itemDisposable != null)
+                {
+                    itemDisposable.Dispose();
+                }
+
+                _navigationHistory.Remove(item);
+
+            } while (_navigationHistory.Count > 0);
+
+            var ccoDisposable = CurrentContentObject as IDisposable;
+            
+            if (ccoDisposable != null)
+            {
+                ccoDisposable.Dispose();
             }
         }
 
