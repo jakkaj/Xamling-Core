@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dynamic="clr-namespace:XamlingCore.XamarinThings.Content.Dynamic"
+             x:Class="XamlingCore.XamarinThings.Content.Dynamic.DynamicContentHostView">
+ <AbsoluteLayout>
+   <dynamic:DynamicContentView x:Name="ViewOne" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsVisible="false" />
+   <dynamic:DynamicContentView x:Name="ViewTwo" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"/>
+ </AbsoluteLayout>
+</ContentView>

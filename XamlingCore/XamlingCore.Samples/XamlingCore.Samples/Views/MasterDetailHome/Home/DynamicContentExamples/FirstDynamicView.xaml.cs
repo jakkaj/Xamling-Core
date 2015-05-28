@@ -17,10 +17,9 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home.DynamicContentExamples
             InitializeComponent();
         }
 
-        public int TransitionOut()
+        public async Task TransitionOut()
         {
-            this.FadeTo(0, 1000, Easing.SpringOut);
-            return 1000;
+            await this.FadeTo(0, 1000, Easing.SpringOut);            
         }
 
         public void TransitionIn()

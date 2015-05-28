@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<transitions:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:transitions="clr-namespace:XamlingCore.Samples.Views.MasterDetailHome.Transitions;assembly=XamlingCore.Samples"
+             x:Class="XamlingCore.Samples.Views.MasterDetailHome.Transitions.Content1View">
+	<AbsoluteLayout BackgroundColor="Olive">
+    <Label Text="Content 1" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5, .5, 1, 1"></Label>
+  </AbsoluteLayout>
+</transitions:BaseView>

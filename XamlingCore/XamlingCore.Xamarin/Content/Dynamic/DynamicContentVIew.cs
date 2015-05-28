@@ -114,8 +114,16 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
                 }
                 try
                 {
+                    var oldTransition = viewer.Content as ITransitionView;
+                    
+                    if (oldTransition != null)
+                    {
+                        await oldTransition.TransitionOut();
+                    }
+
                     viewer.IsVisible = false;
                     viewer.Content = null;
+
                     return;
                 }
                 catch { }

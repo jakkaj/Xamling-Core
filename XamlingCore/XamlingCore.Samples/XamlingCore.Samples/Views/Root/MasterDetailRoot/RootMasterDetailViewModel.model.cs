@@ -9,6 +9,7 @@ using XamlingCore.Samples.Views.MasterDetailHome.Location;
 using XamlingCore.Samples.Views.MasterDetailHome.Menu;
 using XamlingCore.Samples.Views.MasterDetailHome.Orientation;
 using XamlingCore.Samples.Views.MasterDetailHome.Tabs;
+using XamlingCore.Samples.Views.MasterDetailHome.Transitions;
 using XamlingCore.XamarinThings.Content.MasterDetail;
 using XamlingCore.XamarinThings.Contract;
 
@@ -33,6 +34,7 @@ namespace XamlingCore.Samples.Views.Root.MasterDetailRoot
             AddPackage<PlaygroundHomeViewModel>();
             AddPackage<OrientationViewModel>();
             AddPackage<LongListViewModel>();
+            AddPackage<TransitionViewModel>();
 
             //AddPage(CreateContentModel<HomeTabsViewModel>());
             //AddPage(CreateContentModel<AnotherMenuOptionViewModel>());

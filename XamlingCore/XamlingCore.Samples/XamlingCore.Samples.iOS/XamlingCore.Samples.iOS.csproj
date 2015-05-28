@@ -11,7 +11,8 @@
     <AssemblyName>FormsTemplateiOS</AssemblyName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>c7d311a3</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -168,17 +169,21 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="Xamarin.Forms.Core">
+    <Reference Include="Xamarin.Forms.Core, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.2.6359\lib\Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Xamarin.Forms.Platform">
+    <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.2.6359\lib\Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Xamarin.Forms.Platform.iOS">
+    <Reference Include="Xamarin.Forms.Platform.iOS, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.2.6359\lib\Xamarin.iOS10\Xamarin.Forms.Platform.iOS.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Xamarin.Forms.Xaml">
+    <Reference Include="Xamarin.Forms.Xaml, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.2.6359\lib\Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>

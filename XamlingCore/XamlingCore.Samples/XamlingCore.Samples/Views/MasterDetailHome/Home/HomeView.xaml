@@ -7,6 +7,7 @@
   <StackLayout>
     <Label Text="Welcome to the main home thing" VerticalOptions="Center" HorizontalOptions="Center" />
     <Button Text="Click me 2" Command="{Binding NextPageCommand}"/>
+    
     <!--<forms:TransitionContentView DataContext="{Binding DynamicViewModel}" Duration="1000"/>-->
     <dev:SpinnyThing HeightRequest="60" WidthRequest="60" HorizontalOptions="Center" VerticalOptions="Center"/>
     <!--<Button Text="Show a native view" Command="{Binding ShowNativeViewCommand}"/>-->

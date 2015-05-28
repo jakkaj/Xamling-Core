@@ -16,7 +16,8 @@
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>cefddfed</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -163,6 +164,25 @@
     <Compile Include="Views\MasterDetailHome\Tabs\Home\First\FirstContentView.model.cs" />
     <Compile Include="Views\MasterDetailHome\Tabs\Home\Second\SecondContentView.cs" />
     <Compile Include="Views\MasterDetailHome\Tabs\Home\Second\SecondContentView.model.cs" />
+    <Compile Include="Views\MasterDetailHome\Transitions\BaseView.cs" />
+    <Compile Include="Views\MasterDetailHome\Transitions\Content1View.model.cs">
+      <DependentUpon>Content1View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Transitions\Content1View.xaml.cs">
+      <DependentUpon>Content1View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Transitions\Content2View.model.cs">
+      <DependentUpon>Content2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Transitions\Content2View.xaml.cs">
+      <DependentUpon>Content2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Transitions\TransitionView.model.cs">
+      <DependentUpon>TransitionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Transitions\TransitionView.xaml.cs">
+      <DependentUpon>TransitionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Root\MasterDetailRoot\RootMasterDetailViewModel.model.cs" />
     <Compile Include="Views\Tile\MenuOption\MenuOptionView.model.cs" />
     <Compile Include="Views\Tile\MenuOption\MenuOptionViewCell.cs" />
@@ -171,14 +191,17 @@
     <Reference Include="Autofac">
       <HintPath>..\..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Core">
+    <Reference Include="Xamarin.Forms.Core, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.2.6359\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Xamarin.Forms.Platform">
+    <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.2.6359\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Xamarin.Forms.Xaml">
+    <Reference Include="Xamarin.Forms.Xaml, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.2.6359\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -317,6 +340,24 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailHome\Transitions\TransitionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailHome\Transitions\Content1View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailHome\Transitions\Content2View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
