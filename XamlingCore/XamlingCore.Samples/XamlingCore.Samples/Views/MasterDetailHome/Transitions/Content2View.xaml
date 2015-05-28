@@ -4,6 +4,6 @@
              xmlns:transitions="clr-namespace:XamlingCore.Samples.Views.MasterDetailHome.Transitions;assembly=XamlingCore.Samples"
              x:Class="XamlingCore.Samples.Views.MasterDetailHome.Transitions.Content2View">
   <AbsoluteLayout BackgroundColor="Gray">
-      <Label Text="Content 2" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5, .5, 1, 1"></Label>
+    <Label Text="Content 2" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds=".5, .5, 200, 200"></Label>
   </AbsoluteLayout>
 </transitions:BaseView>

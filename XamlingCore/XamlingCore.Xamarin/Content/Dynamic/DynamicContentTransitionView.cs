@@ -189,17 +189,17 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
                     Device.BeginInvokeOnMainThread(async () =>
                     {
                         await Task.Yield();
-                        var old = _getOldView();
+                        var v = _getOldView();
 
-                        var oldTransition = old as ITransitionView;
+                        var tv = v.Content as ITransitionView;
 
-                        if (oldTransition != null)
+                        if (tv != null)
                         {
-                            await oldTransition.TransitionOut();
+                            await tv.TransitionOut();
                         }
 
-                        old.IsVisible = false;
-                        old.Content = null;
+                        v.IsVisible = false;
+                        v.Content = null;
                     });
                 });
                 
@@ -219,13 +219,14 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
                     Device.BeginInvokeOnMainThread(async () =>
                     {
                         await Task.Yield();
-                        var n = _getNewView();
 
-                        var oldTransition = n as ITransitionView;
+                        var v = _getNewView();
 
-                        if (oldTransition != null)
+                        var tv = v.Content as ITransitionView;
+
+                        if (tv != null)
                         {
-                            oldTransition.TransitionIn();
+                            tv.TransitionIn();
                         }
                     });
                 });
