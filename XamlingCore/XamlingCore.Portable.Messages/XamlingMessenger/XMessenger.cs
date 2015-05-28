@@ -34,6 +34,17 @@ namespace XamlingCore.Portable.Messages.XamlingMessenger
             _event.Set();
         }
 
+        public void Register<T>(object registrant, Action callback) where T : XMessage
+        {
+            var registration = new ActionRegistration(registrant, callback);
+
+            var t = typeof(T);
+            _event.WaitOne(200);
+            _event.Reset();
+            _get(t).Add(registration);
+            _event.Set();
+        }
+
         public bool IsRegistered(object t)
         {
             return _registrations.Select(item => item.Value).Any(v => v.Any(vItem => vItem.Registrant == t));
@@ -108,6 +119,7 @@ namespace XamlingCore.Portable.Messages.XamlingMessenger
         protected class ActionRegistration : IDisposable
         {
             private Action<object> _callbackReference;
+            private Action _callbackReferencePlain;
             private object _registrant;
 
             public ActionRegistration(object registrant, Action<object> callback)
@@ -116,11 +128,17 @@ namespace XamlingCore.Portable.Messages.XamlingMessenger
                 _registrant = registrant;
             }
 
+            public ActionRegistration(object registrant, Action callback)
+            {
+                _callbackReferencePlain = callback;
+                _registrant = registrant;
+            }
+
             public bool Action(object message)
             {
                 try
                 {
-                    if (_callbackReference == null)
+                    if (_callbackReference == null && _callbackReferencePlain == null)
                     {
                         return false;
                     }
@@ -130,6 +148,10 @@ namespace XamlingCore.Portable.Messages.XamlingMessenger
                         if (_callbackReference != null)
                         {
                             _callbackReference(message);
+                        }
+                        if (_callbackReferencePlain != null)
+                        {
+                            _callbackReferencePlain();
                         }
                     });
                     return true;
@@ -143,6 +165,11 @@ namespace XamlingCore.Portable.Messages.XamlingMessenger
             public Action<object> CallbackReference
             {
                 get { return _callbackReference; }
+            }
+
+            public Action CallbackReferencePlain
+            {
+                get { return _callbackReferencePlain; }
             }
 
             public object Registrant
@@ -160,6 +187,11 @@ namespace XamlingCore.Portable.Messages.XamlingMessenger
     public static class XMessengerRegisterExtension
     {
         public static void Register<T>(this object registrant, Action<object> callback) where T : XMessage
+        {
+            XMessenger.Default.Register<T>(registrant, callback);
+        }
+
+        public static void Register<T>(this object registrant, Action callback) where T : XMessage
         {
             XMessenger.Default.Register<T>(registrant, callback);
         }

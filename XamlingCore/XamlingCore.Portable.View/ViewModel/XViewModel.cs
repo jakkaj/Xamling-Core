@@ -42,6 +42,7 @@ namespace XamlingCore.Portable.View.ViewModel
         public ILifetimeScope Container { get; internal set; }
 
         private XViewModel _ancillaryViewModel;
+        private XViewModel _subViewModel;
 
         public static Func<string, string, string, string, Task<bool>> NativeAlert { get; set; }
 
@@ -282,6 +283,16 @@ namespace XamlingCore.Portable.View.ViewModel
             set
             {
                 _ancillaryViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public XViewModel SubViewModel
+        {
+            get { return _subViewModel; }
+            set
+            {
+                _subViewModel = value;
                 OnPropertyChanged();
             }
         }
