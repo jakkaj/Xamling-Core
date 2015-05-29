@@ -27,9 +27,11 @@ namespace XamlingCore.Windows8.Implementations
             }
         }
 
-        public string GetFullPath(string fileName)
+        public async Task<string> GetFullPath(string fileName)
         {
-            throw new NotImplementedException();
+            var file = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(fileName);
+
+            return file.Path;
         }
 
         public char Separator()

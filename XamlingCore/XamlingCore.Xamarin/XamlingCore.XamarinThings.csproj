@@ -54,7 +54,7 @@
     <Compile Include="Content\Forms\XLabel.cs" />
     <Compile Include="Content\Lists\XListView.cs" />
     <Compile Include="Content\MasterDetail\XMasterDetailView.cs" />
-    <Compile Include="Content\Navigation\XNavigationPage.cs" />
+    <Compile Include="Content\Navigation\XNavigationPageView.cs" />
     <Compile Include="Content\Navigation\XNavigationPageTypedView.cs" />
     <Compile Include="Content\Navigation\XNavigationPageTypeView.model.cs" />
     <Compile Include="Content\Navigation\XNavigationPageView.model.cs" />

@@ -33,7 +33,8 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 
         void _onNext()
         {
-            NavigateTo<HomePageThreeViewModel>(null, true);
+
+            NavigateTo<HomePageThreeViewModel>();
         }
 
         void _onPop()

@@ -19,7 +19,7 @@ namespace XamlingCore.Droid.Implementations
             return Path.DirectorySeparatorChar;
         }
 
-        public string GetFullPath(string fileName)
+        public async Task<string> GetFullPath(string fileName)
         {
             return _getPath(fileName);
         }

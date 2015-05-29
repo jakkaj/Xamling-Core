@@ -32,9 +32,10 @@ namespace XamlingCore.NET.Implementations
             }
         }
 
-        public string GetFullPath(string fileName)
+        public async Task<string> GetFullPath(string fileName)
         {
-            throw new NotImplementedException();
+            var f = new FileInfo(fileName);
+            return f.FullName;
         }
 
         public char Separator()

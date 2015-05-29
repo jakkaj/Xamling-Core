@@ -23,8 +23,6 @@ namespace XamlingCore.XamarinThings.Navigators
 
         private INavigation _xamarinNavigation;
 
-
-
         public XNavigationPageNavigator(ILifetimeScope scope, XFrame rootFrame, NavigationPage page, IViewResolver viewResolver)
         {
             _scope = scope;
@@ -47,12 +45,23 @@ namespace XamlingCore.XamarinThings.Navigators
             _rootNavigationPage.PoppedToRoot += _rootNavigationPage_PoppedToRoot;
             _rootNavigationPage.Pushed += _rootNavigationPage_Pushed;
 
+            var xNav = _rootNavigationPage as XNavigationPageView;
+            if (xNav != null)
+            {
+                xNav.BackButtonPressed += XNav_BackButtonPressed;    
+            }
+            
             _xamarinNavigation = _rootNavigationPage.Navigation;
 
             if (_xNavigation.CurrentContentObject != null)
             {
                 _setView(NavigationDirection.Forward);
             }
+        }
+
+        private async void XNav_BackButtonPressed(object sender, EventArgs e)
+        {
+            _xNavigation.NavigateBack();
         }
 
         void _rootNavigationPage_Pushed(object sender, NavigationEventArgs e)
@@ -107,7 +116,18 @@ namespace XamlingCore.XamarinThings.Navigators
 
             if (vm == null)
             {
+                var mRoot = _xamarinNavigation.ModalStack?.LastOrDefault();
+                
+                if (mRoot != null)
+                {
+                    var iPopOut = mRoot as XNavigationPageView;
+                    if (iPopOut != null)
+                    {
+                        await iPopOut.AnimateOut();
+                    }
+                }
                 await _xamarinNavigation.PopModalAsync();
+                
                 return;
             }
 
@@ -121,9 +141,23 @@ namespace XamlingCore.XamarinThings.Navigators
             var rootNavigationVm = rootFrame.CreateContentModel<XNavigationPageViewModel>();
 
             var initalViewController = frameManager.Init(rootFrame, rootNavigationVm);
+
+           
+
             rootFrame.NavigateTo(vm);
 
+            var i = initalViewController as XNavigationPageView;
+            if (i != null)
+            {
+                i.PrepForAnimation();
+            }
+
             await _xamarinNavigation.PushModalAsync(initalViewController, true);
+
+            if (i != null)
+            {
+                i.AnimateIn();
+            }
         }
 
         async void _navigationForward()

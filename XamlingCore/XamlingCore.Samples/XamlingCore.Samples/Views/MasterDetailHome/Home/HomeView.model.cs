@@ -105,7 +105,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
         void _nextPage()
         { 
             //NavigateTo<HomeTabsViewModel>();
-            NavigateTo<HomePageTwoViewModel>();
+            NavigateToModal<HomePageTwoViewModel>();
         }
 
         public XViewModel DynamicViewModel

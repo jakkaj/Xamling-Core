@@ -20,7 +20,8 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 
         void _onNext()
         {
-            NavigateTo<HomePageFourViewModel>(null, true);
+            NavigateBack();
+            //NavigateTo<HomePageFourViewModel>(null, true);
         }
     }
 }
