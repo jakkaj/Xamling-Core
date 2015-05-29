@@ -217,6 +217,7 @@ namespace XamlingCore.XamarinThings.Navigators
                     break;
                 }
 
+                _xamarinNavigation.RemovePage(p);
                 
             } while (true);
             
