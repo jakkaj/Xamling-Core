@@ -22,7 +22,6 @@ namespace XamlingCore.XamarinThings.Content.Navigation
 
         public XNavigationPageView(IOrientationSensor orientationSensor, IEnvironmentService environmentService)
         {
-            this.BackgroundColor = Color.Red;
             _orientationSensor = orientationSensor;
             _environmentService = environmentService;
         }
@@ -56,6 +55,7 @@ namespace XamlingCore.XamarinThings.Content.Navigation
                 return;
             }
 
+            
             
 
             _animateOffset = _environmentService.GetScreenHeight();

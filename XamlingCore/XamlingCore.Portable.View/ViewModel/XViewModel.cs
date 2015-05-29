@@ -18,6 +18,7 @@ namespace XamlingCore.Portable.View.ViewModel
     public abstract class XViewModel : ViewModelBase, IDisposable
     {
         private XFrame _parentModel;
+        public XViewModel _parentViewModel;
 
         public bool IsDisposed { get; private set; }
         public double ScrollPosition { get; set; }
@@ -49,7 +50,7 @@ namespace XamlingCore.Portable.View.ViewModel
         public T CreateContentModel<T>(Action<T> initialisedCallback)
              where T : XViewModel
         {
-            var model = ParentModel.CreateContentModel<T>(initialisedCallback);
+            var model = ParentModel.CreateContentModel<T>(initialisedCallback, this);
 
             _childModels.Add(model);
 
@@ -59,7 +60,7 @@ namespace XamlingCore.Portable.View.ViewModel
         public T CreateContentModel<T>()
              where T : XViewModel
         {
-            var model = ParentModel.CreateContentModel<T>(null);
+            var model = ParentModel.CreateContentModel<T>(null, this);
 
             _childModels.Add(model);
 
@@ -114,6 +115,8 @@ namespace XamlingCore.Portable.View.ViewModel
 
             _parentModel.AllViewModels.Remove(this);
 
+           
+
             foreach (var child in _childModels)
             {
                 if (!child.IsDisposed && child != ParentModel.Navigation.CurrentContentObject)
@@ -125,6 +128,10 @@ namespace XamlingCore.Portable.View.ViewModel
             _childModels.Clear();
 
             PropertyDispose();
+
+            Tag = null;
+            ParentViewModel = null;
+            ParentModel = null;
 
             //Debug.WriteLine("***Dispose*** " + _parentModel.AllViewModels.Count);
 
@@ -293,6 +300,16 @@ namespace XamlingCore.Portable.View.ViewModel
             set
             {
                 _subViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public XViewModel ParentViewModel
+        {
+            get { return _parentViewModel; }
+            set
+            {
+                _parentViewModel = value;
                 OnPropertyChanged();
             }
         }

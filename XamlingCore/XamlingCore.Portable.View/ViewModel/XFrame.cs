@@ -117,13 +117,13 @@ namespace XamlingCore.Portable.View.ViewModel
             return obj;
         }
 
-        public T CreateContentModel<T>()
+        public T CreateContentModel<T>(XViewModel createdBy = null)
              where T : XViewModel
         {
-            return CreateContentModel<T>(null);
+            return CreateContentModel<T>(null, createdBy);
         }
 
-        public T CreateContentModel<T>(Action<T> initialisedCallback)
+        public T CreateContentModel<T>(Action<T> initialisedCallback, XViewModel createdBy = null)
              where T : XViewModel
         {
             var rootModel = this;
@@ -140,6 +140,12 @@ namespace XamlingCore.Portable.View.ViewModel
             obj.Dispatcher = Dispatcher;
 
             obj.ParentModel = this;
+            obj.ParentViewModel = createdBy;
+
+            if (createdBy != null)
+            {
+                obj.Tag = createdBy.Tag;
+            }
 
             obj.LoadStatusService = _loadStatusService;
             
