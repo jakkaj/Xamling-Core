@@ -203,7 +203,12 @@ namespace XamlingCore.XamarinThings.Navigators
 
             do
             {
-                var p = _xamarinNavigation.NavigationStack.LastOrDefault();
+                if (_xamarinNavigation.NavigationStack.Count <= 1)
+                {
+                    break;
+                }
+
+                var p = _xamarinNavigation.NavigationStack[_xamarinNavigation.NavigationStack.Count - 2];
                 var vm = p.BindingContext;
                 var notCorrectVm = _rootFrame.CurrentContentObject != vm;
 
@@ -212,7 +217,7 @@ namespace XamlingCore.XamarinThings.Navigators
                     break;
                 }
 
-                _xamarinNavigation.RemovePage(p);
+                
             } while (true);
             
             await _xamarinNavigation.PopAsync();
