@@ -22,12 +22,12 @@ namespace XamlingCore.iOS.Unified.Implementations
             return UIDevice.CurrentDevice.SystemName + " " + UIDevice.CurrentDevice.SystemVersion;
         }
 
-        public int GetScreenWidth()
+        public double GetScreenWidth()
         {
             return (int) UIScreen.MainScreen.Bounds.Width;
         }
 
-        public int GetScreenHeight()
+        public double GetScreenHeight()
         {
             return (int) UIScreen.MainScreen.Bounds.Height;
         }

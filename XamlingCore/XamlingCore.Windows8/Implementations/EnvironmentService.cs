@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using XamlingCore.Portable.Contract.Services;
 
 namespace XamlingCore.Windows8.Implementations
@@ -14,14 +15,14 @@ namespace XamlingCore.Windows8.Implementations
             throw new NotImplementedException();
         }
 
-        public int GetScreenWidth()
+        public double GetScreenWidth()
         {
-            throw new NotImplementedException();
+            return Window.Current.Bounds.Width;
         }
 
-        public int GetScreenHeight()
+        public double GetScreenHeight()
         {
-            throw new NotImplementedException();
+            return Window.Current.Bounds.Height;
         }
 
         public float GetScreenScale()

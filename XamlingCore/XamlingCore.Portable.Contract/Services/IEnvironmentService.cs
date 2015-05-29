@@ -3,8 +3,8 @@
     public interface IEnvironmentService
     {
         string GetOSVersion();
-        int GetScreenWidth();
-        int GetScreenHeight();
+        double GetScreenWidth();
+        double GetScreenHeight();
         float GetScreenScale();
         string GetAppVersion();
     }        

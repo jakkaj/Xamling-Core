@@ -16,14 +16,14 @@ namespace XamlingCore.Droid.Implementations
             return Android.OS.Build.VERSION.SdkInt + " " + Android.OS.Build.VERSION.Release + " (" + Android.OS.Build.VERSION.Codename + ")";
         }
 
-        public int GetScreenWidth()
+        public double GetScreenWidth()
         {
             var px = Resources.System.DisplayMetrics.WidthPixels;
             return px;
             //return ConvertPixelsToDp(px); //Scaled pixels
         }
 
-        public int GetScreenHeight()
+        public double GetScreenHeight()
         {
             var px = Resources.System.DisplayMetrics.HeightPixels;
             return px;
