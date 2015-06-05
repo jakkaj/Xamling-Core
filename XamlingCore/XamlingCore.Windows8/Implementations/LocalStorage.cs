@@ -8,6 +8,7 @@ using Windows.Storage;
 using Windows.UI.Xaml.Data;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Util.Lock;
+using XamlingCore.Windows8.Implementations.Helpers;
 
 namespace XamlingCore.Windows8.Implementations
 {
@@ -29,9 +30,9 @@ namespace XamlingCore.Windows8.Implementations
 
         public async Task<string> GetFullPath(string fileName)
         {
-            var file = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(fileName);
+            var file = await Windows.Storage.ApplicationData.Current.LocalFolder.TryGetFileAsync(fileName);
 
-            return file.Path;
+            return file?.Path;
         }
 
         public char Separator()
@@ -74,7 +75,7 @@ namespace XamlingCore.Windows8.Implementations
         async Task<List<string>> _getAllFilesInFolderRecurse(StorageFolder currentFolder, string topFolder)
         {
             List<string> files = new List<string>();
-            
+
             foreach (var f in await currentFolder.GetFoldersAsync())
             {
                 files.AddRange(await _getAllFilesInFolderRecurse(f, topFolder));
@@ -148,20 +149,14 @@ namespace XamlingCore.Windows8.Implementations
         public async Task<bool> FileExists(string fileName)
         {
             Debug.WriteLine("Checking file: {0}", fileName);
-            try
+
+            var file = await Windows.Storage.ApplicationData.Current.LocalFolder.TryGetItemAsync(fileName);
+
+            if (file != null)
             {
-
-                var file = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(fileName);
-
-                if (file != null)
-                {
-                    return true;
-                }
+                return true;
             }
-            catch (FileNotFoundException ex)
-            {
 
-            }
             return false;
         }
 
@@ -175,9 +170,12 @@ namespace XamlingCore.Windows8.Implementations
             var _lock = XNamedLock.Get(destinationFolder + "\\" + newName);
             using (var releaser = await _lock.LockAsync())
             {
-                if (!await FileExists(source)) return false;
+                var file = await Windows.Storage.ApplicationData.Current.LocalFolder.TryGetFileAsync(source);
 
-                var file = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(source);
+                if (file == null)
+                {
+                    return false;
+                }
 
                 var dFolder =
                     await Windows.Storage.ApplicationData.Current.LocalFolder.GetFolderAsync(destinationFolder);
@@ -196,9 +194,12 @@ namespace XamlingCore.Windows8.Implementations
             var _lock = XNamedLock.Get(fileName);
             using (var releaser = await _lock.LockAsync())
             {
-                if (!await FileExists(fileName)) return null;
+                var file = await Windows.Storage.ApplicationData.Current.LocalFolder.TryGetFileAsync(fileName);
 
-                var file = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(fileName);
+                if (file == null)
+                {
+                    return null;
+                }
 
                 using (var s = await file.OpenStreamForReadAsync())
                 {
@@ -214,10 +215,14 @@ namespace XamlingCore.Windows8.Implementations
             var _lock = XNamedLock.Get(fileName);
             using (var releaser = await _lock.LockAsync())
             {
-                Debug.WriteLine("Reading file: {0}", fileName);
-                if (!await FileExists(fileName)) return null;
+                var file = await Windows.Storage.ApplicationData.Current.LocalFolder.TryGetFileAsync(fileName);
 
-                var file = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(fileName);
+                if (file == null)
+                {
+                    return null;
+                }
+
+                Debug.WriteLine("Reading file: {0}", fileName);
 
                 using (var s = await file.OpenStreamForReadAsync())
                 {
@@ -233,11 +238,14 @@ namespace XamlingCore.Windows8.Implementations
             var _lock = XNamedLock.Get(fileName);
             using (var releaser = await _lock.LockAsync())
             {
+                var file = await Windows.Storage.ApplicationData.Current.LocalFolder.TryGetFileAsync(fileName);
+
+                if (file == null)
+                {
+                    return null;
+                }
+
                 Debug.WriteLine("Reading file: {0}", fileName);
-                if (!await FileExists(fileName)) return null;
-
-                var file = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(fileName);
-
                 return await file.OpenStreamForReadAsync();
             }
         }
@@ -249,7 +257,7 @@ namespace XamlingCore.Windows8.Implementations
             {
                 try
                 {
-                    
+
                     var dataBytes = GetBytes(data);
                     var file =
                         await
@@ -323,20 +331,14 @@ namespace XamlingCore.Windows8.Implementations
             var _lock = XNamedLock.Get(fileName);
             using (var releaser = await _lock.LockAsync())
             {
-                try
-                {
-                    var file = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(fileName);
+                var file = await Windows.Storage.ApplicationData.Current.LocalFolder.TryGetFileAsync(fileName);
 
-                    if (file != null)
-                    {
-                        await file.DeleteAsync();
-                        return true;
-                    }
-                }
-                catch (FileNotFoundException ex)
+                if (file != null)
                 {
-
+                    await file.DeleteAsync();
+                    return true;
                 }
+
                 return false;
             }
         }

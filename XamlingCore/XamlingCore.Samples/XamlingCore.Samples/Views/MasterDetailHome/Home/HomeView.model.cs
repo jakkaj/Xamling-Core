@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using XamlingCore.Portable.Contract.Entities;
+using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
 using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.ViewModel;
@@ -20,6 +21,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
     public class HomeViewModel : XViewModel
     {
         private readonly IEntityCache _cache;
+        private readonly ILocalStorage _storage;
         public ICommand NextPageCommand { get; set; }
         public ICommand ShowNativeViewCommand { get; set; }
 
@@ -27,9 +29,10 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 
         public ICommand RepeatersCommand { get; set; }
 
-        public HomeViewModel(IEntityCache cache)
+        public HomeViewModel(IEntityCache cache, ILocalStorage storage)
         {
             _cache = cache;
+            _storage = storage;
             Title = "Home";
             NextPageCommand = new Command(_nextPage);
             ShowNativeViewCommand = new Command(_onShowNativeView);
@@ -51,7 +54,19 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 
         async void _doThings()
         {
-           
+
+            var fileName = "something\\someting\\\\SomethuingElse\\tes.dat";
+
+            await _storage.SaveString(fileName, "Testing123");
+
+            var fileData = await _storage.LoadString(fileName);
+
+            var fileExists = await _storage.FileExists(fileName);
+
+            await _storage.DeleteFile(fileName);
+
+            var fileExistsAFter = await _storage.FileExists(fileName);
+
             int count = 0;
 
             await Task.Delay(4000);

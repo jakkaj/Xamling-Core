@@ -170,6 +170,7 @@
     <Compile Include="Implementations\DeviceUtilityService.cs" />
     <Compile Include="Implementations\EnvironmentService.cs" />
     <Compile Include="Implementations\Helpers\HashHelper.cs" />
+    <Compile Include="Implementations\Helpers\StorageFileExtensions.cs" />
     <Compile Include="Implementations\LoadStatusService.cs" />
     <Compile Include="Implementations\LocalisedResourceReader.cs" />
     <Compile Include="Implementations\LocalStorage.cs" />
