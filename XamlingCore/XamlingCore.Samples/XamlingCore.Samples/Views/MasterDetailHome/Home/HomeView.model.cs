@@ -12,6 +12,7 @@ using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.Samples.Views.MasterDetailHome.Home.DynamicContentExamples;
+using XamlingCore.Samples.Views.MasterDetailHome.List;
 using XamlingCore.Samples.Views.MasterDetailHome.Tabs;
 
 namespace XamlingCore.Samples.Views.MasterDetailHome.Home
@@ -24,12 +25,21 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 
         private XViewModel _dynamicViewModel;
 
+        public ICommand RepeatersCommand { get; set; }
+
         public HomeViewModel(IEntityCache cache)
         {
             _cache = cache;
             Title = "Home";
             NextPageCommand = new Command(_nextPage);
             ShowNativeViewCommand = new Command(_onShowNativeView);
+
+            RepeatersCommand = new Command(_onRepeaters);
+        }
+
+        private void _onRepeaters()
+        {
+            NavigateTo<RepeaterListViewModel>();
         }
 
         public override void OnInitialise()

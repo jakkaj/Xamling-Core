@@ -117,12 +117,24 @@
       <DependentUpon>HomeView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\MasterDetailHome\Home\ListContent\SomeView.model.cs">
+      <DependentUpon>SomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\Home\ListContent\SomeView.xaml.cs">
+      <DependentUpon>SomeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MasterDetailHome\List\InPlaceLoaderView.cs" />
     <Compile Include="Views\MasterDetailHome\List\InPlaceLoaderView.model.cs" />
     <Compile Include="Views\MasterDetailHome\List\LongListItemView.cs" />
     <Compile Include="Views\MasterDetailHome\List\LongListItemView.model.cs" />
     <Compile Include="Views\MasterDetailHome\List\LongListView.cs" />
     <Compile Include="Views\MasterDetailHome\List\LongListView.model.cs" />
+    <Compile Include="Views\MasterDetailHome\List\RepeaterListView.model.cs">
+      <DependentUpon>RepeaterListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailHome\List\RepeaterListView.xaml.cs">
+      <DependentUpon>RepeaterListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MasterDetailHome\List\XXListView.cs" />
     <Compile Include="Views\MasterDetailHome\Loaders\LoadersView.model.cs">
       <DependentUpon>LoadersView.xaml</DependentUpon>
@@ -358,6 +370,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MasterDetailHome\Transitions\Content2View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailHome\Home\ListContent\SomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailHome\List\RepeaterListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

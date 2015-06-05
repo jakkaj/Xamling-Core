@@ -228,27 +228,31 @@ namespace XamlingCore.Portable.Data.Entities
                 var locker = XNamedLock.Get(key + "3");
                 using (var locked = await locker.LockAsync())
                 {
-
-                    f = await _storageFileRepo.Get<XCacheItem<T>>(fullName);
-
-                    if (f != null && f.Item != null)
+                    f = await _getMemory<T>(key);
+                    if (f == null)
                     {
-                        _updateItem(f.Item, f);
 
-                        if(!_validateAge(f))
+                        f = await _storageFileRepo.Get<XCacheItem<T>>(fullName);
+
+                        if (f != null && f.Item != null)
                         {
-                            //delete it from storage
-                            await _storageFileRepo.Delete(fullName);
-                            return null;
+                            _updateItem(f.Item, f);
+
+                            if (!_validateAge(f))
+                            {
+                                //delete it from storage
+                                await _storageFileRepo.Delete(fullName);
+                                return null;
+                            }
+
+                            TimeSpan? toLiveFromNow = f.MaxAge != null
+                                ? DateTime.UtcNow.Subtract(f.DateStamp.Add(f.MaxAge.Value))
+                                : TimeSpan.FromDays(30);
+
+                            var cacheEntity = await _setMemory(key, f.Item, toLiveFromNow);
+
+                            _updateItem(cacheEntity.Item, cacheEntity);
                         }
-
-                        TimeSpan? toLiveFromNow = f.MaxAge != null
-                            ? DateTime.UtcNow.Subtract(f.DateStamp.Add(f.MaxAge.Value))
-                            : TimeSpan.FromDays(30);
-
-                        var cacheEntity = await _setMemory(key, f.Item, toLiveFromNow);
-                            
-                        _updateItem(cacheEntity.Item, cacheEntity);
                     }
 
                     if (f == null)

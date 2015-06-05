@@ -52,6 +52,8 @@
     <Compile Include="Content\Extensions\ViewExtensions.cs" />
     <Compile Include="Content\Forms\XButton.cs" />
     <Compile Include="Content\Forms\XLabel.cs" />
+    <Compile Include="Content\Lists\XItemsListView.cs" />
+    <Compile Include="Content\Lists\XRepeaterView.cs" />
     <Compile Include="Content\Lists\XListView.cs" />
     <Compile Include="Content\MasterDetail\XMasterDetailView.cs" />
     <Compile Include="Content\Navigation\XNavigationPageView.cs" />
