@@ -31,6 +31,5 @@ namespace XamlingCore.Portable.Contract.Entities
     {
         Task Clear();
         Task ClearAll();
-        bool DisableMultitenant { get; set; }
     }
 }

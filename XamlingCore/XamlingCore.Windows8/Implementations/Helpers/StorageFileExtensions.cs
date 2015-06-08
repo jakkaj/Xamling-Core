@@ -26,7 +26,7 @@ namespace XamlingCore.Windows8.Implementations.Helpers
             {
                 return null;
             }
-
+ 
             var files = await folder.GetItemsAsync();
             return files.FirstOrDefault(p => p.Name == fileName);
         }

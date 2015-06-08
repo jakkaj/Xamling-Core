@@ -11,7 +11,7 @@ using XamlingCore.Portable.Util.Lock;
 
 namespace XamlingCore.Portable.Data.Entities
 {
-    public class EntityCache : IEntityCache
+    public class EntityCache : KeyEntityBase, IEntityCache
     {
         private readonly IStorageFileRepo _storageFileRepo;
         private readonly IMemoryCache _cache;
@@ -344,8 +344,7 @@ namespace XamlingCore.Portable.Data.Entities
         string _getFullKey<T>(string key)
         {
             var path = Path.Combine(_getDirPath<T>(), string.Format("{0}.cache", key));
-
-            return path;
+            return GetKey(path);
         }
 
         string _getDirPath<T>()
@@ -384,11 +383,5 @@ namespace XamlingCore.Portable.Data.Entities
         }
 
         public bool DisablePersistCache { get; set; }
-
-        public bool DisableMultitenant
-        {
-            get { return _storageFileRepo.DisableMultitenant; }
-            set { _storageFileRepo.DisableMultitenant = value; }
-        }
     }
 }

@@ -25,9 +25,6 @@ namespace XamlingCore.Portable.Contract.Entities
 
         Task<TimeSpan?> GetAge<T>(string key) where T : class, new();
 
-        bool DisableMultitenant { get; set; }
-        bool DisablePersistCache { get; set; }
-
         Task<bool> ValidateAge<T>(string key)
             where T : class, new();
     }
