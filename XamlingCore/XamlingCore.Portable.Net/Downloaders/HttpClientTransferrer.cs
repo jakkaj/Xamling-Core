@@ -87,7 +87,7 @@ namespace XamlingCore.Portable.Net.Downloaders
             {
                 result = await _doDownload(obj, downloadConfig);
 
-                if (downloadConfig.Retries <= retryCount &&
+                if (retryCount < downloadConfig.Retries &&
                     (result == null || result.DownloadException != null ||
                      (!result.IsSuccessCode && downloadConfig.RetryOnNonSuccessCode)))
                 {
