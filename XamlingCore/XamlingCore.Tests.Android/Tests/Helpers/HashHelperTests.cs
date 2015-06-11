@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Autofac;
 using NUnit.Framework;
-using XamlingCore.iOS.Implementations.Helpers;
+using XamlingCore.Portable.Contract.Helpers;
 using XamlingCore.Tests.Android.Base;
 
 namespace XamlingCore.Tests.Android.Tests.Helpers

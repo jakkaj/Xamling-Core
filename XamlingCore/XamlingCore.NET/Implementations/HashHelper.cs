@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Helpers;
 
-namespace XamlingCore.iOS.Unified.Implementations.Helpers
+namespace XamlingCore.NET.Implementations
 {
     public class HashHelper : IHashHelper
     {
@@ -22,7 +26,11 @@ namespace XamlingCore.iOS.Unified.Implementations.Helpers
 
         public string HMAC256(string input, string key)
         {
-            throw new NotImplementedException();
+            var hmacsha256 = new HMACSHA256(Encoding.Default.GetBytes(key));
+            hmacsha256.ComputeHash(Encoding.Default.GetBytes(input));
+            var k = hmacsha256.Hash.Aggregate("", (current, test) => current + test.ToString("X2"));
+
+            return k;
         }
     }
 }
