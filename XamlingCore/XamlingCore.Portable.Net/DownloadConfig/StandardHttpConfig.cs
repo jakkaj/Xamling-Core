@@ -31,5 +31,7 @@ namespace XamlingCore.Portable.Net.DownloadConfig
         public bool Gzip { get; set; }
 
         public bool AllowRedirect { get; set; }
+        public int Retries { get; set; }
+        public bool RetryOnNonSuccessCode { get; set; }
     }
 }

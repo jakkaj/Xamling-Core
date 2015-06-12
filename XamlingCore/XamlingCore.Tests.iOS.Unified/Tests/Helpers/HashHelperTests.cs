@@ -5,7 +5,7 @@ using System.Security.Policy;
 using System.Text;
 using Autofac;
 using NUnit.Framework;
-using XamlingCore.iOS.Implementations.Helpers;
+using XamlingCore.Portable.Contract.Helpers;
 using XamlingCore.Tests.iOS.Base;
 
 namespace XamlingCore.Tests.iOS.Tests.Helpers

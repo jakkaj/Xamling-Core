@@ -1,6 +1,5 @@
 using Autofac;
 using Foundation;
-using XamlingCore.iOS.Implementations;
 using XamlingCore.iOS.Unified.Implementations;
 using XamlingCore.iOS.Unified.Implementations.Helpers;
 using XamlingCore.iOS.Unified.Navigation;

@@ -32,5 +32,8 @@ namespace XamlingCore.Portable.Contract.Downloaders
         bool Gzip { get; set; }
         Dictionary<string, string> Cookies { get; set; }
         bool AllowRedirect { get; set; }
+
+        int Retries { get; set; }
+        bool RetryOnNonSuccessCode { get; set; }
     }
 }

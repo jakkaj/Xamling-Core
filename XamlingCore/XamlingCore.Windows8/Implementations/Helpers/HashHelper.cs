@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
-using XamlingCore.iOS.Implementations.Helpers;
+using XamlingCore.Portable.Contract.Helpers;
 
 namespace XamlingCore.Windows8.Implementations.Helpers
 {
@@ -20,6 +20,11 @@ namespace XamlingCore.Windows8.Implementations.Helpers
             var hashed = alg.HashData(buff);
             var res = CryptographicBuffer.EncodeToHexString(hashed);
             return res;
+        }
+
+        public string HMAC256(string input, string key)
+        {
+            throw new NotImplementedException();
         }
     }
 }

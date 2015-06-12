@@ -33,7 +33,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public async Task<XLocation> GetQuickLocation()
         {
-            var loc = await _locator.GetGeopositionAsync(TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(10));
+            var loc = await _locator.GetGeopositionAsync(TimeSpan.FromMinutes(15), TimeSpan.FromSeconds(5));
             
             if (loc == null)
             {

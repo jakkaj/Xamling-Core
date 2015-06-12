@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
-using XamlingCore.iOS.Implementations;
 using XamlingCore.iOS.Unified.Implementations;
 
 namespace XamlingCore.Tests.iOS.Tests.FileTests

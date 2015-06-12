@@ -1,5 +1,6 @@
-﻿using System.Text;
-using XamlingCore.iOS.Implementations.Helpers;
+﻿using System;
+using System.Text;
+using XamlingCore.Portable.Contract.Helpers;
 
 namespace XamlingCore.Droid.Implementations.Helpers
 {
@@ -17,6 +18,11 @@ namespace XamlingCore.Droid.Implementations.Helpers
                 result.Append(hash[i].ToString("X2"));
 
             return result.ToString();
+        }
+
+        public string HMAC256(string input, string key)
+        {
+            throw new NotImplementedException();
         }
     }
 }

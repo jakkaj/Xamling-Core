@@ -241,8 +241,15 @@ namespace XamlingCore.Portable.Data.Entities
                             }
 
                             TimeSpan? toLiveFromNow = f.MaxAge != null
-                                ? DateTime.UtcNow.Subtract(f.DateStamp.Add(f.MaxAge.Value))
+                                ? f.DateStamp.Add(f.MaxAge.Value).Subtract(DateTime.UtcNow)
                                 : TimeSpan.FromDays(30);
+
+                            if (toLiveFromNow.Value.Milliseconds < 0)
+                            {
+                                //this item is in the past!
+                                //Top it up with another day. 
+                                toLiveFromNow = TimeSpan.FromDays(1);
+                            }
 
                             var cacheEntity = await _setMemory(key, f.Item, toLiveFromNow);
 
