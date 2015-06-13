@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
+using Windows.Media;
 using Autofac;
 using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
@@ -11,6 +13,8 @@ namespace XamlingCore.Windows8.Navigation
     {
         private readonly ILifetimeScope _scope;
 
+        Dictionary<Type, Type> _typeCache = new Dictionary<Type,Type>();
+
         public WindowsUniversalViewResolver(ILifetimeScope scope)
         {
             _scope = scope;
@@ -20,31 +24,56 @@ namespace XamlingCore.Windows8.Navigation
         {
             var t = content.GetType();
 
-            var typeName = t.FullName.Replace("ViewModel", "View");
-            typeName = _filterTypeName(typeName);
-            var nextToType = Type.GetType(string.Format("{0}, {1}", typeName, t.GetTypeInfo().Assembly.FullName));
+            Type resolveType = null;
 
-            var cell = _resolveView(nextToType);
+            if (_typeCache.ContainsKey(t))
+            {
+                resolveType = _typeCache[t];
+            }
+            else
+            {
+                var typeName = t.FullName.Replace("ViewModel", "View");
+                typeName = _filterTypeName(typeName);
+                resolveType = Type.GetType(string.Format("{0}, {1}", typeName, t.GetTypeInfo().Assembly.FullName));
+            }
+
+            var cell = _resolveView(resolveType);
 
             if (cell != null)
             {
+                if (!_typeCache.ContainsKey(t))
+                {
+                    _typeCache.Add(t, resolveType);
+                }
+
                 cell.BindingContext = content;
                 
                 return cell;
             }
 
-            throw new Exception("Page could not be resolved: " + typeName);
+            throw new Exception("Page could not be resolved for ViewModel: " + t.ToString());
         }
 
         public Page Resolve(object content)
         {
+
             var t = content.GetType();
 
-            var typeName = t.FullName.Replace("ViewModel", "View");
-            typeName = _filterTypeName(typeName);
-            var nextToType = Type.GetType(string.Format("{0}, {1}", typeName, t.GetTypeInfo().Assembly.FullName));
+            Type resolveType = null;
 
-            var view = _resolve(nextToType);
+            if (_typeCache.ContainsKey(t))
+            {
+                resolveType = _typeCache[t];
+            }
+            else
+            {
+                var typeName = t.FullName.Replace("ViewModel", "View");
+                typeName = _filterTypeName(typeName);
+                resolveType = Type.GetType(string.Format("{0}, {1}", typeName, t.GetTypeInfo().Assembly.FullName));
+            }
+           
+
+            var view = _resolve(resolveType);
 
             if (view == null)
             {
@@ -57,6 +86,11 @@ namespace XamlingCore.Windows8.Navigation
 
             if (view != null)
             {
+                if (!_typeCache.ContainsKey(t))
+                {
+                    _typeCache.Add(t, resolveType);
+                }
+               
                 view.BindingContext = content;
 
                 if (content is XViewModel && string.IsNullOrWhiteSpace(view.Title))
@@ -67,7 +101,7 @@ namespace XamlingCore.Windows8.Navigation
                 return view;
             }
 
-            throw new Exception("Page could not be resolved: " + typeName);
+            throw new Exception("Page could not be resolved for ViewModel: " + t.ToString());
         }
 
         string _filterTypeName(string typeName)
