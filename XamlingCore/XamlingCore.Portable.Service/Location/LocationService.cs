@@ -36,9 +36,8 @@ namespace XamlingCore.Portable.Service.Location
             else
             {
                 _locationSensor.StopTracking();
+                _fireEvent();
             }
-
-            _fireEvent();
         }
 
         public void Stop()
@@ -49,7 +48,7 @@ namespace XamlingCore.Portable.Service.Location
 
         public void _onLocationSettingsChanged(object o = null)
         {
-            Start();
+            Stop();
         }
 
         public bool IsLocationEnabledInDeviceSettings()
