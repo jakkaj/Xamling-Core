@@ -17,6 +17,7 @@ namespace XamlingCore.Portable.Model.Response
         BadRequest = 16,
         Exception = 32,
         NoData = 64,
-        RetryTimeout = 128
+        RetryTimeout = 128,
+        NoNetwork = 256
     }
 }
