@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Autofac;
 using Xamarin.Forms;
 using XamlingCore.Portable.Data.Glue;
@@ -14,8 +15,10 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
             _doContent();
         }
 
-        void _doContent()
+        async void _doContent()
         {
+            await Task.Yield();
+
             var vm = BindingContext;
 
             //resolve a view for this bad boy

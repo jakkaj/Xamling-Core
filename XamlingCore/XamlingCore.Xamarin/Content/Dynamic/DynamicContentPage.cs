@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Autofac;
 using Xamarin.Forms;
 using XamlingCore.Portable.Data.Glue;
@@ -8,8 +9,10 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 {
     public class DynamicContentPage : ContentPage
     {
-        protected override void OnBindingContextChanged()
+        protected override async void OnBindingContextChanged()
         {
+            await Task.Yield();
+
             var vm = BindingContext;
 
             //resolve a view for this bad boy

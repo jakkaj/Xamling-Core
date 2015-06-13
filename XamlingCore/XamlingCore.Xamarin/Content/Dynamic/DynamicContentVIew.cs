@@ -90,6 +90,8 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 
         private async static void _onDataContextChanged(BindableObject obj, object oldValue, object newValue)
         {
+            await Task.Yield();
+
             if (obj.BindingContext == null)
             {
                 return;
