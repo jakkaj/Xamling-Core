@@ -28,7 +28,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public void StopTracking()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public async Task<XLocation> GetQuickLocation()

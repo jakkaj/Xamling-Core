@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.Portable.View.ViewModel.Base;
 using XamlingCore.Samples.Views.MasterDetailHome.Home.ListContent;
@@ -14,9 +16,17 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.List
     {
         private ObservableCollection<XViewModel> _items;
 
+        public ICommand ClearCommand { get; set; }
+
         public RepeaterListViewModel()
         {
             Items = new GroupItemViewModel();
+            ClearCommand = new Command(_onClear);
+        }
+
+        void _onClear()
+        {
+            Items.Clear();
         }
 
         public override void OnInitialise()

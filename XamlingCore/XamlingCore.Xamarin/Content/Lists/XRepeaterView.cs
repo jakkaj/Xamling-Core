@@ -3,7 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Autofac;
 using Xamarin.Forms;
@@ -88,16 +90,23 @@ namespace XamlingCore.XamarinThings.Content.Lists
             {
                 _collection = newValue;
                 _collection.CollectionChanged += _collection_CollectionChanged;
+               
             }
         }
 
-        private void _collection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private async void _collection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            if (e.Action == NotifyCollectionChangedAction.Reset)
+            {
+                await _reset();
+            }
+
             if (e.OldItems != null)
             {
                 foreach (var item in e.OldItems.OfType<T>())
                 {
                     _removeItems(item);
+                    await Task.Yield();
                 }
             }
 
@@ -106,6 +115,21 @@ namespace XamlingCore.XamarinThings.Content.Lists
                 foreach (var item in e.NewItems.OfType<T>())
                 {
                     _addItems(item);
+                    await Task.Yield();
+                }
+            }
+        }
+
+        async Task _reset()
+        {
+            var children = Children.ToList();
+
+            foreach (var child in children)
+            {
+                if (Children.Contains(child))
+                {
+                    Children.Remove(child);
+                    await Task.Yield();
                 }
             }
         }

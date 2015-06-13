@@ -5,5 +5,8 @@
              x:Class="XamlingCore.Samples.Views.MasterDetailHome.List.RepeaterListView">
 	<AbsoluteLayout>
     <lists:XItemsListView ItemsSource="{Binding Items}"/>
+    
+    <Button Command="{Binding ClearCommand}" Text="Clear" AbsoluteLayout.LayoutBounds="1,1,.3,.3"></Button>
+    
   </AbsoluteLayout>
 </ContentPage>
