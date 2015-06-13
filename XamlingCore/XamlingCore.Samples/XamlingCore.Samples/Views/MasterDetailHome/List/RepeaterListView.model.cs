@@ -27,7 +27,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.List
 
         private async void _loop()
         {
-            while (true)
+            while (!IsDisposed)
             {
                 _loadItem();
                 await Task.Delay(1000);

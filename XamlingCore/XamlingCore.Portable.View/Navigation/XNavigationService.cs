@@ -172,31 +172,36 @@ namespace XamlingCore.Portable.View.Navigation
             }
         }
 
-        public void NavigateBack()
+        public bool NavigateBack()
         {
-            NavigateBack(false);
+            return NavigateBack(false);
         }
 
-        public void NavigateBack(bool allowNullNavigation)
+        public bool NavigateBack(bool allowNullNavigation)
         {
             if (IsModal && _navigationHistory.Count == 0)
             {
                 NavigateToModal(null);
-                return;
+                return true;
             }
 
             if (_navigationHistory.Count > 1)
             {
                 NavigateTo(_navigationHistory[_navigationHistory.Count - 1], false, true);
+                return true;
             }
             else if (_navigationHistory.Count == 1)
             {
                 NavigateTo(_navigationHistory[0], true, true);
+                return true;
             }
             else if (allowNullNavigation)
             {
                 NavigateTo(null, false, true);
+                return true;
             }
+
+            return false;
         }
 
         void _disposeHistory()

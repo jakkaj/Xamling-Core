@@ -59,9 +59,9 @@ namespace XamlingCore.XamarinThings.Navigators
             }
         }
 
-        private async void XNav_BackButtonPressed(object sender, EventArgs e)
+        private async void XNav_BackButtonPressed(object sender, XNavigationPageBackButtonEventArgs e)
         {
-            _xNavigation.NavigateBack();
+            e.CancelEvent = _xNavigation.NavigateBack();
         }
 
         void _rootNavigationPage_Pushed(object sender, NavigationEventArgs e)

@@ -50,6 +50,11 @@ namespace XamlingCore.Portable.View.ViewModel
         public T CreateContentModel<T>(Action<T> initialisedCallback)
              where T : XViewModel
         {
+            if (ParentModel == null)
+            {
+                throw new InvalidOperationException("Cannot create content model after ParentModel disposed");
+            }
+            
             var model = ParentModel.CreateContentModel<T>(initialisedCallback, this);
 
             _childModels.Add(model);

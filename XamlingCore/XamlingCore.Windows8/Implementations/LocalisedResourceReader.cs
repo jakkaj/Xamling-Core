@@ -17,8 +17,13 @@ namespace XamlingCore.Windows8.Implementations
         {
             _resourceLoader = new Windows.ApplicationModel.Resources.ResourceLoader();
         }
-        public string GetResource([NotNull] string name, CultureInfo culture = null)
+        public string GetResource(string name, CultureInfo culture = null)
         {
+            if (name == null)
+            {
+                return null;
+            }
+
             return _resourceLoader.GetString(name);
         }
     }

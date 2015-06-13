@@ -56,6 +56,7 @@
     <Compile Include="Content\Lists\XRepeaterView.cs" />
     <Compile Include="Content\Lists\XListView.cs" />
     <Compile Include="Content\MasterDetail\XMasterDetailView.cs" />
+    <Compile Include="Content\Navigation\XNavigationEventArgs.cs" />
     <Compile Include="Content\Navigation\XNavigationPageView.cs" />
     <Compile Include="Content\Navigation\XNavigationPageTypedView.cs" />
     <Compile Include="Content\Navigation\XNavigationPageTypeView.model.cs" />

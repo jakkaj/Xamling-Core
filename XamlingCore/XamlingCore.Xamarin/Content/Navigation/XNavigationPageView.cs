@@ -18,7 +18,7 @@ namespace XamlingCore.XamarinThings.Content.Navigation
 
         private bool _animationIsEnabled;
 
-        public event EventHandler BackButtonPressed;
+        public event EventHandler<XNavigationPageBackButtonEventArgs> BackButtonPressed;
 
         public XNavigationPageView(IOrientationSensor orientationSensor, IEnvironmentService environmentService)
         {
@@ -30,8 +30,9 @@ namespace XamlingCore.XamarinThings.Content.Navigation
         {
             if (BackButtonPressed != null)
             {
-                BackButtonPressed(this, EventArgs.Empty);
-                return true;
+                var args = new XNavigationPageBackButtonEventArgs();
+                BackButtonPressed(this, args);
+                return args.CancelEvent;
             }
 
             return base.OnBackButtonPressed();
@@ -54,9 +55,6 @@ namespace XamlingCore.XamarinThings.Content.Navigation
             {
                 return;
             }
-
-            
-            
 
             _animateOffset = _environmentService.GetScreenHeight();
 
@@ -85,4 +83,5 @@ namespace XamlingCore.XamarinThings.Content.Navigation
 
        
     }
+
 }

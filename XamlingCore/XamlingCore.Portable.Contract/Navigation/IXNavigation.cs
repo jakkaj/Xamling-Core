@@ -20,8 +20,8 @@ namespace XamlingCore.Portable.Contract.Navigation
         void NavigateTo(object content);
         void NavigateTo(object content, bool noHistory);
         void NavigateTo(object content, bool noHistory, bool forceBack);
-        void NavigateBack();
-        void NavigateBack(bool allowNullNavigation);
+        bool NavigateBack();
+        bool NavigateBack(bool allowNullNavigation);
         event PropertyChangedEventHandler PropertyChanged;
         void NavigateToModal(object content);
     }

@@ -108,10 +108,14 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
                 return;
             }
 
+            CurrentDetail?.OnDeactivated();
+
             package.Showing();
 
             DetailContent = package.Page;
             CurrentDetail = package.ViewModel;
+
+            CurrentDetail?.OnActivated();
         }
 
         public void ShowViewModel(XViewModel vm)
