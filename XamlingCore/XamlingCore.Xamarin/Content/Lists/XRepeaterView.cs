@@ -79,7 +79,7 @@ namespace XamlingCore.XamarinThings.Content.Lists
 
         }
 
-        void _collectionSet(ObservableCollection<T> newValue)
+        async void _collectionSet(ObservableCollection<T> newValue)
         {
             if (_collection != null)
             {
@@ -91,6 +91,15 @@ namespace XamlingCore.XamarinThings.Content.Lists
                 _collection = newValue;
                 _collection.CollectionChanged += _collection_CollectionChanged;
                
+            }
+
+            if (_collection != null)
+            {
+                foreach (var item in _collection)
+                {
+                    _addItems(item);
+                    await Task.Yield();
+                }
             }
         }
 
