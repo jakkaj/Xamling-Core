@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -226,6 +227,7 @@ namespace XamlingCore.Portable.Data.Entities
                     f = await _getMemory<T>(key);
                     if (f == null)
                     {
+                        Debug.WriteLine($"*** Entity cache miss: {fullName}");
 
                         f = await _storageFileRepo.Get<XCacheItem<T>>(fullName);
 
@@ -263,6 +265,12 @@ namespace XamlingCore.Portable.Data.Entities
                     }
                 }
             }
+
+            //else
+            //{
+            //    Debug.WriteLine($"Entity cache hit: {fullName}");
+            //}
+
 
             _updateItemCacheSource(f.Item, true);
 
