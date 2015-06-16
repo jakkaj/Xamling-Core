@@ -233,6 +233,7 @@ namespace XamlingCore.Portable.Data.Entities
 
                         if (f != null && f.Item != null)
                         {
+                            Debug.WriteLine($"      Found: {fullName}");
                             _updateItem(f.Item, f);
 
                             if (!_validateAge(f))
@@ -261,6 +262,7 @@ namespace XamlingCore.Portable.Data.Entities
 
                     if (f == null)
                     {
+                        Debug.WriteLine($"      Not found: {fullName}");
                         return null;
                     }
                 }
