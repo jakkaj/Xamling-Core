@@ -93,14 +93,22 @@ namespace XamlingCore.XamarinThings.Content.Lists
                
             }
 
-            if (_collection != null)
+            try
             {
-                foreach (var item in _collection)
+                if (_collection != null)
                 {
-                    _addItems(item);
-                    await Task.Yield();
+                    foreach (var item in _collection)
+                    {
+                        _addItems(item);
+                        await Task.Yield();
+                    }
                 }
             }
+            catch
+            {
+            }
+
+
         }
 
         private async void _collection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -133,14 +141,22 @@ namespace XamlingCore.XamarinThings.Content.Lists
         {
             var children = Children.ToList();
 
-            foreach (var child in children)
+            try
             {
-                if (Children.Contains(child))
+                foreach (var child in children)
                 {
-                    Children.Remove(child);
-                    await Task.Yield();
+                    if (Children.Contains(child))
+                    {
+                        Children.Remove(child);
+                        await Task.Yield();
+                    }
                 }
             }
+            catch
+            {
+            }
+
+
         }
 
         void _addItems(T item)
