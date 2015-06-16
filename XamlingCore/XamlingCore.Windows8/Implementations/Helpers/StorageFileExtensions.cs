@@ -71,6 +71,11 @@ namespace XamlingCore.Windows8.Implementations.Helpers
                     }
                 }
             }
+            else
+            {
+                var newFolder = await _tryGetFolder(folder, name);
+                return newFolder;
+            }
 
             return folder;
         }
