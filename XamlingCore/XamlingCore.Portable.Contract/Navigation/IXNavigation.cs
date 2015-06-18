@@ -15,6 +15,7 @@ namespace XamlingCore.Portable.Contract.Navigation
         object PreviousContentObject { get; set; }
         bool CanGoBack { get; set; }
         object ModalContentObject { get; set; }
+        TimeSpan? RestrictNavigationTime { get; set; }
         void InsertIntoHistory(object obj);
         void ResetHistory();
         void NavigateTo(object content);

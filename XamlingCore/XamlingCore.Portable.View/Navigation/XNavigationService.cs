@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using XamlingCore.Portable.Contract.Navigation;
 using XamlingCore.Portable.Messages.XamlingMessenger;
@@ -23,6 +24,9 @@ namespace XamlingCore.Portable.View.Navigation
         private bool _canGoBack;
 
         public bool IsModal { get; set; }
+        
+        public TimeSpan? RestrictNavigationTime { get; set; }
+        private DateTime _lastNav;
 
         public event EventHandler<XNavigationEventArgs> Navigated;
 
@@ -76,6 +80,14 @@ namespace XamlingCore.Portable.View.Navigation
 
         public void NavigateTo(object content, bool noHistory, bool forceBack)
         {
+            if (RestrictNavigationTime != null && DateTime.Now.Subtract(_lastNav) < RestrictNavigationTime.Value)
+            {
+                Debug.WriteLine("*** navigation speed blocked navigation. No tappy tappy. ");
+                return;
+            }
+
+            _lastNav = DateTime.Now;
+
             if (content == null && IsModal)
             {
                 NavigateToModal(null);

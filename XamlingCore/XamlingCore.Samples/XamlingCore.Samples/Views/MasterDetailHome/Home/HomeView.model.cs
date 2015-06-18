@@ -47,6 +47,7 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Home
 
         public override void OnInitialise()
         {
+            ParentModel.Navigation.RestrictNavigationTime = TimeSpan.FromSeconds(1);
             _doThings();
 
             base.OnInitialise();

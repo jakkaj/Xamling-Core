@@ -91,6 +91,11 @@ namespace XamlingCore.Portable.View.ViewModel
         {
             get
             {
+                if (ParentModel == null || IsDisposed)
+                {
+                    return false;
+                }
+
                 if (ParentModel.Navigation.CurrentContentObject == this)
                 {
                     return true;

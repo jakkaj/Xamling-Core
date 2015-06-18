@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -73,17 +74,13 @@ namespace XamlingCore.XamarinThings.Content.Lists
                     + bindable.GetType().Name);
 
             control._collectionSet(newValue);
-
-      
-           
-
         }
 
         async void _collectionSet(ObservableCollection<T> newValue)
         {
             if (_collection != null)
             {
-                _collection.CollectionChanged += _collection_CollectionChanged;
+                _collection.CollectionChanged -= _collection_CollectionChanged;
             }
 
             if (newValue != null)
@@ -107,8 +104,6 @@ namespace XamlingCore.XamarinThings.Content.Lists
             catch
             {
             }
-
-
         }
 
         private async void _collection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -161,6 +156,7 @@ namespace XamlingCore.XamarinThings.Content.Lists
 
         void _addItems(T item)
         {
+            
             if (item == null)
             {
                 return;
@@ -196,6 +192,12 @@ namespace XamlingCore.XamarinThings.Content.Lists
             {
                 Children.Remove(child);
             }
+        }
+
+        protected override void OnParentSet()
+        {
+            Debug.WriteLine(Parent!=null ? "Has parnet" : "noparent");
+            base.OnParentSet();
         }
     }
 }

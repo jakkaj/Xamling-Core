@@ -9,5 +9,6 @@ namespace XamlingCore.XamarinThings.Content.Lists
 {
     public class XItemsListView : RepeaterView<XViewModel>
     {
+        
     }
 }

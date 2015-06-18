@@ -32,6 +32,8 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.List
         public override void OnInitialise()
         {
             base.OnInitialise();
+
+            
             _loop();
         }
 
