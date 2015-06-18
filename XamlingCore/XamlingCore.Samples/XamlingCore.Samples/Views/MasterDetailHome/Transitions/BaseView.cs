@@ -16,11 +16,12 @@ namespace XamlingCore.Samples.Views.MasterDetailHome.Transitions
             Opacity = 0;
             TranslationX = -40;
         }
-        public async Task TransitionOut()
+        public async Task<TimeSpan?> TransitionOut()
         {
             await Task.WhenAll(
                 this.FadeTo(0, _time),
                 this.TranslateTo(40, 0, _time, Easing.SinOut));
+            return null;
 
         }
 

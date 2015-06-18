@@ -8,7 +8,7 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 {
     public interface ITransitionView
     {
-        Task TransitionOut();
+        Task<TimeSpan?> TransitionOut();
         void TransitionIn();
     }
 }

@@ -197,7 +197,12 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 
                         if (tv != null)
                         {
-                            await tv.TransitionOut();
+                            var ts = await tv.TransitionOut();
+
+                            if (ts != null)
+                            {
+                                await Task.Delay(ts.Value);
+                            }
                         }
 
                         v.IsVisible = false;
@@ -244,7 +249,9 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 
         ContentView _getNewView()
         {
-            return !_currentIsOne ? _hostView.ContentTwo : _hostView.ContentOne;
+            var c = !_currentIsOne ? _hostView.ContentTwo : _hostView.ContentOne;
+            _hostView.RaiseChild(c);
+            return c;
         }
 
 
