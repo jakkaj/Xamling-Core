@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Autofac;
@@ -184,7 +185,27 @@ namespace XamlingCore.Portable.View.ViewModel
 
             var c = (!string.IsNullOrWhiteSpace(cancel)) ? GetResource(cancel) : null;
 
-            return await NativeAlert(t, m, a, c);
+            
+
+            var dialogResult = false;
+            
+
+            await Task.Run(() =>
+            {
+                var msr = new ManualResetEvent(false);
+                
+                Dispatcher.Invoke(async () =>
+                {
+                    dialogResult = await NativeAlert(t, m, a, c);
+                    msr.Set();
+                });
+
+                msr.WaitOne(60000);
+            });
+
+            
+
+            return dialogResult;
         }
 
         protected Action<object> WrapCall(Action<object> method)
