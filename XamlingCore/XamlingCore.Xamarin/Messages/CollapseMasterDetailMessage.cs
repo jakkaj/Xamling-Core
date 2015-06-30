@@ -10,4 +10,9 @@ namespace XamlingCore.XamarinThings.Messages
     public class CollapseMasterDetailMessage : XMessage
     {
     }
+
+    public class ShowMasterDetailMessage : XMessage
+    {
+        
+    }
 }

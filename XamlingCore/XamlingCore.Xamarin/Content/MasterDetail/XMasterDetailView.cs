@@ -16,6 +16,7 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             _orientationSensor = orientationSensor;
 
             this.Register<CollapseMasterDetailMessage>(_onCollapse);
+            this.Register<ShowMasterDetailMessage>(_onShow);
         }
         protected override void OnSizeAllocated(double width, double height)
         {
@@ -38,6 +39,14 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
 
             _setContent();
             base.OnBindingContextChanged();
+        }
+
+        void _onShow(object obj)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                IsPresented = true;
+            });
         }
 
         void _onCollapse(object obj)
