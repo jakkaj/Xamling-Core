@@ -9,17 +9,36 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 {
     public class DynamicContentCell : ViewCell
     {
-        protected override void OnAppearing()
+        private object _previousBindingContext;
+
+        protected override void OnBindingContextChanged()
+        {
+            _doContent();
+            base.OnBindingContextChanged();
+        }
+
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
+
+            if (Device.OS == TargetPlatform.Windows)
+            {
+                await Task.Yield();
+            }
+
             _doContent();
         }
 
-        async void _doContent()
+        void _doContent()
         {
-            await Task.Yield();
-
             var vm = BindingContext;
+
+            if (_previousBindingContext == vm)
+            {
+                return;
+            }
+
+            _previousBindingContext = vm;
 
             //resolve a view for this bad boy
             var resolver = ContainerHost.Container.Resolve<IViewResolver>();

@@ -1,22 +1,11 @@
-﻿using System;
-using System.Globalization;
-using System.Runtime.Versioning;
+﻿using System.Globalization;
 using Foundation;
 using UIKit;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using XamlingCore.iOS;
-using XamlingCore.iOS.Implementations;
-using XamlingCore.iOS.Unified;
-using XamlingCore.Portable.Contract.Services;
-using XamlingCore.Portable.Glue.Locale;
+using XamlingCore.Portable.Service.Localisation;
 using XamlingCore.Samples.iOS.Glue;
-using XamlingCore.Samples.iOS.NativeViews;
-using XamlingCore.Samples.Views.Home;
 using XamlingCore.Samples.Views.Root.MasterDetailRoot;
-using XamlingCore.XamarinThings.Content.Navigation;
-using XamlingCore.XamarinThings.Frame;
 
 namespace XamlingCore.Samples.iOS
 {

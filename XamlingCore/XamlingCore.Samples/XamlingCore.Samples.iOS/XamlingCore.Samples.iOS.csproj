@@ -140,6 +140,10 @@
       <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
       <Name>XamlingCore.Portable.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\XamlingCore.Portable.Service\XamlingCore.Portable.Service.csproj">
+      <Project>{449DC319-446E-4D47-923A-3C9EFDF02B88}</Project>
+      <Name>XamlingCore.Portable.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
       <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
       <Name>XamlingCore.Portable.View</Name>
@@ -167,6 +171,7 @@
       <HintPath>..\..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Globalization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Forms.Core, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">

@@ -74,7 +74,37 @@ namespace XamlingCore.iOS.Unified.Implementations
                 Url = downloadConfig.Url
             };
 
-            return await _doDownload(obj, downloadConfig);
+            return await _retryDownload(obj, downloadConfig);
+        }
+
+        async Task<IHttpTransferResult> _retryDownload(DownloadQueueObject obj, IHttpTransferConfig downloadConfig)
+        {
+            var succeed = false;
+
+            IHttpTransferResult result = null;
+
+            var retryCount = 0;
+
+            do
+            {
+                result = await _doDownload(obj, downloadConfig);
+
+                if (retryCount < downloadConfig.Retries &&
+                    (result == null || result.DownloadException != null ||
+                     (!result.IsSuccessCode && downloadConfig.RetryOnNonSuccessCode)))
+                {
+                    succeed = false;
+                }
+                else
+                {
+                    succeed = true;
+                }
+
+                retryCount++;
+
+            } while (succeed == false);
+
+            return result;
         }
 
         async Task<IHttpTransferResult> _doDownload(DownloadQueueObject obj, IHttpTransferConfig downloadConfig)
