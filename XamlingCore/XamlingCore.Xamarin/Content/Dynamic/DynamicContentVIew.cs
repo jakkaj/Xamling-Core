@@ -42,7 +42,7 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 
         public DynamicContentView()
         {
-
+            IsVisible = false;
         }
 
         protected override void OnParentSet()

@@ -65,8 +65,15 @@ namespace XamlingCore.iOS.Unified.Implementations
                 {
                     if (t.IsFaulted)
                         throw new Exception(((GeolocationException) t.Exception.InnerException).Error.ToString());
+
                     if (t.IsCanceled)
-                        return new XLocation();
+                    {
+                        var x = new XLocation();
+                        x.IsResolved = false;
+                        x.Status = XPositionStatus.NotAvailble;
+                        return x;
+                    }
+                        
                     loc.Latitude = t.Result.Latitude;
                     loc.Longitude = t.Result.Longitude;
                     loc.Accuracy = t.Result.Accuracy;
