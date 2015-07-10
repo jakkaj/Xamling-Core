@@ -17,7 +17,7 @@ namespace XamlingCore.Samples.Windows8
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : WindowsPhonePage
+    public sealed partial class MainPage
     {
         private UserControl _loader;
 
