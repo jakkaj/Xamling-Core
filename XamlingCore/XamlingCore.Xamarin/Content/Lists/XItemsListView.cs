@@ -11,4 +11,9 @@ namespace XamlingCore.XamarinThings.Content.Lists
     {
         
     }
+
+    public class XInPlaceItemsListView : XInPlaceRepeaterView<XViewModel>
+    {
+
+    }
 }
