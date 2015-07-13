@@ -17,6 +17,9 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
 
             this.Register<CollapseMasterDetailMessage>(_onCollapse);
             this.Register<ShowMasterDetailMessage>(_onShow);
+
+            this.Register<EnableMenuSwipeGesture>(_onEnableSwipe);
+            this.Register<DisableMenuSwipeGesture>(_onDisableSwipe);
         }
         protected override void OnSizeAllocated(double width, double height)
         {
@@ -24,7 +27,21 @@ namespace XamlingCore.XamarinThings.Content.MasterDetail
             base.OnSizeAllocated(width, height);
         }
 
-        
+        void _onEnableSwipe()
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                IsGestureEnabled = true;
+            });
+        }
+
+        void _onDisableSwipe()
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                IsGestureEnabled = false;
+            });
+        }
 
         protected override void OnBindingContextChanged()
         {
