@@ -326,7 +326,7 @@ namespace XamlingCore.Portable.View.ViewModel
 
             if (item == null)
             {
-                NavigateTo<T>();
+                NavigateTo<T>(noHistory:true);
                 return;
             }
 
@@ -341,7 +341,7 @@ namespace XamlingCore.Portable.View.ViewModel
                 }
             }
 
-            NavigateTo(item);
+            NavigateTo(item, true);
         }
 
         public void NavigateHome()
