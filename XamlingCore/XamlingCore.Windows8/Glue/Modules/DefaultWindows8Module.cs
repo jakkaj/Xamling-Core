@@ -20,6 +20,7 @@ using XamlingCore.Windows8.Navigation;
 using XamlingCore.XamarinThings.Contract;
 
 using Module = Autofac.Module;
+using XamlingCore.Portable.Contract.Helpers;
 
 namespace XamlingCore.Windows8.Glue.Modules
 {
@@ -32,7 +33,7 @@ namespace XamlingCore.Windows8.Glue.Modules
             builder.RegisterType<Windows8Dispatcher>().As<IDispatcher>().SingleInstance();
             builder.RegisterType<OrientationSensor>().As<IOrientationSensor>();
             builder.RegisterType<Windows8DeviceNetworkStatus>().As<IDeviceNetworkStatus>();
-
+            builder.RegisterType<Zip>().As<IZip>();
             builder.RegisterAssemblyTypes(typeof(DefaultWindows8Module).GetTypeInfo().Assembly)
            .Where(_ => _.FullName.Contains("Service"))
            .AsImplementedInterfaces()
