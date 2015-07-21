@@ -30,5 +30,28 @@ namespace XamlingCore.NET.Implementations
                 return ms.ToArray();
             }
         }
+
+        public async Task<List<Tuple<string, byte[]>>> ExtractZip(byte[] zipData)
+        {
+            var tuples = new List<Tuple<string, byte[]>>();
+
+            using (var ms = new MemoryStream(zipData))
+            {
+                using (var archive = new ZipArchive(ms, ZipArchiveMode.Read))
+                {
+                    foreach (var entry in archive.Entries)
+                    {
+                        var fn = entry.Name;
+                        using (var stream = entry.Open())
+                        {
+                            var b = new byte[stream.Length];
+                            stream.Read(b, 0, b.Length);
+                            tuples.Add(new Tuple<string, byte[]>(fn, b));
+                        }
+                    }
+                }
+            }
+            return tuples;
+        }
     }
 }
