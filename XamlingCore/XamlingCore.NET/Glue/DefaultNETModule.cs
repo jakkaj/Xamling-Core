@@ -19,6 +19,7 @@ namespace XamlingCore.NET.Glue
         {
             builder.RegisterType<LocalStorage>().As<ILocalStorage>().SingleInstance();
             builder.RegisterType<HashHelper>().As<IHashHelper>().SingleInstance();
+            builder.RegisterType<Zip>().As<IZip>();
             base.Load(builder);
         }
     }
