@@ -60,7 +60,7 @@ namespace XamlingCore.iOS.Unified.Implementations
 
             _cancelSource = new CancellationTokenSource();
 
-            await _geolocator.GetPositionAsync(5000, _cancelSource.Token, false)
+            await _geolocator.GetPositionAsync(1500, _cancelSource.Token, false)
                 .ContinueWith(t =>
                 {
                     if (t.IsFaulted)

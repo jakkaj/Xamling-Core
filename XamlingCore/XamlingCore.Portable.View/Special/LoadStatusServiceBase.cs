@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Contract.UI;
+using XamlingCore.Portable.Messages.XamlingMessenger;
+using XamlingCore.Portable.View.Navigation;
 
 namespace XamlingCore.Portable.View.Special
 {
@@ -15,9 +17,23 @@ namespace XamlingCore.Portable.View.Special
         
         private readonly List<LoaderStackItem> _loaderStack = new List<LoaderStackItem>();
 
+        public bool HideOnNavigate { get; set; }
+
         protected LoadStatusServiceBase(IDispatcher dispatcher)
         {
             _dispatcher = dispatcher;
+
+            this.Register<NavigationMessage>(_onNavigation);
+
+            HideOnNavigate = true;
+        }
+
+        void _onNavigation()
+        {
+            if (HideOnNavigate)
+            {
+                _dispatcher.Invoke(HideIndicator);
+            }
         }
 
         void _dispatch(Action method)

@@ -217,7 +217,11 @@ namespace XamlingCore.XamarinThings.Navigators
                     break;
                 }
 
-                _xamarinNavigation.RemovePage(p);
+                if (_xamarinNavigation.NavigationStack.Contains(p))
+                {
+                    _xamarinNavigation.RemovePage(p);
+                }
+               
                 
             } while (true);
             
