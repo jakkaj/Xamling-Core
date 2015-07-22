@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portable", "Portable", "{6226BDFB-2DCF-4DD6-9187-4E6F3940BDA0}"
 EndProject
@@ -1171,8 +1171,6 @@ Global
 		{410C000C-D3A6-432D-96A1-70AE63F1DEFE}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{410C000C-D3A6-432D-96A1-70AE63F1DEFE}.Debug|iPhone.Deploy.0 = Debug|Any CPU
 		{410C000C-D3A6-432D-96A1-70AE63F1DEFE}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{410C000C-D3A6-432D-96A1-70AE63F1DEFE}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{410C000C-D3A6-432D-96A1-70AE63F1DEFE}.Debug|iPhoneSimulator.Deploy.0 = Debug|Any CPU
 		{410C000C-D3A6-432D-96A1-70AE63F1DEFE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{410C000C-D3A6-432D-96A1-70AE63F1DEFE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{410C000C-D3A6-432D-96A1-70AE63F1DEFE}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU

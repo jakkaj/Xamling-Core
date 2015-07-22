@@ -2,6 +2,8 @@ using UIKit;
 using XamlingCore.iOS.Unified.Controls.Loader;
 using XamlingCore.iOS.Unified.Root;
 using XamlingCore.Portable.Contract.UI;
+using XamlingCore.Portable.Messages.View;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.Special;
 
 namespace XamlingCore.iOS.Unified.Implementations
@@ -10,12 +12,21 @@ namespace XamlingCore.iOS.Unified.Implementations
     {
         private LoadingOverlayViewBase _spinnerInstance;
 
+        public static bool OverrideDefaultLoader { get; set; }
+
         public LoadStatusService(IDispatcher dispatcher) : base(dispatcher)
         {
         }
 
         public override void ShowIndicator(string text)
         {
+            new SetLoaderMessage(text).Send();
+
+            if (OverrideDefaultLoader)
+            {
+                return;
+            }
+
             if (!string.IsNullOrWhiteSpace(text))
             {
                 _hideTray();
@@ -34,6 +45,7 @@ namespace XamlingCore.iOS.Unified.Implementations
 
         public override void HideIndicator()
         {
+            new HideLoaderMessage().Send();
             _hideFullScreen();
             _hideTray();
         }

@@ -3,6 +3,7 @@ using Foundation;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
+using XamlingCore.iOS.Unified.Root;
 using XamlingCore.Portable.Service.Localisation;
 using XamlingCore.Samples.iOS.Glue;
 using XamlingCore.Samples.Views.Root.MasterDetailRoot;
@@ -47,7 +48,7 @@ namespace XamlingCore.Samples.iOS
             return base.FinishedLaunching(app, options);
         }
 
-        void _configurePretties()
+        async void _configurePretties()
         {
             UINavigationBar.Appearance.BackgroundColor = UIColor.FromRGBA(0, 0, 0, 0);
             UINavigationBar.Appearance.TintColor = Color.Blue.ToUIColor();
@@ -56,6 +57,12 @@ namespace XamlingCore.Samples.iOS
             {
                 TextColor = UIColor.Black
             });
+
+            await System.Threading.Tasks.Task.Delay(1000);
+
+            var rootView = UIApplication.SharedApplication.KeyWindow.RootViewController;
+            XiOSRoot.RootViewController = rootView;
+            XiOSRoot.RootWindow = UIApplication.SharedApplication.KeyWindow;
         }
     }
 }

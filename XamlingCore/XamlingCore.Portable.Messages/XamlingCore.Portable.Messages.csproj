@@ -60,6 +60,7 @@
     <Compile Include="Settings\SettingsUpdatedMessage.cs" />
     <Compile Include="System\ApplicationDeactivatedMessage.cs" />
     <Compile Include="System\ApplicationReactivatedMessage.cs" />
+    <Compile Include="View\SetLoaderMessage.cs" />
     <Compile Include="View\ShowNativeViewMessage.cs" />
     <Compile Include="XamlingMessenger\XMessage.cs" />
     <Compile Include="XamlingMessenger\XMessenger.cs" />

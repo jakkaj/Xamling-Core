@@ -7,10 +7,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Contract.UI;
+using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.Special;
 using XamlingCore.Windows8.Controls;
-using XamlingCore.Windows8.Messages;
 
 namespace XamlingCore.Windows8.Implementations
 {
@@ -23,7 +23,7 @@ namespace XamlingCore.Windows8.Implementations
 
         public override void ShowIndicator(string text)
         {
-           new SetLoaderMessage().Send();
+           new SetLoaderMessage(text).Send();
         }
 
         public override void HideIndicator()

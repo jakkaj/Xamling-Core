@@ -3,11 +3,11 @@ using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinRT;
+using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Samples.Views.Root.MasterDetailRoot;
 using XamlingCore.Samples.Windows8.Glue;
 using XamlingCore.Windows8.Controls;
-using XamlingCore.Windows8.Messages;
 using NavigationEventArgs = Windows.UI.Xaml.Navigation.NavigationEventArgs;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
