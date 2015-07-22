@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Xamarin.Forms;
+using XamlingCore.Portable.Messages.View;
+using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.ViewModel;
 
 namespace XamlingCore.XamarinThings.UI
@@ -16,6 +18,7 @@ namespace XamlingCore.XamarinThings.UI
 
         public async Task<bool> DisplayAlert(string title, string message, string accept, string cancel)
         {
+            new DisplayAlertMessage().Send();
             if (cancel == null)
             {
                 await _p.DisplayAlert(title, message, accept);
