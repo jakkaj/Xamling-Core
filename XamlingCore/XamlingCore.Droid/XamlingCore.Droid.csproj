@@ -135,6 +135,10 @@
       <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
       <Name>XamlingCore.Portable.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XamlingCore.Portable.Data\XamlingCore.Portable.Data.csproj">
+      <Project>{CEE58A71-49B1-4C9F-B22A-ECD33B6E3A6B}</Project>
+      <Name>XamlingCore.Portable.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Portable.Glue\XamlingCore.Portable.Glue.csproj">
       <Project>{E908CD00-22C8-4F7B-BA99-8DDF32C5F656}</Project>
       <Name>XamlingCore.Portable.Glue</Name>
