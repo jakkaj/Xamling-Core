@@ -19,15 +19,21 @@ namespace XamlingCore.Droid.Implementations
         public double GetScreenWidth()
         {
             var px = Resources.System.DisplayMetrics.WidthPixels;
-            return px;
+            return ConvertPixelsToDp(px);
             //return ConvertPixelsToDp(px); //Scaled pixels
         }
 
         public double GetScreenHeight()
         {
             var px = Resources.System.DisplayMetrics.HeightPixels;
-            return px;
+            return ConvertPixelsToDp(px);
             //return ConvertPixelsToDp(px); //Scaled pixels
+        }
+
+        private double ConvertPixelsToDp(int pixelValue)
+        {
+            var dp = (int)((pixelValue) / Resources.System.DisplayMetrics.Density);
+            return dp;
         }
 
         public float GetScreenScale()
