@@ -33,6 +33,7 @@ namespace XamlingCore.Droid.Implementations
         private void Init()
         {
             CurrentLocation = new XLocation();
+            Setup();
         }
 
         public void OnLocationChanged(Location location) {
@@ -103,7 +104,7 @@ namespace XamlingCore.Droid.Implementations
 
         public void StartTracking()
         {
-            Setup();
+           
             CurrentLocation.IsEnabled = true;
 
             if (IsTracking) return;
@@ -142,7 +143,6 @@ namespace XamlingCore.Droid.Implementations
 
         public async Task<XLocation> GetQuickLocation()
         {
-            Setup();
 
             if (!string.IsNullOrWhiteSpace(_locationProvider) && _locationManager != null)
             {                
@@ -167,13 +167,7 @@ namespace XamlingCore.Droid.Implementations
             return null;
         }
 
-        XLocation ILocationTrackingSensor.CurrentLocation
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+    
 
         public double Distance(double lat, double lng, XLocation b)
         {
