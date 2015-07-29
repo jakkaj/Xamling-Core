@@ -1,25 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using XamlingCore.Portable.Contract.Downloaders;
+using System.Text;
 using System.Threading.Tasks;
-
+using ModernHttpClient;
+using XamlingCore.Portable.Contract.Downloaders;
 using XamlingCore.Portable.Messages.Network;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Net.Downloaders;
-using System.Net;
-using ModernHttpClient;
 
 namespace XamlingCore.Droid.Implementations
 {
@@ -38,7 +27,7 @@ namespace XamlingCore.Droid.Implementations
 
             if (downloadConfig == null)
             {
-                Console.WriteLine("No download config for URL: {0}", url);
+                Debug.WriteLine("No download config for URL: {0}", url);
                 return null;
             }
 
@@ -66,7 +55,7 @@ namespace XamlingCore.Droid.Implementations
 
             if (downloadConfig == null)
             {
-                Console.WriteLine("No download config for URL: {0}", url);
+                Debug.WriteLine("No download config for URL: {0}", url);
                 return null;
             }
 
@@ -85,13 +74,44 @@ namespace XamlingCore.Droid.Implementations
                 Url = downloadConfig.Url
             };
 
-            return await _doDownload(obj, downloadConfig);
+            return await _retryDownload(obj, downloadConfig);
+        }
+
+        async Task<IHttpTransferResult> _retryDownload(DownloadQueueObject obj, IHttpTransferConfig downloadConfig)
+        {
+            var succeed = false;
+
+            IHttpTransferResult result = null;
+
+            var retryCount = 0;
+
+            do
+            {
+                result = await _doDownload(obj, downloadConfig);
+
+                if (retryCount < downloadConfig.Retries &&
+                    (result == null || result.DownloadException != null ||
+                     (!result.IsSuccessCode && downloadConfig.RetryOnNonSuccessCode)))
+                {
+                    succeed = false;
+                }
+                else
+                {
+                    succeed = true;
+                }
+
+                retryCount++;
+
+            } while (succeed == false);
+
+            return result;
         }
 
         async Task<IHttpTransferResult> _doDownload(DownloadQueueObject obj, IHttpTransferConfig downloadConfig)
         {
             // add support for Gzip decompression
             var native = new NativeMessageHandler();
+
             var httpClient = new HttpClient(native);
 
             using (httpClient)
@@ -164,29 +184,34 @@ namespace XamlingCore.Droid.Implementations
 
                     try
                     {
-                        Console.WriteLine("{0}: {1}", downloadConfig.Verb.ToLower() == "get" ? "Downloading" : "Uploading", obj.Url);
+                        Debug.WriteLine("{0}: {1}", downloadConfig.Verb.ToLower() == "get" ? "Downloading" : "Uploading", obj.Url);
 
                         using (var result = await httpClient.SendAsync(message))
                         {
-                            Console.WriteLine("Finished: {0}", obj.Url);
+                            Debug.WriteLine("Finished: {0}", obj.Url);
                             return await _httpTransferService.GetResult(result, downloadConfig);
                         }
+
+
+
                     }
                     catch (HttpRequestException ex)
                     {
-                        Console.WriteLine("Warning - HttpRequestException encountered: {0}", ex.Message);
+                        Debug.WriteLine("Warning - HttpRequestException encountered: {0}", ex.Message);
 
                         return _httpTransferService.GetExceptionResult(ex,
                             "XamlingCore.Portable.Net.Downloaders.HttpClientDownloader", downloadConfig);
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Warning - general HTTP exception encountered: {0}", ex.Message);
+                        Debug.WriteLine("Warning - general HTTP exception encountered: {0}", ex.Message);
                         return _httpTransferService.GetExceptionResult(ex,
                             "XamlingCore.Portable.Net.Downloaders.HttpClientDownloader", downloadConfig);
                     }
                 }
             }
+
+
         }
 
         protected class DownloadQueueObject

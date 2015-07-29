@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Contract.UI;
+using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.View.Navigation;
 
@@ -24,16 +25,24 @@ namespace XamlingCore.Portable.View.Special
             _dispatcher = dispatcher;
 
             this.Register<NavigationMessage>(_onNavigation);
+            this.Register<DisplayAlertMessage>(_onHide);
 
             HideOnNavigate = true;
         }
 
-        void _onNavigation()
+        async void _onNavigation()
         {
             if (HideOnNavigate)
             {
+                await Task.Delay(500);
                 _dispatcher.Invoke(HideIndicator);
             }
+        }
+
+        async void _onHide()
+        {
+            await Task.Delay(500);
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(HideIndicator);
         }
 
         void _dispatch(Action method)
