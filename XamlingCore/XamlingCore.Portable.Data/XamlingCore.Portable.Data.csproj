@@ -78,6 +78,8 @@
     <Compile Include="Repos\Base\SimpleLocalStorageEntityRepo.cs" />
     <Compile Include="Repos\LocalStorageSettingsRepo.cs" />
     <Compile Include="Repos\XWebWepo.cs" />
+    <Compile Include="Security\SecurityRepo.cs" />
+    <Compile Include="Security\SecurityService.cs" />
     <Compile Include="Serialise\JsonEntitySerialiser.cs" />
     <Compile Include="Serialise\JsonNETEntitySerialiser.cs" />
     <Compile Include="Serialise\XMLSerialisationHelper.cs" />
@@ -96,6 +98,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS"

@@ -74,6 +74,7 @@
     <Compile Include="Repos\Base\IWebRepo.cs" />
     <Compile Include="Repos\Base\IStorageFileRepo.cs" />
     <Compile Include="Repos\Base\ISimpleEntityRepo.cs" />
+    <Compile Include="Repos\ISecurityRepo.cs" />
     <Compile Include="Repos\ISettingsRepo.cs" />
     <Compile Include="Serialise\IEntitySerialiser.cs" />
     <Compile Include="Services\IApplicationBarService.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Services\ILoadStatusService.cs" />
     <Compile Include="Services\ILocationService.cs" />
     <Compile Include="Services\IOrientationService.cs" />
+    <Compile Include="Services\ISecurityService.cs" />
     <Compile Include="UI\IDispatcher.cs" />
     <Compile Include="ViewModels\IItemViewModel.cs" />
     <Compile Include="ViewModels\IMoreTileViewModel.cs" />
