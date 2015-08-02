@@ -157,6 +157,9 @@ namespace XamlingCore.Tests.NET.Security
 
             Assert.IsTrue((await sec.GetAccess(companyAdmin, tripod1Id, (int)XPermission.Write)));
             Assert.IsTrue((await sec.GetAccess(companyAdmin, tripod2Id, (int)XPermission.Write)));
+
+            Assert.IsFalse((await sec.AddMember(tripod1AuthorContext.Object, allProjectViewer, allProjectViewer)));
+            Assert.IsFalse((await sec.AddMember(tripod1AuthorContext.Object, tripod1Viewer, allProjectViewer)));
         }
 
 
