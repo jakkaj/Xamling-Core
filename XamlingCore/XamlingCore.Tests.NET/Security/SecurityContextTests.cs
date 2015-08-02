@@ -49,9 +49,20 @@ namespace XamlingCore.Tests.NET.Security
             Assert.IsTrue(reader);
 
             var projectAdminContext = await sec.GetContextByName("All Project Admin");
+            var projectViewContext = await sec.GetContextByName("All Project View");
 
             Assert.IsNotNull(projectAdminContext);
+            Assert.IsNotNull(projectViewContext);
 
+            var addProjectAdminContextUser = await sec.AddMember(projectAdminContext.Object, companyAdmin, allProjectAdmin);
+            var addProjectViewContextUser = await sec.AddMember(projectViewContext.Object, allProjectAdmin, allProjectViewer);
+
+            Assert.IsTrue(addProjectAdminContextUser);
+            Assert.IsTrue(addProjectViewContextUser);
+
+            //attempt to alter things with a user that does not have edit permissions
+            var addProjectAdminContextUserWhenNotAllowed = await sec.AddMember(projectAdminContext.Object, allProjectViewer, allProjectViewer);
+            Assert.IsFalse(addProjectAdminContextUserWhenNotAllowed);
         }
 
         async Task<XSecurityContext> _createSecurityChain(Guid companyAdmin, Guid companyRoot,
