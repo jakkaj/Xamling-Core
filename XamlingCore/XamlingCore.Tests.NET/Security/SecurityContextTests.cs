@@ -48,6 +48,9 @@ namespace XamlingCore.Tests.NET.Security
             var reader = await sec.GetAccess(companyAdmin, tripod1Id, (int) XPermission.Read);
             Assert.IsTrue(reader);
 
+            
+
+            //Working ********
             var projectAdminContext = await sec.GetContextByName("All Project Admin");
             var projectViewContext = await sec.GetContextByName("All Project View");
 
@@ -79,7 +82,83 @@ namespace XamlingCore.Tests.NET.Security
             Assert.IsTrue(viewerCanViewTripod);
             Assert.IsFalse(viewerCannotWriteTripod);
             Assert.IsFalse(viewerCannotEditPermissionsTripod);
+
+            //Project admin bits
+
+            var project1AdminContext = await sec.GetContextByName("Some Project Admin");
+            var project2AdminContext = await sec.GetContextByName("Some Other Project Admin");
+
+            var project1ViewContext = await sec.GetContextByName("Some Project View");
+            var project2ViewContext = await sec.GetContextByName("Some Other Project View");
+
+            Assert.IsNotNull(project1AdminContext);
+            Assert.IsNotNull(project2AdminContext);
+            Assert.IsNotNull(project1ViewContext);
+            Assert.IsNotNull(project2ViewContext);
+
+            await sec.AddMember(project1AdminContext.Object, allProjectAdmin, project1Admin);
+            await sec.AddMember(project2AdminContext.Object, allProjectAdmin, project2Admin);
+
+            await sec.AddMember(project1ViewContext.Object, allProjectAdmin, project1Viewer);
+            await sec.AddMember(project2ViewContext.Object, allProjectAdmin, project2Viewer);
+
+            Assert.IsTrue((await sec.GetAccess(project1Admin, project1Id, (int)XPermission.Write)));
+            Assert.IsTrue((await sec.GetAccess(project2Admin, project2Id, (int)XPermission.Write)));
+
+            Assert.IsFalse((await sec.GetAccess(project2Admin, project1Id, (int)XPermission.Write)));
+            Assert.IsFalse((await sec.GetAccess(project1Admin, project2Id, (int)XPermission.Write)));
+
+            Assert.IsTrue((await sec.GetAccess(project1Viewer, project1Id, (int)XPermission.Read)));
+            Assert.IsFalse((await sec.GetAccess(project1Viewer, project1Id, (int)XPermission.Write)));
+            Assert.IsFalse((await sec.GetAccess(project1Viewer, project1Id, (int)XPermission.EditPermissions)));
+
+            Assert.IsTrue((await sec.GetAccess(project2Viewer, project2Id, (int)XPermission.Read)));
+            Assert.IsFalse((await sec.GetAccess(project2Viewer, project2Id, (int)XPermission.Write)));
+            Assert.IsFalse((await sec.GetAccess(project2Viewer, project2Id, (int)XPermission.EditPermissions)));
+
+            var tripod1AuthorContext = await sec.GetContextByName("Some Tripod Author");
+            var tripod2AuthorContext = await sec.GetContextByName("Some Other Tripod Author");
+
+            var tripod1ViewContext = await sec.GetContextByName("Some Tripod Viewer");
+            var tripod2ViewContext = await sec.GetContextByName("Some Other Tripod Viewer");
+
+
+            await sec.AddMember(tripod1AuthorContext.Object, allProjectAdmin, tripod1Author);
+            await sec.AddMember(tripod2AuthorContext.Object, allProjectAdmin, tripod2Author);
+
+            await sec.AddMember(tripod1ViewContext.Object, allProjectAdmin, tripod1Viewer);
+            await sec.AddMember(tripod2ViewContext.Object, allProjectAdmin, tripod2Viewer);
+
+
+            Assert.IsTrue((await sec.GetAccess(tripod1Author, tripod1Id, (int)XPermission.Write)));
+            Assert.IsTrue((await sec.GetAccess(tripod2Author, tripod2Id, (int)XPermission.Write)));
+
+            Assert.IsFalse((await sec.GetAccess(tripod2Author, tripod1Id, (int)XPermission.Write)));
+            Assert.IsFalse((await sec.GetAccess(tripod1Author, tripod2Id, (int)XPermission.Write)));
+
+            Assert.IsFalse((await sec.GetAccess(tripod2Author, project1Id, (int)XPermission.Write)));
+            Assert.IsFalse((await sec.GetAccess(tripod1Author, project1Id, (int)XPermission.Write)));
+
+
+            Assert.IsTrue((await sec.GetAccess(project1Admin, tripod1Id, (int)XPermission.Write)));
+            Assert.IsTrue((await sec.GetAccess(project2Admin, tripod2Id, (int)XPermission.Write)));
+
+            Assert.IsTrue((await sec.GetAccess(allProjectAdmin, tripod1Id, (int)XPermission.Write)));
+            Assert.IsTrue((await sec.GetAccess(allProjectAdmin, tripod2Id, (int)XPermission.Write)));
+
+            Assert.IsTrue((await sec.GetAccess(allProjectViewer, tripod1Id, (int)XPermission.Read)));
+            Assert.IsTrue((await sec.GetAccess(allProjectViewer, tripod2Id, (int)XPermission.Read)));
+
+            Assert.IsFalse((await sec.GetAccess(allProjectViewer, tripod1Id, (int)XPermission.Write)));
+            Assert.IsFalse((await sec.GetAccess(allProjectViewer, tripod2Id, (int)XPermission.Write)));
+
+            Assert.IsTrue((await sec.GetAccess(companyAdmin, tripod1Id, (int)XPermission.Read)));
+            Assert.IsTrue((await sec.GetAccess(companyAdmin, tripod2Id, (int)XPermission.Read)));
+
+            Assert.IsTrue((await sec.GetAccess(companyAdmin, tripod1Id, (int)XPermission.Write)));
+            Assert.IsTrue((await sec.GetAccess(companyAdmin, tripod2Id, (int)XPermission.Write)));
         }
+
 
         async Task<XSecurityContext> _createSecurityChain(Guid companyAdmin, Guid companyRoot,
             Guid project1, Guid project2, Guid tripod1, Guid tripod2)
@@ -101,10 +180,10 @@ namespace XamlingCore.Tests.NET.Security
             var someProjectOnlyView = await _createContext(project1, someProjectOnlyAdmin, "Some Project View",
                 (int)XPermission.Read);
 
-            var someProjectOnlyAdmin2 = await _createContext(project2, projectAdmin, "Some Project Admin",
+            var someProjectOnlyAdmin2 = await _createContext(project2, projectView, "Some Other Project Admin",
                 (int)XPermission.Write | (int)XPermission.Read | (int)XPermission.EditPermissions);
 
-            var someProjectOnlyView2 = await _createContext(project2, someProjectOnlyAdmin2, "All Project View",
+            var someProjectOnlyView2 = await _createContext(project2, someProjectOnlyAdmin2, "Some Other Project View",
                 (int)XPermission.Read);
 
             var tripodAuthor = await _createContext(tripod1, someProjectOnlyView, "Some Tripod Author",
@@ -113,10 +192,10 @@ namespace XamlingCore.Tests.NET.Security
             var tripodViewer = await _createContext(tripod1, tripodAuthor, "Some Tripod Viewer",
                 (int)XPermission.Read);
 
-            var tripodAuthor2 = await _createContext(tripod2, someProjectOnlyView2, "Some Tripod Author",
+            var tripodAuthor2 = await _createContext(tripod2, someProjectOnlyView2, "Some Other Tripod Author",
                 (int)XPermission.Write | (int)XPermission.Read);
 
-            var tripodViewer2 = await _createContext(tripod2, tripodAuthor2, "Some Tripod Viewer",
+            var tripodViewer2 = await _createContext(tripod2, tripodAuthor2, "Some Other Tripod Viewer",
                 (int)XPermission.Read);
 
             return root;
