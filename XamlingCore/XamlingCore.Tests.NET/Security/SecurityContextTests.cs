@@ -63,6 +63,22 @@ namespace XamlingCore.Tests.NET.Security
             //attempt to alter things with a user that does not have edit permissions
             var addProjectAdminContextUserWhenNotAllowed = await sec.AddMember(projectAdminContext.Object, allProjectViewer, allProjectViewer);
             Assert.IsFalse(addProjectAdminContextUserWhenNotAllowed);
+
+            var adminCanViewTripod = await sec.GetAccess(allProjectAdmin, tripod1Id, (int)XPermission.Read);
+            var adminCanWriteTripod = await sec.GetAccess(allProjectAdmin, tripod1Id, (int)XPermission.Write);
+            var adminCanEditPermissionsTripod = await sec.GetAccess(allProjectAdmin, tripod1Id, (int)XPermission.EditPermissions);
+
+            Assert.IsTrue(adminCanViewTripod);
+            Assert.IsTrue(adminCanWriteTripod);
+            Assert.IsTrue(adminCanEditPermissionsTripod);
+
+            var viewerCanViewTripod = await sec.GetAccess(allProjectViewer, tripod1Id, (int)XPermission.Read);
+            var viewerCannotWriteTripod = await sec.GetAccess(allProjectViewer, tripod1Id, (int)XPermission.Write);
+            var viewerCannotEditPermissionsTripod = await sec.GetAccess(allProjectViewer, tripod1Id, (int)XPermission.EditPermissions);
+
+            Assert.IsTrue(viewerCanViewTripod);
+            Assert.IsFalse(viewerCannotWriteTripod);
+            Assert.IsFalse(viewerCannotEditPermissionsTripod);
         }
 
         async Task<XSecurityContext> _createSecurityChain(Guid companyAdmin, Guid companyRoot,
@@ -79,7 +95,7 @@ namespace XamlingCore.Tests.NET.Security
             var projectView = await _createContext(new List<Guid> { project1, project2 }, projectAdmin, "All Project View",
                 (int)XPermission.Read);
 
-            var someProjectOnlyAdmin = await _createContext(project1, projectAdmin, "Some Project Admin",
+            var someProjectOnlyAdmin = await _createContext(project1, projectView, "Some Project Admin",
                 (int)XPermission.Write | (int)XPermission.Read | (int)XPermission.EditPermissions);
 
             var someProjectOnlyView = await _createContext(project1, someProjectOnlyAdmin, "Some Project View",
@@ -91,13 +107,13 @@ namespace XamlingCore.Tests.NET.Security
             var someProjectOnlyView2 = await _createContext(project2, someProjectOnlyAdmin2, "All Project View",
                 (int)XPermission.Read);
 
-            var tripodAuthor = await _createContext(tripod1, someProjectOnlyAdmin, "Some Tripod Author",
+            var tripodAuthor = await _createContext(tripod1, someProjectOnlyView, "Some Tripod Author",
                 (int)XPermission.Write | (int)XPermission.Read);
 
             var tripodViewer = await _createContext(tripod1, tripodAuthor, "Some Tripod Viewer",
                 (int)XPermission.Read);
 
-            var tripodAuthor2 = await _createContext(tripod2, someProjectOnlyAdmin2, "Some Tripod Author",
+            var tripodAuthor2 = await _createContext(tripod2, someProjectOnlyView2, "Some Tripod Author",
                 (int)XPermission.Write | (int)XPermission.Read);
 
             var tripodViewer2 = await _createContext(tripod2, tripodAuthor2, "Some Tripod Viewer",
