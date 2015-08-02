@@ -71,19 +71,22 @@ namespace XamlingCore.Portable.Data.Security
         {
             var context = await GetContextByTarget(targetId);
 
-            if (!context)
+            if (!context || context.Object.Count == 0)
             {
                 return context.Copy<XSecurityContext>();
             }
 
-            var validatedChainResult = await _validateContextChain(context.Object, userId, securityTypes);
-
-            if (!validatedChainResult)
+            foreach (var xSecurityContext in context.Object)
             {
-                return validatedChainResult.Copy<XSecurityContext>();
+                var validatedChainResult = await _validateContextChain(xSecurityContext, userId, securityTypes);
+
+                if (validatedChainResult)
+                {
+                    return new XResult<XSecurityContext>(xSecurityContext, true, validatedChainResult.Message);
+                }
             }
 
-            return new XResult<XSecurityContext>(context.Object, true, validatedChainResult.Message);
+            return XResult<XSecurityContext>.GetNotAuthorised($"No access chains success for target: {targetId}, user:{userId}, permissions: {securityTypes}. {context.Object.Count} contexts searched");
         }
 
         public async Task<XResult<bool>> AddMember(XSecurityContext context, Guid currentUserId, Guid memberId)
@@ -156,15 +159,21 @@ namespace XamlingCore.Portable.Data.Security
             return new XResult<bool>(true);
         }
 
+        public async Task<XResult<XSecurityContext>> GetContextByName(string contextName)
+        {
+            var context = await _repo.GetContextByName(contextName);
+            return context;
+        }
+
         public async Task<XResult<XSecurityContext>> GetContextById(Guid contextId)
         {
             var context = await _repo.GetContextById(contextId);
             return context;
         }
 
-        public async Task<XResult<XSecurityContext>> GetContextByTarget(Guid targetId)
+        public async Task<XResult<List<XSecurityContext>>> GetContextByTarget(Guid targetId)
         {
-            var context = await _repo.GetContextByTargetId(targetId);
+            var context = await _repo.GetContextsByTargetId(targetId);
             return context;
         }
 

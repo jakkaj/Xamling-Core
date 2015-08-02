@@ -21,7 +21,6 @@ namespace XamlingCore.Tests.NET.Security
 
             var companyAdmin = Guid.NewGuid();
 
-
             var companyId = Guid.NewGuid();
             var project1Id = Guid.NewGuid();
             var project2Id = Guid.NewGuid();
@@ -47,8 +46,11 @@ namespace XamlingCore.Tests.NET.Security
             var tripod2Viewer = Guid.NewGuid();
 
             var reader = await sec.GetAccess(companyAdmin, tripod1Id, (int) XPermission.Read);
-
             Assert.IsTrue(reader);
+
+            var projectAdminContext = await sec.GetContextByName("All Project Admin");
+
+            Assert.IsNotNull(projectAdminContext);
 
         }
 
@@ -63,13 +65,13 @@ namespace XamlingCore.Tests.NET.Security
             var projectAdmin = await _createContext(new List<Guid> { project1, project2 }, root, "All Project Admin",
                 (int)XPermission.Write | (int)XPermission.Read | (int)XPermission.EditPermissions);
 
-            var projectView = await _createContext(new List<Guid> { project1, project2 }, root, "All Project View",
+            var projectView = await _createContext(new List<Guid> { project1, project2 }, projectAdmin, "All Project View",
                 (int)XPermission.Read);
 
             var someProjectOnlyAdmin = await _createContext(project1, projectAdmin, "Some Project Admin",
                 (int)XPermission.Write | (int)XPermission.Read | (int)XPermission.EditPermissions);
 
-            var someProjectOnlyView = await _createContext(project1, someProjectOnlyAdmin, "All Project View",
+            var someProjectOnlyView = await _createContext(project1, someProjectOnlyAdmin, "Some Project View",
                 (int)XPermission.Read);
 
             var someProjectOnlyAdmin2 = await _createContext(project2, projectAdmin, "Some Project Admin",

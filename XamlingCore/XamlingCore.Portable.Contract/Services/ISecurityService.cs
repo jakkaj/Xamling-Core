@@ -14,7 +14,8 @@ namespace XamlingCore.Portable.Contract.Services
         Task<XResult<bool>> AddMember(XSecurityContext context, Guid currentUserId, Guid memberId);
         Task<XResult<bool>> RemoveMember(XSecurityContext context, Guid currentUserId, Guid memberId);
         Task<XResult<XSecurityContext>> GetContextById(Guid contextId);
-        Task<XResult<XSecurityContext>> GetContextByTarget(Guid targetId);
+        Task<XResult<List<XSecurityContext>>> GetContextByTarget(Guid targetId);
         Task<XResult<bool>> _validateContextChain(XSecurityContext context, Guid userId, int securityTypes);
+        Task<XResult<XSecurityContext>> GetContextByName(string contextName);
     }
 }
