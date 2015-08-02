@@ -18,30 +18,45 @@ namespace XamlingCore.Portable.Data.Security
             _repo = repo;
         }
 
-        public async Task<XResult<XSecurityContext>> CreateContext(XSecurityContext parent, string name)
+        public async Task<XResult<XSecurityContext>> CreateContext(XSecurityContext parent, string name, 
+            int permissions, Guid? owner = null, List<Guid> targetIds = null)
         {
             var context = new XSecurityContext
             {
                 Id = Guid.NewGuid(),
-                ParentId = parent.Id,
+                ParentId = parent?.Id ?? Guid.Empty,
                 Name = name,
+                Permissions = permissions, 
                 Members = new List<Guid>(), 
                 Children = new List<Guid>()
             };
 
-            parent.Children.Add(context.Id);
+            if(owner != null)
+            {
+                context.Members.Add(owner.Value);
+            }
+
+            if (targetIds != null)
+            {
+                context.Targets = targetIds;
+            }
+
+            parent?.Children.Add(context.Id);
 
             var newContextResult = await SetContext(context);
-            var parentUpdateResult = await SetContext(parent);
+
+            if (parent != null)
+            {
+                var parentUpdateResult = await SetContext(parent);
+                if (!parentUpdateResult)
+                {
+                    return parentUpdateResult.Copy<XSecurityContext>();
+                }
+            }
 
             if (!newContextResult)
             {
                 return newContextResult.Copy<XSecurityContext>();
-            }
-
-            if (!parentUpdateResult)
-            {
-                return parentUpdateResult.Copy<XSecurityContext>();
             }
 
             return new XResult<XSecurityContext>(context);
@@ -59,11 +74,6 @@ namespace XamlingCore.Portable.Data.Security
             if (!context)
             {
                 return context.Copy<XSecurityContext>();
-            }
-
-            if ((context.Object.SecurityFlags & securityTypes) != 0)
-            {
-                return new XResult<XSecurityContext>();
             }
 
             var validatedChainResult = await _validateContextChain(context.Object, userId, securityTypes);
@@ -160,16 +170,16 @@ namespace XamlingCore.Portable.Data.Security
 
         public async Task<XResult<bool>> _validateContextChain(XSecurityContext context, Guid userId, int securityTypes)
         {
-            if (context.Members.Contains(userId) && (context.SecurityFlags & securityTypes) != 0)
+            if (context.Members.Contains(userId) && (context.Permissions & securityTypes) != 0)
             {
-                return new XResult<bool>(true, true, $"Authorised by ${context.Id}");
+                return new XResult<bool>(true, true, $"Authorised by {context.Name} ({context.Id})");
             }
 
             if (context.ParentId == Guid.Empty)
             {
                 return
                     XResult<bool>.GetNotAuthorised(
-                        $"Permission chain failed. Finished at context {context.Id} looking for permissions {securityTypes}");
+                        $"Permission chain failed. Finished at context {context.Name} ({context.Id}) looking for permissions {securityTypes}");
             }
 
             var parent = await GetContextById(context.ParentId);
@@ -178,7 +188,7 @@ namespace XamlingCore.Portable.Data.Security
             {
                 return
                     XResult<bool>.GetNotAuthorised(
-                        $"Could not find parent context ${context.ParentId} on context {context.Id}. looking for permisssions {securityTypes} ");
+                        $"Could not find parent context ${context.ParentId} on context {context.Name} ({context.Id}). looking for permisssions {securityTypes} ");
             }
 
             return await _validateContextChain(parent.Object, userId, securityTypes);
