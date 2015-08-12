@@ -17,5 +17,6 @@ namespace XamlingCore.Portable.Contract.Services
         Task<XResult<List<XSecurityContext>>> GetContextByTarget(Guid targetId);
         Task<XResult<bool>> _validateContextChain(XSecurityContext context, Guid userId, int securityTypes);
         Task<XResult<XSecurityContext>> GetContextByName(string contextName);
+        Task<XResult<List<XSecurityContext>>> GetParentContexts(Guid contextId);
     }
 }

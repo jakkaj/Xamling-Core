@@ -24,7 +24,6 @@ namespace XamlingCore.Portable.Data.Security
             var context = new XSecurityContext
             {
                 Id = Guid.NewGuid(),
-                ParentId = parent?.Id ?? Guid.Empty,
                 Name = name,
                 Permissions = permissions, 
                 Members = new List<Guid>(), 
@@ -171,9 +170,15 @@ namespace XamlingCore.Portable.Data.Security
             return context;
         }
 
-        public async Task<XResult<List<XSecurityContext>>> GetContextByTarget(Guid targetId)
+        public async Task<XResult<List<XSecurityContext>>> GetContextByTarget(Guid contextId)
         {
-            var context = await _repo.GetContextsByTargetId(targetId);
+            var context = await _repo.GetContextsByTargetId(contextId);
+            return context;
+        }
+
+        public async Task<XResult<List<XSecurityContext>>> GetParentContexts(Guid contextId)
+        {
+            var context = await _repo.GetParentContexts(contextId);
             return context;
         }
 
@@ -184,23 +189,28 @@ namespace XamlingCore.Portable.Data.Security
                 return new XResult<bool>(true, true, $"Authorised by {context.Name} ({context.Id})");
             }
 
-            if (context.ParentId == Guid.Empty)
+            var parents = await GetParentContexts(context.Id);
+
+            if (!parents || parents.Object == null || parents.Object.Count == 0)
             {
                 return
                     XResult<bool>.GetNotAuthorised(
-                        $"Permission chain failed. Finished at context {context.Name} ({context.Id}) looking for permissions {securityTypes}");
+                        $"Could not find parent context on context {context.Name} ({context.Id}). looking for permisssions {securityTypes} ");
             }
 
-            var parent = await GetContextById(context.ParentId);
-
-            if (parent == null)
+            foreach (var parent in parents.Object)
             {
-                return
-                    XResult<bool>.GetNotAuthorised(
-                        $"Could not find parent context ${context.ParentId} on context {context.Name} ({context.Id}). looking for permisssions {securityTypes} ");
+                var c = await _validateContextChain(parent, userId, securityTypes);
+
+                if (c)
+                {
+                    return c;
+                }
             }
 
-            return await _validateContextChain(parent.Object, userId, securityTypes);
+            return
+                    XResult<bool>.GetNotAuthorised(
+                        $"Could not find parent context on context {context.Name} ({context.Id}). looking for permisssions {securityTypes} (last try)");
         }
     }
 }
