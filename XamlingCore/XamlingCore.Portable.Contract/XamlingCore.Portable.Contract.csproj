@@ -78,6 +78,7 @@
     <Compile Include="Repos\ISettingsRepo.cs" />
     <Compile Include="Serialise\IEntitySerialiser.cs" />
     <Compile Include="Services\IApplicationBarService.cs" />
+    <Compile Include="Services\IContextInfoService.cs" />
     <Compile Include="Services\IEnvironmentService.cs" />
     <Compile Include="Services\IGeneralSettingsService.cs" />
     <Compile Include="Services\IGoogleAnalyticsService.cs" />

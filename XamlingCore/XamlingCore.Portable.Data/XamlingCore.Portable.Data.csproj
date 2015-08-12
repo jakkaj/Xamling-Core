@@ -78,6 +78,7 @@
     <Compile Include="Repos\Base\SimpleLocalStorageEntityRepo.cs" />
     <Compile Include="Repos\LocalStorageSettingsRepo.cs" />
     <Compile Include="Repos\XWebWepo.cs" />
+    <Compile Include="Security\ContextInfoService.cs" />
     <Compile Include="Security\SecurityRepo.cs" />
     <Compile Include="Security\SecurityService.cs" />
     <Compile Include="Serialise\JsonEntitySerialiser.cs" />

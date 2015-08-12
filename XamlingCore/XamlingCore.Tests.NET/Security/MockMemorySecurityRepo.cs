@@ -49,6 +49,7 @@ namespace XamlingCore.Tests.NET.Security
         public async Task<XResult<bool>> SetContext(XSecurityContext context)
         {
             var existing = _contexts.FirstOrDefault(_ => _.Id == context.Id);
+
             if (existing != null)
             {
                 _contexts.Remove(existing);

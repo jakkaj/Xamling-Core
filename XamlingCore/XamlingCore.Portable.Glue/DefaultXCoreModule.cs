@@ -9,6 +9,7 @@ using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Data.Entities;
 using XamlingCore.Portable.Data.Repos;
 using XamlingCore.Portable.Data.Repos.Base;
+using XamlingCore.Portable.Data.Security;
 using XamlingCore.Portable.Data.Serialise;
 using XamlingCore.Portable.Net.Downloaders;
 using XamlingCore.Portable.Service.Localisation;
@@ -55,6 +56,8 @@ namespace XamlingCore.Portable.Glue
             builder.RegisterModule<DefaultWorkflowModule>();
 
             builder.RegisterType<LocalisedResourceReader>().As<ILocalisedResourceReader>();
+
+            builder.RegisterType<ContextInfoService>().As<IContextInfoService>();
 
             base.Load(builder);
         }
