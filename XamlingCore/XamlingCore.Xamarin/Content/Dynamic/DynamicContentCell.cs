@@ -31,6 +31,11 @@ namespace XamlingCore.XamarinThings.Content.Dynamic
 
         void _doContent()
         {
+            if (BindingContext == null)
+            {
+                return;
+            }
+
             var vm = BindingContext;
 
             if (_previousBindingContext == vm)
