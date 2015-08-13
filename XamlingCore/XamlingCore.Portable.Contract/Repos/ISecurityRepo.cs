@@ -14,5 +14,7 @@ namespace XamlingCore.Portable.Contract.Repos
         Task<XResult<bool>> DeleteContext(Guid contextId);
         Task<XResult<XSecurityContext>> GetContextByName(string contextName);
         Task<XResult<List<XSecurityContext>>> GetParentContexts(Guid targetId);
+        Task<bool> Save();
+        Task<bool> Load();
     }
 }

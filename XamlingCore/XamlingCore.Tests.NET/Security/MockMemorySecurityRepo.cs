@@ -13,6 +13,16 @@ namespace XamlingCore.Tests.NET.Security
     {
         List<XSecurityContext> _contexts = new List<XSecurityContext>();
 
+        public async Task<bool> Save()
+        {
+            return false;
+        }
+
+        public async Task<bool> Load()
+        {
+            return false;
+        }
+
         public async Task<XResult<XSecurityContext>> GetContextByName(string contextName)
         {
             var existing = _contexts.FirstOrDefault(_ => _.Name == contextName);
