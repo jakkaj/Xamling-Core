@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Repos;
 using XamlingCore.Portable.Contract.Services;
@@ -70,12 +71,28 @@ namespace XamlingCore.Portable.Data.Security
         {
             var context = await GetContextByTarget(targetId);
 
-            if (!context || context.Object.Count == 0)
+            if (!context)
             {
                 return context.Copy<XSecurityContext>();
             }
 
-            foreach (var xSecurityContext in context.Object)
+            return await GetAccess(userId, context.Object, securityTypes);
+        }
+
+        public async Task<XResult<XSecurityContext>> GetAccess(Guid userId, XSecurityContext context,
+            int securityTypes)
+        {
+            return await GetAccess(userId, new List<XSecurityContext> {context}, securityTypes);
+        }
+
+        public async Task<XResult<XSecurityContext>> GetAccess(Guid userId, List<XSecurityContext> context, int securityTypes)
+        {
+            if (context == null || context.Count == 0)
+            {
+                return XResult<XSecurityContext>.GetNotAuthorised("GetAccess - Context was null");
+            }
+
+            foreach (var xSecurityContext in context)
             {
                 var validatedChainResult = await _validateContextChain(xSecurityContext, userId, securityTypes);
 
@@ -85,7 +102,7 @@ namespace XamlingCore.Portable.Data.Security
                 }
             }
 
-            return XResult<XSecurityContext>.GetNotAuthorised($"No access chains success for target: {targetId}, user:{userId}, permissions: {securityTypes}. {context.Object.Count} contexts searched");
+            return XResult<XSecurityContext>.GetNotAuthorised($"No access chains success user:{userId}, permissions: {securityTypes}. {context.Count} contexts searched");
         }
 
         public async Task<XResult<bool>> AddMember(XSecurityContext context, Guid currentUserId, Guid memberId)
