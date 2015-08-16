@@ -18,6 +18,7 @@ namespace XamlingCore.Portable.Model.Response
         Exception = 32,
         NoData = 64,
         RetryTimeout = 128,
-        NoNetwork = 256
+        NoNetwork = 256,
+        NoRecord = 512
     }
 }

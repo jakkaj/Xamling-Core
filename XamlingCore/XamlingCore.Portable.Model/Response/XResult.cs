@@ -225,12 +225,28 @@ namespace XamlingCore.Portable.Model.Response
             return o;
         }
 
+        public static XResult<T> GetNoRecord(string message = null,
+           [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+           [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
+           [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+        {
+            var o = new XResult<T>(default(T), string.Format("No record found that matches your request", message),
+                OperationResults.NoRecord);
+
+            o._setCallerInformation(memberName, sourceFilePath, sourceLineNumber);
+
+            return o;
+        }
+
         void _setCallerInformation(string memberName, string sourceFilePath, int sourceLineNumber)
         {
             CallerInfo = new OperationCallerInfo(memberName, sourceFilePath, sourceLineNumber);
         }
 
        
+
+     
+
     }
 
     public class OperationCallerInfo

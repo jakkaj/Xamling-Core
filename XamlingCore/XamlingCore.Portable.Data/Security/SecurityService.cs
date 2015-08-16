@@ -19,19 +19,19 @@ namespace XamlingCore.Portable.Data.Security
             _repo = repo;
         }
 
-        public async Task<XResult<XSecurityContext>> CreateContext(XSecurityContext parent, string name, 
+        public async Task<XResult<XSecurityContext>> CreateContext(XSecurityContext parent, string name,
             int permissions, Guid? owner = null, List<Guid> targetIds = null)
         {
             var context = new XSecurityContext
             {
                 Id = Guid.NewGuid(),
                 Name = name,
-                Permissions = permissions, 
-                Members = new List<Guid>(), 
+                Permissions = permissions,
+                Members = new List<Guid>(),
                 Children = new List<Guid>()
             };
 
-            if(owner != null)
+            if (owner != null)
             {
                 context.Members.Add(owner.Value);
             }
@@ -82,7 +82,7 @@ namespace XamlingCore.Portable.Data.Security
         public async Task<XResult<XSecurityContext>> GetAccess(Guid userId, XSecurityContext context,
             int securityTypes)
         {
-            return await GetAccess(userId, new List<XSecurityContext> {context}, securityTypes);
+            return await GetAccess(userId, new List<XSecurityContext> { context }, securityTypes);
         }
 
         public async Task<XResult<XSecurityContext>> GetAccess(Guid userId, List<XSecurityContext> context, int securityTypes)
@@ -109,7 +109,7 @@ namespace XamlingCore.Portable.Data.Security
         {
             //first check the current user has permissions to edit security
             var canEditSecurityResult =
-                await _validateContextChain(context, currentUserId, (int) XPermission.EditPermissions);
+                await _validateContextChain(context, currentUserId, (int)XPermission.EditPermissions);
 
             if (!canEditSecurityResult)
             {
@@ -193,10 +193,27 @@ namespace XamlingCore.Portable.Data.Security
             return context;
         }
 
-        public async Task<XResult<List<XSecurityContext>>> GetParentContexts(Guid contextId)
+        public async Task<XResult<XSecurityContext>> GetParentContext(Guid contextId)
         {
-            var context = await _repo.GetParentContexts(contextId);
+            var context = await _repo.GetParentContext(contextId);
             return context;
+        }
+
+        public async Task<XSecurityContext> GetRootContext(Guid contextId)
+        {
+            XSecurityContext currentContext = null;
+
+            while (true)
+            {
+                var context = await _repo.GetParentContext(currentContext.Id);
+
+                if (!context)
+                {
+                    return currentContext;
+                }
+
+                currentContext = context.Object;
+            }
         }
 
         public async Task<XResult<bool>> _validateContextChain(XSecurityContext context, Guid userId, int securityTypes)
@@ -206,23 +223,20 @@ namespace XamlingCore.Portable.Data.Security
                 return new XResult<bool>(true, true, $"Authorised by {context.Name} ({context.Id})");
             }
 
-            var parents = await GetParentContexts(context.Id);
+            var parent = await GetParentContext(context.Id);
 
-            if (!parents || parents.Object == null || parents.Object.Count == 0)
+            if (!parent || parent.Object == null)
             {
                 return
                     XResult<bool>.GetNotAuthorised(
                         $"Could not find parent context on context {context.Name} ({context.Id}). looking for permisssions {securityTypes} ");
             }
 
-            foreach (var parent in parents.Object)
-            {
-                var c = await _validateContextChain(parent, userId, securityTypes);
+            var c = await _validateContextChain(parent.Object, userId, securityTypes);
 
-                if (c)
-                {
-                    return c;
-                }
+            if (c)
+            {
+                return c;
             }
 
             return

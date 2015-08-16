@@ -96,14 +96,14 @@ namespace XamlingCore.Portable.Data.Entities
         public async Task<T> GetSingleFromBucket(string bucket)
         {
             var g = await _bucket.GetSingleFromBucket(bucket);
-            
+
             if (g == Guid.Empty)
             {
                 return null;
             }
 
             return await Get(g);
-        } 
+        }
 
         public async Task AddToBucket(string bucket, T entity)
         {
@@ -195,10 +195,7 @@ namespace XamlingCore.Portable.Data.Entities
 
             if (memory != null)
             {
-                if(await _entityCache.ValidateAge<T>(_getKey(id)))
-                {
-                    return memory;
-                }
+                return memory;
             }
 
             using (var lRead = await XNamedLock.Get("entm_" + id).LockAsync())

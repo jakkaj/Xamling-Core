@@ -37,11 +37,16 @@ namespace XamlingCore.Tests.NET.Security
             return new XResult<List<XSecurityContext>>(existing.ToList());
         }
 
-        public async Task<XResult<List<XSecurityContext>>> GetParentContexts(Guid targetId)
+        public async Task<XResult<XSecurityContext>> GetParentContext(Guid contextId)
         {
-            var existing = _contexts.Where(_ => _.Children.Contains(targetId));
+            var existing = _contexts.FirstOrDefault(_ => _.Children.Contains(contextId));
 
-            return new XResult<List<XSecurityContext>>(existing.ToList());
+            if (existing == null)
+            {
+                return XResult<XSecurityContext>.GetNoRecord();
+            }
+
+            return new XResult<XSecurityContext>(existing);
         }
 
         public async Task<XResult<XSecurityContext>> GetContextById(Guid contextId)
@@ -50,7 +55,7 @@ namespace XamlingCore.Tests.NET.Security
 
             if (existing == null)
             {
-                return XResult<XSecurityContext>.GetNoData();
+                return XResult<XSecurityContext>.GetNoRecord();
             }
 
             return new XResult<XSecurityContext>(existing);
