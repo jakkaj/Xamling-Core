@@ -11,11 +11,12 @@ namespace XamlingCore.Portable.Contract.Entities
         Task<T> GetEntity<T>(string key) where T : class, new();
         Task<bool> SetEntity<T>(string key, T item) where T : class, new();
         Task<bool> SetEntity<T>(string key, T item, TimeSpan? maxAge) where T : class, new();
-        Task Clear();
+       
         Task<bool> Delete<T>(string key) where T : class, new();
+    }
 
-        Task DisableMemoryCache();
-        Task EnableMemoryCache();
+    public interface IFileEntityCache : IEntityCache
+    {
 
         Task<List<T>> GetAll<T>()
             where T : class, new();
@@ -27,5 +28,13 @@ namespace XamlingCore.Portable.Contract.Entities
 
         Task<bool> ValidateAge<T>(string key)
             where T : class, new();
+
+        Task Clear();
+    }
+
+    public interface ILegacyEntityCache : IFileEntityCache
+    {
+        Task DisableMemoryCache();
+        Task EnableMemoryCache();
     }
 }
