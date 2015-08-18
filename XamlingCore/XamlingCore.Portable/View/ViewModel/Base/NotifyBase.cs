@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using XamlingCore.Portable.View.Properties;
+using XamlingCore.Portable.View.Special;
 
 namespace XamlingCore.Portable.View.ViewModel.Base
 {

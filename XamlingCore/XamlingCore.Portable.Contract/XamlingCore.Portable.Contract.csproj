@@ -38,57 +38,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Device\IOrientationSensor.cs" />
-    <Compile Include="Device\Location\IMotionSensor.cs" />
-    <Compile Include="Device\Service\IDeviceUtilityService.cs" />
-    <Compile Include="Entities\ICacheInfo.cs" />
-    <Compile Include="Entities\IEntityBucket.cs" />
-    <Compile Include="Entities\IEntityCache.cs" />
-    <Compile Include="Entities\IEntityManager.cs" />
-    <Compile Include="Config\IConfig.cs" />
-    <Compile Include="Device\Info\IDeviceInfoService.cs" />
-    <Compile Include="Device\Location\ILocationTrackingSensor.cs" />
-    <Compile Include="Device\Toast\IToastService.cs" />
-    <Compile Include="Downloaders\IHttpTransferConfig.cs" />
-    <Compile Include="Downloaders\IHttpTrasferConfigService.cs" />
-    <Compile Include="Downloaders\IHttpTransferrer.cs" />
-    <Compile Include="Downloaders\IHttpTransferResult.cs" />
-    <Compile Include="Downloaders\ISimpleHttpTranferrer.cs" />
-    <Compile Include="Entities\IHttpEntity.cs" />
-    <Compile Include="Entities\IMemoryCache.cs" />
-    <Compile Include="EventArgs\BucketUpdatedEventArgs.cs" />
-    <Compile Include="Glue\IGlue.cs" />
-    <Compile Include="Helpers\IHashHelper.cs" />
-    <Compile Include="Helpers\IZip.cs" />
-    <Compile Include="Infrastructure\LocalStorage\ILocalStorage.cs" />
-    <Compile Include="Infrastructure\Resource\IApplicationResource.cs" />
-    <Compile Include="Localisation\ILocalisationService.cs" />
-    <Compile Include="Localisation\ILocalisedResourceReader.cs" />
-    <Compile Include="Localisation\IXLocalisable.cs" />
-    <Compile Include="Messenging\IMessenger.cs" />
-    <Compile Include="Navigation\IXNavigation.cs" />
-    <Compile Include="Network\IDeviceNetworkStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repos\Base\IXWebRepo.cs" />
-    <Compile Include="Repos\Base\IOperationWebRepo.cs" />
-    <Compile Include="Repos\Base\IWebRepo.cs" />
-    <Compile Include="Repos\Base\IStorageFileRepo.cs" />
-    <Compile Include="Repos\Base\ISimpleEntityRepo.cs" />
-    <Compile Include="Repos\ISecurityRepo.cs" />
-    <Compile Include="Repos\ISettingsRepo.cs" />
-    <Compile Include="Serialise\IEntitySerialiser.cs" />
-    <Compile Include="Services\IApplicationBarService.cs" />
-    <Compile Include="Services\IContextInfoService.cs" />
-    <Compile Include="Services\IEnvironmentService.cs" />
-    <Compile Include="Services\IGeneralSettingsService.cs" />
-    <Compile Include="Services\IGoogleAnalyticsService.cs" />
-    <Compile Include="Services\ILoadStatusService.cs" />
-    <Compile Include="Services\ILocationService.cs" />
-    <Compile Include="Services\IOrientationService.cs" />
-    <Compile Include="Services\ISecurityService.cs" />
-    <Compile Include="UI\IDispatcher.cs" />
-    <Compile Include="ViewModels\IItemViewModel.cs" />
-    <Compile Include="ViewModels\IMoreTileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using Windows.ApplicationModel.Resources;
 using XamlingCore.Portable.Contract.Localisation;
-using XamlingCore.Portable.View.Properties;
 
 namespace XamlingCore.Windows8.Implementations
 {
@@ -15,7 +9,7 @@ namespace XamlingCore.Windows8.Implementations
         private readonly ResourceLoader _resourceLoader;
         public LocalisedResourceReader()
         {
-            _resourceLoader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            _resourceLoader = new ResourceLoader();
         }
         public string GetResource(string name, CultureInfo culture = null)
         {

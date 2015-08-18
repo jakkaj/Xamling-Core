@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using XamlingCore.Portable.Contract.Entities;
 using XamlingCore.Portable.Contract.EventArgs;
+using XamlingCore.Portable.Data.Mapper;
 using XamlingCore.Portable.Messages.Entities;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Model.Contract;

@@ -39,31 +39,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <Folder Include="Mapping\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cache\XCacheItem.cs" />
-    <Compile Include="Contract\IEntity.cs" />
-    <Compile Include="Contract\ISelectableItem.cs" />
-    <Compile Include="Contract\ISelectedItem.cs" />
-    <Compile Include="Localisation\XLocalisedResources.cs" />
-    <Compile Include="Location\XLocation.cs" />
-    <Compile Include="Location\XLocationSearchResult.cs" />
-    <Compile Include="Location\XMotion.cs" />
-    <Compile Include="Location\XPositionStatus.cs" />
-    <Compile Include="Navigation\NavigationDirection.cs" />
-    <Compile Include="Navigation\XNavigationEventArgs.cs" />
-    <Compile Include="Network\XAllowedNetworkType.cs" />
-    <Compile Include="Network\XNetworkType.cs" />
-    <Compile Include="Orientation\XPageOrientation.cs" />
-    <Compile Include="Other\XSeverityLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resiliency\XResiliant.cs" />
-    <Compile Include="Response\OperationResults.cs" />
-    <Compile Include="Response\XResult.cs" />
-    <Compile Include="Security\XPermission.cs" />
-    <Compile Include="Security\XSecurityContext.cs" />
-    <Compile Include="Settings\GeneralSettingsEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">

@@ -128,49 +128,9 @@
       <Project>{b242680a-dfe0-4cfb-83b2-ea14ace94b60}</Project>
       <Name>XamlingCore.Droid</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
-      <Project>{ea36c7d4-c89e-4242-bd39-8e485f408086}</Project>
-      <Name>XamlingCore.Portable.Contract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Data\XamlingCore.Portable.Data.csproj">
-      <Project>{cee58a71-49b1-4c9f-b22a-ecd33b6e3a6b}</Project>
-      <Name>XamlingCore.Portable.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Glue\XamlingCore.Portable.Glue.csproj">
-      <Project>{e908cd00-22c8-4f7b-ba99-8ddf32c5f656}</Project>
-      <Name>XamlingCore.Portable.Glue</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
-      <Project>{568d9a09-151c-49b3-bee5-71529fc6869d}</Project>
-      <Name>XamlingCore.Portable.Messages</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
-      <Project>{e2682110-bb54-48d8-9e8c-20bc29488bbe}</Project>
-      <Name>XamlingCore.Portable.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Net\XamlingCore.Portable.Net.csproj">
-      <Project>{da91f91f-3a71-4c7d-9fd5-4f0dc6e3dc86}</Project>
-      <Name>XamlingCore.Portable.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Service\XamlingCore.Portable.Service.csproj">
-      <Project>{449dc319-446e-4d47-923a-3c9efdf02b88}</Project>
-      <Name>XamlingCore.Portable.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Util\XamlingCore.Portable.Util.csproj">
-      <Project>{bf649817-277f-44c1-af23-c90d6daf5901}</Project>
-      <Name>XamlingCore.Portable.Util</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
-      <Project>{b3d7c301-2df7-4c16-9f49-7dda8689556e}</Project>
-      <Name>XamlingCore.Portable.View</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Workflow\XamlingCore.Portable.Workflow.csproj">
-      <Project>{9d082abd-f398-4a28-be80-9af2ba5b1be9}</Project>
-      <Name>XamlingCore.Portable.Workflow</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Xamarin\XamlingCore.XamarinThings.csproj">
-      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
-      <Name>XamlingCore.XamarinThings</Name>
+    <ProjectReference Include="..\XamlingCore.Portable\XamlingCore.Portable.csproj">
+      <Project>{CB7E7377-7F48-40E0-AAFE-A936743DA902}</Project>
+      <Name>XamlingCore.Portable</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

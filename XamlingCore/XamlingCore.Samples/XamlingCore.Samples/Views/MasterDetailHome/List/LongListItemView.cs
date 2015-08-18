@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using XamlingCore.Portable.View.Properties;
+﻿using Xamarin.Forms;
 
 namespace XamlingCore.Samples.Views.MasterDetailHome.List
 {

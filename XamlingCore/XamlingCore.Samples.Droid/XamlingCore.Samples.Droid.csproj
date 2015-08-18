@@ -51,35 +51,17 @@
       <HintPath>..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FormsViewGroup, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Forms.1.4.3.6376\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="ModernHttpClient">
       <HintPath>..\packages\modernhttpclient.2.4.0\lib\MonoAndroid\ModernHttpClient.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="OkHttp">
-      <HintPath>..\packages\modernhttpclient.2.4.0\lib\MonoAndroid\OkHttp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Linq.Expressions" />
     <Reference Include="System.ObjectModel" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Threading.Tasks" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Android.Support.v4.22.2.0.0\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Forms.1.4.3.6376\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
       <Private>True</Private>
@@ -90,10 +72,6 @@
     </Reference>
     <Reference Include="Xamarin.Forms.Platform.Android, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Forms.1.4.3.6376\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Xaml, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Forms.1.4.3.6376\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -126,46 +104,6 @@
     <ProjectReference Include="..\XamlingCore.Droid\XamlingCore.Droid.csproj">
       <Project>{b242680a-dfe0-4cfb-83b2-ea14ace94b60}</Project>
       <Name>XamlingCore.Droid</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
-      <Project>{ea36c7d4-c89e-4242-bd39-8e485f408086}</Project>
-      <Name>XamlingCore.Portable.Contract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Data\XamlingCore.Portable.Data.csproj">
-      <Project>{cee58a71-49b1-4c9f-b22a-ecd33b6e3a6b}</Project>
-      <Name>XamlingCore.Portable.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Glue\XamlingCore.Portable.Glue.csproj">
-      <Project>{e908cd00-22c8-4f7b-ba99-8ddf32c5f656}</Project>
-      <Name>XamlingCore.Portable.Glue</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
-      <Project>{568d9a09-151c-49b3-bee5-71529fc6869d}</Project>
-      <Name>XamlingCore.Portable.Messages</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
-      <Project>{e2682110-bb54-48d8-9e8c-20bc29488bbe}</Project>
-      <Name>XamlingCore.Portable.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Net\XamlingCore.Portable.Net.csproj">
-      <Project>{da91f91f-3a71-4c7d-9fd5-4f0dc6e3dc86}</Project>
-      <Name>XamlingCore.Portable.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Service\XamlingCore.Portable.Service.csproj">
-      <Project>{449dc319-446e-4d47-923a-3c9efdf02b88}</Project>
-      <Name>XamlingCore.Portable.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Util\XamlingCore.Portable.Util.csproj">
-      <Project>{bf649817-277f-44c1-af23-c90d6daf5901}</Project>
-      <Name>XamlingCore.Portable.Util</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
-      <Project>{b3d7c301-2df7-4c16-9f49-7dda8689556e}</Project>
-      <Name>XamlingCore.Portable.View</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Workflow\XamlingCore.Portable.Workflow.csproj">
-      <Project>{9d082abd-f398-4a28-be80-9af2ba5b1be9}</Project>
-      <Name>XamlingCore.Portable.Workflow</Name>
     </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Samples\XamlingCore.Samples\XamlingCore.Samples.csproj">
       <Project>{07465752-9C33-46CB-B0C9-F7DED7FA7FFC}</Project>

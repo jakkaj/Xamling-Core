@@ -13,10 +13,12 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,14 +38,171 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Contract\Config\IConfig.cs" />
+    <Compile Include="Contract\Device\Info\IDeviceInfoService.cs" />
+    <Compile Include="Contract\Device\IOrientationSensor.cs" />
+    <Compile Include="Contract\Device\Location\ILocationTrackingSensor.cs" />
+    <Compile Include="Contract\Device\Location\IMotionSensor.cs" />
+    <Compile Include="Contract\Device\Service\IDeviceUtilityService.cs" />
+    <Compile Include="Contract\Device\Toast\IToastService.cs" />
+    <Compile Include="Contract\Downloaders\IHttpTransferConfig.cs" />
+    <Compile Include="Contract\Downloaders\IHttpTransferrer.cs" />
+    <Compile Include="Contract\Downloaders\IHttpTransferResult.cs" />
+    <Compile Include="Contract\Downloaders\IHttpTrasferConfigService.cs" />
+    <Compile Include="Contract\Downloaders\ISimpleHttpTranferrer.cs" />
+    <Compile Include="Contract\Entities\ICacheInfo.cs" />
+    <Compile Include="Contract\Entities\IEntityBucket.cs" />
+    <Compile Include="Contract\Entities\IEntityCache.cs" />
+    <Compile Include="Contract\Entities\IEntityManager.cs" />
+    <Compile Include="Contract\Entities\IHttpEntity.cs" />
+    <Compile Include="Contract\Entities\IMemoryCache.cs" />
+    <Compile Include="Contract\EventArgs\BucketUpdatedEventArgs.cs" />
+    <Compile Include="Contract\Glue\IGlue.cs" />
+    <Compile Include="Contract\Helpers\IHashHelper.cs" />
+    <Compile Include="Contract\Helpers\IZip.cs" />
+    <Compile Include="Contract\Infrastructure\LocalStorage\ILocalStorage.cs" />
+    <Compile Include="Contract\Infrastructure\Resource\IApplicationResource.cs" />
+    <Compile Include="Contract\Localisation\ILocalisationService.cs" />
+    <Compile Include="Contract\Localisation\ILocalisedResourceReader.cs" />
+    <Compile Include="Contract\Localisation\IXLocalisable.cs" />
+    <Compile Include="Contract\Messenging\IMessenger.cs" />
+    <Compile Include="Contract\Navigation\IXNavigation.cs" />
+    <Compile Include="Contract\Network\IDeviceNetworkStatus.cs" />
+    <Compile Include="Contract\Repos\Base\IOperationWebRepo.cs" />
+    <Compile Include="Contract\Repos\Base\ISimpleEntityRepo.cs" />
+    <Compile Include="Contract\Repos\Base\IStorageFileRepo.cs" />
+    <Compile Include="Contract\Repos\Base\IWebRepo.cs" />
+    <Compile Include="Contract\Repos\Base\IXWebRepo.cs" />
+    <Compile Include="Contract\Repos\ISecurityRepo.cs" />
+    <Compile Include="Contract\Repos\ISettingsRepo.cs" />
+    <Compile Include="Contract\Serialise\IEntitySerialiser.cs" />
+    <Compile Include="Contract\Services\IApplicationBarService.cs" />
+    <Compile Include="Contract\Services\IContextInfoService.cs" />
+    <Compile Include="Contract\Services\IEnvironmentService.cs" />
+    <Compile Include="Contract\Services\IGeneralSettingsService.cs" />
+    <Compile Include="Contract\Services\IGoogleAnalyticsService.cs" />
+    <Compile Include="Contract\Services\ILoadStatusService.cs" />
+    <Compile Include="Contract\Services\ILocationService.cs" />
+    <Compile Include="Contract\Services\IOrientationService.cs" />
+    <Compile Include="Contract\Services\ISecurityService.cs" />
+    <Compile Include="Contract\UI\IDispatcher.cs" />
+    <Compile Include="Contract\ViewModels\IItemViewModel.cs" />
+    <Compile Include="Contract\ViewModels\IMoreTileViewModel.cs" />
+    <Compile Include="Data\Database\SQLite\SQLiteAttributes.cs" />
+    <Compile Include="Data\Entities\EntityBucket.cs" />
+    <Compile Include="Data\Entities\EntityCache.cs" />
+    <Compile Include="Data\Entities\EntityManager.cs" />
+    <Compile Include="Data\Entities\EntityService.cs" />
+    <Compile Include="Data\Entities\KeyEntityBase.cs" />
+    <Compile Include="Data\Entities\MemoryCache.cs" />
+    <Compile Include="Data\Extensions\EntityDataExtensions.cs" />
+    <Compile Include="Data\Glue\ContainerHost.cs" />
+    <Compile Include="Data\Mapper\SimpleMapper.cs" />
+    <Compile Include="Data\Repos\Base\LocalStorageFileRepo.cs" />
+    <Compile Include="Data\Repos\Base\OperationWebRepo.cs" />
+    <Compile Include="Data\Repos\Base\SimpleLocalStorageEntityRepo.cs" />
+    <Compile Include="Data\Repos\Base\WebRepo.cs" />
+    <Compile Include="Data\Repos\LocalStorageSettingsRepo.cs" />
+    <Compile Include="Data\Repos\XWebWepo.cs" />
+    <Compile Include="Data\Security\ContextInfoService.cs" />
+    <Compile Include="Data\Security\SecurityRepo.cs" />
+    <Compile Include="Data\Security\SecurityService.cs" />
+    <Compile Include="Data\Serialise\JsonEntitySerialiser.cs" />
+    <Compile Include="Data\Serialise\JsonNETEntitySerialiser.cs" />
+    <Compile Include="Data\Serialise\XMLSerialisationHelper.cs" />
+    <Compile Include="Glue\DefaultXCoreModule.cs" />
+    <Compile Include="Glue\GlueBase.cs" />
+    <Compile Include="Glue\Glue\XAutofacModule.cs" />
+    <Compile Include="Glue\TestUtils\TestBase.cs" />
+    <Compile Include="Messages\Device\PageOrientationChangedMessage.cs" />
+    <Compile Include="Messages\Device\SupportedOrientationChangedMessage.cs" />
+    <Compile Include="Messages\Entities\BucketUpdatedMessage.cs" />
+    <Compile Include="Messages\Entities\EntityUpdated.cs" />
+    <Compile Include="Messages\Location\LocationSettingsChangedMessage.cs" />
+    <Compile Include="Messages\Location\LowResLocationUpdatedMessage.cs" />
+    <Compile Include="Messages\Navigation\ForceAppExitUsingNavigation.cs" />
+    <Compile Include="Messages\Network\CouldNotContactServersErrorMessage.cs" />
+    <Compile Include="Messages\Network\NetworkChangedMessage.cs" />
+    <Compile Include="Messages\Network\NoNetworkErrorMessage.cs" />
+    <Compile Include="Messages\Network\TransferProgressMessage.cs" />
+    <Compile Include="Messages\Settings\SettingsUpdatedMessage.cs" />
+    <Compile Include="Messages\System\ApplicationDeactivatedMessage.cs" />
+    <Compile Include="Messages\System\ApplicationReactivatedMessage.cs" />
+    <Compile Include="Messages\View\DisplayAlertMessage.cs" />
+    <Compile Include="Messages\View\SetLoaderMessage.cs" />
+    <Compile Include="Messages\View\ShowNativeViewMessage.cs" />
+    <Compile Include="Messages\XamlingMessenger\XMessage.cs" />
+    <Compile Include="Messages\XamlingMessenger\XMessenger.cs" />
+    <Compile Include="Model\Cache\XCacheItem.cs" />
+    <Compile Include="Model\Contract\IEntity.cs" />
+    <Compile Include="Model\Contract\ISelectableItem.cs" />
+    <Compile Include="Model\Contract\ISelectedItem.cs" />
+    <Compile Include="Model\Localisation\XLocalisedResources.cs" />
+    <Compile Include="Model\Location\XLocation.cs" />
+    <Compile Include="Model\Location\XLocationSearchResult.cs" />
+    <Compile Include="Model\Location\XMotion.cs" />
+    <Compile Include="Model\Location\XPositionStatus.cs" />
+    <Compile Include="Model\Navigation\NavigationDirection.cs" />
+    <Compile Include="Model\Navigation\XNavigationEventArgs.cs" />
+    <Compile Include="Model\Network\XAllowedNetworkType.cs" />
+    <Compile Include="Model\Network\XNetworkType.cs" />
+    <Compile Include="Model\Orientation\XPageOrientation.cs" />
+    <Compile Include="Model\Other\XSeverityLevel.cs" />
+    <Compile Include="Model\Resiliency\XResiliant.cs" />
+    <Compile Include="Model\Response\OperationResults.cs" />
+    <Compile Include="Model\Response\XResult.cs" />
+    <Compile Include="Model\Security\XPermission.cs" />
+    <Compile Include="Model\Security\XSecurityContext.cs" />
+    <Compile Include="Model\Settings\GeneralSettingsEntity.cs" />
+    <Compile Include="Net\DownloadConfig\StandardHttpConfig.cs" />
+    <Compile Include="Net\Downloaders\HttpClientTransferrer.cs" />
+    <Compile Include="Net\Downloaders\HttpTransferResult.cs" />
+    <Compile Include="Net\Downloaders\NativeHttpClientTransferrer.cs" />
+    <Compile Include="Net\Downloaders\SimpleHttpTransfer.cs" />
+    <Compile Include="Net\Downloaders\SimpleNativeHttpTransferer.cs" />
+    <Compile Include="Net\Service\HttpTransferConfigServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Localisation\LocalisationService.cs" />
+    <Compile Include="Service\Localisation\LocalisedResourceReader.cs" />
+    <Compile Include="Service\Localisation\XLocale.cs" />
+    <Compile Include="Service\Location\LocationService.cs" />
+    <Compile Include="Service\Orientation\OrientationService.cs" />
+    <Compile Include="Service\Settings\GeneralSettingsService.cs" />
+    <Compile Include="Util\Extensions\UriExtensions.cs" />
+    <Compile Include="Util\GeoSpatial\DistanceHelper.cs" />
+    <Compile Include="Util\GeoSpatial\HeadingHelper.cs" />
+    <Compile Include="Util\Localisation\LocalisableHelper.cs" />
+    <Compile Include="Util\Lock\XAsyncLock.cs" />
+    <Compile Include="Util\TaskUtils\TaskExtensions.cs" />
+    <Compile Include="Util\TaskUtils\TaskThrottler.cs" />
+    <Compile Include="Util\Util\DateUtil.cs" />
+    <Compile Include="View\Navigation\NavigationMessage.cs" />
+    <Compile Include="View\Navigation\XNavigationService.cs" />
+    <Compile Include="View\Special\Annotations.cs" />
+    <Compile Include="View\Special\LoadStatusServiceBase.cs" />
+    <Compile Include="View\ViewModel\Base\DisplayListViewModel.cs" />
+    <Compile Include="View\ViewModel\Base\GroupItemViewModel.cs" />
+    <Compile Include="View\ViewModel\Base\GroupListViewModel.cs" />
+    <Compile Include="View\ViewModel\Base\ItemViewModel.cs" />
+    <Compile Include="View\ViewModel\Base\NotifyBase.cs" />
+    <Compile Include="View\ViewModel\Base\ViewModelBase.cs" />
+    <Compile Include="View\ViewModel\XFrame.cs" />
+    <Compile Include="View\ViewModel\XViewModel.cs" />
+    <Compile Include="Workflow\Flow\XFlow.cs" />
+    <Compile Include="Workflow\Flow\XFlowState.cs" />
+    <Compile Include="Workflow\Flow\XFlowStates.cs" />
+    <Compile Include="Workflow\Flow\XWorkflowHub.cs" />
+    <Compile Include="Workflow\Glue\DefaultWorkflowGlue.cs" />
+    <Compile Include="Workflow\Stage\XStage.cs" />
+    <Compile Include="Workflow\Stage\XStageResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.4.1\lib\portable-win+net40+sl50+wp8\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper">
-      <HintPath>..\packages\AutoMapper.3.2.1\lib\portable-windows8+net40+wp8+sl5+MonoAndroid+MonoTouch\AutoMapper.dll</HintPath>
+    <Reference Include="ModernHttpClient, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\modernhttpclient.2.4.2\lib\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
@@ -57,19 +216,26 @@
     <Reference Include="System.Net.Http.Primitives">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Forms.Core, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Forms.1.4.4.6392\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
-      <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
-      <Name>XamlingCore.Portable.Contract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
-      <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
-      <Name>XamlingCore.Portable.Model</Name>
-    </ProjectReference>
+    <Folder Include="Model\Mapping\" />
+    <Folder Include="Workflow\Contract\" />
+    <Folder Include="Workflow\Samples\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
@@ -78,15 +244,21 @@
     <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\portable-windows8+net45+wp8+MonoAndroid+MonoTouch"
+    <PostBuildEvent>copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS"
 copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\wp8"
 copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\MonoAndroid"
 copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\MonoTouch"
+copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\Xamarin.iOS10"
+copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\net45"
+copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\portable-win81+wpa81"
 
-xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\portable-windows8+net45+wp8+MonoAndroid+MonoTouch"
+xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS"
 xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\wp8"
 xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\MonoAndroid"
-xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\MonoTouch"</PostBuildEvent>
+xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\MonoTouch"
+xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\Xamarin.iOS10"
+xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\net45"
+xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\portable-win81+wpa81"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -94,7 +266,9 @@ xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\MonoTouch"</P
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets'))" />
   </Target>
+  <Import Project="..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

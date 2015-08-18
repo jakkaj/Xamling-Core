@@ -16,7 +16,7 @@
 
 using System;
 
-namespace XamlingCore.Portable.View.Properties
+namespace XamlingCore.Portable.View.Special
 {
   /// <summary>
   /// Indicates that marked element should be localized or not.

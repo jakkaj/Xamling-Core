@@ -200,9 +200,6 @@
     <Compile Include="Views\Tile\MenuOption\MenuOptionViewCell.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
-      <HintPath>..\..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.3.6376\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
       <Private>True</Private>
@@ -221,29 +218,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
-      <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
-      <Name>XamlingCore.Portable.Contract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
-      <Project>{568D9A09-151C-49B3-BEE5-71529FC6869D}</Project>
-      <Name>XamlingCore.Portable.Messages</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
-      <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
-      <Name>XamlingCore.Portable.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\XamlingCore.Portable.Net\XamlingCore.Portable.Net.csproj">
-      <Project>{DA91F91F-3A71-4C7D-9FD5-4F0DC6E3DC86}</Project>
-      <Name>XamlingCore.Portable.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\XamlingCore.Portable.Util\XamlingCore.Portable.Util.csproj">
-      <Project>{BF649817-277F-44C1-AF23-C90D6DAF5901}</Project>
-      <Name>XamlingCore.Portable.Util</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\XamlingCore.Portable.View\XamlingCore.Portable.View.csproj">
-      <Project>{B3D7C301-2DF7-4C16-9F49-7DDA8689556E}</Project>
-      <Name>XamlingCore.Portable.View</Name>
+    <ProjectReference Include="..\..\XamlingCore.Portable\XamlingCore.Portable.csproj">
+      <Project>{CB7E7377-7F48-40E0-AAFE-A936743DA902}</Project>
+      <Name>XamlingCore.Portable</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XamlingCore.Xamarin\XamlingCore.XamarinThings.csproj">
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>

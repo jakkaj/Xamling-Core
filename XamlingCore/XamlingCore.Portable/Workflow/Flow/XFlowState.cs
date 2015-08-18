@@ -2,8 +2,8 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using XamlingCore.Portable.Model.Contract;
-using XamlingCore.Portable.View.ViewModel.Base;
-using XamlingCore.Portable.Workflow.Annotations;
+using XamlingCore.Portable.View.Special;
+
 using XamlingCore.Portable.Workflow.Stage;
 
 namespace XamlingCore.Portable.Workflow.Flow

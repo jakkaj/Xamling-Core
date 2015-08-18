@@ -38,34 +38,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\XamlingCore.Portable.Contract\XamlingCore.Portable.Contract.csproj">
-      <Project>{EA36C7D4-C89E-4242-BD39-8E485F408086}</Project>
-      <Name>XamlingCore.Portable.Contract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Messages\XamlingCore.Portable.Messages.csproj">
-      <Project>{568D9A09-151C-49B3-BEE5-71529FC6869D}</Project>
-      <Name>XamlingCore.Portable.Messages</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Portable.Model\XamlingCore.Portable.Model.csproj">
-      <Project>{E2682110-BB54-48D8-9E8C-20BC29488BBE}</Project>
-      <Name>XamlingCore.Portable.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Navigation\NavigationMessage.cs" />
-    <Compile Include="Navigation\XNavigationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Special\Annotations.cs" />
-    <Compile Include="Special\LoadStatusServiceBase.cs" />
-    <Compile Include="ViewModel\Base\DisplayListViewModel.cs" />
-    <Compile Include="ViewModel\Base\GroupItemViewModel.cs" />
-    <Compile Include="ViewModel\Base\GroupListViewModel.cs" />
-    <Compile Include="ViewModel\Base\ItemViewModel.cs" />
-    <Compile Include="ViewModel\Base\NotifyBase.cs" />
-    <Compile Include="ViewModel\Base\ViewModelBase.cs" />
-    <Compile Include="ViewModel\XFrame.cs" />
-    <Compile Include="ViewModel\XViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">
