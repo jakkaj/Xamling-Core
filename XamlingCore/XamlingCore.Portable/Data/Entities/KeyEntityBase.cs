@@ -8,11 +8,15 @@ namespace XamlingCore.Portable.Data.Entities
 {
     public class KeyEntityBase
     {
-        public virtual string GetKey(string key)
+        private Func<string, string> _keyModifierCallback;
+        public void SetKeyModifier(Func<string, string> keyModifierCallback)
         {
-            return key;
+            _keyModifierCallback = keyModifierCallback;
         }
 
-        
+        public virtual string GetKey(string key)
+        {
+            return _keyModifierCallback != null ? _keyModifierCallback(key) : key;
+        }
     }
 }
