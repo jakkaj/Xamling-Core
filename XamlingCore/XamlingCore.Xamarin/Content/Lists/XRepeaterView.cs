@@ -76,7 +76,7 @@ namespace XamlingCore.XamarinThings.Content.Lists
             control._collectionSet(newValue);
         }
 
-        async void _collectionSet(ObservableCollection<T> newValue)
+        void _collectionSet(ObservableCollection<T> newValue)
         {
             if (_collection != null)
             {
@@ -97,7 +97,6 @@ namespace XamlingCore.XamarinThings.Content.Lists
                     foreach (var item in _collection)
                     {
                         _addItems(item);
-                        await Task.Yield();
                     }
                 }
             }
@@ -106,11 +105,11 @@ namespace XamlingCore.XamarinThings.Content.Lists
             }
         }
 
-        private async void _collection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void _collection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Reset)
             {
-                await _reset();
+                _reset();
             }
 
             if (e.OldItems != null)
@@ -118,7 +117,6 @@ namespace XamlingCore.XamarinThings.Content.Lists
                 foreach (var item in e.OldItems.OfType<T>())
                 {
                     _removeItems(item);
-                    await Task.Yield();
                 }
             }
 
@@ -127,12 +125,11 @@ namespace XamlingCore.XamarinThings.Content.Lists
                 foreach (var item in e.NewItems.OfType<T>())
                 {
                     _addItems(item);
-                    await Task.Yield();
                 }
             }
         }
 
-        async Task _reset()
+        void _reset()
         {
             var children = Children.ToList();
 
@@ -143,7 +140,6 @@ namespace XamlingCore.XamarinThings.Content.Lists
                     if (Children.Contains(child))
                     {
                         Children.Remove(child);
-                        await Task.Yield();
                     }
                 }
             }
