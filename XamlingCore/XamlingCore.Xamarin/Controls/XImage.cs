@@ -49,16 +49,19 @@ namespace XamlingCore.XamarinThings.Controls
             if (imgSource is FileImageSource && Device.OS == TargetPlatform.Android)
             {
                 var iFile = imgSource as FileImageSource;
-                var fFlattened = iFile.File.Replace('/', '_').Replace('\\', '_');
-                fFlattened = fFlattened.Trim('_');
-                var fs = ImageSource.FromFile(fFlattened);
-                base.Source = fs;
-                return;
+
+                /* '/Data' contains downloaded files. */
+                if (!iFile.File.ToLower().StartsWith("/data/"))
+                {
+                    var fFlattened = iFile.File.Replace('/', '_').Replace('\\', '_');
+                    fFlattened = fFlattened.Trim('_');
+                    var fs = ImageSource.FromFile(fFlattened);
+                    base.Source = fs;
+                    return;
+                }
             }
 
             base.Source = imgSource;
         }
-
-
     }
 }
