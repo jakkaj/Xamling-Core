@@ -63,10 +63,8 @@ namespace XamlingCore.iOS.Unified.Implementations
             await _geolocator.GetPositionAsync(1500, _cancelSource.Token, false)
                 .ContinueWith(t =>
                 {
-                    if (t.IsFaulted)
-                        throw new Exception(((GeolocationException) t.Exception.InnerException).Error.ToString());
 
-                    if (t.IsCanceled)
+                    if (t.IsCanceled || t.IsFaulted)
                     {
                         var x = new XLocation();
                         x.IsResolved = false;
