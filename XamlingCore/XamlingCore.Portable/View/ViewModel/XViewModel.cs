@@ -12,6 +12,7 @@ using XamlingCore.Portable.Contract.Services;
 using XamlingCore.Portable.Messages.Device;
 using XamlingCore.Portable.Messages.XamlingMessenger;
 using XamlingCore.Portable.Model.Orientation;
+using XamlingCore.Portable.Util.Lock;
 using XamlingCore.Portable.View.ViewModel.Base;
 
 namespace XamlingCore.Portable.View.ViewModel
@@ -155,57 +156,58 @@ namespace XamlingCore.Portable.View.ViewModel
             IsDisposed = true;
         }
 
+        static XAsyncLock _alertLock = new XAsyncLock();
+
         public async Task<bool> DisplayAlert(string title, string message, string accept, string cancel = null)
         {
-            if (NativeAlert == null)
+            using (var l = await _alertLock.LockAsync())
             {
-                return false;
-            }
-
-            var t = GetResource(title);
-            
-            if (string.IsNullOrWhiteSpace(t))
-            {
-                t = title;
-            }
-            
-            var m = GetResource(message);
-            
-            if (string.IsNullOrWhiteSpace(m))
-            {
-                m = message;
-            }
-
-            var a = GetResource(accept);
-
-            if (string.IsNullOrWhiteSpace(a))
-            {
-                a = accept;
-            } 
-
-            var c = (!string.IsNullOrWhiteSpace(cancel)) ? GetResource(cancel) : null;
-
-            
-
-            var dialogResult = false;
-            
-
-            await Task.Run(() =>
-            {
-                var msr = new ManualResetEvent(false);
-                
-                Dispatcher.Invoke(async () =>
+                if (NativeAlert == null)
                 {
-                    dialogResult = await NativeAlert(t, m, a, c);
-                    msr.Set();
+                    return false;
+                }
+
+                var t = GetResource(title);
+
+                if (string.IsNullOrWhiteSpace(t))
+                {
+                    t = title;
+                }
+
+                var m = GetResource(message);
+
+                if (string.IsNullOrWhiteSpace(m))
+                {
+                    m = message;
+                }
+
+                var a = GetResource(accept);
+
+                if (string.IsNullOrWhiteSpace(a))
+                {
+                    a = accept;
+                }
+
+                var c = (!string.IsNullOrWhiteSpace(cancel)) ? GetResource(cancel) : null;
+
+                var dialogResult = false;
+
+
+                await Task.Run(() =>
+                {
+                    var msr = new ManualResetEvent(false);
+
+                    Dispatcher.Invoke(async () =>
+                    {
+                        dialogResult = await NativeAlert(t, m, a, c);
+                        msr.Set();
+                    });
+
+                    msr.WaitOne(60000);
                 });
 
-                msr.WaitOne(60000);
-            });
-
-            
-
-            return dialogResult;
+                return dialogResult;
+            }
         }
 
         protected Action<object> WrapCall(Action<object> method)
