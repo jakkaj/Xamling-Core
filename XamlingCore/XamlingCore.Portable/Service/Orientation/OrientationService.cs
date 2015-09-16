@@ -60,6 +60,15 @@ namespace XamlingCore.Portable.Service.Orientation
             }
         }
 
+        public XPageOrientation DeviceOrientation
+        {
+            get
+            {
+                return _deviceOrientation;
+            }
+           
+        }
+
         public XPageOrientation CurrentPageOrientation
         {
             get

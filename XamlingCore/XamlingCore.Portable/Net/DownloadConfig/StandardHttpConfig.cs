@@ -33,5 +33,7 @@ namespace XamlingCore.Portable.Net.DownloadConfig
         public bool AllowRedirect { get; set; }
         public int Retries { get; set; }
         public bool RetryOnNonSuccessCode { get; set; }
+
+        public int Timeout { get; set; }
     }
 }

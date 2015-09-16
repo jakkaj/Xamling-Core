@@ -35,5 +35,6 @@ namespace XamlingCore.Portable.Contract.Downloaders
 
         int Retries { get; set; }
         bool RetryOnNonSuccessCode { get; set; }
+        int Timeout { get; set; }
     }
 }

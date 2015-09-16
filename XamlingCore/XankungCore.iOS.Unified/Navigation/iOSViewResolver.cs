@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Autofac;
 using Xamarin.Forms;
 using XamlingCore.Portable.View.ViewModel;
@@ -43,6 +44,8 @@ namespace XamlingCore.iOS.Unified.Navigation
             typeName = _filterTypeName(typeName);
             var nextToType = Type.GetType(string.Format("{0}, {1}", typeName, t.Assembly.FullName));
 
+            Debug.WriteLine($"Page: {typeName}");
+            
             var view = _resolve(nextToType);
 
             if (view == null)

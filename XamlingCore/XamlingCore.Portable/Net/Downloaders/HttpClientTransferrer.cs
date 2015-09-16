@@ -209,6 +209,11 @@ namespace XamlingCore.Portable.Net.Downloaders
                             downloadConfig.Auth);
                     }
 
+                    if (downloadConfig.Timeout != 0)
+                    {
+                        httpClient.Timeout = TimeSpan.FromSeconds(downloadConfig.Timeout);
+                    }
+
                     try
                     {
                         Debug.WriteLine("{0}: {1}", downloadConfig.Verb.ToLower() == "get" ? "Downloading": "Uploading", obj.Url);

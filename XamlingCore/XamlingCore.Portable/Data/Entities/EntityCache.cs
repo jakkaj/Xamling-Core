@@ -12,7 +12,7 @@ using XamlingCore.Portable.Util.Lock;
 
 namespace XamlingCore.Portable.Data.Entities
 {
-    public class EntityCache : KeyEntityBase, IEntityCache
+    public class EntityCache : KeyEntityBase, ILegacyEntityCache, IFileEntityCache, IEntityCache
     {
         private readonly IStorageFileRepo _storageFileRepo;
         private readonly IMemoryCache _cache;
