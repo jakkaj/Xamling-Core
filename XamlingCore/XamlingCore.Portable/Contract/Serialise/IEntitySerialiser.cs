@@ -6,5 +6,7 @@
             where T : class;
 
         string Serialise<T>(T entity);
+        T BinaryDeserialise<T>(byte[] entity) where T : class;
+        byte[] BinarySerialise<T>(T entity);
     }
 }
