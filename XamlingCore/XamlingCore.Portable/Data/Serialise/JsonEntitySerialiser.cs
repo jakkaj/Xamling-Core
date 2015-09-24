@@ -1,48 +1,58 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using XamlingCore.Portable.Contract.Serialise;
+﻿//using System;
+//using System.Diagnostics;
+//using System.IO;
+//using System.Runtime.Serialization.Json;
+//using System.Text;
+//using XamlingCore.Portable.Contract.Serialise;
 
-namespace XamlingCore.Portable.Data.Serialise
-{
-    public class JsonEntitySerialiser : IEntitySerialiser
-    {
-        public T Deserialise<T>(string entity)
-           where T : class
-        {
-            try
-            {
-                var des = new DataContractJsonSerializer(typeof(T));
+//namespace XamlingCore.Portable.Data.Serialise
+//{
+//    public class JsonEntitySerialiser : IEntitySerialiser
+//    {
+//        public T Deserialise<T>(string entity)
+//           where T : class
+//        {
+//            try
+//            {
+//                var des = new DataContractJsonSerializer(typeof(T));
 
-                var ms = new MemoryStream(Encoding.UTF8.GetBytes(entity));
+//                var ms = new MemoryStream(Encoding.UTF8.GetBytes(entity));
 
-                T item = des.ReadObject(ms) as T;
-                return item;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Des problem: " + ex.Message);
-            }
+//                T item = des.ReadObject(ms) as T;
+//                return item;
+//            }
+//            catch (Exception ex)
+//            {
+//                Debug.WriteLine("Des problem: " + ex.Message);
+//            }
 
-            return null;
-        }
+//            return null;
+//        }
 
 
-        public string Serialise<T>(T entity)
-        {
-            var des = new DataContractJsonSerializer(typeof(T));
-            var ms = new MemoryStream();
-            des.WriteObject(ms, entity);
+//        public string Serialise<T>(T entity)
+//        {
+//            var des = new DataContractJsonSerializer(typeof(T));
+//            var ms = new MemoryStream();
+//            des.WriteObject(ms, entity);
 
-            ms.Seek(0, SeekOrigin.Begin);
+//            ms.Seek(0, SeekOrigin.Begin);
 
-            var b = new byte[ms.Length];
+//            var b = new byte[ms.Length];
 
-            ms.Read(b, 0, b.Length);
+//            ms.Read(b, 0, b.Length);
 
-            return Encoding.UTF8.GetString(b, 0, b.Length);
-        }
-    }
-}
+//            return Encoding.UTF8.GetString(b, 0, b.Length);
+//        }
+
+//        public T BinaryDeserialise<T>(byte[] entity) where T : class
+//        {
+//            throw new NotImplementedException();
+//        }
+
+//        public byte[] BinarySerialise<T>(T entity)
+//        {
+//            throw new NotImplementedException();
+//        }
+//    }
+//}
