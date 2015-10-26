@@ -20,6 +20,14 @@ namespace XamlingCore.iOS.Unified.Controls.Pages
         {
             _orientationService = ContainerHost.Container.Resolve<IOrientationService>();
             
+            
+        }
+
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+            this.InteractivePopGestureRecognizer.Enabled = false;
+
         }
 
         public override bool ShouldAutomaticallyForwardRotationMethods
