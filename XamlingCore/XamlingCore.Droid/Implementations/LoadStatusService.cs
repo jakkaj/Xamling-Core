@@ -50,7 +50,12 @@ namespace XamlingCore.Droid.Implementations
 
             if (!_spinnerInstance.IsShowing)
             {
-                _spinnerInstance.Show();
+                try
+                {
+                    _spinnerInstance.Show();
+                }
+                catch { }
+                
             }            
         }
 
