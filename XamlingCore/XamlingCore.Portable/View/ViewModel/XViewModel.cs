@@ -352,12 +352,12 @@ namespace XamlingCore.Portable.View.ViewModel
         public void NavigateSkipBack<T>()
             where T : XViewModel
         {
-            ParentModel.NavigateSkipBack<T>();
+            ParentModel?.NavigateSkipBack<T>();
         }
 
         public void NavigateToModal(object content)
         {
-            ParentModel.NavigateToModal(content);
+            ParentModel?.NavigateToModal(content);
         }
 
         public void NavigateToModal<T>(Action<T> initialisedCallback = null, bool noHistory = false)
