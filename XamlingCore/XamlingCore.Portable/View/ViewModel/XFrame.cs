@@ -335,7 +335,7 @@ namespace XamlingCore.Portable.View.ViewModel
             for (var i = index + 1; i < nh.Count; i++)
             {
                 var obj = nh[i] as XViewModel;
-                if (obj != null)
+                if (obj != null && obj != item)
                 {
                     obj.Dispose();
                 }

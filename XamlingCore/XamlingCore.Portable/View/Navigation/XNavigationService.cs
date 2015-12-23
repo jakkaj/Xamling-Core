@@ -26,6 +26,10 @@ namespace XamlingCore.Portable.View.Navigation
         public bool IsModal { get; set; }
         
         public TimeSpan? RestrictNavigationTime { get; set; }
+        public TimeSpan? BlockSameNavigationTime { get; set; }
+
+        private Type _lastType = null;
+
         private DateTime _lastNav;
 
         public event EventHandler<XNavigationEventArgs> Navigated;
@@ -85,6 +89,14 @@ namespace XamlingCore.Portable.View.Navigation
                 Debug.WriteLine("*** navigation speed blocked navigation. No tappy tappy. ");
                 return;
             }
+
+            if (BlockSameNavigationTime != null && DateTime.Now.Subtract(_lastNav) < BlockSameNavigationTime.Value && content?.GetType() == _lastType)
+            {
+                Debug.WriteLine("*** navigation speed blocked same object navigation. No samey samey. ");
+                return;
+            }
+
+            _lastType = content?.GetType();
 
             _lastNav = DateTime.Now;
 
