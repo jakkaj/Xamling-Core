@@ -68,6 +68,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlingCore.Tests.NET", "Xa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlingCore.Portable", "XamlingCore.Portable\XamlingCore.Portable.csproj", "{CB7E7377-7F48-40E0-AAFE-A936743DA902}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UWP", "UWP", "{604A66BD-4CD9-4EFC-8CB4-B181480848F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlingCore.Samples.UWP", "XamlingCore.Samples.UWP\XamlingCore.Samples.UWP.csproj", "{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		XamlingCore.Samples.Windows8\XamlingCore.Samples.Windows8.Shared\XamlingCore.Samples.Windows8.Shared.projitems*{2ddba451-2da1-4461-99d9-a1376422ad1f}*SharedItemsImports = 4
@@ -886,6 +890,86 @@ Global
 		{CB7E7377-7F48-40E0-AAFE-A936743DA902}.Release|x64.Build.0 = Release|Any CPU
 		{CB7E7377-7F48-40E0-AAFE-A936743DA902}.Release|x86.ActiveCfg = Release|Any CPU
 		{CB7E7377-7F48-40E0-AAFE-A936743DA902}.Release|x86.Build.0 = Release|Any CPU
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|All package build.ActiveCfg = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|All package build.Build.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|All package build.Deploy.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|Any CPU.ActiveCfg = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|Any CPU.Build.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|Any CPU.Deploy.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|ARM.ActiveCfg = Release|ARM
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|ARM.Build.0 = Release|ARM
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|ARM.Deploy.0 = Release|ARM
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|iPhone.ActiveCfg = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|iPhone.Build.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|iPhone.Deploy.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|iPhoneSimulator.Build.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|iPhoneSimulator.Deploy.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|Mixed Platforms.ActiveCfg = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|Mixed Platforms.Build.0 = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|Mixed Platforms.Deploy.0 = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|x64.ActiveCfg = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|x64.Build.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|x64.Deploy.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|x86.ActiveCfg = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|x86.Build.0 = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Ad-Hoc|x86.Deploy.0 = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|All package build.ActiveCfg = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|All package build.Build.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|All package build.Deploy.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|Any CPU.ActiveCfg = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|Any CPU.Build.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|Any CPU.Deploy.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|ARM.ActiveCfg = Release|ARM
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|ARM.Build.0 = Release|ARM
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|ARM.Deploy.0 = Release|ARM
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|iPhone.ActiveCfg = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|iPhone.Build.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|iPhone.Deploy.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|iPhoneSimulator.ActiveCfg = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|iPhoneSimulator.Build.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|iPhoneSimulator.Deploy.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|Mixed Platforms.ActiveCfg = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|Mixed Platforms.Build.0 = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|Mixed Platforms.Deploy.0 = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|x64.ActiveCfg = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|x64.Build.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|x64.Deploy.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|x86.ActiveCfg = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|x86.Build.0 = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.AppStore|x86.Deploy.0 = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|All package build.ActiveCfg = Debug|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|ARM.ActiveCfg = Debug|ARM
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|ARM.Build.0 = Debug|ARM
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|ARM.Deploy.0 = Debug|ARM
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|iPhone.ActiveCfg = Debug|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|iPhoneSimulator.ActiveCfg = Debug|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|Mixed Platforms.Deploy.0 = Debug|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|x64.ActiveCfg = Debug|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|x64.Build.0 = Debug|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|x64.Deploy.0 = Debug|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|x86.ActiveCfg = Debug|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|x86.Build.0 = Debug|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Debug|x86.Deploy.0 = Debug|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|All package build.ActiveCfg = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|Any CPU.ActiveCfg = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|ARM.ActiveCfg = Release|ARM
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|ARM.Build.0 = Release|ARM
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|ARM.Deploy.0 = Release|ARM
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|iPhone.ActiveCfg = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|iPhoneSimulator.ActiveCfg = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|Mixed Platforms.Build.0 = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|Mixed Platforms.Deploy.0 = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|x64.ActiveCfg = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|x64.Build.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|x64.Deploy.0 = Release|x64
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|x86.ActiveCfg = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|x86.Build.0 = Release|x86
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -916,5 +1000,7 @@ Global
 		{75C18A96-7E26-4003-9971-04B4B4DD7E22} = {DAF32F58-D8FF-4BBB-8262-56C058ABB349}
 		{D3973DC8-8003-4B07-8F9C-324A74DD9A2E} = {DAF32F58-D8FF-4BBB-8262-56C058ABB349}
 		{CB7E7377-7F48-40E0-AAFE-A936743DA902} = {6226BDFB-2DCF-4DD6-9187-4E6F3940BDA0}
+		{604A66BD-4CD9-4EFC-8CB4-B181480848F7} = {62B89798-8693-4C44-B04A-E073AF053254}
+		{3F2B4371-3B30-4C41-B505-E1AF51EA5DE0} = {604A66BD-4CD9-4EFC-8CB4-B181480848F7}
 	EndGlobalSection
 EndGlobal

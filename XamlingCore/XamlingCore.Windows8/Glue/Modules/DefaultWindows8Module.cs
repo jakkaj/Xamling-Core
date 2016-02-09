@@ -28,7 +28,7 @@ namespace XamlingCore.Windows8.Glue.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<WindowsUniversalViewResolver>().As<IViewResolver>();
+            builder.RegisterType<Windows8ViewResolver>().As<IViewResolver>();
             builder.RegisterType<LocalStorageWindows8>().As<ILocalStorage>().SingleInstance();
             builder.RegisterType<Windows8Dispatcher>().As<IDispatcher>().SingleInstance();
             builder.RegisterType<OrientationSensor>().As<IOrientationSensor>();

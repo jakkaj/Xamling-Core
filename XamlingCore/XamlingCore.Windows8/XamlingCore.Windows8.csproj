@@ -145,7 +145,7 @@
     <Compile Include="Implementations\Windows8Dispatcher.cs" />
     <Compile Include="Implementations\WindowsUniversalDispatcher.cs" />
     <Compile Include="Implementations\WindowsUniversalNativeHttpClientTransferrer.cs" />
-    <Compile Include="Navigation\WindowsUniversalViewResolver.cs" />
+    <Compile Include="Navigation\Windows8ViewResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implementations\XWindowsAutofacAutoRegisterExternsions.cs" />
     <Compile Include="Glue\XWindowsCoreAutoRegistrations.cs" />

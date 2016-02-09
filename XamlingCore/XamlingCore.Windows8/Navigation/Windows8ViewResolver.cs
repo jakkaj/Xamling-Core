@@ -9,13 +9,13 @@ using XamlingCore.XamarinThings.Contract;
 
 namespace XamlingCore.Windows8.Navigation
 {
-    public class WindowsUniversalViewResolver : IViewResolver
+    public class Windows8ViewResolver : IViewResolver
     {
         private readonly ILifetimeScope _scope;
 
         Dictionary<Type, Type> _typeCache = new Dictionary<Type,Type>();
 
-        public WindowsUniversalViewResolver(ILifetimeScope scope)
+        public Windows8ViewResolver(ILifetimeScope scope)
         {
             _scope = scope;
         }
