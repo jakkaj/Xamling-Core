@@ -128,7 +128,7 @@ namespace XamlingCore.Portable.View.ViewModel
         public virtual void Dispose()
         {
             if (IsDisposed) return;
-
+            IsDisposed = true;
             XMessenger.Default.Unregister(this);
 
             _parentModel.AllViewModels.Remove(this);
@@ -370,6 +370,12 @@ namespace XamlingCore.Portable.View.ViewModel
             where T : XViewModel
         {
             var vm = CreateContentModel<T>(initialisedCallback);
+
+            if (vm == null)
+            {
+                return;
+            }
+
             NavigateToModal(vm);
         }
 
@@ -377,6 +383,12 @@ namespace XamlingCore.Portable.View.ViewModel
           where T : XViewModel
         {
             var vm = CreateContentModel<T>(initialisedCallback);
+
+            if (vm == null)
+            {
+                return;
+            }
+
             NavigateTo(vm, noHistory);
         }
 

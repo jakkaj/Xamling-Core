@@ -13,6 +13,9 @@ namespace XamlingCore.XamarinThings.Utility
 
         public static implicit operator T(XOnPlatform<T> onPlatform)
         {
+
+
+
             if (Device.OS == TargetPlatform.Windows)
             {
                 return onPlatform.Windows;
