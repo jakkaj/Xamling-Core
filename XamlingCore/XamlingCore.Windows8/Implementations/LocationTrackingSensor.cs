@@ -33,30 +33,36 @@ namespace XamlingCore.Windows8.Implementations
 
         public async Task<XLocation> GetQuickLocation()
         {
-            var loc = await _locator.GetGeopositionAsync(TimeSpan.FromMinutes(15), TimeSpan.FromSeconds(5));
-            
-            if (loc == null)
+            try
             {
-                return null;
+                var loc = await _locator.GetGeopositionAsync(TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(8));
+
+                if (loc == null)
+                {
+                    return null;
+                }
+
+                var xloc = new XLocation
+                {
+                    Accuracy = loc.Coordinate.Accuracy,
+                    Altitude = loc.Coordinate.Altitude,
+                    AltitudeAccuracy = loc.Coordinate.AltitudeAccuracy,
+                    Heading = loc.Coordinate.Heading,
+                    IsEnabled = true,
+                    IsResolved = true,
+                    Latitude = loc.Coordinate.Latitude,
+                    Longitude = loc.Coordinate.Longitude,
+                    Speed = loc.Coordinate.Speed,
+
+                };
+
+                CurrentLocation = xloc;
+
+                return xloc;
             }
+            catch { }
 
-            var xloc = new XLocation
-            {
-                Accuracy = loc.Coordinate.Accuracy,
-                Altitude = loc.Coordinate.Altitude,
-                AltitudeAccuracy = loc.Coordinate.AltitudeAccuracy,
-                Heading = loc.Coordinate.Heading,
-                IsEnabled = true,
-                IsResolved = true,
-                Latitude = loc.Coordinate.Latitude,
-                Longitude = loc.Coordinate.Longitude,
-                Speed = loc.Coordinate.Speed,
-
-            };
-
-            CurrentLocation = xloc;
-
-            return xloc;
+            return null;
         }
 
         public bool IsTracking { get; set; }

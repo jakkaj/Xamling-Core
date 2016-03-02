@@ -89,32 +89,26 @@ namespace XamlingCore.Droid.Implementations
                     Accuracy = Accuracy.Fine
                 };
 
-                IList<string> acceptableLocationProviders = _locationManager.GetProviders(criteriaForLocationService, true);
-
-                if (acceptableLocationProviders != null && acceptableLocationProviders.Count > 0)
-                {
-                    _locationProvider = acceptableLocationProviders[0];
-                }
-                else
-                {
-                    _locationProvider = String.Empty;
-                }
+                _locationProvider =  _locationManager.GetBestProvider(criteriaForLocationService, true);
             }
         }
 
         public void StartTracking()
         {
+            if (_locationProvider == null)
+            {
+                return;
+            }
            
             CurrentLocation.IsEnabled = true;
 
             if (IsTracking) return;
 
             try {
-                _locationManager.RequestLocationUpdates(_locationProvider, 0, 0, this); //TODO: Set back to 5000,1,this
+                _locationManager.RequestLocationUpdates(_locationProvider, 2000, 1, this); //TODO: Set back to 5000,1,this
             }catch(Exception e)
             {
-                var i = 0;
-                i++;
+                return;
             }
 
             IsTracking = true;
@@ -124,6 +118,10 @@ namespace XamlingCore.Droid.Implementations
 
         public void StopTracking()
         {
+            if (_locationProvider == null)
+            {
+                return;
+            }
             if (!IsTracking) return;
 
             CurrentLocation.IsEnabled = false;
