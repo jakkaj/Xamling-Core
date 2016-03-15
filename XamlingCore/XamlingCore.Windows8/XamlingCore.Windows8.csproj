@@ -128,6 +128,7 @@
     <Compile Include="Controls\LoaderOverlayView.xaml.cs">
       <DependentUpon>LoaderOverlayView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Glue\Modules\NativeUWPModule.cs" />
     <Compile Include="Glue\Modules\DefaultWindows8Module.cs" />
     <Compile Include="Glue\Windows8Glue.cs" />
     <Compile Include="Implementations\DeviceNetworkStatus.cs" />
@@ -146,9 +147,11 @@
     <Compile Include="Implementations\WindowsUniversalDispatcher.cs" />
     <Compile Include="Implementations\WindowsUniversalNativeHttpClientTransferrer.cs" />
     <Compile Include="Navigation\Windows8ViewResolver.cs" />
+    <Compile Include="Navigation\WindowsNativeViewResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implementations\XWindowsAutofacAutoRegisterExternsions.cs" />
     <Compile Include="Glue\XWindowsCoreAutoRegistrations.cs" />
+    <Compile Include="View\XViewModelPage.cs" />
     <Compile Include="View\XWindows8Page.cs" />
     <Compile Include="XWindows8Core.cs" />
   </ItemGroup>
