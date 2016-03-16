@@ -14,6 +14,11 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Autofac;
+using XamlingCore.Portable.Data.Glue;
+using XamlingCore.Samples.UWP.Native.Glue;
+using XamlingCore.Samples.UWP.Native.View;
+using XamlingCore.Windows8.Contract;
 
 namespace XamlingCore.Samples.UWP.Native
 {
@@ -22,6 +27,9 @@ namespace XamlingCore.Samples.UWP.Native
     /// </summary>
     sealed partial class App : Application
     {
+
+        public static ILifetimeScope Container { get; set; }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -39,6 +47,19 @@ namespace XamlingCore.Samples.UWP.Native
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+
+            var g=  new ProjectGlue();
+            g.Init();
+            Container = g.Container;
+            ContainerHost.Container = Container;
+
+
+            var v = Container.Resolve<IUWPViewResolver>();
+
+            var vm = new HomeViewModel();
+
+            var resolved = v.ResolvePageType(vm);
+            
 
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -72,7 +93,8 @@ namespace XamlingCore.Samples.UWP.Native
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                
+                rootFrame.Navigate(resolved, vm);
             }
             // Ensure the current window is active
             Window.Current.Activate();

@@ -21,14 +21,15 @@ using XamlingCore.XamarinThings.Contract;
 
 using Module = Autofac.Module;
 using XamlingCore.Portable.Contract.Helpers;
+using XamlingCore.Windows8.Contract;
 
 namespace XamlingCore.Windows8.Glue.Modules
 {
-    public class NativeUWPModule : Module
+    public class DefaultNativeUWPModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<Windows8ViewResolver>().As<IViewResolver>();
+            builder.RegisterType<WindowsNativeViewResolver>().As<IUWPViewResolver>();
             builder.RegisterType<LocalStorageWindows8>().As<ILocalStorage>().SingleInstance();
             builder.RegisterType<Windows8Dispatcher>().As<IDispatcher>().SingleInstance();
             builder.RegisterType<OrientationSensor>().As<IOrientationSensor>();

@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using XamlingCore.Portable.View.ViewModel;
 
-namespace XamlingCore.Windows8.View
+namespace XamlingCore.Windows8.Contract
 {
-    public class XViewModelPage<T> : XWindows8Page
+    public interface IXPage<T>
         where T:XViewModel
     {
-        public T ViewModel { get; set; }
+        T ViewModel { get; set; }
     }
 }
