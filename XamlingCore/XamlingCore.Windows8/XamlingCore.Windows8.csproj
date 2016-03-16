@@ -130,6 +130,10 @@
     <Compile Include="Controls\LoaderOverlayView.xaml.cs">
       <DependentUpon>LoaderOverlayView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Contract\IXUWPFrameManager.cs" />
+    <Compile Include="Core\XUWPCore.cs" />
+    <Compile Include="Core\XUWPFrameManager.cs" />
+    <Compile Include="Core\XUWPFrameNavigator.cs" />
     <Compile Include="Glue\Modules\DefaultNativeUWPModule.cs" />
     <Compile Include="Glue\Modules\DefaultWindows8Module.cs" />
     <Compile Include="Glue\UWPGlue.cs" />
