@@ -106,6 +106,12 @@
     <Compile Include="View\Home\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Home\Subs\SecondHomePageView.model.cs">
+      <DependentUpon>SecondHomePageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Home\Subs\SecondHomePageView.xaml.cs">
+      <DependentUpon>SecondHomePageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Menu\MenuMasterView.model.cs">
       <DependentUpon>MenuMasterView.xaml</DependentUpon>
     </Compile>
@@ -147,6 +153,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="View\Home\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Home\Subs\SecondHomePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
