@@ -125,20 +125,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Auth\JsonWebTokenParser.cs" />
-    <Compile Include="Contract\IUWPViewResolver.cs" />
-    <Compile Include="Contract\IXPage.cs" />
     <Compile Include="Controls\LoaderOverlayView.xaml.cs">
       <DependentUpon>LoaderOverlayView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Contract\IXUWPFrameManager.cs" />
-    <Compile Include="Core\XUWPCore.cs" />
-    <Compile Include="Core\XUWPFrameManager.cs" />
-    <Compile Include="Core\XUWPFrameNavigator.cs" />
-    <Compile Include="Glue\Modules\DefaultNativeUWPModule.cs" />
     <Compile Include="Glue\Modules\DefaultWindows8Module.cs" />
-    <Compile Include="Glue\UWPGlue.cs" />
     <Compile Include="Glue\Windows8Glue.cs" />
-    <Compile Include="Glue\XUWPCoreAutoRegistrations.cs" />
     <Compile Include="Implementations\DeviceNetworkStatus.cs" />
     <Compile Include="Implementations\DeviceUtilityService.cs" />
     <Compile Include="Implementations\EnvironmentService.cs" />
@@ -155,11 +146,9 @@
     <Compile Include="Implementations\WindowsUniversalDispatcher.cs" />
     <Compile Include="Implementations\WindowsUniversalNativeHttpClientTransferrer.cs" />
     <Compile Include="Navigation\Windows8ViewResolver.cs" />
-    <Compile Include="Navigation\WindowsNativeViewResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implementations\XWindowsAutofacAutoRegisterExternsions.cs" />
     <Compile Include="Glue\XWindowsCoreAutoRegistrations.cs" />
-    <Compile Include="View\XPage.cs" />
     <Compile Include="View\XWindows8Page.cs" />
     <Compile Include="XWindows8Core.cs" />
   </ItemGroup>

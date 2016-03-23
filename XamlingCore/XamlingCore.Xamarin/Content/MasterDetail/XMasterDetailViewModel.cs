@@ -11,7 +11,6 @@ using XamlingCore.Portable.Contract.ViewModels;
 using XamlingCore.Portable.Model.Contract;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.Portable.View.ViewModel.Base;
-using XamlingCore.XamarinThings.Content.Common;
 using XamlingCore.XamarinThings.Content.Navigation;
 using XamlingCore.XamarinThings.Contract;
 using XamlingCore.XamarinThings.Frame;

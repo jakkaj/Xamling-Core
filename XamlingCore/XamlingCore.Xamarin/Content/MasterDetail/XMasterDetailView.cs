@@ -1,8 +1,8 @@
 ﻿using System;
 using Xamarin.Forms;
 using XamlingCore.Portable.Contract.Device;
+using XamlingCore.Portable.Messages.View;
 using XamlingCore.Portable.Messages.XamlingMessenger;
-using XamlingCore.XamarinThings.Messages;
 
 namespace XamlingCore.XamarinThings.Content.MasterDetail
 {

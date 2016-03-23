@@ -1,6 +1,7 @@
 ﻿using XamlingCore.Samples.UWP.Native.View;
-using XamlingCore.Windows8.Glue;
-using XamlingCore.Windows8.Shared.Glue;
+using XamlingCore.Samples.UWP.Native.View.Home;
+using XamlingCore.UWP.Glue;
+
 
 namespace XamlingCore.Samples.UWP.Native.Glue
 {

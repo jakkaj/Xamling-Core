@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
+
 using XamlingCore.Portable.Contract.ViewModels;
 using XamlingCore.Portable.Model.Contract;
 
@@ -30,7 +30,7 @@ namespace XamlingCore.Portable.View.ViewModel.Base
 
         public DisplayListViewModel()
         {
-            MoreDataCommand = new Command(OnMore);
+            MoreDataCommand = new XCommand<object>(OnMore);
         }
 
         protected virtual void OnItemSelected(TEntityType selectedItem)

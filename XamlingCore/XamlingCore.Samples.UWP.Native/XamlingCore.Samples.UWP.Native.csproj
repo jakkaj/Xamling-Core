@@ -100,14 +100,20 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\AnotherView.model.cs" />
-    <Compile Include="View\AnotherView.xaml.cs">
-      <DependentUpon>AnotherView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HomeView.model.cs" />
-    <Compile Include="View\HomeView.xaml.cs">
+    <Compile Include="View\Home\HomeView.model.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Home\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Menu\MenuMasterView.model.cs">
+      <DependentUpon>MenuMasterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Menu\MenuMasterView.xaml.cs">
+      <DependentUpon>MenuMasterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Menu\MenuOptionViewModel.cs" />
+    <Compile Include="View\RootViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -135,11 +141,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\AnotherView.xaml">
+    <Page Include="Styles\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="View\Home\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\HomeView.xaml">
+    <Page Include="View\Menu\MenuMasterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -149,9 +160,9 @@
       <Project>{CB7E7377-7F48-40E0-AAFE-A936743DA902}</Project>
       <Name>XamlingCore.Portable</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Windows8\XamlingCore.Windows8.csproj">
-      <Project>{00BF8A1F-E777-432E-AA20-17B074393FB1}</Project>
-      <Name>XamlingCore.Windows8</Name>
+    <ProjectReference Include="..\XamlingCore.UWP\XamlingCore.UWP.csproj">
+      <Project>{5bf29a01-df0e-403f-9ed6-e3debdf9d561}</Project>
+      <Name>XamlingCore.UWP</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

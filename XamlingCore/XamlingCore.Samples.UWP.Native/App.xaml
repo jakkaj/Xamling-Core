@@ -4,5 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:XamlingCore.Samples.UWP.Native"
     RequestedTheme="Light">
+    <Application.Resources>
+        <ResourceDictionary>
 
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Styles.xaml"/>
+                <ResourceDictionary Source="ms-appx:///XamlingCore.UWP/Styles/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

@@ -42,7 +42,7 @@ namespace XamlingCore.Portable.View.Special
         async void _onHide()
         {
             await Task.Delay(500);
-            Xamarin.Forms.Device.BeginInvokeOnMainThread(HideIndicator);
+            _dispatcher.Invoke(HideIndicator);
         }
 
         void _dispatch(Action method)

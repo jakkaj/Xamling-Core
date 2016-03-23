@@ -42,7 +42,6 @@
       <DependentUpon>DynamicContentHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Content\Dynamic\DynamicContentPage.cs" />
-    <Compile Include="Content\Common\SectionViewModel.cs" />
     <Compile Include="Content\Dynamic\DynamicContentTransitionView.cs" />
     <Compile Include="Content\Dynamic\DynamicContentView.cs" />
     <Compile Include="Content\Dynamic\ITransitionView.cs" />
@@ -80,8 +79,6 @@
     <Compile Include="Frame\XRootFrame.cs" />
     <Compile Include="Frame\XFrameManager.cs" />
     <Compile Include="Glue\XamarinGlue.cs" />
-    <Compile Include="Messages\CollapseMasterDetailMessage.cs" />
-    <Compile Include="Messages\MenuSwipeGestureMessages.cs" />
     <Compile Include="Navigators\XNavigationMasterDetailNavigator.cs" />
     <Compile Include="Navigators\XNavigationPageNavigator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -132,6 +129,10 @@
       <Project>{CB7E7377-7F48-40E0-AAFE-A936743DA902}</Project>
       <Name>XamlingCore.Portable</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Common\" />
+    <Folder Include="Messages\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

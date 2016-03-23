@@ -1,25 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Autofac;
-using XamlingCore.Portable.Data.Glue;
 using XamlingCore.Samples.UWP.Native.Glue;
 using XamlingCore.Samples.UWP.Native.View;
-using XamlingCore.Windows8.Contract;
-using XamlingCore.Windows8.Core;
+using XamlingCore.UWP.Core;
+using XamlingCore.UWP.Navigation.MasterDetail;
 
 namespace XamlingCore.Samples.UWP.Native
 {
@@ -48,8 +36,7 @@ namespace XamlingCore.Samples.UWP.Native
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
-            var c = new XUWPCore<HomeViewModel, ProjectGlue>();
+            var c = new XUWPCore<RootViewModel, ProjectGlue>();
             c.InitRoot();
         }
 
