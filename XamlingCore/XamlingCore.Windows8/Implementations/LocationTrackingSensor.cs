@@ -21,6 +21,11 @@ namespace XamlingCore.Windows8.Implementations
             _locator.DesiredAccuracy = PositionAccuracy.High;
         }
 
+        public void Init()
+        {
+            
+        }
+
         public void StartTracking()
         {
             throw new NotImplementedException();

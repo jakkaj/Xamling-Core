@@ -11,7 +11,7 @@ using XamlingCore.Portable.Model.Location;
 
 namespace XamlingCore.Droid.Implementations
 {
-    public class LocationTrackingSensor : Java.Lang.Object, ILocationTrackingSensor, ILocationListener
+    public class LocationTrackingSensor : ILocationTrackingSensor
     {
         //http://developer.xamarin.com/recipes/android/os_device_resources/gps/get_current_device_location/
 
@@ -25,29 +25,66 @@ namespace XamlingCore.Droid.Implementations
         private LocationManager _locationManager;
         private string _locationProvider;
 
+        private JavaSensorHandler _handler;
+
         public LocationTrackingSensor()
         {
+            _handler = new JavaSensorHandler(this);
             Init();
-        }        
+        }
 
-        private void Init()
+        public class JavaSensorHandler : Java.Lang.Object, ILocationListener
+        {
+            private readonly LocationTrackingSensor _parent;
+
+            public JavaSensorHandler(LocationTrackingSensor parent)
+            {
+                _parent = parent;
+            }
+
+            public void OnLocationChanged(Location location)
+            {
+                _parent.OnLocationChanged(location);
+            }
+
+            public void OnProviderDisabled(string provider)
+            {
+                _parent.OnProviderDisabled(provider);
+            }
+
+            public void OnProviderEnabled(string provider)
+            {
+                _parent.OnProviderEnabled(provider);
+            }
+
+            public void OnStatusChanged(string provider, Availability status, Bundle extras)
+            {
+                _parent.OnStatusChanged(provider, status, extras);
+            }
+        }
+
+
+        public void Init()
         {
             CurrentLocation = new XLocation();
             Setup();
         }
 
-        public void OnLocationChanged(Location location) {
+        public void OnLocationChanged(Location location)
+        {
             _currentLocation = location;
             _sendUpdate();
         }
 
-        public void OnProviderDisabled(string provider) {
+        public void OnProviderDisabled(string provider)
+        {
             _isUnavailable();
         }
 
         public void OnProviderEnabled(string provider) { /* Nothing? */ }
 
-        public void OnStatusChanged(string provider, Availability status, Bundle extras) {
+        public void OnStatusChanged(string provider, Availability status, Bundle extras)
+        {
             switch (status)
             {
                 case Availability.OutOfService:
@@ -61,7 +98,7 @@ namespace XamlingCore.Droid.Implementations
                     break;
             }
         }
-        
+
 
         private void _isAvailable()
         {
@@ -72,7 +109,7 @@ namespace XamlingCore.Droid.Implementations
         {
             CurrentLocation.IsResolved = false;
             CurrentLocation.Status = XPositionStatus.NotAvailble;
-           _fire();
+            _fire();
         }
 
         private void Setup()
@@ -89,24 +126,27 @@ namespace XamlingCore.Droid.Implementations
                     Accuracy = Accuracy.Fine
                 };
 
-                _locationProvider =  _locationManager.GetBestProvider(criteriaForLocationService, true);
+                _locationProvider = _locationManager.GetBestProvider(criteriaForLocationService, true);
             }
         }
 
         public void StartTracking()
         {
+            Init();
             if (_locationProvider == null)
             {
                 return;
             }
-           
+
             CurrentLocation.IsEnabled = true;
 
             if (IsTracking) return;
 
-            try {
-                _locationManager.RequestLocationUpdates(_locationProvider, 2000, 1, this); //TODO: Set back to 5000,1,this
-            }catch(Exception e)
+            try
+            {
+                _locationManager.RequestLocationUpdates(_locationProvider, 2000, 1, _handler); //TODO: Set back to 5000,1,this
+            }
+            catch (Exception e)
             {
                 return;
             }
@@ -118,6 +158,7 @@ namespace XamlingCore.Droid.Implementations
 
         public void StopTracking()
         {
+            Init();
             if (_locationProvider == null)
             {
                 return;
@@ -127,7 +168,7 @@ namespace XamlingCore.Droid.Implementations
             CurrentLocation.IsEnabled = false;
             CurrentLocation.IsResolved = false;
 
-            _locationManager.RemoveUpdates(this);
+            _locationManager.RemoveUpdates(_handler);
 
             IsTracking = false;
 
@@ -141,9 +182,10 @@ namespace XamlingCore.Droid.Implementations
 
         public async Task<XLocation> GetQuickLocation()
         {
+            Init();
 
             if (!string.IsNullOrWhiteSpace(_locationProvider) && _locationManager != null)
-            {                
+            {
                 var l = _locationManager.GetLastKnownLocation(_locationProvider);
 
                 if (l != null)
@@ -162,10 +204,10 @@ namespace XamlingCore.Droid.Implementations
                 }
             }
 
-            return null;
+            return new XLocation();
         }
 
-    
+
 
         public double Distance(double lat, double lng, XLocation b)
         {

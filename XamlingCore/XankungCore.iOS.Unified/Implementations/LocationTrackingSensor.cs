@@ -20,6 +20,8 @@ namespace XamlingCore.iOS.Unified.Implementations
             Init();
         }
 
+       
+
         public event EventHandler LocationUpdated;
 
         public void StartTracking()
@@ -101,7 +103,7 @@ namespace XamlingCore.iOS.Unified.Implementations
             return CLLocationManager.LocationServicesEnabled;
         }
 
-        private void Init()
+        public void Init()
         {
             CurrentLocation = new XLocation();
             

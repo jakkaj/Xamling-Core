@@ -49,8 +49,7 @@ namespace XamlingCore.Tests.Android
 			global::Xamarin.Android.NUnitLite.Resource.Layout.results = global::XamlingCore.Tests.Android.Resource.Layout.results;
 			global::Xamarin.Android.NUnitLite.Resource.Layout.test_result = global::XamlingCore.Tests.Android.Resource.Layout.test_result;
 			global::Xamarin.Android.NUnitLite.Resource.Layout.test_suite = global::XamlingCore.Tests.Android.Resource.Layout.test_suite;
-			global::Xamarin.Forms.Platform.Resource.String.ApplicationName = global::XamlingCore.Tests.Android.Resource.String.ApplicationName;
-			global::Xamarin.Forms.Platform.Resource.String.Hello = global::XamlingCore.Tests.Android.Resource.String.Hello;
+			
 			global::XamlingCore.Droid.Resource.String.ApplicationName = global::XamlingCore.Tests.Android.Resource.String.ApplicationName;
 			global::XamlingCore.Droid.Resource.String.Hello = global::XamlingCore.Tests.Android.Resource.String.Hello;
 			global::XamlingCore.Droid.Resource.String.library_name = global::XamlingCore.Tests.Android.Resource.String.library_name;

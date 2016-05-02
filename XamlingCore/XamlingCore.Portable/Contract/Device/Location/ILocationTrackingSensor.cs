@@ -21,5 +21,7 @@ namespace XamlingCore.Portable.Contract.Device.Location
 
         double Distance(double lat, double lng, XLocation b);
         bool IsLocationEnabledInDeviceSettings();
+
+        void Init();
     }
 }

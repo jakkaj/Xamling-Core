@@ -4,6 +4,7 @@ using XamlingCore.Droid.Implementations;
 using XamlingCore.Droid.Implementations.Helpers;
 using XamlingCore.Droid.Navigation;
 using XamlingCore.Droid.Services;
+using XamlingCore.Portable.Contract.Device.Location;
 using XamlingCore.Portable.Contract.Device.Service;
 using XamlingCore.Portable.Contract.Downloaders;
 using XamlingCore.Portable.Contract.Infrastructure.LocalStorage;
@@ -27,7 +28,7 @@ namespace XamlingCore.Droid.Glue.Modules
             
             builder.Register(_ => new DroidDispatcher()).As<IDispatcher>().SingleInstance(); //Needs testing -- Can also try like //builder.Register(_ => new DroidDispatcher(Android.App.Application.Context)).As<IDispatcher>().SingleInstance();
 
-            builder.RegisterType<LocationTrackingSensor>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<LocationTrackingSensor>().As<ILocationTrackingSensor>().SingleInstance();
             builder.RegisterType<DeviceNetworkStatus>().As<IDeviceNetworkStatus>().SingleInstance();            
 
             builder.RegisterType<HashHelper>().AsImplementedInterfaces();

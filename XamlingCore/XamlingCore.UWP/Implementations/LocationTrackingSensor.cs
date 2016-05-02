@@ -18,6 +18,11 @@ namespace XamlingCore.UWP.Implementations
             _locator.DesiredAccuracy = PositionAccuracy.High;
         }
 
+        public void Init()
+        {
+            
+        }
+
         public void StartTracking()
         {
             throw new NotImplementedException();
