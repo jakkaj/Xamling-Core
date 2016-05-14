@@ -123,7 +123,8 @@ namespace XamlingCore.Droid.Implementations
             {
                 Criteria criteriaForLocationService = new Criteria
                 {
-                    Accuracy = Accuracy.Fine
+                    Accuracy = Accuracy.Fine,
+                    PowerRequirement = Power.High
                 };
 
                 _locationProvider = _locationManager.GetBestProvider(criteriaForLocationService, true);
