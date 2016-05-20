@@ -240,6 +240,7 @@
   <PropertyGroup>
     <PostBuildEvent>copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS"
 copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\wp8"
+copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\uap10.0"
 copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\MonoAndroid"
 copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\MonoTouch"
 copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\Xamarin.iOS10"
@@ -248,6 +249,7 @@ copy /y "$(TargetPath)" "$(SolutionDir)\nuget\lib\portable-win81+wpa81"
 
 xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS"
 xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\wp8"
+xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\uap10.0"
 xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\MonoAndroid"
 xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\MonoTouch"
 xcopy /y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\nuget\lib\Xamarin.iOS10"
