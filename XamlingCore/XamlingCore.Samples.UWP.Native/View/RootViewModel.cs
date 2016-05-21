@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XamlingCore.Samples.UWP.Native.View.AnotherMenu;
 using XamlingCore.Samples.UWP.Native.View.Home;
 using XamlingCore.Samples.UWP.Native.View.Menu;
 using XamlingCore.UWP.Contract;
@@ -19,6 +20,7 @@ namespace XamlingCore.Samples.UWP.Native.View
         public override void OnInitialise()
         {
             AddPackage<HomeViewModel>();
+            AddPackage<AnotherPageViewModel>();
 
             SetMaster(CreateContentModel<MenuMasterViewModel>());
 

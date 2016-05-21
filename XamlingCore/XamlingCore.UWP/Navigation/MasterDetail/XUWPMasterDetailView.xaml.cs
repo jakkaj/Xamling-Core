@@ -78,9 +78,17 @@ namespace XamlingCore.UWP.Navigation.MasterDetail
         public override void SetViewModel(object vm)
         {
             ViewModel = vm as XUWPMasterDetailViewModel;
+            ViewModel.PropertyChanged += ViewModel_PropertyChanged;
             _setContent();
         }
 
+        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "DetailContent")
+            {
+                _setContent();
+            }
+        }
 
         public XUWPMasterDetailViewModel ViewModel { get; set; }
 

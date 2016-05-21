@@ -100,6 +100,12 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\AnotherMenu\AnotherPageView.model.cs">
+      <DependentUpon>AnotherPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AnotherMenu\AnotherPageView.xaml.cs">
+      <DependentUpon>AnotherPageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Home\HomeView.model.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
@@ -151,6 +157,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="View\AnotherMenu\AnotherPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Home\HomeView.xaml">
       <SubType>Designer</SubType>
