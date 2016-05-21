@@ -20,10 +20,10 @@ namespace XamlingCore.UWP.Core
         private readonly IXNavigation _xNavigation;
         private readonly ILifetimeScope _container;
 
-      
+
         private readonly IUWPViewResolver _viewResolver;
 
-       
+
 
         public XUWPFrameNavigator(ILifetimeScope scope, XFrame rootFrame, Frame rootElement, IUWPViewResolver viewResolver, Type rootPageType)
         {
@@ -32,7 +32,7 @@ namespace XamlingCore.UWP.Core
             _rootElement = rootElement;
             _xNavigation = rootFrame.Navigation;
             _container = rootFrame.Container;
-            
+
             _viewResolver = viewResolver;
 
             _configure(rootPageType);
@@ -44,7 +44,7 @@ namespace XamlingCore.UWP.Core
         {
             _xNavigation.Navigated += _xNavigation_Navigated;
 
-            _rootElement.Navigating += _rootElement_Navigating;
+            _rootElement.Navigated += _rootElement_Navigated; ;
 
             if (_xNavigation.CurrentContentObject != null)
             {
@@ -53,7 +53,7 @@ namespace XamlingCore.UWP.Core
             }
         }
 
-        private void _rootElement_Navigating(object sender, Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e)
+        private void _rootElement_Navigated(object sender, NavigationEventArgs e)
         {
             if (e.NavigationMode == NavigationMode.Forward || e.NavigationMode == NavigationMode.New)
             {
@@ -64,7 +64,7 @@ namespace XamlingCore.UWP.Core
                 _synchroniseNavigation(NavigationDirection.Back);
             }
         }
-        
+
         /// <summary>
         /// Check that the current page is synchronised with the XCore navigation framework
         /// They can get our of wack as navigation can be kicked off by things outside the framework
@@ -74,7 +74,7 @@ namespace XamlingCore.UWP.Core
         void _synchroniseNavigation(NavigationDirection direction)
         {
             var page = _rootElement.Content as XPage;
-            
+
 
             if (page != null && page.DataContext != null)
             {
@@ -146,7 +146,7 @@ namespace XamlingCore.UWP.Core
 
         async void _navigationForward()
         {
-            
+
             var vm = _xNavigation.CurrentContentObject;
 
             var currentPage = _rootElement.Content as XPage;
@@ -166,12 +166,12 @@ namespace XamlingCore.UWP.Core
 
             _rootElement.Navigate(p, _xNavigation.CurrentContentObject);
 
-           
+
 
 
             if (currentPage != null &&
                 !_xNavigation.NavigationHistory.Contains(currentPage.DataContext) &&
-                    _rootElement.BackStack.Any(_=>_.Parameter == currentPage.DataContext)
+                    _rootElement.BackStack.Any(_ => _.Parameter == currentPage.DataContext)
                 )
             {
                 var itemsToRemove = _rootElement.BackStack.Where(_ => _.Parameter == currentPage.DataContext);
@@ -180,6 +180,7 @@ namespace XamlingCore.UWP.Core
                     _rootElement.BackStack.Remove(item);
                 }
             }
+            _updateSystemButton();
         }
 
         async void _navigationBackward()
@@ -211,6 +212,7 @@ namespace XamlingCore.UWP.Core
             } while (true);
 
             _rootElement.GoBack();
+            _updateSystemButton();
         }
 
         private void _setView(NavigationDirection direction)
@@ -232,6 +234,14 @@ namespace XamlingCore.UWP.Core
         void _xNavigation_Navigated(object sender, XNavigationEventArgs e)
         {
             _setView(e.Direction);
+            
+           
+
+        }
+
+        void _updateSystemButton()
+        {
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = _xNavigation.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
         }
     }
 }

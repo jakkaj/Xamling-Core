@@ -91,9 +91,7 @@ namespace XamlingCore.UWP.Navigation.MasterDetail
             var firstPage = _packages.First();
 
             ShowNavPage(firstPage);
-
-
-            firstPage.ViewModel.OnActivated();
+            
             MasterViewModel.OnActivated();
         }
 
@@ -186,17 +184,32 @@ namespace XamlingCore.UWP.Navigation.MasterDetail
         {
             private readonly ILifetimeScope _container;
 
-           
-
+            private IXUWPFrameManager _frameManager;
+                
             public NavigationPackage(ILifetimeScope container)
             {
                 _container = container;
 
                 var frameManager = _container.Resolve<IXUWPFrameManager>();
+                _frameManager = frameManager;
                 RootFrame = XFrame.CreateRootFrame<XUWPRootFrame>(_container);
                 var rootNavigationVm = RootFrame.CreateContentModel<XUWPNavigationPageViewModel>();
                 Page = frameManager.Init(RootFrame, rootNavigationVm, false);
                 ViewModel = RootFrame.CreateContentModel<T>();
+
+
+                RootFrame.Activated += RootFrame_Activated;
+                RootFrame.Deactivated += RootFrame_Deactivated;
+            }
+
+            private void RootFrame_Deactivated(object sender, System.EventArgs e)
+            {
+                _frameManager.SetActive(true);
+            }
+
+            private void RootFrame_Activated(object sender, System.EventArgs e)
+            {
+                _frameManager.SetActive(true);
             }
 
             public XUWPRootFrame RootFrame { get; set; }

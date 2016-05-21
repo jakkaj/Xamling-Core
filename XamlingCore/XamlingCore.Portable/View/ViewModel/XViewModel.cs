@@ -92,7 +92,9 @@ namespace XamlingCore.Portable.View.ViewModel
             if (Activated != null)
             {
                 Activated(this, EventArgs.Empty);
+                
             }
+            ParentModel?.OnActivated();
         }
 
         public bool IsActive
@@ -394,27 +396,27 @@ namespace XamlingCore.Portable.View.ViewModel
 
         public void NavigateTo(object content)
         {
-            ParentModel.NavigateTo(content);
+            ParentModel?.NavigateTo(content);
         }
 
         protected void NavigateTo(object content, bool noHistory, bool forceBack)
         {
-            ParentModel.NavigateTo(content, noHistory, forceBack);
+            ParentModel?.NavigateTo(content, noHistory, forceBack);
         }
 
         protected void NavigateTo(object content, bool noHistory)
         {
-            ParentModel.NavigateTo(content, noHistory);
+            ParentModel?.NavigateTo(content, noHistory);
         }
 
         public void NavigateBack()
         {
-            ParentModel.NavigateBack();
+            ParentModel?.NavigateBack();
         }
 
         public void NavigateBack(bool allowNullNavigation)
         {
-            ParentModel.NavigateBack(allowNullNavigation);
+            ParentModel?.NavigateBack(allowNullNavigation);
         }
         
         #endregion

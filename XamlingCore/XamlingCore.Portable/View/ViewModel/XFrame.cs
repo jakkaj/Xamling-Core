@@ -50,6 +50,9 @@ namespace XamlingCore.Portable.View.ViewModel
         public List<object> AllViewModels = new List<object>();
         public List<object> IgnoreResetModels = new List<object>();
 
+        public event EventHandler Activated;
+        public event EventHandler Deactivated;
+
         public ILifetimeScope Container { get; private set; }
 
         protected XFrame(
@@ -191,6 +194,7 @@ namespace XamlingCore.Portable.View.ViewModel
             }
 
             XMessenger.Default.Send(new ApplicationDeactivatedMessage());
+            Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
         protected void FireActivated()
@@ -212,6 +216,7 @@ namespace XamlingCore.Portable.View.ViewModel
             }
 
             XMessenger.Default.Send(new ApplicationReactivatedMessage());
+            Activated?.Invoke(this, EventArgs.Empty);
         }
 
         void navigationService_Navigated(object sender, XNavigationEventArgs e)

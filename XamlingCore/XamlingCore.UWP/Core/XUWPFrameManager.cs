@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Autofac;
@@ -14,12 +15,18 @@ namespace XamlingCore.UWP.Core
         private readonly IUWPViewResolver _viewResolver;
         private readonly IDispatcher _dispatcher;
 
+        private bool _active;
 
         public XUWPFrameManager(ILifetimeScope scope, IUWPViewResolver viewResolver, IDispatcher dispatcher)
         {
             _scope = scope;
             _viewResolver = viewResolver;
             _dispatcher = dispatcher;
+        }
+
+        public void SetActive(bool isActive)
+        {
+            _active = isActive;
         }
 
         public UIElement Init(XFrame rootFrame, XViewModel rootViewModel, bool isRoot)
@@ -71,12 +78,21 @@ namespace XamlingCore.UWP.Core
             {
                 Window.Current.Activate();
             }
-          
+
+            SystemNavigationManager.GetForCurrentView().BackRequested += XUWPFrameManager_BackRequested; ;
 
             return rootFrame;
         }
 
-        
+        private void XUWPFrameManager_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (!_active)
+            {
+                return;
+            }
+
+            RootViewModel.NavigateBack();
+        }
 
         public XUWPFrameNavigator FrameNavigator { get; set; }
 

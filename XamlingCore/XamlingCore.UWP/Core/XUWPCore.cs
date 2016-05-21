@@ -3,6 +3,7 @@ using XamlingCore.Portable.Contract.Glue;
 using XamlingCore.Portable.Data.Glue;
 using XamlingCore.Portable.View.ViewModel;
 using XamlingCore.UWP.Contract;
+using XamlingCore.UWP.Navigation.MasterDetail;
 
 namespace XamlingCore.UWP.Core
 {
@@ -26,8 +27,24 @@ namespace XamlingCore.UWP.Core
             ContainerHost.Container = Container; //sometimes we need to resolve around the place outside of strucutre. 
 
             RootFrame = XFrame.CreateRootFrame<XUWPRootFrame>(glue.Container.BeginLifetimeScope());
-
+            
+            if (!(typeof(TRootViewModel) is XUWPMasterDetailViewModel))
+            {
+                RootFrame.Activated += RootFrame_Activated;
+                RootFrame.Deactivated += RootFrame_Deactivated;
+            }
+            
             _init<TRootViewModel>();
+        }
+
+        private void RootFrame_Deactivated(object sender, System.EventArgs e)
+        {
+            _frameManager.SetActive(true);
+        }
+
+        private void RootFrame_Activated(object sender, System.EventArgs e)
+        {
+           _frameManager.SetActive(true);
         }
 
         public void _init<TViewModel>() where TViewModel : XViewModel

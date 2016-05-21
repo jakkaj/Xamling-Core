@@ -9,5 +9,6 @@ namespace XamlingCore.UWP.Contract
         UIElement Init(XFrame rootFrame, XViewModel rootViewModel, bool isRoot);
         XUWPFrameNavigator FrameNavigator { get; set; }
         XViewModel RootViewModel { get; }
+        void SetActive(bool isActive);
     }
 }
