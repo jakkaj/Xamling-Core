@@ -73,23 +73,24 @@ namespace XamlingCore.UWP.Core
         /// <param name="direction"></param>
         void _synchroniseNavigation(NavigationDirection direction)
         {
-            var page = _rootElement.Content as XPage;
+            
+            //var page = _rootElement.Content as XPage;
 
 
-            if (page != null && page.DataContext != null)
-            {
-                if (page.DataContext != _xNavigation.CurrentContentObject)
-                {
-                    if (direction == NavigationDirection.Back)
-                    {
-                        _rootFrame.NavigateBack();
-                    }
-                    else
-                    {
-                        _rootFrame.NavigateTo(page.DataContext);
-                    }
-                }
-            }
+            //if (page != null && page.DataContext != null)
+            //{
+            //    if (page.DataContext != _xNavigation.CurrentContentObject)
+            //    {
+            //        if (direction == NavigationDirection.Back)
+            //        {
+            //            _rootFrame.NavigateBack();
+            //        }
+            //        else
+            //        {
+            //            _rootFrame.NavigateTo(page.DataContext);
+            //        }
+            //    }
+            //}
         }
 
         async void _navigationModal()

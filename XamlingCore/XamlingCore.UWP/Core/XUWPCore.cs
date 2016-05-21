@@ -28,11 +28,11 @@ namespace XamlingCore.UWP.Core
 
             RootFrame = XFrame.CreateRootFrame<XUWPRootFrame>(glue.Container.BeginLifetimeScope());
             
-            if (!(typeof(TRootViewModel) is XUWPMasterDetailViewModel))
-            {
-                RootFrame.Activated += RootFrame_Activated;
-                RootFrame.Deactivated += RootFrame_Deactivated;
-            }
+            //if (!(typeof(TRootViewModel) is XUWPMasterDetailViewModel))
+            //{
+            //    RootFrame.Activated += RootFrame_Activated;
+            //    RootFrame.Deactivated += RootFrame_Deactivated;
+            //}
             
             _init<TRootViewModel>();
         }
