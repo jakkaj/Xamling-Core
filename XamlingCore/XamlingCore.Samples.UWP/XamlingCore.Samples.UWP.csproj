@@ -137,10 +137,6 @@
       <Project>{07465752-9c33-46cb-b0c9-f7ded7fa7ffc}</Project>
       <Name>XamlingCore.Samples</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XamlingCore.Windows8\XamlingCore.Windows8.csproj">
-      <Project>{00bf8a1f-e777-432e-aa20-17b074393fb1}</Project>
-      <Name>XamlingCore.Windows8</Name>
-    </ProjectReference>
     <ProjectReference Include="..\XamlingCore.Xamarin\XamlingCore.XamarinThings.csproj">
       <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
       <Name>XamlingCore.XamarinThings</Name>
